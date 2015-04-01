@@ -1,0 +1,44 @@
+
+<div class="pageContent">
+	<form method="post" action="/user/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<#if user??>
+			<p>
+				<label>用户ID：</label>
+				
+				<input name="id" type="text" size="30" value="${(user.id)!}" readonly="readonly" />
+			</p>
+			</#if>
+			<p>
+				<label>用户昵称：</label>
+				<input name="nickName" class="required" type="text" size="30" value="${(user.nickName)!}" alt="请输入昵称"/>
+			</p>
+			<p>
+				<label>年龄：</label>
+				<input name="avg" type="text" size="30" value="${(user.avg)!}" />
+			</p>
+			<p>
+				<label>账号：</label>
+				<input name="loginId" class="required" type="text" size="30" value="${(user.loginId)!}" />		
+			</p>
+			<p>
+				<label>密码：</label>
+				<input name="loginPwd" type="password" readonly="readonly" value="${(user.loginPwd)!}" />
+			</p>
+			<p>
+				<label>客户类型：</label>
+				<select name="type" class="required combox">
+					<option value="">请选择</option>
+					<option value="个人">个人</option>
+					<option value="公司" selected>公司</option>
+				</select>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>

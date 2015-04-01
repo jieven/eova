@@ -1,0 +1,81 @@
+<%layout("/eova/layout/default.html",{'title' : 'Portal'}){%>
+
+<style type="text/css">
+	.title{
+		font-size:16px;
+		font-weight:bold;
+		padding:20px 10px;
+		background:#eee;
+		overflow:hidden;
+		border-bottom:1px solid #ccc;
+	}
+	.t-list{
+		padding:5px;
+	}
+</style>
+
+<script>
+	$(function(){
+		$('#pp').portal({
+			border:false,
+			fit:true
+		});
+// 		add();
+	});
+// 	function add(){
+// 		for(var i=1; i<3; i++){
+// 			var p = $('<div/>').appendTo('body');
+// 			p.panel({
+// 				title:'Title'+i,
+// 				content:'<div style="padding:5px;">Content'+(i+1)+'</div>',
+// 				height:100,
+// 				closable:true,
+// 				collapsible:true
+// 			});
+// 			$('#pp').portal('add', {
+// 				panel:p,
+// 				columnIndex:i
+// 			});
+// 		}
+// 		$('#pp').portal('resize');
+// 	}
+// 	function remove(){
+// 		$('#pp').portal('remove',$('#pgrid'));
+// 		$('#pp').portal('resize');
+// 	}
+</script>
+
+<body class="easyui-layout">
+
+	<div region="center" border="false">
+		<div id="pp" style="position:relative">
+			<div style="width:20%;">
+			    <div title="互动交流" closable="true" style="height:420px;padding:5px;">
+					<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=ceaa329c68a2288d5c8aa65ece30d28844d9bc640b88043d23287a2256198227"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="EOVA快速开发" title="EOVA快速开发"></a>
+					<br>
+					进行快速开发,走向人生巅峰！<br>
+					<br>
+					详细介绍和使用文档正在编写ing...有兴趣的同学可以先加群交流！<br>
+					<br>
+					本系统从构思到现在历时2年，伴随着我的职业生涯，可谓是呕心沥血。。。
+					<br>
+					<br>
+					冥冥中一切自有主宰，从入行开始，就一直在使用和维护快速开发框架，所以长年累月侵淫此道，略有心得，故而分享之！
+					<br><br>
+					<br>
+					Eova是如何实现原理：
+					<a target="_blank" href="http://note.youdao.com/share/?id=87597baa337b6306d29478d5f348d2f3&type=note">http://note.youdao.com/share/?id=87597baa337b6306d29478d5f348d2f3&type=note</a><br>
+					<br>详细使用手册和二次开发文档正在编写中，即将开源，请先加群耐心等待...<br>
+				</div>
+			</div>
+			<div style="width:80%;">
+				<div title="EOVA简介" closable="true" style="height:420px;padding:5px;">
+					<div class="note-content"><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">大家好我是Java的表弟Eova，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">中文名:伊哇 </span><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2">:)</font></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2"><br></font></span></div><div style="background-color: rgb(255, 255, 255);">我的全称是——Easy Object View Admin(<span style="background-color:rgb(255, 255, 255);">简单对象视图管理系统</span>)</div><div style="background-color: rgb(255, 255, 255);">Easy-----简单，方便，快速，快速开发 So Easy</div><div style="background-color: rgb(255, 255, 255);">Object--万物皆对象，以元数据驱动业务</div><div style="background-color: rgb(255, 255, 255);">View----各种功能界面</div><div style="background-color: rgb(255, 255, 255);">Admin--信息管理和维护</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);"><br></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">我的个性：</span></div><div style="background-color: rgb(255, 255, 255);">0xx01：<span style="line-height: 1.5; background-color: rgb(255, 255, 255);">以出自</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">KingDee</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">的元数据驱动业务为核心思想</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx02：使用了极速框架JFinal</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">，站在巨人的肩膀上</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx03：套上</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">了众所周知的EasyUI，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">五官端正，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">不卑不亢</span></div><div style="background-color: rgb(255, 255, 255);"><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">0xx04：使用</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">Beetl粘合JFinal-EasyUI，融为一体</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx05：采用了最流行的MySQL，术业专攻</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx06：可以一键完成CRUD，但不仅限于CRUD</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx07：灵动迅捷，多快好省，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">不影响你你实现任何功能</span></div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><div style="background-color: rgb(255, 255, 255);">我可以快速完成开发任务，信手拈来</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">我会10大控件,4大组件,N种业务模型</span></div><div style="background-color: rgb(255, 255, 255);">常见的增删改查、条件查询、数据校验、前后置业务处理、批量操作、权限管理...通通能帮你快速搞定</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);">更多高级功能等你来玩，开发不再苦逼，生活由此美丽！</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><br></div></div></div>
+				</div>				
+			</div>
+			
+		</div>
+	</div>
+</body>
+
+<<%}%>

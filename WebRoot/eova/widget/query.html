@@ -1,0 +1,28 @@
+<style>
+#eova-query div{
+	float: left;
+}
+#eova-query .field{
+	width: 250px;
+	margin-left: 10px;
+	border: 1px solid red;
+}
+#eova-query .lbl{
+	line-height: 25px;
+	width: 90px;
+}
+</style>
+
+<form id="queryForm">
+	<%//输出快速查询条件%>
+	<%for(item in itemList){%>
+		<%if(item.isQuery){%>
+		<div id="eova-query">
+			<div class="field">
+				<div class="lbl" title="${item.cn}[${item.en}]">${item.cn}:111</div>
+				<div><input name="query_${item.en}" value="${item.value!}" style="width: 135px;border: 1px solid #95B8E7" /></div>
+			</div>
+		</div>
+		<%}%>
+	<%}%>
+</form>

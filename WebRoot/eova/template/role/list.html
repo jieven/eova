@@ -1,0 +1,40 @@
+<%layout("/eova/layout/default.html",{'title' : 'ROLE'}){%>
+<script type="text/javascript" src="/eova/template/crud/crud.js"></script>
+
+<body class="easyui-layout">
+	<%if(isTrue(isQuery!)){%>
+	<div id="layoutNorth" region="north" title="快速查询" split="true" style="height:64px;">
+    <#query id="queryForm" items="${itemList}" />
+    </div>
+	<%}%>
+    <div data-options="region:'center',fit:false,border:false">
+		<div id="toolbar" style="display: none;">
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td><%include("/eova/template/crud/btn/query.html"){}%></td>
+								<td><%include("/eova/template/crud/btn/add.html"){}%></td>
+								<td><%include("/eova/template/crud/btn/update.html"){}%></td>
+								<td><%include("/eova/template/crud/btn/dels.html"){}%></td>
+								<%if(isTrue(obj.isExport!)){%>
+								<td><%include("/eova/template/crud/btn/export.html"){}%></td>
+								<%}%>
+								<%if(isTrue(obj.isImport!)){%>
+								<td><%include("/eova/template/crud/btn/import.html"){}%></td>
+								<%}%>
+								<%if(!isEmpty(obj.diyFun!)){%>
+								<td><%include(obj.diyFun){}%></td>
+								<%}%>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<#grid id="grid" obj="${obj}" items="${itemList}" />
+    </div>
+</body>
+
+<%}%>

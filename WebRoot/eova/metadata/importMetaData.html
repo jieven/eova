@@ -1,0 +1,75 @@
+<%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
+
+<form id="myForm" method="post" class="form">
+	<table class="table" style="width: 100%;">
+		<tr>
+			<th>数据源</th>
+			<td>
+			<select class="easyui-combobox" id="ds" name="ds" style="width: 179px;" data-options="editable:false,onChange:valueChange">
+				<%for(db in dbMap){%>
+				<option value="${db.key}">${db.key}[${db.value}]</option> 
+				<%}%>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<th>元类型</th>
+			<td>
+			<select class="easyui-combobox" id="type" name="type" style="width: 179px;" data-options="editable:false,onChange:valueChange">
+					<option value="table">Table</option>
+					<option value="view">View</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<th>元数据表</th>
+			<td><#find id="table" name="table" isNoN="true" url="/metadata/find/eova-table" /></td>
+		</tr>
+		<tr>
+			<th>元对象名称</th>
+			<td><#text id="name" name="name" isNoN="true"/></td>
+		</tr>
+		<tr>
+			<th>元对象编码</th>
+			<td><#text id="code" name="code" isNoN="true"/></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+// 元类型变更时级联变更元数据表查找框URL
+var valueChange = function(){
+	var url = '/metadata/find/' + $('#ds').combobox('getValue') + '-' + $('#type').combobox('getValue');
+	console.log(url);
+	$('#table').attr('url', url);
+}
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+var fm = $('#myForm');
+var submitNow = function($dialog, $grid, $pjq) {
+	var url = "/metadata/importData";
+	$.post(url, sy.serializeObject(fm), function(result) {
+		if (result.success) {
+			//$pjq.messager.alert('提示', result.msg, 'info');
+			slideMsg("导入元数据成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+var submitForm = function($dialog, $grid, $pjq) {
+	if (fm.form('validate')) {
+		submitNow($dialog, $grid, $pjq);
+	}
+};
+</script>
+
+
+<%}%>

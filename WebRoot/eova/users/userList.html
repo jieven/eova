@@ -1,0 +1,122 @@
+<form id="pagerForm" method="post" action="/user/list">
+	<input type="hidden" name="${PAGENUM}" value="${userPage.pageNumber}" />
+	<input type="hidden" name="${PAGESIZE}" value="${userPage.pageSize}" />
+	<input type="hidden" name="orderField" value="${orderField!}" />
+	<input type="hidden" name="orderLast" value="${orderLast!}" />
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#clearForm").click(function(){
+		$(":input","#searchForm").not(":button, :submit, :reset, :hidden").val("").removeAttr("checked").removeAttr("selected");
+	});
+});
+</script>
+<div layoutH="26" width="100%">
+	<div class="pageContent"> 
+		<form id="searchForm" onsubmit="return navTabSearch(this);" action="/user/list" method="post">
+			<div class="pageHeader">
+				<div class="panel ${panelState!}">
+					<h1>快速查询</h1>
+					<div class="searchBar">
+						<table class="searchContent">
+							<tr>
+								<td>昵称：<input type="text" name="nickName"
+									value="${nickName!}" />
+								</td>
+								<td>年龄：<input type="text" name="avg"
+									value="${avg!}" />
+								</td>
+								<td>账号：<input type="text" name="loginId"
+									value="${loginId!}" />
+								</td>
+							</tr>
+						</table>
+						<div class="subBar">
+							<ul>
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit" >检索</button>
+										</div>
+									</div>
+								</li>
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="button" id="clearForm" >清空</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/user/toAdd" target="dialog" rel="dlg_useradd" mask="true" title="添加数据" ><span>添加</span></a></li>
+			<li><a class="edit" href="/user/toUpdate/{userId}" target="dialog" rel="dlg_useredit" mask="true" title="修改数据"><span>修改</span></a></li>
+			<li><a class="delete" href="/user/delete/{userId}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li class="line">line</li>
+			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="150" >
+		<thead>
+			<tr>
+				<th width="40"></th>
+				
+				<#if orderField?? && orderField?index_of("avg")!=-1 >%>
+				<th orderField="avg" class="desc">年龄</th>
+				<#else>				
+				<th orderField="avg">年龄</th>
+				</#if>
+				
+				<#if orderLast?? && orderLast?index_of("nickName")!=-1 >
+				<th orderField="nickName" class="desc">昵称</th>
+				<#else>
+				<th orderField="nickName">昵称</th>				
+				</#if>
+				
+				<#if orderField?? && orderField?index_of("loginId")!=-1 >
+				<th orderField="loginId" class="desc">账号</th>
+				<#else>
+				<th orderField="loginId">账号</th>								
+				</#if>
+
+				<#if orderField?? && orderField?index_of("loginPwd")!=-1 >
+				<th orderField="loginPwd" class="desc">密码</th>
+				<#else>
+				<th orderField="loginPwd">密码</th>
+				</#if>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<#list userPage.getList() as user>
+			<tr target="userId" rel="${user.id}">
+				<td>${user_index+1}-${user.id}</td>
+				<td>${user.avg}</td>
+				<td>${user.nickName}</td>
+				<td>${user.loginId}</td>
+				<td>${user.loginPwd}</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+</div>
+</div>
+<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="${PAGESIZE}" onchange="navTabPageBreak({${PAGESIZE}:this.value})">
+				<option value="15" <#if userPage.pageSize == 15 >selected="selected"</#if> >15</option>
+				<option value="30" <#if userPage.pageSize == 30 >selected="selected"</#if> >30</option>
+				<option value="50" <#if userPage.pageSize == 50 >selected="selected"</#if> >50</option>
+				<option value="100" <#if userPage.pageSize == 100 >selected="selected"</#if> >100</option>
+			</select>
+			<span>条，共${userPage.totalRow!}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="${userPage.totalRow}" numPerPage="${userPage.pageSize}" pageNumShown="${userPage.totalPage}" currentPage="${userPage.pageNumber}"></div>
+	</div>

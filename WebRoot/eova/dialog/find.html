@@ -1,0 +1,55 @@
+<%layout("/eova/layout/default.html",{'title' : '1231'}){%>
+
+<body class="easyui-layout">
+	<%// title="快速查询" collapsed="true"%>
+    <div id="layoutNorth" region="north"  split="true" style="height:40px;">
+    <#query id="queryFindForm" items="${itemList}" />
+    </div>
+    <div data-options="region:'center',fit:false,border:false">
+	    <%include("/eova/widget/queryBtn.html"){}%>
+	    <#grid id="findGrid" obj="${obj}" items="${itemList}" url="${action!}" />
+    </div>
+</body>
+<script>
+
+var init = function($dialog, $input, $inputcn) {
+	alert(inputcn.attr('id'));
+}
+
+var selectData = function($dialog, $input, $inputcn) {
+
+    var grid = $('#findGrid');
+    var row = grid.datagrid('getSelected');
+    try{
+    	// 有选中行
+        if (row) {
+        	// 获取主键值(第一列)
+        	$input.val(row.${obj.pkName});
+        	// 获取翻译值(第二列)
+            $inputcn.val(row.${obj.cn});
+            $inputcn.validatebox('validate');
+    	} else {
+    		// 没选值，就清空
+    		$input.val("");
+            $inputcn.val("");
+            //$inputcn.addClass("validatebox-invalid");
+            $inputcn.validatebox('validate');
+    	}
+        
+    }catch(err){
+    	console.log("查找框validate异常:" + err);
+    }finally{
+    	// 关闭Dialog
+    	$dialog.dialog('destroy');
+    }
+};
+
+//绑定双击事件
+$('#findGrid').datagrid({
+	onDblClickRow : function(rowIndex, rowData){
+		// 模拟点击确认
+		parent.$('#find_ok').trigger('click');
+	}
+});
+</script>
+<%}%>

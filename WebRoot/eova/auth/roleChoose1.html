@@ -1,0 +1,51 @@
+<%layout("/eova/layout/default.html"){%>
+
+<ul id="roleChooseTree"></ul>
+
+<script type="text/javascript">
+
+$('#roleChooseTree').tree({
+	url : '/auth/showFunTree/' + ${rid},
+	parentField : 'pid',
+	method:'get',
+	animate:true,
+	cascadeCheck:false,
+	checkbox : true
+});
+
+var getCheckIds = function getChecked(){
+	// 获取选中和不确定节点
+    var nodes = $('#roleChooseTree').tree('getChecked', ['checked','indeterminate']);
+    var ids = '';
+    for(var i=0; i<nodes.length; i++){
+        if (ids != '') ids += ',';
+        ids += nodes[i].id;
+    }
+    return ids;
+}
+
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+var submitForm = function($dialog, $grid, $pjq) {
+	var url = "/auth/roleChoose/" + ${rid};
+	var o ={'checks': getCheckIds()};
+	$.post(url, o, function(result) {
+		if (result.success) {
+			slideMsg("操作成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+</script>
+
+
+<%}%>
