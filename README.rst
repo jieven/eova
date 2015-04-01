@@ -1,24 +1,23 @@
 ===========================
-J2EE ¿ìËÙ¿ª·¢Æ½Ì¨ EOVA
+J2EE å¿«é€Ÿå¼€å‘å¹³å° EOVA
 ===========================
 
-´ó¼ÒºÃÎÒÊÇJavaµÄ±íµÜEova£¬ÖÐÎÄÃû:ÒÁÍÛ :)
+å¤§å®¶å¥½æˆ‘æ˜¯Javaçš„è¡¨å¼ŸEovaï¼Œä¸­æ–‡å:ä¼Šå“‡ :)
 
-ÎÒµÄÈ«³ÆÊÇ¡ª¡ªEasy Object View Admin(¼òµ¥¶ÔÏóÊÓÍ¼¹ÜÀíÏµÍ³)
-Easy-----¼òµ¥£¬·½±ã£¬¿ìËÙ£¬¿ìËÙ¿ª·¢ So Easy
-Object--ÍòÎï½Ô¶ÔÏó£¬ÒÔÔªÊý¾ÝÇý¶¯ÒµÎñ
-View----¸÷ÖÖ¹¦ÄÜ½çÃæ
-Admin--ÐÅÏ¢¹ÜÀíºÍÎ¬»¤
+æˆ‘çš„å…¨ç§°æ˜¯â€”â€”Easy Object View Admin(ç®€å•å¯¹è±¡è§†å›¾ç®¡ç†ç³»ç»Ÿ)
+Easy-----ç®€å•ï¼Œæ–¹ä¾¿ï¼Œå¿«é€Ÿï¼Œå¿«é€Ÿå¼€å‘ So Easy
+Object--ä¸‡ç‰©çš†å¯¹è±¡ï¼Œä»¥å…ƒæ•°æ®é©±åŠ¨ä¸šåŠ¡
+View----å„ç§åŠŸèƒ½ç•Œé¢
+Admin--ä¿¡æ¯ç®¡ç†å’Œç»´æŠ¤
 
-ÎÒµÄ¸öÐÔ£º
+æˆ‘çš„ä¸ªæ€§ï¼š
 ------------------------
-#MVC¼Ü¹¹£¬Éè¼Æ¾«ÇÉ£¬Ê¹ÓÃ¼òµ¥
-#0xx01£ºÒÔ³ö×ÔKingDeeµÄÔªÊý¾ÝÇý¶¯ÒµÎñÎªºËÐÄË¼Ïë
-#0xx02£ºÊ¹ÓÃÁË¼«ËÙ¿ò¼ÜJFinal£¬Õ¾ÔÚ¾ÞÈËµÄ¼ç°òÉÏ
-#0xx03£ºÌ×ÉÏÁËÖÚËùÖÜÖªµÄEasyUI£¬Îå¹Ù¶ËÕý£¬²»±°²»¿º
-#0xx04£ºÊ¹ÓÃBeetlÕ³ºÏJFinal-EasyUI£¬ÈÚÎªÒ»Ìå
-#0xx05£º²ÉÓÃÁË×îÁ÷ÐÐµÄMySQL£¬ÊõÒµ×¨¹¥
-#0xx06£º¿ÉÒÔÒ»¼üÍê³ÉCRUD£¬µ«²»½öÏÞÓÚCRUD
-#0xx07£ºÁé¶¯Ñ¸½Ý£¬¶à¿ìºÃÊ¡£¬²»Ó°ÏìÄãÄãÊµÏÖÈÎºÎ¹¦ÄÜ
+#. ä»¥å‡ºè‡ªKingDeeçš„å…ƒæ•°æ®é©±åŠ¨ä¸šåŠ¡ä¸ºæ ¸å¿ƒæ€æƒ³
+#. ä½¿ç”¨äº†æžé€Ÿæ¡†æž¶JFinalï¼Œç«™åœ¨å·¨äººçš„è‚©è†€ä¸Š
+#. å¥—ä¸Šäº†ä¼—æ‰€å‘¨çŸ¥çš„EasyUIï¼Œäº”å®˜ç«¯æ­£ï¼Œä¸å‘ä¸äº¢
+#. ä½¿ç”¨Beetlç²˜åˆJFinal-EasyUIï¼Œèžä¸ºä¸€ä½“
+#. é‡‡ç”¨äº†æœ€æµè¡Œçš„MySQLï¼Œæœ¯ä¸šä¸“æ”»
+#. å¯ä»¥ä¸€é”®å®ŒæˆCRUDï¼Œä½†ä¸ä»…é™äºŽCRUD
+#. çµåŠ¨è¿…æ·ï¼Œå¤šå¿«å¥½çœï¼Œä¸å½±å“ä½ ä½ å®žçŽ°ä»»ä½•åŠŸèƒ½
 
-**Eova¿ìËÙ¿ª·¢QQÈº»¶Ó­ÄúµÄ¼ÓÈë: 424665115**
+**Eovaå¿«é€Ÿå¼€å‘QQç¾¤æ¬¢è¿Žæ‚¨çš„åŠ å…¥: 424665115**
