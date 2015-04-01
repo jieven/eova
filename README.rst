@@ -28,6 +28,7 @@ EOVA 为Eclipse工程,可直接Import
 #. /sql 数据库初始化脚本
 #. /src/eova.config 修改Mysql数据连接
 #. /src/com/Eova_Main.java Run Application 启动服务,默认80端口
+#. Eova默认登录帐号/密码:admin/000000
 
 **Eova快速开发QQ群欢迎您的加入: 424665115**
 
