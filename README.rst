@@ -26,9 +26,9 @@ Admin--信息管理和维护
 ------------------------
 EOVA 为Eclipse工程,可直接Import
 
-#. EOVA/sql 数据库初始化脚本
-#. EOVA/src/eova.config 修改Mysql数据连接
-#. EOVA/src/com/Eova_Main.java Run Application 启动服务,默认80端口
+#. /sql 数据库初始化脚本
+#. /src/eova.config 修改Mysql数据连接
+#. /src/com/Eova_Main.java Run Application 启动服务,默认80端口
 
 EOVA文档:
 http://note.youdao.com/share/?id=15baba0592076b4b9ba4c406b6e4d8f3&type=note
