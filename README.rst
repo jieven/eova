@@ -20,8 +20,6 @@ J2EE 快速开发平台 EOVA
 #. 可以一键完成CRUD，但不仅限于CRUD
 #. 灵动迅捷，多快好省，不影响你你实现任何功能
 
-**Eova快速开发QQ群欢迎您的加入: 424665115**
-
 使用说明：
 ------------------------
 EOVA 为Eclipse工程,可直接Import
@@ -29,6 +27,8 @@ EOVA 为Eclipse工程,可直接Import
 #. /sql 数据库初始化脚本
 #. /src/eova.config 修改Mysql数据连接
 #. /src/com/Eova_Main.java Run Application 启动服务,默认80端口
+
+**Eova快速开发QQ群欢迎您的加入: 424665115**
 
 EOVA文档:
 http://note.youdao.com/share/?id=15baba0592076b4b9ba4c406b6e4d8f3&type=note
