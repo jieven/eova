@@ -1,0 +1,1 @@
+<input id="${id!}" name="${isTrue(isQuery!) ? QUERY+name:name}" type="checkbox" ${isTrue(value!) ? 'checked':""}>&nbsp;&nbsp;&nbsp;
