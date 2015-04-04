@@ -10,6 +10,7 @@ import com.eova.common.Easy;
 import com.eova.config.EovaConst;
 import com.eova.model.Eova_Button;
 import com.eova.model.Eova_Menu;
+import com.eova.model.Eova_Menu_Object;
 import com.jfinal.core.Controller;
 import com.rzyunyou.common.xx;
 
@@ -40,6 +41,7 @@ public class MenuController extends Controller {
 	public void add() {
 		
 		String menuCode = getPara("code");
+		String type = getPara("type");
 		
 		Eova_Menu menu = new Eova_Menu();
 		menu.set("parentId", getPara("parentId"));
@@ -47,9 +49,8 @@ public class MenuController extends Controller {
 		menu.set("name", getPara("name"));
 		menu.set("code", menuCode);
 		menu.set("indexNum", getPara("indexNum"));
-		menu.set("type", getPara("type"));
-//		menu.set("urlCmd", getPara("urlCmd"));
-		menu.set("bizIntercept", getPara("bizIntercept"));
+		menu.set("type", type);
+		menu.set("bizIntercept", getPara("bizIntercept", ""));
 		menu.save();
 		
 		// 初始化查询按钮
@@ -57,6 +58,17 @@ public class MenuController extends Controller {
 		btn.set("menuCode", menuCode);
 		btn.set("name", EovaConst.FUN_QUERY);
 		btn.save();
+		
+		// 单表-菜单关联对象
+		if (type.equals(Eova_Menu.TYPE_SINGLEGRID)) {
+			// 单表只有一个对象
+			Eova_Menu_Object mo = new Eova_Menu_Object();
+			mo.set("menuCode", menuCode);
+			mo.set("objectCode", getPara("objectCode"));
+			mo.save();
+		}
+		
+		// TODO 其它业务模版
 		
 		renderJson(new Easy());
 	}

@@ -15,6 +15,11 @@ public class Eova_Menu extends BaseModel<Eova_Menu> {
 	private static final long serialVersionUID = 7072369370299999169L;
 
 	public static final Eova_Menu dao = new Eova_Menu();
+	
+	/**菜单类型-自定义**/
+	public static final String TYPE_DIY = "diy";
+	/**菜单类型-单表**/
+	public static final String TYPE_SINGLEGRID = "singleGrid";
 
 	private List<Eova_Menu> childList;
 
