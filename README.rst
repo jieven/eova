@@ -32,5 +32,4 @@ EOVA 为Eclipse工程,可直接Import
 
 **Eova快速开发QQ群欢迎您的加入: 424665115**
 
-EOVA文档:
-:download:`点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`
+EOVA文档: `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_ 
