@@ -23,7 +23,7 @@ J2EE 快速开发平台 EOVA
 
 使用说明：
 ------------------------
-EOVA 构建项目方法，请`点击查看 <http://note.youdao.com/share/?id=f9c2db62746047d251ef67b28063f871&type=note>`_
+EOVA 构建项目方法，请 `点击查看 <http://note.youdao.com/share/?id=f9c2db62746047d251ef67b28063f871&type=note>`_
 
 #. /sql 数据库初始化脚本
 #. /src/eova.config 修改Mysql数据连接
