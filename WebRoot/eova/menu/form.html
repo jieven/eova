@@ -18,18 +18,19 @@
 			</tr>
 			<tr>
 				<th>序号</th>
-				<td><#text id="index" name="indexNum" value="${menu.indexNum!}" isNoN="true" /></td>
-				<th>模版类型</th>
+				<td><#text id="index" name="indexNum" value="${menu.indexNum!1}" isNoN="true" /></td>
+				<th>业务类型</th>
 				<td>
 				<select class="easyui-combobox" id="type" name="type" style="width: 179px;" isNoN="true" data-options="editable:false, onChange:typeChange">
+					<option value="dir">父目录菜单[dir]</option>
 					<option value="diy">自定义业务[diy]</option>
 					<option value="singleGrid">单表[singleGrid]</option>
 				</select>
 				</td>
 			</tr>
-			<tr id="trUrl">
+			<tr id="trUrl" style="display: none;">
 				<th>业务URL</th>
-				<td colspan="3"><#text id="url" name="urlCmd" width="501" height="20" value="${menu.urlCmd!}" isNoN="true" htmlattrs="placeholder='请输入自定义功能的访问URL'" /></td>
+				<td colspan="3"><#text id="url" name="url" width="501" height="20" value="${menu.url!}" isNoN="false" htmlattrs="placeholder='请输入自定义功能的访问URL'" /></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -38,7 +39,7 @@
 		<table class="table" style="width: 100%;">
 			<tr>
 				<th>元对象</th>
-				<td><#find id="singleGrid_Object" name="objectCode" exp="select code 编码,code 编码,name 名称 from eova_object where 1=1;ds=eova" isNoN="true" /></td>
+				<td><#find id="singleGrid_Object" name="objectCode" exp="select code 编码,code 编码,name 名称 from eova_object where 1=1;ds=eova" isNoN="false" /></td>
 			</tr>
 			<tr>
 				<th>业务拦截器</th>
@@ -80,10 +81,7 @@ function typeChange(newValue, oldValue){
 	} else {
 		$('#trUrl').hide();
 	}
-	
-	var type = $('#type').combo('getText');
-	console.log(type);
-	
+
 	$('#' + newValue).show();
 	$('#' + oldValue).hide();
 }
@@ -91,39 +89,40 @@ function typeChange(newValue, oldValue){
 var fm = $('#myForm');
 
 var submitForm = function($dialog, $grid, $pjq) {
-	buildUrl();
+	buildUrl($pjq);
 	if (fm.form('validate')) {
 		submitNow($dialog, $grid, $pjq);
 	}
 };
 
-function buildUrl(){
+function buildUrl($pjq){
 	
 	var type = $('#type').combo('getValue');
-	if(type == 'diy'){
+	var $singleGrid_Object = $('#singleGrid_Object');
+	var $url = $('#url');
+	
+	// 如果是目录直接返回
+	if(type == 'dir'){
 		return;
 	}
-	//url前缀
-	var url;
 	
-	var menuCode = $('#code').val(); 
-	menuCode = 'menuCode=' + menuCode;
-	
-	if(type == 'singleGrid'){
-		if ($('#singleGrid_Object').val() == '') {
-			$('#singleGrid_Object').combo({
-				required:true,
-				missingMessage:'该输入项为必输项'
-			});
-		} else {
-			$('#singleGrid_Object').combo({
-				required:false
-			});
+	// 自定义菜单
+	if(type == 'diy'){
+		// url 不能为空
+		if($url.val() == ''){
+			$pjq.messager.alert('提示', '请输入业务URL', 'error');
+			return;
 		}
-
-		url = '/crud/toList?' + menuCode + '&objectCode=' + $('#singleGrid_Object').val();
 	}
-	$('#url').val(url);
+	
+	// 单表模版，如果元对象为空，则弹必填提示
+	if(type == 'singleGrid'){
+		// 元对象不能为空
+		if($singleGrid_Object.val() == ''){
+			$pjq.messager.alert('提示', '请选择元对象', 'error');
+			return;
+		}
+	}
 }
 
 function submitNow($dialog, $grid, $pjq) {

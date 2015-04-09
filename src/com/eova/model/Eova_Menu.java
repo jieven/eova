@@ -9,6 +9,7 @@ package com.eova.model;
 import java.util.List;
 
 import com.rzyunyou.base.BaseModel;
+import com.rzyunyou.common.xx;
 
 public class Eova_Menu extends BaseModel<Eova_Menu> {
 
@@ -16,6 +17,8 @@ public class Eova_Menu extends BaseModel<Eova_Menu> {
 
 	public static final Eova_Menu dao = new Eova_Menu();
 	
+	/**菜单类型-目录**/
+	public static final String TYPE_DIR = "dir";
 	/**菜单类型-自定义**/
 	public static final String TYPE_DIY = "diy";
 	/**菜单类型-单表**/
@@ -35,7 +38,11 @@ public class Eova_Menu extends BaseModel<Eova_Menu> {
 	 * 获取访问URL 
 	 */
 	public String getUrl(){
-		return '/' + this.getStr("type") + "/list/" +this.getStr("code");
+		String url = this.getStr("url");
+		if (xx.isEmpty(url)) {
+			return '/' + this.getStr("type") + "/list/" +this.getStr("code");
+		}
+		return url;
 	}
 	
 	public Eova_Menu findByCode(String code){

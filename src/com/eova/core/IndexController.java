@@ -290,8 +290,11 @@ public class IndexController extends Controller {
 		}
 		sb.append("{");
 		sb.append("\"attributes\": {");
-		sb.append("\"target\": \"\",");
-		sb.append("\"url\": \"" + menu.getUrl() + "\"");
+		// 目录不显示URL
+		if(!menu.getStr("type").equals(Eova_Menu.TYPE_DIR) ){
+			sb.append("\"url\": \"" + menu.getUrl() + "\"");
+//			System.out.println(menu.getUrl());
+		}
 		sb.append("},\n");
 		sb.append("\"checked\": false,");
 		sb.append("\"iconCls\": \"" + icon + "\",");

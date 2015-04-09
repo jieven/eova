@@ -51,7 +51,14 @@ public class MenuController extends Controller {
 		menu.set("indexNum", getPara("indexNum"));
 		menu.set("type", type);
 		menu.set("bizIntercept", getPara("bizIntercept", ""));
+		menu.set("url", getPara("url", ""));
 		menu.save();
+		
+		// 如果是父级目录菜单没有按钮也无需关联对象
+		if (type.equals(Eova_Menu.TYPE_DIR)) {
+			renderJson(new Easy());
+			return;
+		}
 		
 		// 初始化查询按钮
 		Eova_Button btn = new Eova_Button();
