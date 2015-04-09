@@ -26,7 +26,7 @@ J2EE 快速开发平台 EOVA
 EOVA 项目构建方法
 
 #. 创建项目,请 `点击查看 <http://note.youdao.com/share/?id=f9c2db62746047d251ef67b28063f871&type=note>`_
-#. /sql 数据库初始化脚本
+#. /sql 数据库初始化脚本,先执行eova.sql+web.sql,然后执行path.sql(更新脚本)
 #. /src/eova.config 修改Mysql数据连接
 #. /src/com/Eova_Main.java Run Application 启动服务,默认80端口
 #. Eova默认登录帐号/密码:admin/000000
