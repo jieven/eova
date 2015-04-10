@@ -128,9 +128,6 @@ public class MetaDataController extends Controller {
 		Eova_Object eo = EovaExp.getEo(exp);
 		// 根据表达式手工构建Eova_Item
 		List<Eova_Item> eis = EovaExp.getEis(exp);
-		// System.out.println(eis.toString());
-
-		// eo.set("pkName", "pk");
 
 		setAttr("obj", eo);
 		setAttr("itemList", eis);
@@ -142,6 +139,7 @@ public class MetaDataController extends Controller {
 	// 查找视图结构
 	public void findJson() {
 
+		// 获取数据库
 		String db = getPara(0);
 		String type = getPara(1);
 
@@ -156,7 +154,6 @@ public class MetaDataController extends Controller {
 		String select = EovaExp.getSelectNoAlias(exp);
 		String from = EovaExp.getFrom(exp);
 		String where = EovaExp.getWhere(exp);
-		String ds = EovaExp.getDs(exp);
 
 		// 获取分页参数
 		int pageNumber = getParaToInt(PageConst.PAGENUM, 1);
@@ -174,7 +171,7 @@ public class MetaDataController extends Controller {
 
 		// 分页查询Grid数据
 		String sql = from + where + sort;
-		Page<Record> page = Db.use(ds).paginate(pageNumber, pageSize, select, sql, parm);
+		Page<Record> page = Db.use(xx.DS_EOVA).paginate(pageNumber, pageSize, select, sql, parm);
 
 		// 将分页数据转换成JSON
 		String json = JsonKit.toJson(page.getList());
