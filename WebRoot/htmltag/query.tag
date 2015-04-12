@@ -40,7 +40,7 @@
 				<%}else if(item.type == "数字框"){%>
 					<div><#number id="${item.en}" name="${item.en}" code="${item.objectCode }" isQuery="true" /></div>
 				<%}else if(item.type == "复选框"){%>
-					<div><#choose id="${item.en}" name="${item.en}" isQuery="true" /></div>
+					<div><#check id="${item.en}" name="${item.en}" isQuery="true" /></div>
 				<%}else {%>
 					<%// 默认为文本框%>
 					<div><#text id="${item.en}" name="${item.en}" value="${item.value!}" isQuery="true" /></div>

@@ -22,11 +22,13 @@
 					<%} else if(item.type == "查找框"){%>
 						<#find id="${item.en}" name="${item.en}" code="${item.objectCode}" en="${item.en}" value="${item.value!}" isNoN="${item.isNotNull!}" />
 					<%} else if(item.type == "时间框"){%>
-						<#time id="${item.en}" name="${item.en}" value="${item.value!}" isNoN="${item.isNotNull!}"/>
+						<#time id="${item.en}" name="${item.en}" value="${item.value!}" isNoN="${item.isNotNull!}" />
 					<%} else if(item.type == "文本域"){%>
-						<#texts id="${item.en}" name="${item.en}" value="${item.value!}" />
+						<#texts id="${item.en}" name="${item.en}" value="${item.value!}" style="width:471px;height:80px" />
+					<%} else if(item.type == "编辑框"){%>
+						<#edit id="${item.en}" name="${item.en}" value="${item.value!}" style="width:550px;height:100px" />
 					<%} else if(item.type == "复选框"){%>
-						<#choose id="${item.en}" name="${item.en}" value="${item.value!}" />
+						<#check id="${item.en}" name="${item.en}" value="${item.value!}" />
 					<%}else if(item.type == "图标框"){%>
 						<#icon id="${item.en}" name="${item.en}" value="${item.value!}" />
 					<%} else {// 默认为文本框%>
@@ -47,9 +49,11 @@
 					<%} else if(item.type == "时间框"){%>
 						<#time id="${item.en}" name="${item.en}" value="${item.value!}" isNoN="${item.isNotNull!}"/>
 					<%} else if(item.type == "文本域"){%>
-						<#texts id="${item.en}" name="${item.en}" value="${item.value!}" />
+						<#texts id="${item.en}" name="${item.en}" value="${item.value!}" style="width:471px;height:80px" />
+					<%} else if(item.type == "编辑框"){%>
+						<#edit id="${item.en}" name="${item.en}" value="${item.value!}" style="width:550px;height:100px;" />
 					<%} else if(item.type == "复选框"){%>
-						<#choose id="${item.en}" name="${item.en}" value="${item.value!}" />
+						<#check id="${item.en}" name="${item.en}" value="${item.value!}" />
 					<%}else if(item.type == "图标框"){%>
 						<#icon id="${item.en}" name="${item.en}" value="${item.value!}" />
 					<%} else {// 默认为文本框%>

@@ -156,7 +156,7 @@ public class CrudController extends Controller {
 		List<Eova_Item> eis = crud.getItemList();
 
 		// 构建对象数据
-		final Map<String, Record> reMap = CrudManager.buildData(this, eis, record);
+		final Map<String, Record> reMap = CrudManager.buildData(this, eis, record, crud.getPkName());
 
 		// 事务(默认为TRANSACTION_READ_COMMITTED)
 		boolean flag = Db.tx(new IAtom() {
@@ -293,7 +293,7 @@ public class CrudController extends Controller {
 
 		// 获取基础数据
 		final Eova_Object eo = crud.getObject();
-		final Map<String, Record> reMap = CrudManager.buildData(this, crud.getItemList(), record);
+		final Map<String, Record> reMap = CrudManager.buildData(this, crud.getItemList(), record, crud.getPkName());
 		final Object pkValue = record.get(crud.getPkName());
 
 		// 事务(默认为TRANSACTION_READ_COMMITTED)

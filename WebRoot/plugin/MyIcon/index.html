@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>图标测试</title>
+<%include("/include/_jquery.html"){}%>
+<%include("/include/_jquery_cookie.html"){}%>
+<%include("/include/_easyui.html"){}%>
+</head>
+<body>
+<div style="margin-bottom:40px">
+	<table cellpadding="5">
+		<tr>
+			<td><a id="icon_sample" iconCls="" href="#" class="easyui-linkbutton" /></td>
+			<td>
+				<input id="input_iconCls" class="easyui-textbox" style="width:200px;height:29px;" data-options="prompt: '请选择图标!',
+					icons:[{
+						iconCls:'icon-search',
+						handler: function(e){
+							openSelectIconDialog('iconDlg', '${ctx}/common/icon/list/', 'selectIconCallback');
+						}
+					}]
+				">
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="iconDlg">
+</div>
+
+</body>
+</html>
+<script>
+<%include("/common/icon/_select_icon.js"){}%>
+function selectIconCallback(iconName){
+	$("#input_iconCls").textbox('setValue', iconName);
+	$("#icon_sample").linkbutton({iconCls:iconName});
+	$('#iconDlg').dialog('close');
+}
+</script>

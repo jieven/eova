@@ -42,7 +42,8 @@ public class AuthController extends Controller {
 	 */
 	public void getFunJson(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("select m.id,m.parentId,m.name,m.code,m.icon,m.indexNum,GROUP_CONCAT(b.name) btnName,GROUP_CONCAT(b.id) btnId");
+		// Mysql 5.1 需手工转换GROUP_CONCAT结果类型
+		sb.append("select m.id,m.parentId,m.name,m.code,m.icon,m.indexNum,GROUP_CONCAT(b.name) btnName,GROUP_CONCAT(CAST(b.id AS CHAR(11))) btnId");
 		sb.append(" from eova_menu m left join eova_button b on m.code = b.menuCode");
 		sb.append(" where FIND_IN_SET(m.id, queryChild(0)) group by m.code order by m.indexNum,b.indexNum");
 		

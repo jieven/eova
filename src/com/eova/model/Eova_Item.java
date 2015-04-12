@@ -23,6 +23,15 @@ public class Eova_Item extends BaseModel<Eova_Item> {
 	private static final long serialVersionUID = -7381270435240459528L;
 
 	public static final Eova_Item dao = new Eova_Item();
+	
+	public static final String TYPE_AUTO = "文本框";
+	public static final String TYPE_TEXT = "文本框";
+	public static final String TYPE_TEXTS = "文本域";
+	public static final String TYPE_EDIT = "编辑框";
+	public static final String TYPE_TIME = "时间框";
+	public static final String TYPE_FIND = "查找框";
+	public static final String TYPE_COMBO = "下拉框";
+	public static final String TYPE_CHECK = "复选框";
 
 	/**
 	 * 获取对象详情

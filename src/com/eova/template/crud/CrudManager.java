@@ -29,31 +29,34 @@ public class CrudManager {
 	/**
 	 * 通过Form构建数据
 	 * 
-	 * @param c Controller
-	 * @param eo 对象
+	 * @param c 控制器
 	 * @param eis 对象属性
 	 * @param record 主对象数据集
+	 * @param pkName 主键字段名
 	 * @return 其它对象数据集
 	 */
-	public static Map<String, Record> buildData(Controller c, List<Eova_Item> eis, Record record) {
+	public static Map<String, Record> buildData(Controller c, List<Eova_Item> eis, Record record, String pkName) {
 		Map<String, Record> reMap = new HashMap<String, Record>();
 		// 获取字段当前的值
 		for (Eova_Item item : eis) {
+			// 控件类型
+			String type = item.getStr("type");
 			// 字段名
 			String key = item.getStr("en");
-			// 获当前字段更新后的值
-			String value = c.getPara(key);
+			// 获当前字段更新后的值,默认空值
+			String value = c.getPara(key, "");
+			
+			// 新增跳过自增长字段(新增时为空)
+			if (xx.isEmpty(value) && type.equals(Eova_Item.TYPE_AUTO)) {
+				continue;
+			}
 			// 复选框需要特转换值
-			if (item.getStr("type").equals("复选框")) {
+			if (type.equals(Eova_Item.TYPE_CHECK)) {
 				if (xx.isEmpty(value)) {
 					value = "0";
 				} else {
 					value = "1";
 				}
-			}
-			// 空字段不维护(新增直接跳过主键)
-			if (xx.isEmpty(value)) {
-				continue;
 			}
 
 			// 当前字段的持久化对象
@@ -96,7 +99,6 @@ public class CrudManager {
 			// 保存数据到对应的表
 			Db.use(eo.getStr("dataSource")).save(table, pkName, re);
 		}
-
 	}
 
 	/**
@@ -147,41 +149,4 @@ public class CrudManager {
 		return " order by " + sort + ' ' + order;
 	}
 
-	/**
-	 * 获取条件
-	 * 
-	 * @param c Controller
-	 * @param crud VO
-	 * @param parmList 条件值集合
-	 * @return
-	 */
-	// @Deprecated
-	// public static String getWhere(Controller c, Crud crud, List<String> parmList) {
-	// String where = "";
-	//
-	// boolean isWhere = true;
-	// for (int i = 0; i < crud.getItemList().size(); i++) {
-	//
-	// // 给查询表单添加前缀，防止和系统级别字段重名
-	// String key = crud.getItemList().get(i).getStr("en");
-	// String value = c.getPara(PageConst.QUERY + key, "").trim();
-	// if (!value.equals("")) {
-	// if (isWhere) {
-	// where += " where 1=1 ";
-	// isWhere = false;
-	// }
-	// if (crud.getItemList().get(i).getStr("dataType").equals(TemplateConfig.DATATYPE_STRING)) {
-	// where += "and " + key + " like ? ";
-	// parmList.add('%' + value + '%');
-	// }
-	// if (crud.getItemList().get(i).getStr("dataType").equals(TemplateConfig.DATATYPE_NUMBER)) {
-	// where += "and " + key + " = ? ";
-	// parmList.add(value);
-	// }
-	// // 保持条件值
-	// crud.getItemList().get(i).put("value", value);
-	// }
-	// }
-	// return where;
-	// }
 }

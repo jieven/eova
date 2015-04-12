@@ -64,7 +64,7 @@ var eova_iconDialog = function(input, span) {
 				window.focus();
 			}
 		} ]
-	});
+	}, 572, 390);
 };
 
 // Find 查询框
