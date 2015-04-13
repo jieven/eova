@@ -285,7 +285,7 @@ public class MetaDataController extends Controller {
 		} else if ( length > 200) {
 			return Eova_Item.TYPE_TEXTS;
 		} else if ( length > 1000) {
-			return Eova_Item.TYPE_AUTO;
+			return Eova_Item.TYPE_EDIT;
 		} else {
 			// 默认都是文本框
 			return Eova_Item.TYPE_TEXT;
