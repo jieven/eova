@@ -271,7 +271,7 @@ public class MetaDataController extends Controller {
 	 * @param re
 	 * @return
 	 */
-	private static String getType(Record re) {
+	private String getType(Record re) {
 		Integer length = xx.toInt(re.getInt("length"), 0) ;
 		
 		if (re.getStr("DATA_TYPE").contains("time")) {
