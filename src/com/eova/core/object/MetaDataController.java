@@ -223,8 +223,12 @@ public class MetaDataController extends Controller {
 			if (xx.isEmpty(re.getStr("valueExp"))) {
 				re.set("valueExp", "");
 			}
+			
+			// 移除不需要的VO字段
 			re.remove("COLUMN_KEY");
 			re.remove("DATA_TYPE");
+			re.remove("length");
+			
 			Db.use(xx.DS_EOVA).save("eova_item", re);
 		}
 
@@ -272,7 +276,7 @@ public class MetaDataController extends Controller {
 	 * @return
 	 */
 	private String getType(Record re) {
-		Integer length = xx.toInt(re.getInt("length"), 0) ;
+		long length = xx.toLong(re.getStr("length"), 0);
 		
 		if (re.getStr("DATA_TYPE").contains("time")) {
 			return Eova_Item.TYPE_TIME;
