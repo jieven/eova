@@ -24,7 +24,7 @@ public class Eova_Item extends BaseModel<Eova_Item> {
 
 	public static final Eova_Item dao = new Eova_Item();
 	
-	public static final String TYPE_AUTO = "文本框";
+	public static final String TYPE_AUTO = "自增框";
 	public static final String TYPE_TEXT = "文本框";
 	public static final String TYPE_TEXTS = "文本域";
 	public static final String TYPE_EDIT = "编辑框";
