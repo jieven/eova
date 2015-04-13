@@ -197,7 +197,7 @@ public class MetaDataController extends Controller {
 		// 查询元字段
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT COLUMN_NAME en,COLUMN_COMMENT cn,ORDINAL_POSITION indexNum,COLUMN_KEY,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH length");
-		sb.append("if(EXTRA='auto_increment','1','0') isAuto,");
+		sb.append(" if(EXTRA='auto_increment','1','0') isAuto,");
 		sb.append(" if(IS_NULLABLE='YES','1','0') isNotNull,COLUMN_DEFAULT valueExp");
 		sb.append(" FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? and");
 		sb.append(" TABLE_NAME = ? ORDER BY ORDINAL_POSITION;");
@@ -271,10 +271,10 @@ public class MetaDataController extends Controller {
 	 * @param re
 	 * @return
 	 */
-	private String getType(Record re) {
+	private static String getType(Record re) {
 		Integer length = xx.toInt(re.getInt("length"), 0) ;
 		
-		if (re.getStr("DATA_TYPE").indexOf("time") != -1) {
+		if (re.getStr("DATA_TYPE").contains("time")) {
 			return Eova_Item.TYPE_TIME;
 		} else if (re.getStr("isAuto").equals("1")) {
 			return Eova_Item.TYPE_AUTO;
@@ -287,5 +287,5 @@ public class MetaDataController extends Controller {
 			return Eova_Item.TYPE_TEXT;
 		}
 	}
-
+	
 }
