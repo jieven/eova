@@ -196,7 +196,7 @@ public class MetaDataController extends Controller {
 
 		// 查询元字段
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT COLUMN_NAME en,COLUMN_COMMENT cn,ORDINAL_POSITION indexNum,COLUMN_KEY,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH length");
+		sb.append("SELECT COLUMN_NAME en,COLUMN_COMMENT cn,ORDINAL_POSITION indexNum,COLUMN_KEY,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH length,");
 		sb.append(" if(EXTRA='auto_increment','1','0') isAuto,");
 		sb.append(" if(IS_NULLABLE='YES','1','0') isNotNull,COLUMN_DEFAULT valueExp");
 		sb.append(" FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? and");
