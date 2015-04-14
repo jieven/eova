@@ -276,7 +276,7 @@ public class MetaDataController extends Controller {
 	 * @return
 	 */
 	private String getType(Record re) {
-		long length = xx.toLong(re.getStr("length"), 0);
+		long length = xx.toLong(re.get("length"), 0);
 		
 		if (re.getStr("DATA_TYPE").contains("time")) {
 			return Eova_Item.TYPE_TIME;
