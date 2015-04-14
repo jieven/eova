@@ -196,8 +196,8 @@ public class MetaDataController extends Controller {
 
 		// 查询元字段
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT COLUMN_NAME en,COLUMN_COMMENT cn,ORDINAL_POSITION indexNum,COLUMN_KEY,DATA_TYPE,");
-		sb.append("if(EXTRA='auto_increment','1','0') isAuto,");
+		sb.append("SELECT COLUMN_NAME en,COLUMN_COMMENT cn,ORDINAL_POSITION indexNum,COLUMN_KEY,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH length,");
+		sb.append(" if(EXTRA='auto_increment','1','0') isAuto,");
 		sb.append(" if(IS_NULLABLE='YES','1','0') isNotNull,COLUMN_DEFAULT valueExp");
 		sb.append(" FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? and");
 		sb.append(" TABLE_NAME = ? ORDER BY ORDINAL_POSITION;");
@@ -223,8 +223,12 @@ public class MetaDataController extends Controller {
 			if (xx.isEmpty(re.getStr("valueExp"))) {
 				re.set("valueExp", "");
 			}
+			
+			// 移除不需要的VO字段
 			re.remove("COLUMN_KEY");
 			re.remove("DATA_TYPE");
+			re.remove("length");
+			
 			Db.use(xx.DS_EOVA).save("eova_item", re);
 		}
 
@@ -272,14 +276,20 @@ public class MetaDataController extends Controller {
 	 * @return
 	 */
 	private String getType(Record re) {
-		if (re.getStr("DATA_TYPE").indexOf("time") != -1) {
+		long length = xx.toLong(re.get("length"), 0);
+		
+		if (re.getStr("DATA_TYPE").contains("time")) {
 			return Eova_Item.TYPE_TIME;
 		} else if (re.getStr("isAuto").equals("1")) {
 			return Eova_Item.TYPE_AUTO;
+		} else if ( length > 200) {
+			return Eova_Item.TYPE_TEXTS;
+		} else if ( length > 1000) {
+			return Eova_Item.TYPE_EDIT;
 		} else {
 			// 默认都是文本框
 			return Eova_Item.TYPE_TEXT;
 		}
 	}
-
+	
 }
