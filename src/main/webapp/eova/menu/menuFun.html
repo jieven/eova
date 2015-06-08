@@ -1,0 +1,53 @@
+<%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
+
+<form id="myForm" method="post" class="form">
+	<table class="table" style="width: 100%;">
+		<tr>
+			<th style="width: 200px;">是否允许新增</th>
+			<td><#check id="isAdd" name="isAdd" value="${isAdd}" /></td>
+		</tr>
+		<tr>
+			<th>是否允许修改</th>
+			<td><#check id="isUpdate" name="isUpdate" value="${isUpdate}" /></td>
+		</tr>
+		<tr>
+			<th>是否允许删除</th>
+			<td><#check id="isDelete" name="isDelete" value="${isDelete}" /></td>
+		</tr>
+		<tr>
+			<th>是否允许导入</th>
+			<td><#check id="isImport" name="isImport" value="${isImport}" /></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+var fm = $('#myForm');
+var submitNow = function($dialog, $grid, $pjq) {
+	var url = "/menu/menuFun/${menuCode}";
+	$.post(url, sy.serializeObject(fm), function(result) {
+		if (result.success) {
+			slideMsg("操作成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+var submitForm = function($dialog, $grid, $pjq) {
+	if (fm.form('validate')) {
+		submitNow($dialog, $grid, $pjq);
+	}
+};
+</script>
+
+
+<%}%>

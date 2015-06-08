@@ -1,0 +1,15 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-zoom',plain:true"
+onclick="crud_query()">
+	快速查询
+</a>
+<script type="text/javascript">
+var crud_query = function(){
+	$('#grid').datagrid('load',sy.serializeObject($('#queryForm')));
+};
+
+$('#queryForm').keydown(function(event){
+	if (event.keyCode == 13){
+		crud_query();
+	}
+});
+</script>

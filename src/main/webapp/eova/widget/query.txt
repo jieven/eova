@@ -1,0 +1,13 @@
+<form id="queryForm">
+	<%//输出快速查询条件%>
+	<%for(item in itemList){%>
+		<%if(item.isQuery){%>
+		<div class="eova-query">
+			<div class="field">
+				<div class="lbl" title="${item.cn}[${item.en}]">${item.cn}:111</div>
+				<div><input name="query_${item.en}" value="${item.value!}" style="width: 135px;border: 1px solid #95B8E7" /></div>
+			</div>
+		</div>
+		<%}%>
+	<%}%>
+</form>

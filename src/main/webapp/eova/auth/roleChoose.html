@@ -1,0 +1,151 @@
+<%layout("/eova/layout/default.html",{'title' : 'CRUD'}){%>
+<script type="text/javascript" src="/eova/template/crud/crud.js"></script>
+
+<body class="easyui-layout">
+	<div id="toolbar" style="display: none;">
+		<table>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkAll()">
+									全选
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkAllNo()">
+									反选
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkKey('查询')">
+									选择所有查询
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkKey('新增')">
+									选择所有新增
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkKey('修改')">
+									选择所有修改
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-groupedit',plain:true"
+								onclick="checkKey('删除')">
+									选择所有删除
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<table id="roleMenu"></table>
+</body>
+
+<script>
+// 全选
+var checkAll = function(){
+	$('input:checkbox').each(function() {
+		this.checked = true;
+	});
+};
+// 反选
+var checkAllNo = function(){
+	$('input:checkbox').each(function() {
+		if (this.checked) {
+			this.checked = false;
+		} else {
+		    this.checked = true;
+		}
+	});
+};
+// 选择目标所有
+var checkKey = function(key){
+	$('input:checkbox[fun="'+ key +'"]').each(function() {
+		 this.checked = true;
+	});
+};
+
+$(function() {
+	$("#roleMenu").treegrid({
+        url: '/auth/getFunJson',
+        method: 'get',
+        rownumbers: true,
+        idField: 'id',
+        treeField: 'name',
+        fit: true,
+        toolbar: '#toolbar',
+        columns: [[{
+            field: 'name',
+            title: '菜单',
+            width: '180'
+        },
+        {
+            field: 'btnName',
+            title: '功能',
+            width: '800',
+            formatter: function(value, row, field) {
+                if (value) {
+                    var names = value.split(",");
+                    var ids = row['btnId'].split(",");
+                    var s = "";
+                    for (i = 0; i < names.length; i++) {
+                        s += '<label><input type="checkbox" id="'+ ids[i] +'" value="' + ids[i] + '" name="funBtn" fun="'+ names[i] +'">' + names[i] + '</label>&nbsp;&nbsp;&nbsp;';
+                    }
+                }
+                return s;
+            }
+        }]],
+        onLoadSuccess : function (){
+        	// 功能加载完成之后加载已分配功能
+        	$.ajax({
+                url: '/auth/getRoleFunJson/${rid}',
+                dataType: 'json',
+                success: function(data) {
+                	console.log("成功...");
+                    // 将返回数据转换为JSON对象
+                	var list = eval(data);
+                	for(i = 0; i < list.length; i++){
+                		var x = list[i];
+                		$('#'+ x.bid).attr('checked', true);
+                	}
+                }
+            });
+        }
+    })
+});
+// 获取所有选中ID
+var getCheckIds = function getChecked(){
+	// 获取选中和不确定节点
+    var ids = '';
+	$("input:checked").each(function() {
+		if (ids != '') ids += ',';
+        ids += $(this).val();
+	});
+    return ids;
+}
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+var submitForm = function($dialog, $grid, $pjq) {
+	var url = "/auth/roleChoose/" + ${rid};
+	var o ={'checks': getCheckIds()};
+	$.post(url, o, function(result) {
+		if (result.success) {
+			slideMsg("操作成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+</script>
+
+<%}%>

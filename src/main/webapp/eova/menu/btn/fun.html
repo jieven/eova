@@ -1,0 +1,13 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cogedit',plain:true"
+onclick="eova_importMetaData()">
+	基本功能设置
+</a>
+<script type="text/javascript">
+var eova_importMetaData = function() {
+	var grid = $('#grid');
+	var row = grid.datagrid('getSelected');
+	if (isSelected(row)){
+		loadDialog(grid, '基本功能设置', '/menu/toMenuFun/' + row.code );
+	}
+};
+</script>

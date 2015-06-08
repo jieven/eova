@@ -1,0 +1,34 @@
+<%layout("/eova/layout/default.html",{'title' : 'CRUD'}){%>
+<script type="text/javascript" src="/eova/template/crud/crud.js"></script>
+
+<body class="easyui-layout">
+	<%if(isTrue(isQuery!)){%>
+	<div id="layoutNorth" region="north" title="快速查询" split="true">
+    <#query id="queryForm" items="${itemList}" />
+    </div>
+	<%}%>
+    <div data-options="region:'center',fit:false,border:false">
+		<div id="toolbar" style="display: none;">
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<%if(isQuery){%>
+								<td><%include("/eova/template/crud/btn/query.html"){}%></td>
+								<%}%>
+								<%// 自定义功能按钮%>
+								<%for(btn in btnList){%>
+								<td><%include(btn.ui){}%></td>
+								<%}%>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<#grid id="grid" obj="${obj}" items="${itemList}" cellEdit="add,update,delete" />
+	</div>
+</body>
+
+<%}%>

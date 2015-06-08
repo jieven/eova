@@ -1,0 +1,10 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-databasecopy',plain:true"
+onclick="eova_importMetaData()">
+	导入元数据
+</a>
+<script type="text/javascript">
+var eova_importMetaData = function() {
+	var grid = $('#grid');
+	loadDialog(grid, '导入元数据', '/metadata/toImport');
+};
+</script>

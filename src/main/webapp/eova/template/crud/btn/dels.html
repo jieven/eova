@@ -1,0 +1,20 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-pagedelete',plain:true"
+onclick="crud_deletes()">
+	删除
+</a>
+<script type="text/javascript">
+var crud_deletes = function() {
+	var grid = $('#grid');
+	var array = grid.datagrid('getSelections');
+	var id2 = "";
+	var num = array.length; //获取要删除信息的个数
+	if (num == "0") {
+		slideMsg("请选择一条记录！");
+		return;
+	}
+	for (var i = 0; i < array.length; i++) { //组成一个字符串，ID主键用逗号隔开  
+		id2 = id2 + array[i].pk_val + ",";
+	}
+	confirmDel(grid, '/singleGrid/delete/${menu.code}-' + id2);
+};
+</script>

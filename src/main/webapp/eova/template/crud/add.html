@@ -1,0 +1,34 @@
+<%layout("/eova/layout/default.html",{'title' : '新增' + obj.name }){%>
+
+<script type="text/javascript">
+	var slideMsg = function(str,$pjq){
+		$pjq.messager.show({
+	        title:'操作提示',
+	        msg:str,
+	        timeout:1500,
+	        showType:'slide'
+	    });
+	};
+	var submitNow = function($dialog, $grid, $pjq) {
+		var url = "/singleGrid/add/${menu.code}";
+		$.post(url, sy.serializeObject($('#addForm')), function(result) {
+			if (result.success) {
+				//$pjq.messager.alert('提示', result.msg, 'info');
+				slideMsg("新增${obj.Name}成功！", $pjq);
+				$grid.datagrid('load');
+				$dialog.dialog('destroy');
+			} else {
+				$pjq.messager.alert('提示', result.msg, 'error');
+			}
+		}, 'json');
+	};
+	var submitForm = function($dialog, $grid, $pjq) {
+		if ($('#addForm').form('validate')) {
+			submitNow($dialog, $grid, $pjq);
+		}
+	};
+</script>
+<body>
+<#form id="addForm" name="addForm" items="${itemList}" />
+</body>
+<%}%>

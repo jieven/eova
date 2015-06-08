@@ -1,0 +1,132 @@
+<%layout("/eova/layout/default.html",{'title' : 'Portal'}){%>
+
+<style type="text/css">
+	.title{
+		font-size:16px;
+		font-weight:bold;
+		padding:20px 10px;
+		background:#eee;
+		overflow:hidden;
+		border-bottom:1px solid #ccc;
+	}
+	.t-list{
+		padding:5px;
+	}
+	a {
+		color:blue;
+		text-decoration:underline;
+	}
+</style>
+
+<script>
+	$(function(){
+		$('#pp').portal({
+			border:false,
+			fit:true
+		});
+// 		add();
+	});
+// 	function add(){
+// 		for(var i=1; i<3; i++){
+// 			var p = $('<div/>').appendTo('body');
+// 			p.panel({
+// 				title:'Title'+i,
+// 				content:'<div style="padding:5px;">Content'+(i+1)+'</div>',
+// 				height:100,
+// 				closable:true,
+// 				collapsible:true
+// 			});
+// 			$('#pp').portal('add', {
+// 				panel:p,
+// 				columnIndex:i
+// 			});
+// 		}
+// 		$('#pp').portal('resize');
+// 	}
+// 	function remove(){
+// 		$('#pp').portal('remove',$('#pgrid'));
+// 		$('#pp').portal('resize');
+// 	}
+</script>
+
+<body class="easyui-layout">
+
+	<div region="center" border="false">
+		<div id="pp" style="position:relative">
+			<div style="width:15%;">
+			    <div title="互动交流" closable="true" style="height:430px;padding:5px;">
+					<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=ceaa329c68a2288d5c8aa65ece30d28844d9bc640b88043d23287a2256198227"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="EOVA快速开发" title="EOVA快速开发"></a>
+					<br>
+					进行快速开发,走向人生巅峰！<br>
+					# <a href="http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf">Eova文档</a><br>
+					# <a href="http://note.youdao.com/share/?id=9b998a7112e0d32f669b689088b4c87b&type=note">新人必看</a><br>
+					<br>
+					Eova的起源：<br>
+					企业在项目研发过程中，发现数据管理系统研发成本高，研发周期长，维护成本高。所以很多企业纷纷自主研发二次开发平台作为公司项目的基础平台，以解决上述问题，降低成本。<br>		
+					<br>
+					作者简介：
+					<br>
+					快速开发布道师！<br>
+					<br>
+					2009 金鹏 企业CRM<br>
+					2010 3GT 网络游戏<br>
+					2012 CCS 电信OSS<br>
+					2014  云游 自主创业<br>
+					2015 DJB 互联网保险<br>
+					<br>
+					Eova核心成员招募：<br>
+					#1年以上JFinal开发经验<br>
+					#2年以上工作经验<br>
+					#热爱开源，擅长沟通，认可Eova<br>
+					<br>
+				</div>
+			</div>
+			<div style="width:32%;">
+			    <div title="更新日志" closable="true" style="height:430px;padding:5px;">
+<pre>
+Eova V1.2
+-----------------------
+[新增]Eova演示功能
+[新增]Grid右键导出所有数据为Excel
+[新增]SingleGrid业务模版新增Excel导入数据功能
+[新增]EovaUI新增复选框实现，并支持Grid Cell Edit
+[新增]SingleGrid业务模版AOP新增Controller参数
+[新增]字段管理允许行内编辑，提高字段管理操作效率
+[新增]新增菜单自动授权给超管角色并可配置
+
+[修复]移除MySql递归函数以兼容低版本
+[修复]Grid Cell Edit 下拉框数据编辑异常改
+[修复]对象管理-过滤条件不生效的问题
+[修复]View重构,可正常CRUD
+[修复]Grid Cell Edit 重复加载数据问题
+[修复]Query组件回车事件触发源改成queryForm
+[修复]Query组件回车事件触发源改成queryForm
+[修复]Grid Cell Edit 下拉框不显示数据
+[修复]导入数据Table中存在View数据
+
+[优化]Grid右键保存数据异步处理
+[优化]改造EasyUI datagrid以兼容Eova控件
+[优化]新增菜单默认开放CRUD权限(by 念小山)
+[优化]Grid被表达式转换为中文的列进行统一备份列
+[优化]Grid组件服务端实现拆分成独立的模块
+[优化]字段管理控件类型改为下拉框选择
+[优化]文本域默认宽度调整
+[优化]新增菜单控件优化
+[优化]自定义Tag优化
+[优化]转换表达式值算法(by 陈清越)
+
+大量代码重构和性能优化，屏蔽冗余输出。
+</pre>
+				</div>
+			</div>
+			<div style="width:50%;">
+				<div title="EOVA简介" closable="true" style="height:430px;padding:5px;">
+					<div class="note-content"><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">大家好我是Java的表弟Eova，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">中文名:伊哇 </span><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2">:)</font></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2"><br></font></span></div><div style="background-color: rgb(255, 255, 255);">我的全称是——Easy Object View Admin(<span style="background-color:rgb(255, 255, 255);">简单对象视图管理系统</span>)</div><div style="background-color: rgb(255, 255, 255);">Easy-----简单，方便，快速，快速开发 So Easy</div><div style="background-color: rgb(255, 255, 255);">Object--万物皆对象，以元数据驱动业务</div><div style="background-color: rgb(255, 255, 255);">View----各种功能界面</div><div style="background-color: rgb(255, 255, 255);">Admin--信息管理和维护</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);"><br></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">我的个性：</span></div><div style="background-color: rgb(255, 255, 255);">0xx01：<span style="line-height: 1.5; background-color: rgb(255, 255, 255);">以出自</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">KingDee</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">的元数据驱动业务为核心思想</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx02：使用了极速框架JFinal</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">，站在巨人的肩膀上</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx03：套上</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">了众所周知的EasyUI，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">五官端正，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">不卑不亢</span></div><div style="background-color: rgb(255, 255, 255);"><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">0xx04：使用</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">Beetl粘合JFinal-EasyUI，融为一体</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx05：采用了最流行的MySQL，术业专攻</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx06：可以一键完成CRUD，但不仅限于CRUD</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx07：灵动迅捷，多快好省，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">不影响你你实现任何功能</span></div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><div style="background-color: rgb(255, 255, 255);">我可以快速完成开发任务，信手拈来</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">我会10大控件,4大组件,N种业务模型</span></div><div style="background-color: rgb(255, 255, 255);">常见的增删改查、条件查询、数据校验、前后置业务处理、批量操作、权限管理...通通能帮你快速搞定</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);">更多高级功能等你来玩，开发不再苦逼，生活由此美丽！</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><br></div></div></div>
+				</div>				
+			</div>
+			
+		</div>
+	</div>
+</body>
+
+<<%}%>

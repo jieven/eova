@@ -1,0 +1,36 @@
+<%layout("/eova/layout/default.html",{'title' : '修改' + obj.name }){%>
+
+<script type="text/javascript">
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+var submitNow = function($dialog, $grid, $pjq) {
+	var url = "/singleGrid/update/${menu.code}";
+	//console.log(url);
+	$.post(url, sy.serializeObject($('#updateForm')), function(result) {
+		console.log(result);
+		if (result.success) {
+			slideMsg("修改${obj.Name}成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			console.log('失败');
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+var submitForm = function($dialog, $grid, $pjq) {
+	if ($.html5Validate.isAllpass($('#updateForm'))) {
+		submitNow($dialog, $grid, $pjq);
+	}
+};
+</script>
+<body>
+<#form id="updateForm" name="updateForm" items="${itemList}" isUpdate="true" />
+</body>
+<%}%>

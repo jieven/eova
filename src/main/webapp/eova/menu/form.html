@@ -1,0 +1,151 @@
+<%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
+
+<form id="myForm" method="post" class="form">
+	<fieldset>
+		<legend>菜单信息</legend>
+		<table class="table" style="width: 100%;">
+			<tr>
+				<th style="width:110px;">父级</th>
+				<td><#find id="pid" name="parentId" code="eova_menu_code" field="parentId" value="${menu.parentId!}" isNoN="true" /></td>
+				<th style="width:110px;">图标</th>
+				<td><#icon id="icon" name="icon" isNoN="true" value="${menu.icon!}" /></td>
+			</tr>
+			<tr>
+				<th>名称</th>
+				<td><#text id="name" name="name" value="${menu.name!}" isNoN="true" /></td>
+				<th>编码</th>
+				<td><#text id="code" name="code" value="${menu.code!}" isNoN="true" /></td>
+			</tr>
+			<tr>
+				<th>序号</th>
+				<td><#text id="index" name="indexNum" value="${menu.indexNum!1}" isNoN="true" /></td>
+				<th>业务类型</th>
+				<td>
+				<select class="easyui-combobox" id="type" name="type" style="width: 179px;" isNoN="true" data-options="editable:false, onChange:typeChange">
+					<option value="dir">父目录菜单[dir]</option>
+					<option value="diy">自定义业务[diy]</option>
+					<option value="singleGrid" selected="selected">单表[singleGrid]</option>
+				</select>
+				</td>
+			</tr>
+			<tr id="trUrl" style="display: none;">
+				<th>业务URL</th>
+				<td colspan="3"><#text id="url" name="url" width="501" height="20" value="${menu.url!}" isNoN="false" htmlattrs="placeholder='请输入自定义功能的访问URL'" /></td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset id="singleGrid">
+		<legend>业务模版配置(单表)</legend>
+		<table class="table" style="width: 100%;">
+			<tr>
+				<th style="width:110px;">元对象</th>
+				<td><#find id="singleGrid_Object" name="objectCode" code="eova_object" field="code" exp="select code 编码,code 编码,name 名称 from eova_object where 1=1;ds=eova" isNoN="false" /></td>
+			</tr>
+			<tr>
+				<th>业务拦截器</th>
+				<td><#texts id="singleGrid_Interceptor" name="bizIntercept" value="${menu.bizIntercept!}" style="width:90%;height:50px;" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset id="twoGrid" style="display: none;">
+		<legend>业务模版配置(主子表)</legend>
+		<table class="table" style="width: 100%;">
+			<tr>
+				<th>主元对象</th>
+				<td><#text id="name" name="name" /></td>
+				<th>关联主字段</th>
+				<td><#text id="name" name="name" /></td>
+			</tr>
+			<tr>
+				<th>子元对象</th>
+				<td><#text id="name" name="name" /></td>
+				<th>关联子字段</th>
+				<td><#text id="name" name="name" /></td>
+			</tr>
+			<tr>
+				<th>业务拦截器</th>
+				<td colspan="3"><#text id="twoGrid_Interceptor" name="diyIntercept" width="500" height="20" value="" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
+			</tr>
+		</table>
+	</fieldset>
+</form>
+<script type="text/javascript">
+$(function(){
+	console.log('init');
+});
+
+function typeChange(newValue, oldValue){
+	// 切换显示模版配置项
+	if(newValue == 'diy'){
+		$('#trUrl').show();
+	} else {
+		$('#trUrl').hide();
+	}
+
+	$('#' + newValue).show();
+	$('#' + oldValue).hide();
+}
+
+var fm = $('#myForm');
+
+var submitForm = function($dialog, $grid, $pjq) {
+	buildUrl($pjq);
+	if (fm.form('validate')) {
+		submitNow($dialog, $grid, $pjq);
+	}
+};
+
+function buildUrl($pjq){
+	
+	var type = $('#type').combo('getValue');
+	var $singleGrid_Object = $('#singleGrid_Object');
+	var $url = $('#url');
+	
+	// 如果是目录直接返回
+	if(type == 'dir'){
+		return;
+	}
+	
+	// 自定义菜单
+	if(type == 'diy'){
+		// url 不能为空
+		if($url.val() == ''){
+			$pjq.messager.alert('提示', '请输入业务URL', 'error');
+			return;
+		}
+	}
+	
+	// 单表模版，如果元对象为空，则弹必填提示
+	if(type == 'singleGrid'){
+		// 元对象不能为空
+		if($singleGrid_Object.eovafind().getValue() == ''){
+			$pjq.messager.alert('提示', '请选择元对象', 'error');
+			return;
+		}
+	}
+}
+
+function submitNow($dialog, $grid, $pjq) {
+	var url = "/menu/add";
+	$.post(url, sy.serializeObject(fm), function(result) {
+		if (result.success) {
+			slideMsg("添加菜单成功！", $pjq);
+			$grid.datagrid('load');
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+var slideMsg = function(str,$pjq){
+	$pjq.messager.show({
+        title:'操作提示',
+        msg:str,
+        timeout:1500,
+        showType:'slide'
+    });
+};
+</script>
+
+
+<%}%>
