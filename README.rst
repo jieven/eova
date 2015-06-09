@@ -1,3 +1,13 @@
+不想使用Maven可以手工下载部署：
+Eova相关下载：Jar Sql Static Project
+http://pan.baidu.com/s/1jGgonfo
+
+JFinal使用手册：
+http://www.jfinal.com/download?file=jfinal-1.8-manual.pdf
+
+Beetl使用手册：
+http://ibeetl.com/guide
+
 ===========================
 J2EE 快速开发平台 EOVA
 ===========================
