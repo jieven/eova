@@ -1,3 +1,9 @@
+不想使用Maven可以手工下载部署：
+------------------------
+#. Eova相关下载：Jar Sql Static Project http://pan.baidu.com/s/1jGgonfo
+#. JFinal使用手册：http://www.jfinal.com/download?file=jfinal-1.8-manual.pdf
+#. Beetl使用手册：http://ibeetl.com/guide
+
 ===========================
 J2EE 快速开发平台 EOVA
 ===========================
@@ -32,4 +38,4 @@ EOVA 为Eclipse工程,可直接Import
 
 **Eova快速开发QQ群欢迎您的加入: 424665115**
 
-EOVA文档: `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_ 
+EOVA文档: `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_

@@ -47,8 +47,8 @@ public class ExcelUtil {
 		}
 		row++;
 		// 写入数据行
-		for (; row < list.size(); row++) {
-			Record record = list.get(row);
+		for (int j=0; j < list.size(); j++,row++) {
+			Record record = list.get(j);
 			// 获取当前行数据
 			String[] values = getValues(items, record);
 			for (int i = 0; i < values.length; i++) {
