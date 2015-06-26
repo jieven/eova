@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jfinal.plugin.activerecord.Config;
 import com.jfinal.plugin.activerecord.DbKit;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,37 +25,27 @@ public class DBInfoUtil {
      */
     public static String getDbNameByConfigName(String configName) {
         String dbName = null;
+        Connection conn = null;
         try {
             Config config = DbKit.getConfig(configName);
             if (config == null) {
                 throw new SQLException(configName + " not started");
             }
-            dbName = config.getDataSource().getConnection().getCatalog();
+            conn = config.getDataSource().getConnection();
+            dbName = conn.getCatalog();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ignore) {
+                }
+            }
         }
         return dbName;
     }
 
-    /**
-     * 获取JDBC URL中的driverName
-     *
-     * @param configName
-     * @return driverName
-     */
-    public static String getDbDriverNameByConfigName(String configName) {
-        String driverName = null;
-        try {
-            Config config = DbKit.getConfig(configName);
-            if (config == null) {
-                throw new SQLException(configName + " not started");
-            }
-            driverName = config.getDataSource().getConnection().getMetaData().getDatabaseProductName();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return driverName;
-    }
 
     /**
      * 获取JDBC URL中的driverName
@@ -69,12 +56,14 @@ public class DBInfoUtil {
     public static List<String> getTableNamesByConfigName(String configName, String type) {
         List<String> tables = new ArrayList<String>();
         ResultSet rs = null;
+        Connection conn = null;
         try {
             Config config = DbKit.getConfig(configName);
             if (config == null) {
                 throw new SQLException(configName + " not started");
             }
-            DatabaseMetaData md = config.getDataSource().getConnection().getMetaData();
+            conn = config.getDataSource().getConnection();
+            DatabaseMetaData md = conn.getMetaData();
             rs = md.getTables(null, null, "%", new String[]{type.toUpperCase()});
             while (rs.next()) {
                 tables.add(rs.getString("TABLE_NAME"));
@@ -86,6 +75,12 @@ public class DBInfoUtil {
             if (rs != null) {
                 try {
                     rs.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
                 } catch (SQLException ignore) {
                 }
             }
@@ -104,12 +99,14 @@ public class DBInfoUtil {
         // json数组
         JSONArray array = new JSONArray();
         ResultSet rs = null;
+        Connection conn = null;
         try {
             Config config = DbKit.getConfig(configName);
             if (config == null) {
                 throw new SQLException(configName + " not started");
             }
-            DatabaseMetaData md = config.getDataSource().getConnection().getMetaData();
+            conn = config.getDataSource().getConnection();
+            DatabaseMetaData md = conn.getMetaData();
             rs = md.getColumns(null, null, tableNamePattern, null);
             // 获取列数
             ResultSetMetaData metaData = rs.getMetaData();
@@ -131,6 +128,12 @@ public class DBInfoUtil {
             if (rs != null) {
                 try {
                     rs.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
                 } catch (SQLException ignore) {
                 }
             }
