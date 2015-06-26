@@ -23,9 +23,6 @@ public class EovaConst {
 	/** EOVA 数据源名称 **/
 	public static final String DS_EOVA = "eova";
 
-	/** DB名称列表 **/
-	public static HashMap<String, String> DBMAP = new HashMap<String, String>();
-	
 	/** 基本通用功能-新增 **/
 	public static final String FUN_QUERY = "查询";
 	/** 基本通用功能-新增 **/
