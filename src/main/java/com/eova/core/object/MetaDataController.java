@@ -6,11 +6,16 @@
  */
 package com.eova.core.object;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eova.common.Easy;
-import com.eova.common.utils.db.DBInfoUtil;
 import com.eova.common.utils.xx;
+import com.eova.common.utils.db.DsUtil;
 import com.eova.engine.EovaExp;
 import com.eova.model.MetaItem;
 import com.eova.model.MetaObject;
@@ -20,13 +25,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.activerecord.TableMapping;
 import com.jfinal.plugin.activerecord.tx.Tx;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 元数据操作 MetaObject+MetaItem
@@ -44,8 +43,8 @@ public class MetaDataController extends Controller {
         Map<String, String> dbMap = new HashMap<String, String>();
         String eova = xx.DS_EOVA;
         String main = xx.DS_MAIN;
-        dbMap.put(eova, DBInfoUtil.getDbNameByConfigName(eova));
-        dbMap.put(main, DBInfoUtil.getDbNameByConfigName(main));
+        dbMap.put(eova, DsUtil.getDbNameByConfigName(eova));
+        dbMap.put(main, DsUtil.getDbNameByConfigName(main));
         setAttr("dbMap", dbMap);
         render("/eova/metadata/importMetaData.html");
     }
@@ -82,7 +81,7 @@ public class MetaDataController extends Controller {
         // 获取数据库
         String ds = getPara(0);
         String type = getPara(1);
-        List<String> tables = DBInfoUtil.getTableNamesByConfigName(ds, type);
+        List<String> tables = DsUtil.getTableNamesByConfigName(ds, type);
         JSONArray tableArray = new JSONArray();
         for (String tableName : tables) {
             JSONObject jsonObject = new JSONObject();
@@ -100,35 +99,52 @@ public class MetaDataController extends Controller {
     public void importData() {
 
         String ds = getPara("ds");
-        String db = DBInfoUtil.getDbNameByConfigName(ds);
         String type = getPara("type");
         String table = getPara("table");
         String name = getPara("name");
         String code = getPara("code");
 
-        String pkName = "";
-        JSONArray list = DBInfoUtil.getColumnInfoByConfigName(ds, db, null, table);
+		JSONArray list = DsUtil.getColumnInfoByConfigName(ds, table);
 
-        // 导入元字段
+		// 导入元字段
+		importMetaField(code, list);
+
+		// 导入视图默认第一列为主键
+		String pkName = DsUtil.getPkName(ds, table);
+		if (xx.isEmpty(pkName)) {
+			pkName = list.getJSONObject(0).getString("en");
+		}
+
+		// 导入元对象
+		importMetaObject(ds, type, table, name, code, pkName);
+
+		renderJson(new Easy());
+	}
+
+	// 导入元字段
+	private void importMetaField(String code, JSONArray list) {
         for (int i = 0; i < list.size(); i++) {
-            JSONObject jo = list.getJSONObject(i);
+            JSONObject o = list.getJSONObject(i);
             Record re = new Record();
-            re.set("en", jo.getString("COLUMN_NAME"));
-            re.set("cn", jo.getString("COLUMN_COMMENT"));
-            re.set("indexNum", jo.getIntValue("ORDINAL_POSITION"));
-            re.set("length", jo.getIntValue("COLUMN_SIZE"));
-            re.set("isAuto", "YES".equalsIgnoreCase(jo.getString("IS_AUTOINCREMENT")) ? "1" : "0");
-            re.set("isNotNull", "YES".equalsIgnoreCase(jo.getString("IS_NULLABLE")) ? "1" : "0");
-            re.set("COLUMN_KEY", jo.getString("COLUMN_KEY"));
-            re.set("DATA_TYPE", jo.getString("TYPE_NAME"));
-            re.set("valueExp", jo.getString("REMARKS"));
+            re.set("en", o.getString("COLUMN_NAME"));
+			re.set("cn", o.getString("REMARKS"));
+            re.set("indexNum", o.getIntValue("ORDINAL_POSITION"));
+            re.set("isNotNull", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? "1" : "0");
 
-            // 对象编码
-            re.set("objectCode", code);
-            // 数据类型
-            re.set("dataType", getDataType(re.getStr("DATA_TYPE")));
+			// 是否自增
+			boolean isAuto = "YES".equalsIgnoreCase(o.getString("IS_AUTOINCREMENT")) ? true : false;
+			re.set("isAuto", isAuto);
+			// 字段类型
+			String typeName = o.getString("TYPE_NAME");
+			re.set("dataType", getDataType(typeName));
+			// 字段长度
+			int size = o.getIntValue("COLUMN_SIZE");
+			// 默认值
+			String def = o.getString("COLUMN_DEF");
+			re.set("valueExp", def);
+
             // 控件类型
-            re.set("type", getType(re));
+			re.set("type", getFormType(isAuto, typeName, size));
             // 将注释作为CN,若为空使用EN
             if (xx.isEmpty(re.getStr("cn"))) {
                 re.set("cn", re.getStr("en"));
@@ -137,26 +153,21 @@ public class MetaDataController extends Controller {
             if (xx.isEmpty(re.getStr("valueExp"))) {
                 re.set("valueExp", "");
             }
-
-            // 移除不需要的VO字段
-            re.remove("COLUMN_KEY");
-            re.remove("DATA_TYPE");
-            re.remove("length");
+			// 对象编码
+			re.set("objectCode", code);
 
             Db.use(xx.DS_EOVA).save("eova_item", re);
         }
+	}
 
-        // 导入视图默认第一列为主键
-        //pkName = list.get(0).getStr("en");
-
-        // 导入元对象
-        MetaObject eo = new MetaObject();
+	// 导入元对象
+	private void importMetaObject(String ds, String type, String table, String name, String code, String pkName) {
+		MetaObject eo = new MetaObject();
         // 编码
         eo.set("code", code);
         // 名称
         eo.set("name", name);
         // 主键
-        pkName = TableMapping.me().getTable(eo.getClass()).getPrimaryKey();
         eo.set("pkName", pkName);
         // 数据源
         eo.set("dataSource", ds);
@@ -167,42 +178,40 @@ public class MetaDataController extends Controller {
             eo.set("view", table);
         }
         eo.save();
-
-        renderJson(new Easy());
-    }
+	}
 
     /**
-     * 转换数据类型
-     *
-     * @param type DB数据类型
-     * @return
-     */
-    private String getDataType(String type) {
-        if (type.indexOf("int") != -1) {
+	 * 转换数据类型
+	 * 
+	 * @param typeName DB数据类型
+	 * @return
+	 */
+	private String getDataType(String typeName) {
+		if (typeName.indexOf("int") != -1) {
             return TemplateConfig.DATATYPE_NUMBER;
-        } else if (type.indexOf("time") != -1) {
+		} else if (typeName.indexOf("time") != -1) {
             return TemplateConfig.DATATYPE_TIME;
         } else {
             return TemplateConfig.DATATYPE_STRING;
         }
     }
 
-    /**
-     * 获取控件类型
-     *
-     * @param re
-     * @return
-     */
-    private String getType(Record re) {
-        long length = xx.toLong(re.get("length"), 0);
-
-        if (re.getStr("DATA_TYPE").contains("time")) {
+	/**
+	 * 获取表单类型
+	 * 
+	 * @param isAuto 是否自增
+	 * @param typeName 类型
+	 * @param size 长度
+	 * @return
+	 */
+	private String getFormType(boolean isAuto, String typeName, int size) {
+		if (typeName.contains("time")) {
             return MetaItem.TYPE_TIME;
-        } else if (re.getStr("isAuto").equals("1")) {
+		} else if (isAuto) {
             return MetaItem.TYPE_AUTO;
-        } else if (length > 255) {
+		} else if (size > 255) {
             return MetaItem.TYPE_TEXTS;
-        } else if (length > 500) {
+		} else if (size > 500) {
             return MetaItem.TYPE_EDIT;
         } else {
             // 默认都是文本框

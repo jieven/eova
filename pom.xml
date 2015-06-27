@@ -16,22 +16,21 @@
         <jdk.version>1.6</jdk.version>
         <junit.version>4.11</junit.version>
 
-        <!--h2 driver-->
-        <db.driver.groupId>com.h2database</db.driver.groupId>
-        <db.driver.artifactId>h2</db.driver.artifactId>
-        <db.driver.version>1.4.187</db.driver.version>
-        <!--mysql driver-->
-        <!--<db.driver.groupId>mysql</db.driver.groupId>
+        <db.driver.groupId>mysql</db.driver.groupId>
         <db.driver.artifactId>mysql-connector-java</db.driver.artifactId>
-        <db.driver.version>5.1.34</db.driver.version>-->
-        <!--postgresql driver-->
-        <!--<db.driver.groupId>postgresql</db.driver.groupId>-->
-        <!--<db.driver.artifactId>postgresql</db.driver.artifactId>-->
-        <!--<db.driver.version>9.1-901-1.jdbc4</db.driver.version>-->
-        <!--oracle driver-->
+        <db.driver.version>5.1.34</db.driver.version>
+
         <!--<db.driver.groupId>com.oracle</db.driver.groupId>
         <db.driver.artifactId>ojdbc14</db.driver.artifactId>
         <db.driver.version>10.2.0.4.0</db.driver.version>-->
+
+        <!--<db.driver.groupId>com.h2database</db.driver.groupId>
+        <db.driver.artifactId>h2</db.driver.artifactId>
+        <db.driver.version>1.4.187</db.driver.version>-->
+        
+        <!--<db.driver.groupId>postgresql</db.driver.groupId>-->
+        <!--<db.driver.artifactId>postgresql</db.driver.artifactId>-->
+        <!--<db.driver.version>9.1-901-1.jdbc4</db.driver.version>-->
 
         <druid.version>1.0.14</druid.version>
         <ehcache.version>2.5.2</ehcache.version>
