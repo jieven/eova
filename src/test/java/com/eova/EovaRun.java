@@ -8,7 +8,7 @@ package com.eova;
 
 import com.jfinal.core.JFinal;
 
-public class EovaMain {
+public class EovaRun {
 	/**
 	 * Run as Eova Application
 	 */

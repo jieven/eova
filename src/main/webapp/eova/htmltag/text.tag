@@ -2,5 +2,5 @@
 data-options="
 required : ${isNoN!false}, placeholder : ${format(placeholder!)} 
 ${!isEmpty(options!) ? ', ' + options : '' } 
-${!isEmpty(validate!) ? ', ' + validate : '' }"
+${!isEmpty(validator!) ? ', ' + validator : '' }"
 ></div>

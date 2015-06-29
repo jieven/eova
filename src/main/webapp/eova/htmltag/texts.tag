@@ -5,10 +5,10 @@ placeholder='${placeholder!}'
 ${htmlattrs!} 
 style="${style!}">${value!}</textarea>
 <script>
-var validate = '${validate!}';
+var validator = '${validator!}';
 var $texts = $('#${id!}'); 
-if(validate != ''){
-	var obj = eval('({'+ validate +'})');
+if(validator != ''){
+	var obj = eval('({'+ validator +'})');
 	if(obj.min){
 	    $texts.attr('data-min', obj.min);
 	}

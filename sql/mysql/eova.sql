@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50513
 File Encoding         : 65001
 
-Date: 2015-06-09 09:26:37
+Date: 2015-06-30 01:28:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,9 +21,9 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `eova_button`;
 CREATE TABLE `eova_button` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `menuCode` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单Code',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮名称',
-  `ui` varchar(255) NOT NULL DEFAULT '' COMMENT '按钮UI路径',
+  `menuCode` varchar(255) NOT NULL COMMENT '菜单Code',
+  `name` varchar(255) NOT NULL COMMENT '按钮名称',
+  `ui` varchar(255) DEFAULT '' COMMENT '按钮UI路径',
   `bs` varchar(500) DEFAULT '' COMMENT '按钮BS路径',
   `indexNum` int(11) DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
@@ -143,13 +143,13 @@ CREATE TABLE `eova_item` (
   `isEdit` tinyint(1) DEFAULT '1' COMMENT '是否可编辑字段',
   `isNotNull` tinyint(1) DEFAULT '1' COMMENT '是否必填',
   `placeholder` varchar(255) DEFAULT '' COMMENT '输入提示',
-  `validate` varchar(255) DEFAULT '' COMMENT '校验表达式',
+  `validator` varchar(255) DEFAULT '' COMMENT 'UI校验表达式',
   `valueExp` varchar(255) DEFAULT '' COMMENT '默认值表达式',
   `width` int(4) DEFAULT '130' COMMENT '控件宽度',
   `height` int(4) DEFAULT '20' COMMENT '控件高度',
   `isMultiple` tinyint(1) DEFAULT '0' COMMENT '是否多选',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of eova_item
@@ -176,8 +176,6 @@ INSERT INTO `eova_item` VALUES ('20', 'eova_object_code', '', 'isSingleSelect', 
 INSERT INTO `eova_item` VALUES ('21', 'eova_object_code', '', 'isShowNum', '显示行号', '0', 'number', '复选框', '9', '', '0', '1', '1', '1', '1', '0', '0', '', '', '', '70', '0', '0');
 INSERT INTO `eova_item` VALUES ('22', 'eova_object_code', '', 'isDefaultPkDesc', '默认逆序', '0', 'number', '复选框', '10', '', '0', '1', '1', '1', '1', '0', '0', '', '', '', '70', '0', '0');
 INSERT INTO `eova_item` VALUES ('23', 'eova_object_code', '', 'filterWhere', '过滤条件', '0', 'string', '文本域', '11', '', '0', '1', '1', '1', '1', '0', '0', '', '', '', '130', '0', '0');
-INSERT INTO `eova_item` VALUES ('24', 'eova_object_code', '', 'diyCard', 'DIY卡片面板', '0', 'string', '文本域', '12', '', '0', '1', '1', '1', '1', '0', '0', '', '', '', '130', '0', '0');
-INSERT INTO `eova_item` VALUES ('25', 'eova_object_code', '', 'diyList', 'DIY列表面板', '0', 'string', '文本域', '13', '', '0', '0', '1', '1', '1', '0', '0', '', '', '', '130', '0', '0');
 INSERT INTO `eova_item` VALUES ('26', 'eova_item_code', '', 'id', 'ID', '1', 'number', '自增框', '1', '', '0', '0', '1', '1', '1', '0', '1', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('27', 'eova_item_code', '', 'objectCode', '对象编码', '0', 'string', '查找框', '2', 'select code 编码,name 名称 from eova_object where 1=1;ds=eova', '1', '1', '1', '1', '1', '0', '1', '', '', 'eova_user_code', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('28', 'eova_item_code', '', 'en', '字段名', '0', 'string', '文本框', '3', '', '1', '1', '1', '1', '1', '1', '1', '数据库的字段名', '', '', '70', '20', '0');
@@ -215,7 +213,7 @@ INSERT INTO `eova_item` VALUES ('62', 'eova_role_code', '', 'name', '角色名',
 INSERT INTO `eova_item` VALUES ('63', 'eova_role_code', '', 'info', '角色描述', '0', 'string', '文本框', '0', '', '0', '1', '1', '1', '1', '0', '1', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('64', 'eova_user_code', '', 'rid', '角色', '0', 'string', '下拉框', '0', 'select id ID,name CN from eova_role where 1=1;ds=eova', '0', '1', '1', '1', '1', '0', '1', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('70', 'eova_log_code', '', 'id', 'id', '1', 'number', '自增框', '1', '', '0', '1', '1', '1', '1', '0', '0', '', '', '', '130', '20', '0');
-INSERT INTO `eova_item` VALUES ('71', 'eova_log_code', '', 'uid', '操作用户', '0', 'number', '查找框', '2', 'select id UID,nickName 用户名 from eova_user where 1=1;ds=eova', '1', '1', '1', '1', '1', '0', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('71', 'eova_log_code', '', 'userId', '操作用户', '0', 'number', '查找框', '2', 'select id UID,nickName 用户名 from eova_user where 1=1;ds=eova', '1', '1', '1', '1', '1', '0', '0', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('72', 'eova_log_code', '', 'type', '日志类型', '0', 'number', '文本框', '3', 'select value ID,name CN from `eova_dict` where `class` = \'eova_log\' and field = \'type\';ds=eova', '1', '1', '1', '1', '1', '0', '0', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('73', 'eova_log_code', '', 'ip', '操作IP', '0', 'string', '文本框', '4', '', '1', '1', '1', '1', '1', '0', '0', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('74', 'eova_log_code', '', 'info', '操作详情', '0', 'string', '文本框', '5', '', '0', '1', '1', '1', '1', '0', '1', '', '', '', '200', '20', '0');
@@ -257,6 +255,33 @@ INSERT INTO `eova_item` VALUES ('154', 'users_exp_code', '', 'exp', '经验值',
 INSERT INTO `eova_item` VALUES ('155', 'users_exp_code', '', 'avg', '年龄', '0', 'number', '文本框', '3', '', '0', '1', '1', '1', '1', '1', '1', '', '', '0', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('156', 'users_exp_code', '', 'qq', 'QQ', '0', 'string', '文本框', '4', '', '0', '1', '1', '1', '1', '1', '1', '', '', '', '130', '20', '0');
 INSERT INTO `eova_item` VALUES ('157', 'eova_item_code', '', 'placeholder', '输入提示', '0', 'string', '文本框', '28', '', '0', '1', '1', '1', '1', '1', '0', 'input的placeholder属性', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('158', 'test01', '', 'id', 'id', '1', 'string', '自增框', '1', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('159', 'test01', '', 'value', 'value', '0', 'string', '文本框', '2', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('160', 'test01', '', 'name', 'name', '0', 'string', '文本框', '3', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('161', 'test01', '', 'class', 'class', '0', 'string', '文本框', '4', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('162', 'test01', '', 'field', 'field', '0', 'string', '文本框', '5', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('163', 'test01', '', 'ext', 'ext', '0', 'string', '文本框', '6', '', '0', '1', '1', '1', '1', '1', '0', '', '', '扩展', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('164', 'test02', '', 'id', 'id', '1', 'string', '自增框', '1', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('165', 'test02', '', 'status', 'status', '0', 'string', '文本框', '2', '', '0', '1', '1', '1', '1', '1', '1', '', '', '状态', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('166', 'test02', '', 'loginId', 'loginId', '0', 'string', '文本框', '3', '', '0', '1', '1', '1', '1', '1', '1', '', '', '登录账户', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('167', 'test02', '', 'loginPwd', 'loginPwd', '0', 'string', '文本框', '4', '', '0', '1', '1', '1', '1', '1', '1', '', '', '录登密码', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('168', 'test02', '', 'nickName', 'nickName', '0', 'string', '文本框', '5', '', '0', '1', '1', '1', '1', '1', '1', '', '', '昵称', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('169', 'test02', '', 'regTime', 'regTime', '0', 'string', '文本框', '6', '', '0', '1', '1', '1', '1', '1', '1', '', '', '注册时间', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('170', 'test02', '', 'info', 'info', '0', 'string', '文本框', '7', '', '0', '1', '1', '1', '1', '1', '1', '', '', '备注', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('171', 'test04', '', 'id', 'id', '1', 'string', '自增框', '1', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('172', 'test04', '', 'status', 'status', '0', 'string', '文本框', '2', '', '0', '1', '1', '1', '1', '1', '1', '', '', '状态', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('173', 'test04', '', 'loginId', 'loginId', '0', 'string', '文本框', '3', '', '0', '1', '1', '1', '1', '1', '1', '', '', '登录账户', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('174', 'test04', '', 'loginPwd', 'loginPwd', '0', 'string', '文本框', '4', '', '0', '1', '1', '1', '1', '1', '1', '', '', '录登密码', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('175', 'test04', '', 'nickName', 'nickName', '0', 'string', '文本框', '5', '', '0', '1', '1', '1', '1', '1', '1', '', '', '昵称', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('176', 'test04', '', 'regTime', 'regTime', '0', 'string', '文本框', '6', '', '0', '1', '1', '1', '1', '1', '1', '', '', '注册时间', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('177', 'test04', '', 'info', 'info', '0', 'string', '文本框', '7', '', '0', '1', '1', '1', '1', '1', '1', '', '', '备注', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('178', 'test05', '', 'id', 'id', '1', 'string', '自增框', '1', '', '0', '1', '1', '1', '1', '1', '0', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('179', 'test05', '', 'status', '状态', '0', 'string', '文本框', '2', '', '0', '1', '1', '1', '1', '1', '1', '', '', '0', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('180', 'test05', '', 'loginId', '登录账户', '0', 'string', '文本框', '3', '', '0', '1', '1', '1', '1', '1', '1', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('181', 'test05', '', 'loginPwd', '录登密码', '0', 'string', '文本框', '4', '', '0', '1', '1', '1', '1', '1', '1', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('182', 'test05', '', 'nickName', '昵称', '0', 'string', '文本框', '5', '', '0', '1', '1', '1', '1', '1', '1', '', '', '', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('183', 'test05', '', 'regTime', '注册时间', '0', 'string', '文本框', '6', '', '0', '1', '1', '1', '1', '1', '1', '', '', 'CURRENT_TIMESTAMP', '130', '20', '0');
+INSERT INTO `eova_item` VALUES ('184', 'test05', '', 'info', '备注', '0', 'string', '文本框', '7', '', '0', '1', '1', '1', '1', '1', '1', '', '', '', '130', '20', '0');
 
 -- ----------------------------
 -- Table structure for `eova_log`
@@ -264,40 +289,16 @@ INSERT INTO `eova_item` VALUES ('157', 'eova_item_code', '', 'placeholder', '输
 DROP TABLE IF EXISTS `eova_log`;
 CREATE TABLE `eova_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL COMMENT '操作用户',
+  `userId` int(11) NOT NULL COMMENT '操作用户',
   `type` int(11) NOT NULL COMMENT '日志类型',
   `ip` varchar(255) NOT NULL COMMENT '操作IP',
   `info` varchar(500) DEFAULT '' COMMENT '操作详情',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of eova_log
 -- ----------------------------
-INSERT INTO `eova_log` VALUES ('1', '1', '2', '127.0.0.1', 'player_code[84]');
-INSERT INTO `eova_log` VALUES ('2', '1', '2', '127.0.0.1', 'eova_user_code[4]');
-INSERT INTO `eova_log` VALUES ('3', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('4', '1', '2', '127.0.0.1', 'player_code[84]');
-INSERT INTO `eova_log` VALUES ('5', '1', '2', '127.0.0.1', 'item_code[6]');
-INSERT INTO `eova_log` VALUES ('6', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('7', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('8', '1', '2', '127.0.0.1', 'users_item_code[7]');
-INSERT INTO `eova_log` VALUES ('9', '1', '2', '127.0.0.1', 'users_item_code[7]');
-INSERT INTO `eova_log` VALUES ('10', '1', '2', '127.0.0.1', 'users_item_code[7]');
-INSERT INTO `eova_log` VALUES ('11', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('12', '1', '2', '127.0.0.1', 'users_item_code[7]');
-INSERT INTO `eova_log` VALUES ('13', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('14', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('15', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('16', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('17', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('18', '1', '3', '127.0.0.1', 'v_users_code[29]');
-INSERT INTO `eova_log` VALUES ('19', '1', '3', '127.0.0.1', 'v_users_code[83]');
-INSERT INTO `eova_log` VALUES ('20', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('21', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('22', '1', '2', '127.0.0.1', 'users_item_code[7]');
-INSERT INTO `eova_log` VALUES ('23', '1', '2', '127.0.0.1', 'v_users_code[null]');
-INSERT INTO `eova_log` VALUES ('24', '1', '2', '127.0.0.1', 'item_code[6]');
 
 -- ----------------------------
 -- Table structure for `eova_menu`
@@ -307,7 +308,7 @@ CREATE TABLE `eova_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL COMMENT '编码',
   `name` varchar(30) NOT NULL COMMENT '名称',
-  `type` varchar(20) NOT NULL DEFAULT '1' COMMENT '菜单类型',
+  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '菜单类型',
   `icon` varchar(255) DEFAULT '' COMMENT '图标路径',
   `indexNum` int(11) DEFAULT '0' COMMENT '序号',
   `parentId` int(11) DEFAULT '0' COMMENT '父节点',
@@ -382,8 +383,8 @@ CREATE TABLE `eova_object` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) NOT NULL COMMENT '对象编码',
   `name` varchar(50) NOT NULL COMMENT '对象名称',
-  `view` varchar(255) DEFAULT '' COMMENT '查询数据视图',
-  `table` varchar(50) DEFAULT NULL COMMENT '保存数据主表',
+  `viewName` varchar(255) DEFAULT '' COMMENT '查询数据视图',
+  `tableName` varchar(50) DEFAULT '' COMMENT '保存数据主表',
   `pkName` varchar(50) NOT NULL COMMENT '主键',
   `dataSource` varchar(50) DEFAULT 'main' COMMENT '数据源',
   `isSingleSelect` tinyint(1) DEFAULT '1' COMMENT '是否单选',
@@ -395,7 +396,7 @@ CREATE TABLE `eova_object` (
   `diyList` varchar(255) DEFAULT '' COMMENT '自定义列表面板',
   `diyIntercept` varchar(255) DEFAULT '' COMMENT '自定义业务拦截器',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of eova_object
@@ -414,6 +415,10 @@ INSERT INTO `eova_object` VALUES ('11', 'users_item_code', '艺人关联道具',
 INSERT INTO `eova_object` VALUES ('13', 'v_users_code', '女优详情', 'v_users', '', 'id', 'main', '1', '0', '1', '1', '', '', '', '');
 INSERT INTO `eova_object` VALUES ('15', 'celledit_users_code', '可编辑用户', '', 'users', 'id', 'main', '1', '1', '1', '1', '', '', '', '');
 INSERT INTO `eova_object` VALUES ('16', 'users_exp_code', '女优信息拓展', '', 'users_exp', 'uid', 'main', '1', '0', '1', '1', '', '', '', '');
+INSERT INTO `eova_object` VALUES ('17', 'test01', 'test01', '', 'dict', 'id', 'main', '1', '0', '1', '1', '', '', '', '');
+INSERT INTO `eova_object` VALUES ('18', 'test02', 'test02', '', 'users', 'id', 'main', '1', '0', '1', '1', '', '', '', '');
+INSERT INTO `eova_object` VALUES ('19', 'test04', 'test04', '', 'users', 'id', 'main', '1', '0', '1', '1', '', '', '', '');
+INSERT INTO `eova_object` VALUES ('20', 'test05', 'test05', '', 'users', 'id', 'main', '1', '0', '1', '1', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `eova_role`
@@ -448,65 +453,65 @@ CREATE TABLE `eova_role_btn` (
   `rid` int(11) NOT NULL COMMENT '角色',
   `bid` int(11) NOT NULL COMMENT '功能',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1348 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1402 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of eova_role_btn
 -- ----------------------------
-INSERT INTO `eova_role_btn` VALUES ('1294', '1', '65');
-INSERT INTO `eova_role_btn` VALUES ('1295', '1', '67');
-INSERT INTO `eova_role_btn` VALUES ('1296', '1', '68');
-INSERT INTO `eova_role_btn` VALUES ('1297', '1', '69');
-INSERT INTO `eova_role_btn` VALUES ('1298', '1', '66');
-INSERT INTO `eova_role_btn` VALUES ('1299', '1', '71');
-INSERT INTO `eova_role_btn` VALUES ('1300', '1', '72');
-INSERT INTO `eova_role_btn` VALUES ('1301', '1', '73');
-INSERT INTO `eova_role_btn` VALUES ('1302', '1', '74');
-INSERT INTO `eova_role_btn` VALUES ('1303', '1', '75');
-INSERT INTO `eova_role_btn` VALUES ('1304', '1', '76');
-INSERT INTO `eova_role_btn` VALUES ('1305', '1', '77');
-INSERT INTO `eova_role_btn` VALUES ('1306', '1', '78');
-INSERT INTO `eova_role_btn` VALUES ('1307', '1', '79');
-INSERT INTO `eova_role_btn` VALUES ('1308', '1', '80');
-INSERT INTO `eova_role_btn` VALUES ('1309', '1', '81');
-INSERT INTO `eova_role_btn` VALUES ('1310', '1', '86');
-INSERT INTO `eova_role_btn` VALUES ('1311', '1', '87');
-INSERT INTO `eova_role_btn` VALUES ('1312', '1', '96');
-INSERT INTO `eova_role_btn` VALUES ('1313', '1', '97');
-INSERT INTO `eova_role_btn` VALUES ('1314', '1', '98');
-INSERT INTO `eova_role_btn` VALUES ('1315', '1', '99');
-INSERT INTO `eova_role_btn` VALUES ('1316', '1', '7');
-INSERT INTO `eova_role_btn` VALUES ('1317', '1', '29');
-INSERT INTO `eova_role_btn` VALUES ('1318', '1', '30');
-INSERT INTO `eova_role_btn` VALUES ('1319', '1', '31');
-INSERT INTO `eova_role_btn` VALUES ('1320', '1', '8');
-INSERT INTO `eova_role_btn` VALUES ('1321', '1', '26');
-INSERT INTO `eova_role_btn` VALUES ('1322', '1', '27');
-INSERT INTO `eova_role_btn` VALUES ('1323', '1', '28');
-INSERT INTO `eova_role_btn` VALUES ('1324', '1', '32');
-INSERT INTO `eova_role_btn` VALUES ('1325', '1', '9');
-INSERT INTO `eova_role_btn` VALUES ('1326', '1', '1');
-INSERT INTO `eova_role_btn` VALUES ('1327', '1', '10');
-INSERT INTO `eova_role_btn` VALUES ('1328', '1', '11');
-INSERT INTO `eova_role_btn` VALUES ('1329', '1', '12');
-INSERT INTO `eova_role_btn` VALUES ('1330', '1', '23');
-INSERT INTO `eova_role_btn` VALUES ('1331', '1', '2');
-INSERT INTO `eova_role_btn` VALUES ('1332', '1', '16');
-INSERT INTO `eova_role_btn` VALUES ('1333', '1', '17');
-INSERT INTO `eova_role_btn` VALUES ('1334', '1', '18');
-INSERT INTO `eova_role_btn` VALUES ('1335', '1', '3');
-INSERT INTO `eova_role_btn` VALUES ('1336', '1', '19');
-INSERT INTO `eova_role_btn` VALUES ('1337', '1', '20');
-INSERT INTO `eova_role_btn` VALUES ('1338', '1', '21');
-INSERT INTO `eova_role_btn` VALUES ('1339', '1', '22');
-INSERT INTO `eova_role_btn` VALUES ('1340', '1', '4');
-INSERT INTO `eova_role_btn` VALUES ('1341', '1', '13');
-INSERT INTO `eova_role_btn` VALUES ('1342', '1', '14');
-INSERT INTO `eova_role_btn` VALUES ('1343', '1', '15');
-INSERT INTO `eova_role_btn` VALUES ('1344', '1', '5');
-INSERT INTO `eova_role_btn` VALUES ('1345', '1', '24');
-INSERT INTO `eova_role_btn` VALUES ('1346', '1', '25');
-INSERT INTO `eova_role_btn` VALUES ('1347', '1', '6');
+INSERT INTO `eova_role_btn` VALUES ('1348', '1', '65');
+INSERT INTO `eova_role_btn` VALUES ('1349', '1', '67');
+INSERT INTO `eova_role_btn` VALUES ('1350', '1', '68');
+INSERT INTO `eova_role_btn` VALUES ('1351', '1', '69');
+INSERT INTO `eova_role_btn` VALUES ('1352', '1', '66');
+INSERT INTO `eova_role_btn` VALUES ('1353', '1', '71');
+INSERT INTO `eova_role_btn` VALUES ('1354', '1', '72');
+INSERT INTO `eova_role_btn` VALUES ('1355', '1', '73');
+INSERT INTO `eova_role_btn` VALUES ('1356', '1', '74');
+INSERT INTO `eova_role_btn` VALUES ('1357', '1', '75');
+INSERT INTO `eova_role_btn` VALUES ('1358', '1', '76');
+INSERT INTO `eova_role_btn` VALUES ('1359', '1', '77');
+INSERT INTO `eova_role_btn` VALUES ('1360', '1', '78');
+INSERT INTO `eova_role_btn` VALUES ('1361', '1', '79');
+INSERT INTO `eova_role_btn` VALUES ('1362', '1', '80');
+INSERT INTO `eova_role_btn` VALUES ('1363', '1', '81');
+INSERT INTO `eova_role_btn` VALUES ('1364', '1', '86');
+INSERT INTO `eova_role_btn` VALUES ('1365', '1', '87');
+INSERT INTO `eova_role_btn` VALUES ('1366', '1', '96');
+INSERT INTO `eova_role_btn` VALUES ('1367', '1', '97');
+INSERT INTO `eova_role_btn` VALUES ('1368', '1', '98');
+INSERT INTO `eova_role_btn` VALUES ('1369', '1', '99');
+INSERT INTO `eova_role_btn` VALUES ('1370', '1', '7');
+INSERT INTO `eova_role_btn` VALUES ('1371', '1', '29');
+INSERT INTO `eova_role_btn` VALUES ('1372', '1', '30');
+INSERT INTO `eova_role_btn` VALUES ('1373', '1', '31');
+INSERT INTO `eova_role_btn` VALUES ('1374', '1', '8');
+INSERT INTO `eova_role_btn` VALUES ('1375', '1', '26');
+INSERT INTO `eova_role_btn` VALUES ('1376', '1', '27');
+INSERT INTO `eova_role_btn` VALUES ('1377', '1', '28');
+INSERT INTO `eova_role_btn` VALUES ('1378', '1', '32');
+INSERT INTO `eova_role_btn` VALUES ('1379', '1', '9');
+INSERT INTO `eova_role_btn` VALUES ('1380', '1', '1');
+INSERT INTO `eova_role_btn` VALUES ('1381', '1', '10');
+INSERT INTO `eova_role_btn` VALUES ('1382', '1', '11');
+INSERT INTO `eova_role_btn` VALUES ('1383', '1', '12');
+INSERT INTO `eova_role_btn` VALUES ('1384', '1', '23');
+INSERT INTO `eova_role_btn` VALUES ('1385', '1', '2');
+INSERT INTO `eova_role_btn` VALUES ('1386', '1', '16');
+INSERT INTO `eova_role_btn` VALUES ('1387', '1', '17');
+INSERT INTO `eova_role_btn` VALUES ('1388', '1', '18');
+INSERT INTO `eova_role_btn` VALUES ('1389', '1', '3');
+INSERT INTO `eova_role_btn` VALUES ('1390', '1', '19');
+INSERT INTO `eova_role_btn` VALUES ('1391', '1', '20');
+INSERT INTO `eova_role_btn` VALUES ('1392', '1', '21');
+INSERT INTO `eova_role_btn` VALUES ('1393', '1', '22');
+INSERT INTO `eova_role_btn` VALUES ('1394', '1', '4');
+INSERT INTO `eova_role_btn` VALUES ('1395', '1', '13');
+INSERT INTO `eova_role_btn` VALUES ('1396', '1', '14');
+INSERT INTO `eova_role_btn` VALUES ('1397', '1', '15');
+INSERT INTO `eova_role_btn` VALUES ('1398', '1', '5');
+INSERT INTO `eova_role_btn` VALUES ('1399', '1', '24');
+INSERT INTO `eova_role_btn` VALUES ('1400', '1', '25');
+INSERT INTO `eova_role_btn` VALUES ('1401', '1', '6');
 
 -- ----------------------------
 -- Table structure for `eova_user`
@@ -517,7 +522,7 @@ CREATE TABLE `eova_user` (
   `loginId` varchar(30) NOT NULL COMMENT '帐号',
   `loginPwd` varchar(50) NOT NULL COMMENT '密码',
   `nickName` varchar(255) NOT NULL COMMENT '中文名',
-  `rid` int(11) DEFAULT NULL COMMENT '角色ID',
+  `rid` int(11) DEFAULT '0' COMMENT '角色ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -526,4 +531,3 @@ CREATE TABLE `eova_user` (
 -- ----------------------------
 INSERT INTO `eova_user` VALUES ('1', 'admin', '000000', 'Jieven', '1');
 INSERT INTO `eova_user` VALUES ('3', 'test', '000000', '测试', '2');
-INSERT INTO `eova_user` VALUES ('4', '', '1232134', '举套问天我操谁', '5');
