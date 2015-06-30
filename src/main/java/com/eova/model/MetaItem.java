@@ -35,6 +35,28 @@ public class MetaItem extends BaseModel<MetaItem> {
 	public static final String TYPE_IMG = "图片框";
 
 	/**
+	 * 获取字段英文名
+	 * 
+	 * @return
+	 */
+	public String getEn() {
+		// POSTGRE 数据库,默认小写
+		// if (JdbcUtils.POSTGRESQL.equalsIgnoreCase(EovaConfig.EOVA_DBTYPE)) {
+		// return this.getStr("en").toLowerCase();
+		// }
+		return this.getStr("en");
+	}
+
+	/**
+	 * 获取字段中文名
+	 * 
+	 * @return
+	 */
+	public String getCn() {
+		return this.getStr("cn");
+	}
+
+	/**
 	 * 获取对象详情
 	 * 
 	 * @param objectCode 对象Code

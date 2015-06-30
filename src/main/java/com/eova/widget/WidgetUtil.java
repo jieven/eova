@@ -30,7 +30,7 @@ public class WidgetUtil {
 				// 如果有表达式，说明会被翻译，所以需要备份列
 				String exp = x.getStr("exp");
 				if (!xx.isEmpty(exp)) {
-					String en = x.getStr("en");
+					String en = x.getEn();
 					// 备份被转换的列的值
 					re.set(en + "_val", re.get(en).toString());
 				}

@@ -169,7 +169,7 @@ public class GridController extends Controller {
 			re.setColumns(map);
 			// 将Text翻译成Value,然后删除val字段
 			for (MetaItem x : items) {
-				String en = x.getStr("en");// 字段名
+				String en = x.getEn();// 字段名
 				String exp = x.getStr("exp");// 表达式
 				String type = x.getStr("type");// 控件类型
 				Object value = re.get(en);// 值

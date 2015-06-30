@@ -49,7 +49,7 @@ public class UIUtil {
 				// 是否显示字段
 				boolean isShow = item.getBoolean("isShow");
 				if (isShow) {
-					String itemKey = item.getStr("en");
+					String itemKey = item.getEn();
 					sb.append("<td>" + record.get(itemKey).toString() + "</td>");
 				}
 			}

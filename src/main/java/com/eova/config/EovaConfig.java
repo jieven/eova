@@ -58,6 +58,9 @@ public class EovaConfig extends JFinalConfig {
 
 	private long startTime = 0;
 
+	/** EOVA所在数据库的类型 **/
+	public static String EOVA_DBTYPE = "mysql";
+
 	/**
 	 * 系统启动之后
 	 */
@@ -184,6 +187,13 @@ public class EovaConfig extends JFinalConfig {
 			arp.addMapping("eova_log", EovaLog.class);
 			plugins.add(dp).add(arp);
 			System.out.println("load eova datasource:" + eova_url + "/" + eova_user + "/" + eova_pwd);
+
+			try {
+				// Eova的数据库类型
+				EOVA_DBTYPE = JdbcUtils.getDbType(eova_url, JdbcUtils.getDriverClassName(eova_url));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// 初始化ServiceManager
@@ -253,7 +263,7 @@ public class EovaConfig extends JFinalConfig {
 	 */
 	private ActiveRecordPlugin initActiveRecordPlugin(String url, String ds, DruidPlugin dp) {
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(ds, dp);
-
+		
 		String dbType;
 		try {
 			dbType = JdbcUtils.getDbType(url, JdbcUtils.getDriverClassName(url));
@@ -262,7 +272,7 @@ public class EovaConfig extends JFinalConfig {
 		}
 
 		Dialect dialect;
-		if (JdbcUtils.MYSQL.equalsIgnoreCase(dbType)) {
+		if (JdbcUtils.MYSQL.equalsIgnoreCase(dbType) || JdbcUtils.H2.equalsIgnoreCase(dbType)) {
 			dialect = new MysqlDialect();
 		} else if (JdbcUtils.ORACLE.equalsIgnoreCase(dbType)) {
 			dialect = new OracleDialect();

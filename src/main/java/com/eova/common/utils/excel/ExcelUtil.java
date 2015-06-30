@@ -41,7 +41,7 @@ public class ExcelUtil {
 			MetaItem item = items.get(i);
 			WritableCellFormat format = new WritableCellFormat();
 			format.setBackground(Colour.GRAY_25);// 设置灰色背景
-			sheet.addCell(new Label(i, row, item.getStr("cn"), format));
+			sheet.addCell(new Label(i, row, item.getCn(), format));
 			// 设置列宽度(列宽px值/10)
 			sheet.setColumnView(i, item.getInt("width") / 10);
 		}
@@ -74,7 +74,7 @@ public class ExcelUtil {
 		int i = -1;
 		for (MetaItem item : items) {
 			i++;
-			Object value = record.get(item.getStr("en"));
+			Object value = record.get(item.getEn());
 			if (value == null) {
 				continue;
 			}
@@ -134,7 +134,7 @@ public class ExcelUtil {
 	private static Map<String, String> getKeyValue(List<MetaItem> items) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		for (MetaItem item : items) {
-			map.put(item.getStr("cn"), item.getStr("en"));
+			map.put(item.getCn(), item.getEn());
 		}
 		return map;
 	}

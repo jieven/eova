@@ -29,7 +29,7 @@ public class TemplateUtil {
 			List<String> temp = new ArrayList<String>();
 			// 获取字段名
 			for (MetaItem item : itemList) {
-				temp.add(record.get(item.getStr("en")).toString());
+				temp.add(record.get(item.getEn()).toString());
 			}
 			list.add(temp);
 		}
@@ -46,7 +46,7 @@ public class TemplateUtil {
 	public static List<String> getKeyList(List<MetaItem> itemList) {
 		List<String> list = new ArrayList<String>();
 		for (MetaItem item : itemList) {
-			list.add(item.getStr("en"));
+			list.add(item.getEn());
 		}
 		return list;
 	}

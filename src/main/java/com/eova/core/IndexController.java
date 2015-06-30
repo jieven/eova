@@ -7,6 +7,7 @@
 package com.eova.core;
 
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ import java.util.TreeMap;
 
 import com.eova.common.Easy;
 import com.eova.common.utils.xx;
+import com.eova.common.utils.db.JdbcUtil;
 import com.eova.model.Menu;
 import com.eova.model.User;
 import com.eova.service.sm;
@@ -25,7 +27,7 @@ import com.jfinal.ext.render.CaptchaRender;
 
 /**
  * Eova入口
- *
+ * 
  * @author Jieven
  * @date 2015-1-6
  */
@@ -52,6 +54,7 @@ public class IndexController extends Controller {
 	public void toIcon() {
 		render("/eova/icon.html");
 	}
+
 	public void toUe() {
 		render("/eova/uedemo.html");
 	}
@@ -60,7 +63,6 @@ public class IndexController extends Controller {
 		render("/eova/icon.html");
 	}
 
-	
 	public void toLogin() {
 		render("/eova/login.html");
 	}
@@ -117,9 +119,9 @@ public class IndexController extends Controller {
 	public void doLogin() {
 		String loginId = getPara(LOGINID);
 		String loginPwd = getPara(LOGINPWD);
-//		if (loginId.equals("admin")) {
-//			renderJson(new Easy());
-//		}
+		// if (loginId.equals("admin")) {
+		// renderJson(new Easy());
+		// }
 		// 登录校验
 		// validateRequiredString("loginId", "msg", "请输入用户名");
 		// validateRequiredString("loginPwd", "msg", "请输入密码");
@@ -292,9 +294,9 @@ public class IndexController extends Controller {
 		sb.append("{");
 		sb.append("\"attributes\": {");
 		// 目录不显示URL
-		if(!menu.getStr("type").equals(Menu.TYPE_DIR) ){
+		if (!menu.getStr("type").equals(Menu.TYPE_DIR)) {
 			sb.append("\"url\": \"" + menu.getUrl() + "\"");
-//			System.out.println(menu.getUrl());
+			// System.out.println(menu.getUrl());
 		}
 		sb.append("},\n");
 		sb.append("\"checked\": false,");
@@ -417,6 +419,53 @@ public class IndexController extends Controller {
 	public void vcodeImg() {
 		render(new CaptchaRender("VCODEKEY"));
 	}
+
+	/**
+	 * 初始化操作
+	 */
+	public void init() {
+		render("/eova/init.html");
+	}
+
+	/**
+	 * 初始化操作
+	 */
+	public void doInit() {
+		String ip = getPara("ip");
+		String port = getPara("port");
+		String userName = getPara("userName");
+		String password = getPara("password");
+
+		keepPara(ip);
+		keepPara(port);
+		keepPara(userName);
+		keepPara(password);
+
+		String local_url = MessageFormat.format("jdbc:mysql://{0}:{1}/web?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", ip, port);
+		// String local_user = userName;
+		// String local_pwd = password;
+
+		String local_eova_url = MessageFormat.format("jdbc:mysql://{0}:{1}/eova?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", ip, port);
+		// String local_eova_user = userName;
+		// String local_eova_pwd = password;
+
+		// 自动生成JDBC配置 to eova.config
+		String msg = JdbcUtil.initConnection(local_url, userName, password);
+		if (msg != null) {
+
+			if (msg.startsWith("Communications link failure")) {
+				msg = "无法连接数据库，请检查IP:Port";
+			} else if (msg.startsWith("Access denied for user")) {
+				msg = "用户无权限访问，请检查用户名和密码";
+			}
+
+			setAttr("msg", msg);
+			init();
+			return;
+		}
+
+	}
+
 
 	public static void main(String[] args) {
 		// TreeMap<String, String> m = new TreeMap<String, String>();

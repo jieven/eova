@@ -73,7 +73,7 @@ public class WidgetManager {
 		for (MetaItem ei : eis) {
 
 			// 给查询表单添加前缀，防止和系统级别字段重名
-			String key = ei.getStr("en");
+			String key = ei.getEn();
 			String value = c.getPara(PageConst.QUERY + key, "").trim();
 			if ( (!value.equals("")) && (!value.equals("-1"))) {
 				if (isWhere) {
@@ -137,7 +137,7 @@ public class WidgetManager {
 				continue;
 			}
 			// 获取存在表达式的列名
-			String en = ei.get("en").toString();
+			String en = ei.getEn();
 			// System.out.println(en + " EovaExp:" + exp);
 			// in 条件值
 			Set<String> ids = new HashSet<String>();

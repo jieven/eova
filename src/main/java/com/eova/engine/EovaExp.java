@@ -141,7 +141,7 @@ public class EovaExp {
 		eo.put("dataSource", getDs(exp));
 //		eo.put("code", code);
 		eo.put("name", "");
-		eo.put("table", "");
+		eo.put("tableName", "");
 		eo.put("isDefaultPkDesc", false);
 		// 获取第一的值作为主键
 		eo.put("pkName", getPk(exp));

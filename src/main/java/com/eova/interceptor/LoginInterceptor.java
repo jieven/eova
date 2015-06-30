@@ -12,24 +12,20 @@ import com.jfinal.core.ActionInvocation;
 
 /**
  * 常量加载拦截器
+ * 
  * @author Jieven
- *
+ * 
  */
 public class LoginInterceptor implements Interceptor{
 
+	@Override
 	public void intercept(ActionInvocation ai) {
-		if (ai.getActionKey().equals("/toLogin")) {
+		if (ai.getActionKey().equals("/toLogin") || ai.getActionKey().equals("/vcodeImg") || ai.getActionKey().equals("/doLogin") || ai.getActionKey().equals("/init")
+				|| ai.getActionKey().equals("/doInit")) {
 			ai.invoke();
 			return;
 		}
-		if (ai.getActionKey().equals("/vcodeImg")) {
-			ai.invoke();
-			return;
-		}
-		if (ai.getActionKey().equals("/doLogin")) {
-			ai.invoke();
-			return;
-		}
+
 		// 获取登录用户的角色
 		User user = ai.getController().getSessionAttr("user");
 		if (user == null) {

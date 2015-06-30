@@ -30,7 +30,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getTable() {
-		return this.getStr("table");
+		return this.getStr("tableName");
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getView() {
-		String view = this.getStr("view");
+		String view = this.getStr("viewName");
 		if (xx.isEmpty(view)) {
 			view = getTable();
 		}

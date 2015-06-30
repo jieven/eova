@@ -102,7 +102,7 @@ public class CrudController extends Controller {
 
 		// 分别根据字段获取值
 		for (MetaItem ei : eis) {
-			String key = ei.getStr("en");
+			String key = ei.getEn();
 			Object value = record.get(key);
 			if (value == null) {
 				value = "";

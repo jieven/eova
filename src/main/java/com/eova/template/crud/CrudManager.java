@@ -45,7 +45,7 @@ public class CrudManager {
 			// 控件类型
 			String type = item.getStr("type");
 			// 字段名
-			String key = item.getStr("en");
+			String key = item.getEn();
 			// 获当前字段更新后的值,默认空值
 			String value = c.getPara(key, "");
 
@@ -108,7 +108,7 @@ public class CrudManager {
 		String pkName = eo.getStr("pkName");
 		re.set(pkName, pkValue);
 		// 保存的数据值
-		String table = eo.getStr("table");
+		String table = eo.getStr("tableName");
 		// 主键是否有值
 		if (isUpdate) {
 			// 更新数据到对应的表
