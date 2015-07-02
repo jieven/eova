@@ -85,6 +85,7 @@ public class IndexController extends Controller {
 		// 已经登录
 		if (user != null) {
 			int rid = user.getInt("rid");
+			// int rid = user.getBigDecimal("rid").intValue();
 			// 获取根节点作为模块
 			List<Menu> cacheList = Menu.dao.queryRoot();
 			// 防止迭代影响Cache，复制一个List
@@ -445,7 +446,7 @@ public class IndexController extends Controller {
 		// String local_user = userName;
 		// String local_pwd = password;
 
-		String local_eova_url = MessageFormat.format("jdbc:mysql://{0}:{1}/eova?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", ip, port);
+		// String local_eova_url = MessageFormat.format("jdbc:mysql://{0}:{1}/eova?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull", ip, port);
 		// String local_eova_user = userName;
 		// String local_eova_pwd = password;
 

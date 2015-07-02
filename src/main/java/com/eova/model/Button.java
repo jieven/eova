@@ -8,10 +8,10 @@ package com.eova.model;
 
 import java.util.List;
 
-import com.eova.config.EovaConst;
-import com.jfinal.plugin.activerecord.Db;
 import com.eova.common.base.BaseModel;
 import com.eova.common.utils.xx;
+import com.eova.config.EovaConst;
+import com.jfinal.plugin.activerecord.Db;
 
 /**
  * 功能按钮
@@ -32,7 +32,8 @@ public class Button extends BaseModel<Button> {
 	 * @return
 	 */
 	public List<Button> queryByMenuCode(String menuCode, int rid) {
-		return Button.dao.find("select * from eova_button where menuCode = ? and ui != '' and id in (select bid from eova_role_btn where rid = ?) order by indexNum", menuCode, rid);
+		// 为了同时兼容Mysql和Oracle的写法
+		return Button.dao.find("select * from eova_button where menuCode = ? and (ui is not null or ui != '') and id in (select bid from eova_role_btn where rid = ?) order by indexNum", menuCode, rid);
 	}
 	
 	/**

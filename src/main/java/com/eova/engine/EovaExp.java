@@ -9,9 +9,9 @@ package com.eova.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eova.common.utils.xx;
 import com.eova.model.MetaItem;
 import com.eova.model.MetaObject;
-import com.eova.common.utils.xx;
 
 public class EovaExp {
 	public static void main(String[] args) {
@@ -171,6 +171,7 @@ public class EovaExp {
 		for (String item : items.split(",")) {
 			index++;
 			String[] strs = item.split(" ");
+
 			String en = strs[0];
 			String cn = strs[1];
 
@@ -197,6 +198,9 @@ public class EovaExp {
 	 * @return
 	 */
 	public static MetaItem buildItem(int index, String en, String cn, boolean isQuery) {
+
+		en = en.toLowerCase();
+
 		MetaItem ei = new MetaItem();
 		ei.put("indexNum", index);
 		//ei.put("objectCode", code);

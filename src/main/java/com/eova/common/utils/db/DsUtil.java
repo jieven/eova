@@ -41,7 +41,7 @@ public class DsUtil {
 			}
 			conn = config.getDataSource().getConnection();
 			if (props != null) {
-				conn.setClientInfo(props);
+				// conn.setClientInfo(props);
 			}
 			DatabaseMetaData md = conn.getMetaData();
 			return md;

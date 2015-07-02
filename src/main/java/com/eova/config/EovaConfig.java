@@ -45,6 +45,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
+import com.jfinal.plugin.activerecord.IDataSourceProvider;
 import com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect;
 import com.jfinal.plugin.activerecord.dialect.Dialect;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
@@ -72,7 +73,8 @@ public class EovaConfig extends JFinalConfig {
 		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_MAIN));
 		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_item"));
 		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE));
-		// System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "eova_item"));
+		// System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "EOVA_USER"));
+		// DbUtil.createOracleSql();
 	}
 
 	/**
@@ -166,6 +168,7 @@ public class EovaConfig extends JFinalConfig {
 		// 默认数据源
 		{
 			DruidPlugin dp = initDruidPlugin(url, user, pwd);
+			// C3p0Plugin dp = initC3p0Plugin(url, user, pwd);
 			ActiveRecordPlugin arp = initActiveRecordPlugin(url, xx.DS_MAIN, dp);
 			plugins.add(dp).add(arp);
 
@@ -174,12 +177,13 @@ public class EovaConfig extends JFinalConfig {
 		// Eova数据源
 		{
 			DruidPlugin dp = initDruidPlugin(eova_url, eova_user, eova_pwd);
+			// C3p0Plugin dp = initC3p0Plugin(eova_url, eova_user, eova_pwd);
 			ActiveRecordPlugin arp = initActiveRecordPlugin(eova_url, xx.DS_EOVA, dp);
 			// 配置ActiveRecord插件
+			arp.addMapping("eova_user", User.class);
 			arp.addMapping("eova_object", MetaObject.class);
 			arp.addMapping("eova_item", MetaItem.class);
 			arp.addMapping("eova_button", Button.class);
-			arp.addMapping("eova_user", User.class);
 			arp.addMapping("eova_menu", Menu.class);
 			arp.addMapping("eova_menu_object", MenuObject.class);
 			arp.addMapping("eova_role", Role.class);
@@ -261,9 +265,9 @@ public class EovaConfig extends JFinalConfig {
 	 * @param dp Druid
 	 * @return
 	 */
-	private ActiveRecordPlugin initActiveRecordPlugin(String url, String ds, DruidPlugin dp) {
+	private ActiveRecordPlugin initActiveRecordPlugin(String url, String ds, IDataSourceProvider dp) {
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(ds, dp);
-		
+
 		String dbType;
 		try {
 			dbType = JdbcUtils.getDbType(url, JdbcUtils.getDriverClassName(url));
@@ -276,8 +280,12 @@ public class EovaConfig extends JFinalConfig {
 			dialect = new MysqlDialect();
 		} else if (JdbcUtils.ORACLE.equalsIgnoreCase(dbType)) {
 			dialect = new OracleDialect();
+			// 默认小写
+			arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));
+			((DruidPlugin) dp).setValidationQuery("select 1 FROM DUAL");
 		} else if (JdbcUtils.POSTGRESQL.equalsIgnoreCase(dbType)) {
 			dialect = new PostgreSqlDialect();
+			// 默认小写
 			arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));
 		} else {
 			// 默认使用标准SQL方言
