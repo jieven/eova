@@ -69,6 +69,9 @@ public class EovaConfig extends JFinalConfig {
 		System.err.println("JFinal Started\n");
 		// Load Cost Time
 		costTime(startTime);
+
+		EovaInit.initPlugins();
+
 		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_MAIN));
 		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_item"));
 		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE));
@@ -106,8 +109,10 @@ public class EovaConfig extends JFinalConfig {
 
 		// 设置全局变量
 		Map<String, Object> sharedVars = new HashMap<String, Object>();
-		String CDN = getProperty("domain_cdn", "http://127.0.0.1");
-		sharedVars.put("CDN", CDN);
+		String CDN = getProperty("domain_cdn");
+		if (!xx.isEmpty(CDN)) {
+			sharedVars.put("CDN", CDN);
+		}
 
 		// Load Template Const
 		PageConst.init(sharedVars);
@@ -276,6 +281,7 @@ public class EovaConfig extends JFinalConfig {
 			dialect = new MysqlDialect();
 		} else if (JdbcUtils.ORACLE.equalsIgnoreCase(dbType)) {
 			dialect = new OracleDialect();
+			dp.setValidationQuery("select 1 from DUAL");
 		} else if (JdbcUtils.POSTGRESQL.equalsIgnoreCase(dbType)) {
 			dialect = new PostgreSqlDialect();
 			arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));

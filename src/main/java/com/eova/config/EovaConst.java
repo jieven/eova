@@ -41,7 +41,6 @@ public class EovaConst {
 	public static final String FUN_IMPORT_UI = "/eova/template/crud/btn/import.html";
 	public static final String FUN_IMPORT_BS = "crud/import";
 
-	
 	/** Cache Key 所有菜单信息 **/
 	public static final String ALL_MENU = "all_menu";
 
@@ -50,6 +49,12 @@ public class EovaConst {
 
 	/** 默认图片上传目录 **/
 	public static final String DIR_IMG = PathKit.getWebRootPath() + File.separator + "upimg" + File.separator;
+	/** 下载临时目录 **/
+	public static final String DIR_UPLOAD = PathKit.getWebRootPath() + File.separator + "upload" + File.separator;
+	/** 插件目录 **/
+	public static final String DIR_PLUGINS = PathKit.getWebRootPath() + File.separator + "plugins" + File.separator;
 
-	public static final String FILENAME = "plugins.zip";
+	/** Eova插件包URL **/
+	public static final String PLUGINS_URL = "http://7xign9.com1.z0.glb.clouddn.com/eova_plugins.zip";
+	// public static final String PLUGINS_URL = "http://7xign9.com1.z0.glb.clouddn.com/eova_plugins.zip";
 }
