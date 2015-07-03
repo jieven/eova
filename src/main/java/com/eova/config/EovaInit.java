@@ -24,7 +24,8 @@ public class EovaInit {
 			@Override
 			public void run() {
 				try {
-					String zipPath = EovaConst.DIR_UPLOAD + "plugins.zip";
+					// 下载到Web根目录
+					String zipPath = EovaConst.DIR_WEB + "plugins.zip";
 
 					if (!FileUtil.isExists(EovaConst.DIR_PLUGINS)) {
 						System.err.println("正在下载：" + EovaConst.PLUGINS_URL);

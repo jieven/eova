@@ -47,6 +47,8 @@ public class EovaConst {
 	/** 默认超级管理员角色(创建菜单自动给角色授权) **/
 	public static final int DEFAULT_RID = 1;
 
+	/** WebApp 根目录 **/
+	public static final String DIR_WEB = PathKit.getWebRootPath() + File.separator;
 	/** 默认图片上传目录 **/
 	public static final String DIR_IMG = PathKit.getWebRootPath() + File.separator + "upimg" + File.separator;
 	/** 下载临时目录 **/
