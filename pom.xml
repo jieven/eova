@@ -18,11 +18,11 @@
 
         <db.driver.groupId>mysql</db.driver.groupId>
         <db.driver.artifactId>mysql-connector-java</db.driver.artifactId>
-        <db.driver.version>5.1.34</db.driver.version>
+        <db.driver.version>5.1.20</db.driver.version>
 
-        <!--<db.driver.groupId>com.oracle</db.driver.groupId>
+        <db.driver.groupId>com.oracle</db.driver.groupId>
         <db.driver.artifactId>ojdbc14</db.driver.artifactId>
-        <db.driver.version>10.2.0.4.0</db.driver.version>-->
+        <db.driver.version>10.2.0.4.0</db.driver.version>
 
         <!--<db.driver.groupId>com.h2database</db.driver.groupId>
         <db.driver.artifactId>h2</db.driver.artifactId>
@@ -32,7 +32,7 @@
         <!--<db.driver.artifactId>postgresql</db.driver.artifactId>-->
         <!--<db.driver.version>9.1-901-1.jdbc4</db.driver.version>-->
 
-        <druid.version>1.0.14</druid.version>
+        <druid.version>1.0.5</druid.version>
         <ehcache.version>2.5.2</ehcache.version>
 
         <jetty.version>8.1.8</jetty.version>
@@ -179,25 +179,7 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.8.v20121106</version>
-                <configuration>
-                    <stopKey>stop</stopKey>
-                    <stopPort>5599</stopPort>
-                    <webAppConfig>
-                        <contextPath>/</contextPath>
-                    </webAppConfig>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>80</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
-                </configuration>
-            </plugin>
+            
         </plugins>
     </build>
 </project>

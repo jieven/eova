@@ -53,8 +53,11 @@ public class GridController extends Controller {
 		int pageSize = getParaToInt(PageConst.PAGESIZE, 95);
 
 		// 获取条件
+		String where = "";
 		List<String> parmList = new ArrayList<String>();
-		String where = WidgetManager.getWhere(this, eis, parmList, ' ' + eo.getStr("filterWhere"));
+		if (!xx.isEmpty(parmList)) {
+			where = WidgetManager.getWhere(this, eis, parmList, ' ' + eo.getStr("filterWhere"));
+		}
 
 		// 转换SQL参数为Obj[]
 		Object[] parm = new Object[parmList.size()];

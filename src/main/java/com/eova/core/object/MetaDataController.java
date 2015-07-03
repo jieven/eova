@@ -98,7 +98,7 @@ public class MetaDataController extends Controller {
 
 		String ds = getPara("ds");
 		String type = getPara("type");
-		String table = getPara("tableName");
+		String table = getPara("table");
 		String name = getPara("name");
 		String code = getPara("code");
 
@@ -185,7 +185,7 @@ public class MetaDataController extends Controller {
 	 * @return
 	 */
 	private String getDataType(String typeName) {
-		if (typeName.indexOf("int") != -1) {
+		if (typeName.contains("INT") || typeName.contains("BIT")) {
 			return TemplateConfig.DATATYPE_NUMBER;
 		} else if (typeName.indexOf("time") != -1) {
 			return TemplateConfig.DATATYPE_TIME;
