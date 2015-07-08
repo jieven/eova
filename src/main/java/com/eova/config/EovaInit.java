@@ -6,9 +6,14 @@
  */
 package com.eova.config;
 
+import java.io.File;
+import java.io.IOException;
+
+import com.eova.common.utils.db.DbUtil;
 import com.eova.common.utils.io.FileUtil;
 import com.eova.common.utils.io.NetUtil;
 import com.eova.common.utils.io.ZipUtil;
+import com.jfinal.kit.PathKit;
 
 public class EovaInit {
 
@@ -46,4 +51,23 @@ public class EovaInit {
 		t.start();
 	}
 
+	public static void initCreateSql() {
+		// 异步下载插件包
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				System.out.println("正在生成Oracle Sql ing...");
+				DbUtil.createOracleSql();
+				System.out.println("生成成功:/sql/oracle/*.sql");
+			}
+		};
+		t.start();
+	}
+
+	public static void main(String[] args) throws IOException {
+		System.out.println(PathKit.getRootClassPath());
+		System.out.println(PathKit.getWebRootPath());
+		System.out.println(new File(PathKit.getWebRootPath()).getParentFile().getParentFile().getCanonicalPath());
+		System.out.println(PathKit.class.getResource("/").getFile());
+	}
 }

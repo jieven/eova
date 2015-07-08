@@ -71,8 +71,18 @@ public class EovaConfig extends JFinalConfig {
 		// Load Cost Time
 		costTime(startTime);
 
-		EovaInit.initPlugins();
-
+		{
+			Boolean isInit = getPropertyToBoolean("initPlugins", true);
+			if (isInit) {
+				EovaInit.initPlugins();
+			}
+		}
+		{
+			Boolean isInit = getPropertyToBoolean("initSql", false);
+			if (isInit) {
+				EovaInit.initCreateSql();
+			}
+		}
 		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_MAIN));
 		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_field"));
 		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE));
@@ -99,8 +109,6 @@ public class EovaConfig extends JFinalConfig {
 		loadPropertyFile("eova.config");
 		// 开发模式
 		me.setDevMode(getPropertyToBoolean("devMode", true));
-		// 默认主视图
-		// me.setViewType(ViewType.FREE_MARKER);
 		// 设置主视图为Beetl
 		me.setMainRenderFactory(new BeetlRenderFactory());
 		// POST内容最大500M(安装包上传)

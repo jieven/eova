@@ -72,6 +72,7 @@ public class DsUtil {
 			}
 			conn = config.getDataSource().getConnection();
 			dbName = conn.getCatalog();
+			// TODO Oracle 无法获取数据库名称
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -85,14 +86,21 @@ public class DsUtil {
 	 * 
 	 * @param ds 数据源
 	 * @param type DsUtil.TABLE/VIEW
+	 * @param schemaPattern TODO
+	 * @param tableNamePattern TODO
 	 * @return
 	 */
-	public static List<String> getTableNamesByConfigName(String ds, String type) {
+	public static List<String> getTableNamesByConfigName(String ds, String type, String schemaPattern, String tableNamePattern) {
+
+		if (tableNamePattern == null) {
+			tableNamePattern = "%";
+		}
+
 		List<String> tables = new ArrayList<String>();
 		ResultSet rs = null;
 		try {
 			DatabaseMetaData md = getDatabaseMetaData(ds);
-			rs = md.getTables(null, null, "%", new String[] { type.toUpperCase() });
+			rs = md.getTables(null, schemaPattern, tableNamePattern, new String[] { type.toUpperCase() });
 			while (rs.next()) {
 				tables.add(rs.getString("TABLE_NAME"));
 			}

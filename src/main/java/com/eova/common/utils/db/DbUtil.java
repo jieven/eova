@@ -5,7 +5,6 @@ import java.util.List;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eova.common.utils.xx;
-import com.eova.template.common.config.TemplateConfig;
 import com.jfinal.plugin.activerecord.Record;
 
 public class DbUtil {
@@ -17,10 +16,12 @@ public class DbUtil {
 	 * @return
 	 */
 	private static String convertDataType(String typeName) {
-		if (typeName.contains("INT") || typeName.contains("BIT")) {
+		if (typeName.contains("INT")) {
 			return "NUMBER";
+		} else if (typeName.contains("BIT")) {
+			return "CHAR";
 		} else if (typeName.indexOf("TIME") != -1) {
-			return TemplateConfig.DATATYPE_TIME;
+			return "DATE";
 		} else {
 			return "VARCHAR2";
 		}
@@ -32,7 +33,7 @@ public class DbUtil {
 		StringBuilder sbDrop = new StringBuilder();
 		
 		String ds = xx.DS_EOVA;
-		List<String> tables = DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE);
+		List<String> tables = DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE, null, "EOVA%");
 		// List<String> tables = new ArrayList<String>();
 		// tables.add("eova_field");
 		for (String table : tables) {
@@ -46,6 +47,8 @@ public class DbUtil {
 			StringBuilder sb2 = new StringBuilder();
 			StringBuilder sb3 = new StringBuilder();
 
+			System.out.println(list);
+
 			sb.append("create table " + table);
 			sb.append("(\n");
 
@@ -56,7 +59,7 @@ public class DbUtil {
 				re.set("en", o.getString("COLUMN_NAME"));
 				re.set("cn", o.getString("REMARKS"));
 	            re.set("order_num", o.getIntValue("ORDINAL_POSITION"));
-				re.set("is_required", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? true : false);
+				re.set("is_required", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? false : true);
 
 				// 是否自增
 				boolean isAuto = "YES".equalsIgnoreCase(o.getString("IS_AUTOINCREMENT")) ? true : false;

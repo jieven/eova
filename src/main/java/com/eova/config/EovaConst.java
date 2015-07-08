@@ -47,6 +47,8 @@ public class EovaConst {
 	/** 默认超级管理员角色(创建菜单自动给角色授权) **/
 	public static final int DEFAULT_RID = 1;
 
+	/** 项目根目录 **/
+	public static final String DIR_PROJECT = new File(PathKit.getWebRootPath()).getParentFile().getParentFile().getParentFile().getPath() + File.separator;
 	/** WebApp 根目录 **/
 	public static final String DIR_WEB = PathKit.getWebRootPath() + File.separator;
 	/** 默认图片上传目录 **/
@@ -58,5 +60,5 @@ public class EovaConst {
 
 	/** Eova插件包URL **/
 	public static final String PLUGINS_URL = "http://7xign9.com1.z0.glb.clouddn.com/eova_plugins.zip";
-	// public static final String PLUGINS_URL = "http://7xign9.com1.z0.glb.clouddn.com/eova_plugins.zip";
+
 }

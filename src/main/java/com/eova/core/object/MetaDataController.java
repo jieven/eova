@@ -79,7 +79,7 @@ public class MetaDataController extends Controller {
 		// 获取数据库
 		String ds = getPara(0);
 		String type = getPara(1);
-		List<String> tables = DsUtil.getTableNamesByConfigName(ds, type);
+		List<String> tables = DsUtil.getTableNamesByConfigName(ds, type, null, null);
 		JSONArray tableArray = new JSONArray();
 		for (String tableName : tables) {
 			JSONObject jsonObject = new JSONObject();
