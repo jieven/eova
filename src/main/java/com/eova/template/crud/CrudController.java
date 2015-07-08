@@ -17,7 +17,7 @@ import com.eova.common.utils.file.ImageUtil;
 import com.eova.common.utils.util.ExceptionUtil;
 import com.eova.config.EovaConst;
 import com.eova.model.EovaLog;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
@@ -93,15 +93,15 @@ public class CrudController extends Controller {
 		initIntercept(crud.getBizIntercept());
 
 		// 获取基础数据
-		List<MetaItem> eis = crud.getItemList();
+		List<MetaField> eis = crud.getItemList();
 
 		// 获取主键的值
 		Object pkValue = getPara(1);
 		// 根据主键获取对象
-		Record record = Db.use(crud.getDs()).findById(crud.getView(), crud.getPkName(), pkValue, "*");
+		Record record = Db.use(crud.getDs()).findById(crud.getView(), crud.getPk(), pkValue, "*");
 
 		// 分别根据字段获取值
-		for (MetaItem ei : eis) {
+		for (MetaField ei : eis) {
 			String key = ei.getEn();
 			Object value = record.get(key);
 			if (value == null) {
@@ -129,10 +129,10 @@ public class CrudController extends Controller {
 
 		Crud crud = new Crud(this, CrudConfig.LIST);
 
-		List<MetaItem> eis = crud.getItemList();
+		List<MetaField> eis = crud.getItemList();
 		boolean isQuery = false;
-		for (MetaItem item : eis) {
-			if (item.getBoolean("isQuery")) {
+		for (MetaField item : eis) {
+			if (item.getBoolean("is_query")) {
 				isQuery = true;
 				break;
 			}
@@ -160,10 +160,10 @@ public class CrudController extends Controller {
 
 		// 获取基础数据
 		final MetaObject eo = crud.getObject();
-		List<MetaItem> eis = crud.getItemList();
+		List<MetaField> eis = crud.getItemList();
 
 		// 构建对象数据
-		final Map<String, Record> reMap = CrudManager.buildData(this, eis, record, crud.getPkName(), true);
+		final Map<String, Record> reMap = CrudManager.buildData(this, eis, record, crud.getPk(), true);
 
 		// 事务(默认为TRANSACTION_READ_COMMITTED)
 		boolean flag = Db.tx(new IAtom() {
@@ -177,10 +177,10 @@ public class CrudController extends Controller {
 
 					if (!xx.isEmpty(crud.getTable())) {
 						// update table
-						Db.use(crud.getDs()).save(crud.getTable(), crud.getPkName(), record);
+						Db.use(crud.getDs()).save(crud.getTable(), crud.getPk(), record);
 					} else {
 						// update view
-						CrudManager.operateView(crud.getPkName(), reMap, CrudConfig.ADD);
+						CrudManager.operateView(crud.getPk(), reMap, CrudConfig.ADD);
 					}
 
 					// 新增后置任务
@@ -249,7 +249,7 @@ public class CrudController extends Controller {
 						for (String pk : pks) {
 							// 根据主键删除对象
 							if (!xx.isEmpty(crud.getTable())) {
-								Db.use(crud.getDs()).deleteById(crud.getTable(), crud.getPkName(), pk);
+								Db.use(crud.getDs()).deleteById(crud.getTable(), crud.getPk(), pk);
 							} else {
 								// update view
 								CrudManager.deleteView(eo.getStr("code"), pk);
@@ -303,8 +303,8 @@ public class CrudController extends Controller {
 
 		// 获取基础数据
 		final MetaObject eo = crud.getObject();
-		final Map<String, Record> reMap = CrudManager.buildData(this, crud.getItemList(), record, crud.getPkName(), false);
-		final Object pkValue = record.get(crud.getPkName());
+		final Map<String, Record> reMap = CrudManager.buildData(this, crud.getItemList(), record, crud.getPk(), false);
+		final Object pkValue = record.get(crud.getPk());
 
 		// 事务(默认为TRANSACTION_READ_COMMITTED)
 		boolean flag = Db.tx(new IAtom() {
@@ -318,10 +318,10 @@ public class CrudController extends Controller {
 
 					if (!xx.isEmpty(crud.getTable())) {
 						// update table
-						Db.use(crud.getDs()).update(crud.getTable(), crud.getPkName(), record);
+						Db.use(crud.getDs()).update(crud.getTable(), crud.getPk(), record);
 					} else {
 						// update view
-						CrudManager.operateView(crud.getPkName(), reMap, CrudConfig.UPDATE);
+						CrudManager.operateView(crud.getPk(), reMap, CrudConfig.UPDATE);
 					}
 
 					// 修改后置任务

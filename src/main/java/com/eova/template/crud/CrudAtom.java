@@ -47,9 +47,9 @@ public class CrudAtom implements IAtom {
 			for (Record re : records) {
 				System.out.println(re.toJson());
 				// 移除主键(新增数据主键自增长)
-				re.remove(crud.getPkName());
+				re.remove(crud.getPk());
 				if (!xx.isEmpty(crud.getTable())) {
-					Db.use(crud.getDs()).save(crud.getTable(), crud.getPkName(), re);
+					Db.use(crud.getDs()).save(crud.getTable(), crud.getPk(), re);
 				}
 			}
 

@@ -27,7 +27,7 @@ import com.eova.model.Button;
 import com.eova.model.EovaLog;
 import com.eova.model.Menu;
 import com.eova.model.MenuObject;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.eova.model.Role;
 import com.eova.model.RoleBtn;
@@ -74,7 +74,7 @@ public class EovaConfig extends JFinalConfig {
 		EovaInit.initPlugins();
 
 		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_MAIN));
-		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_item"));
+		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_field"));
 		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE));
 		// System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "EOVA_USER"));
 		// DbUtil.createOracleSql();
@@ -187,7 +187,7 @@ public class EovaConfig extends JFinalConfig {
 			// 配置ActiveRecord插件
 			arp.addMapping("eova_user", User.class);
 			arp.addMapping("eova_object", MetaObject.class);
-			arp.addMapping("eova_item", MetaItem.class);
+			arp.addMapping("eova_field", MetaField.class);
 			arp.addMapping("eova_button", Button.class);
 			arp.addMapping("eova_menu", Menu.class);
 			arp.addMapping("eova_menu_object", MenuObject.class);

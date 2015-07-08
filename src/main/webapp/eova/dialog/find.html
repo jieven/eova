@@ -24,7 +24,7 @@ var selectData = function($dialog, $input, $inputcn) {
     	// 有选中行
         if (row) {
         	// 获取主键值(第一列)
-        	$input.val(row.${obj.pkName});
+        	$input.val(row.${obj.pk});
         	// 获取翻译值(第二列)
             $inputcn.val(row.${obj.cn});
             $inputcn.validatebox('validate');

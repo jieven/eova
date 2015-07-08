@@ -11,7 +11,7 @@ import java.util.List;
 import com.eova.model.Button;
 import com.eova.model.Menu;
 import com.eova.model.MenuObject;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.eova.model.User;
 import com.eova.template.common.vo.UrlCmd;
@@ -26,7 +26,7 @@ import com.jfinal.core.Controller;
 public class Crud {
 
 	private MetaObject object; // 对象模型
-	private List<MetaItem> itemList; // 字段属性
+	private List<MetaField> itemList; // 字段属性
 	private List<Button> btnList; // 功能按钮
 	private UrlCmd cmd; // 参数对象
 	private String url; // 参数URL
@@ -41,7 +41,7 @@ public class Crud {
 	 * @return
 	 */
 	public String getDs() {
-		return object.getStr("dataSource");
+		return object.getDs();
 	}
 
 	/***
@@ -49,8 +49,8 @@ public class Crud {
 	 * 
 	 * @return
 	 */
-	public String getPkName() {
-		return object.getStr("pkName");
+	public String getPk() {
+		return object.getPk();
 	}
 
 	/**
@@ -96,14 +96,14 @@ public class Crud {
 
 		// 获取菜单
 		Menu menu = Menu.dao.findByCode(menuCode);
-		this.bizIntercept = menu.getStr("bizIntercept");
+		this.bizIntercept = menu.getStr("biz_intercept");
 		
 		// 获取当前菜单的数据对象
 		List<MenuObject> objectCodes = MenuObject.dao.queryByMenuCode(menuCode);
-		String objectCode = objectCodes.get(0).getStr("objectCode");
+		String objectCode = objectCodes.get(0).getStr("object_code");
 
 		this.object = MetaObject.dao.getByCode(objectCode);
-		this.itemList = MetaItem.dao.queryByObjectCode(objectCode);
+		this.itemList = MetaField.dao.queryByObjectCode(objectCode);
 		// 根据权限获取功能按钮
 		User user = c.getSessionAttr("user");
 		this.btnList = Button.dao.queryByMenuCode(menuCode, user.getInt("rid"));
@@ -112,7 +112,7 @@ public class Crud {
 		this.view = object.getView();
 		
 		// 获取Edit 控件类型
-		for(MetaItem item : itemList){
+		for(MetaField item : itemList){
 			String type = item.getStr("type");
 			if (type.equals("复选框")) {
 				item.put("editor", "eovacheck");
@@ -149,11 +149,11 @@ public class Crud {
 		this.object = obj;
 	}
 
-	public List<MetaItem> getItemList() {
+	public List<MetaField> getItemList() {
 		return itemList;
 	}
 
-	public void setItemList(List<MetaItem> itemList) {
+	public void setItemList(List<MetaField> itemList) {
 		this.itemList = itemList;
 	}
 

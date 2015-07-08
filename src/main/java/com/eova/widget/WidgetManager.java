@@ -13,7 +13,7 @@ import java.util.Set;
 import com.eova.common.utils.xx;
 import com.eova.config.PageConst;
 import com.eova.engine.EovaExp;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
@@ -40,15 +40,7 @@ public class WidgetManager {
 		if (xx.isEmpty(sort)) {
 			return "";
 		}
-		// if (!xx.isEmpty(eo) ) {
-		// if (xx.isEmpty(sort)) {
-		// // 初始默认主键排序
-		// if (xx.isEmpty(sort) && eo.getBoolean("isDefaultPkDesc")) {
-		// return " order by " + eo.getStr("pkName") + " desc";
-		// }
-		// return " ";
-		// }
-		// }
+
 		// 获取排序方式
 		String order = c.getPara(PageConst.ORDER, "desc");
 		return " order by " + sort + ' ' + order;
@@ -67,52 +59,57 @@ public class WidgetManager {
 	 * @param parmList SQL参数
 	 * @return
 	 */
-	public static String getWhere(Controller c, List<MetaItem> eis, List<String> parmList, String where) {
+	public static String getWhere(Controller c, List<MetaField> eis, List<String> parmList, String where) {
 
+		StringBuilder sb = new StringBuilder();
+		
 		boolean isWhere = true;
-		for (MetaItem ei : eis) {
-
-			// 给查询表单添加前缀，防止和系统级别字段重名
-			String key = ei.getEn();
-			String value = c.getPara(PageConst.QUERY + key, "").trim();
-			if ( (!value.equals("")) && (!value.equals("-1"))) {
-				if (isWhere) {
-					if (!xx.contains(where.toLowerCase(), "where")) {
-						where += " where 1=1 ";
+		for (MetaField ei : eis) {
+			// sql where 初始化
+			if (isWhere) {
+				// 存在初始过滤条件
+				if (!xx.isEmpty(where)) {
+					// 补where
+					if (!where.toLowerCase().contains("where")) {
+						sb.insert(0, " where ");
 					} else {
-						where += " ";
+						sb.append(" ");
 					}
-					isWhere = false;
-				}
-				// 复选框需要特转换值
-				if (ei.getStr("type").equals(MetaItem.TYPE_CHECK)) {
-					if (xx.isEmpty(value)) {
-						value = "0";
-					} else {
-						value = "1";
-					}
-				}
-				// 文本框查询条件为模糊匹配
-				if (ei.getStr("type").equals(MetaItem.TYPE_TEXT)) {
-					where += "and " + key + " like ? ";
-					parmList.add("%"+ value +"%");
+					sb.append(where + " ");
 				} else {
-					where += "and " + key + " = ? ";
-					parmList.add(value);
+					sb.append(" where 1=1 ");
 				}
-				// if (ei.getStr("dataType").equals(TemplateConfig.DATATYPE_NUMBER)) {
-				// where += "and " + key + " = ? ";
-				// parmList.add(value);
-				// }
-				// if (ei.getStr("dataType").equals(TemplateConfig.DATATYPE_TIME)) {
-				// where += "and " + key + " = ? ";
-				// parmList.add(value);
-				// }
-				// 保持条件值
-				ei.put("value", value);
+				isWhere = false;
 			}
+
+			String key = ei.getEn();
+			// 给查询表单添加前缀，防止和系统级别字段重名
+			String value = c.getPara(PageConst.QUERY + key, "").trim();
+			if (xx.isEmpty(value) || value.equals("-1")) {
+				continue;
+			}
+			
+			// 复选框需要转换值
+			if (ei.getStr("type").equals(MetaField.TYPE_CHECK)) {
+				if (xx.isEmpty(value)) {
+					value = "0";
+				} else {
+					value = "1";
+				}
+			}
+			// 文本框查询条件为模糊匹配
+			if (ei.getStr("type").equals(MetaField.TYPE_TEXT)) {
+				sb.append("and " + key + " like ? ");
+				parmList.add("%" + value + "%");
+			} else {
+				sb.append("and " + key + " = ? ");
+				parmList.add(value);
+			}
+			
+			// 保持条件值回显
+			ei.put("value", value);
 		}
-		return where;
+		return sb.toString();
 	}
 
 	/**
@@ -122,15 +119,15 @@ public class WidgetManager {
 	 * @return
 	 */
 	public static String addWhere(String sql) {
-		if (!xx.contains(sql.toLowerCase(), "where")) {
+		if (!sql.toLowerCase().contains("where")) {
 			return " where 1=1 ";
 		}
 		return "";
 	}
 
-	public static void convertValueByExp(List<MetaItem> eis, List<Record> reList) {
+	public static void convertValueByExp(List<MetaField> eis, List<Record> reList) {
 		// 根据表达式翻译显示CN(获取当前字段所有的 查询结果值，拼接成 字符串 用于 结合表达式进行 in()查询获得cn 然后替换之)
-		for (MetaItem ei : eis) {
+		for (MetaField ei : eis) {
 			// 获取控件表达式
 			String exp = ei.getStr("exp");
 			if (xx.isEmpty(exp)) {
@@ -166,11 +163,11 @@ public class WidgetManager {
 				sql.append(" and ").append(pk);
 				sql.append(" in(");
 				// 根据当前页数据主键查询外键显示值
-				for(String id : ids){
+				for (String id : ids) {
 					sql.append(xx.format(id));
 					sql.append(",");
 				}
-				sql.delete(sql.length() -1, sql.length());
+				sql.delete(sql.length() - 1, sql.length());
 				sql.append(")");
 			}
 			// System.out.println("convertValueByExp：" + sql.toString());

@@ -12,7 +12,7 @@ import java.util.List;
 import com.eova.common.utils.xx;
 import com.eova.config.PageConst;
 import com.eova.engine.EovaExp;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
@@ -48,7 +48,7 @@ public class WidgetController extends Controller {
 		// 自定义表达式
 		if (xx.isEmpty(exp)) {
 			// 根据表达式获取ei
-			MetaItem ei = MetaItem.dao.getByObjectCodeAndEn(code, field);
+			MetaField ei = MetaField.dao.getByObjectCodeAndEn(code, field);
 			exp = ei.getStr("exp");
 			url += "code=" + code + "&field=" + field;
 		} else {
@@ -58,7 +58,7 @@ public class WidgetController extends Controller {
 		// 根据表达式手工构建Eova_Object
 		MetaObject eo = EovaExp.getEo(exp);
 		// 根据表达式手工构建Eova_Item
-		List<MetaItem> eis = EovaExp.getEis(exp);
+		List<MetaField> eis = EovaExp.getEis(exp);
 
 		setAttr("obj", eo);
 		setAttr("itemList", eis);
@@ -77,12 +77,12 @@ public class WidgetController extends Controller {
 		String en = getPara("field");
 		if (xx.isEmpty(exp)) {
 			// 根据表达式获取ei
-			MetaItem ei = MetaItem.dao.getByObjectCodeAndEn(code, en);
+			MetaField ei = MetaField.dao.getByObjectCodeAndEn(code, en);
 			exp = ei.getStr("exp");
 		}
 
 		// 根据表达式手工构建Eova_Item
-		List<MetaItem> eis = EovaExp.getEis(exp);
+		List<MetaField> eis = EovaExp.getEis(exp);
 		// 根据表达式获取SQL进行查询
 		String select = EovaExp.getSelectNoAlias(exp);
 		String from = EovaExp.getFrom(exp);
@@ -124,7 +124,7 @@ public class WidgetController extends Controller {
 		String value = getPara(2);
 
 		// 根据表达式获取ei
-		MetaItem ei = MetaItem.dao.getByObjectCodeAndEn(code, en);
+		MetaField ei = MetaField.dao.getByObjectCodeAndEn(code, en);
 		// 获取查找框表达式
 		String exp = ei.getStr("exp");
 		// 根据表达式获取SQL进行查询
@@ -156,11 +156,11 @@ public class WidgetController extends Controller {
 		String en = getPara(1);
 
 		// 根据Code和字段获取表达式
-		MetaItem ei = MetaItem.dao.getByObjectCodeAndEn(objectCode, en);
+		MetaField ei = MetaField.dao.getByObjectCodeAndEn(objectCode, en);
 		String exp = ei.getStr("exp");
 
 		// 根据表达式手工构建Eova_Item
-		List<MetaItem> eis = EovaExp.getEis(exp);
+		List<MetaField> eis = EovaExp.getEis(exp);
 		
 		// 根据表达式获取SQL进行查询
 		// 下拉框表达式 别名固定为 ID,CN,否则页面无法获取

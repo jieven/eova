@@ -18,7 +18,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -29,7 +29,7 @@ import com.jfinal.plugin.activerecord.Record;
  * 
  */
 public class ExcelUtil {
-	public static void createExcel(OutputStream os, List<Record> list, List<MetaItem> items, MetaObject object) throws WriteException, IOException {
+	public static void createExcel(OutputStream os, List<Record> list, List<MetaField> items, MetaObject object) throws WriteException, IOException {
 		// 创建工作薄
 		WritableWorkbook workbook = Workbook.createWorkbook(os);
 		// 创建新的一页
@@ -38,7 +38,7 @@ public class ExcelUtil {
 		int row = 0;// 当前行索引
 		// 写入标题
 		for (int i = 0; i < items.size(); i++) {
-			MetaItem item = items.get(i);
+			MetaField item = items.get(i);
 			WritableCellFormat format = new WritableCellFormat();
 			format.setBackground(Colour.GRAY_25);// 设置灰色背景
 			sheet.addCell(new Label(i, row, item.getCn(), format));
@@ -69,10 +69,10 @@ public class ExcelUtil {
 	 * @param record
 	 * @return
 	 */
-	private static String[] getValues(List<MetaItem> items, Record record) {
+	private static String[] getValues(List<MetaField> items, Record record) {
 		String[] values = new String[items.size()];
 		int i = -1;
-		for (MetaItem item : items) {
+		for (MetaField item : items) {
 			i++;
 			Object value = record.get(item.getEn());
 			if (value == null) {
@@ -83,7 +83,7 @@ public class ExcelUtil {
 		return values;
 	}
 
-	public static List<Record> importExcel(InputStream is, List<MetaItem> items) {
+	public static List<Record> importExcel(InputStream is, List<MetaField> items) {
 
 		List<Record> list = new ArrayList<Record>();
 
@@ -131,9 +131,9 @@ public class ExcelUtil {
 		return list;
 	}
 
-	private static Map<String, String> getKeyValue(List<MetaItem> items) {
+	private static Map<String, String> getKeyValue(List<MetaField> items) {
 		HashMap<String, String> map = new HashMap<String, String>();
-		for (MetaItem item : items) {
+		for (MetaField item : items) {
 			map.put(item.getCn(), item.getEn());
 		}
 		return map;

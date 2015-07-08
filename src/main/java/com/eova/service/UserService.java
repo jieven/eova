@@ -12,8 +12,8 @@ import com.eova.model.User;
 
 public class UserService {
 
-	public List<User> queryUser(String nickName){
-		List<User> list = User.dao.find("select * from eova_user where nickName = ?", nickName);
+	public List<User> queryUser(String nickname){
+		List<User> list = User.dao.find("select * from eova_user where nickname = ?", nickname);
 		return list;
 	}
 	
@@ -23,6 +23,6 @@ public class UserService {
 	 * @return
 	 */
 	public User getUserByLoginId(String loginId) {
-		return User.dao.findFirst("select * from eova_user where loginId = ?", loginId);
+		return User.dao.findFirst("select * from eova_user where login_id = ?", loginId);
 	}
 }

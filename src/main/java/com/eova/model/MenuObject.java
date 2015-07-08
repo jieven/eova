@@ -8,9 +8,9 @@ package com.eova.model;
 
 import java.util.List;
 
-import com.jfinal.plugin.activerecord.Db;
 import com.eova.common.base.BaseModel;
 import com.eova.common.utils.xx;
+import com.jfinal.plugin.activerecord.Db;
 
 /**
  * 菜单关联对象
@@ -30,7 +30,7 @@ public class MenuObject extends BaseModel<MenuObject> {
 	 * @return
 	 */
 	public List<MenuObject> queryByMenuCode(String menuCode) {
-		return MenuObject.dao.queryByCache("select objectCode from eova_menu_object where menuCode = ?", menuCode);
+		return MenuObject.dao.queryByCache("select object_code from eova_menu_object where menu_code = ?", menuCode);
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class MenuObject extends BaseModel<MenuObject> {
 	 * @param menuCode
 	 */
 	public void deleteByMenuCode(String menuCode) {
-		Db.use(xx.DS_EOVA).update("delete from eova_menu_object where menuCode = ?", menuCode);
+		Db.use(xx.DS_EOVA).update("delete from eova_menu_object where menu_code = ?", menuCode);
 	}
 	
 }

@@ -55,7 +55,7 @@ public class Menu extends BaseModel<Menu> {
 	 * @return
 	 */
 	public List<Menu> queryRoot() {
-		return super.queryByCache("select * from eova_menu where parentId = 0 order by indexNum");
+		return super.queryByCache("select * from eova_menu where parentId = 0 order by order_num");
 	}
 
 	/**
@@ -64,73 +64,7 @@ public class Menu extends BaseModel<Menu> {
 	 */
 	@Override
 	public List<Menu> queryAll() {
-		return super.queryByCache("select * from eova_menu order by indexNum");
+		return super.queryByCache("select * from eova_menu order by order_num");
 	}
-
-	/**
-	 * 获取菜单
-	 * @param parentId 根节点
-	 * @return
-	 */
-	// public List<Menu> queryByParentId(int parentId) {
-	// return super.queryByCache("select * from eova_menu where parentId != 0 and FIND_IN_SET(id, queryChild(?)) order by parentId,indexNum ", parentId);
-	// }
-
-	// public List<Menu> queryByParentId(int parentId, int rid) {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("select * from eova_menu where parentId != 0 and FIND_IN_SET(id, queryChild(?)) and urlCmd = ''");
-//		sb.append(" or code in (select menuCode from eova_button where name = '查询' and id in (select bid from eova_role_btn where rid = ?)");
-//		sb.append(") order by indexNum");
-//		sb.append("");
-	// String sql = "select * from eova_menu where parentId != 0 and FIND_IN_SET(id, queryChild(?))";
-	// return super.queryByCache(sql, parentId, rid);
-	// }
-
-	/**
-	 * 获取某节点所有父子数据（废弃）
-	 * 
-	 * @return
-	 */
-	// public Map<Integer, Menu> queryMenuByParentId(int parentId) {
-	// List<Menu> menus = Menu.dao.find("select * from eova_menu order by parentId,indexNum");
-	//
-	// // List转有序Map
-	// LinkedHashMap<Integer, Menu> temp = new LinkedHashMap<Integer, Menu>();
-	// for (Menu x : menus) {
-	// temp.put(x.getInt("id"), x);
-	// }
-	//
-	// // 获取某节点下数据
-	// LinkedHashMap<Integer, Menu> result = new LinkedHashMap<Integer, Menu>();
-	//
-	// getNode(temp, parentId, result);
-	//
-	// return result;
-	// }
-	
-	/**
-	 * 递归查找子节点
-	 * @param src
-	 * @param parentId
-	 * @param result
-	 */
-	// private void getNode(Map<Integer, Menu> src, int parentId, Map<Integer, Menu> result) {
-	// for (Map.Entry<Integer, Menu> map : src.entrySet()) {
-	// if (map.getKey() == parentId) {
-	// result.put(map.getKey(), map.getValue());
-	// // 子ID递归找孙节点
-	// getNode(src, map.getKey(), result);
-	// }
-	// }
-	// }
-
-//	public int compare(Menu o1, Menu o2) {
-//		if (o1.getInt("indexNum") < o2.getInt("indexNum")) {
-//			return -1;
-//		} else if (o1.getInt("indexNum") < o2.getInt("indexNum")) {
-//			return 0;
-//		} else
-//			return 1;
-//	}
 
 }

@@ -23,9 +23,9 @@ CREATE TABLE `dict` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `class` varchar(50) NOT NULL,
+  `object` varchar(50) NOT NULL,
   `field` varchar(50) NOT NULL,
-  `ext` varchar(255) NOT NULL DEFAULT '' COMMENT '扩展',
+  `ext` varchar(255) NOT NULL COMMENT '扩展Json',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -65,10 +65,10 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` int(2) DEFAULT '0' COMMENT '状态',
-  `loginId` varchar(255) DEFAULT '' COMMENT '登录账户',
-  `loginPwd` varchar(255) DEFAULT '' COMMENT '录登密码',
-  `nickName` varchar(255) DEFAULT '' COMMENT '昵称',
-  `regTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+  `login_id` varchar(255) DEFAULT '' COMMENT '登录账户',
+  `login_pwd` varchar(255) DEFAULT '' COMMENT '录登密码',
+  `nickname` varchar(255) DEFAULT '' COMMENT '昵称',
+  `reg_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `info` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
@@ -153,11 +153,11 @@ INSERT INTO `users` VALUES ('84', '0', 'test2', '000000', '浅仓舞', '2014-12-
 -- ----------------------------
 DROP TABLE IF EXISTS `users_exp`;
 CREATE TABLE `users_exp` (
-  `uid` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
   `exp` int(11) DEFAULT '0' COMMENT '经验值',
   `avg` int(11) DEFAULT '0' COMMENT '年龄',
   `qq` varchar(255) DEFAULT '' COMMENT 'QQ',
-  PRIMARY KEY (`uid`)
+  PRIMARY KEY (`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -199,8 +199,8 @@ INSERT INTO `users_exp` VALUES ('30', '0', '47', '1623736479');
 DROP TABLE IF EXISTS `users_item`;
 CREATE TABLE `users_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `usersId` int(11) NOT NULL COMMENT '艺人',
-  `itemId` int(11) NOT NULL COMMENT '道具',
+  `users_id` int(11) NOT NULL COMMENT '艺人',
+  `item_id` int(11) NOT NULL COMMENT '道具',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -219,4 +219,4 @@ INSERT INTO `users_item` VALUES ('7', '10', '1');
 -- View structure for `v_users`
 -- ----------------------------
 DROP VIEW IF EXISTS `v_users`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_users` AS select `users`.`id` AS `id`,`users`.`status` AS `status`,`users`.`loginId` AS `loginId`,`users`.`loginPwd` AS `loginPwd`,`users`.`nickName` AS `nickName`,`users`.`regTime` AS `regTime`,`users`.`info` AS `info`,`users_exp`.`uid` AS `uid`,`users_exp`.`exp` AS `exp`,`users_exp`.`avg` AS `avg`,`users_exp`.`qq` AS `qq` from (`users` join `users_exp`) where (`users`.`id` = `users_exp`.`uid`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_users` AS select `users`.`id` AS `id`,`users`.`status` AS `status`,`users`.`login_id` AS `login_id`,`users`.`login_pwd` AS `login_pwd`,`users`.`nickname` AS `nickname`,`users`.`reg_time` AS `reg_time`,`users`.`info` AS `info`,`users_exp`.`users_id` AS `users_id`,`users_exp`.`exp` AS `exp`,`users_exp`.`avg` AS `avg`,`users_exp`.`qq` AS `qq` from (`users` join `users_exp`) where (`users`.`id` = `users_exp`.`users_id`) ;

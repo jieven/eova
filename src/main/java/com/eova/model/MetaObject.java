@@ -21,7 +21,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getDs() {
-		return this.getStr("dataSource");
+		return this.getStr("data_source");
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getTable() {
-		return this.getStr("tableName");
+		return this.getStr("table_name");
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getPk() {
-		return this.getStr("pkName");
+		return this.getStr("pk_name");
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class MetaObject extends BaseModel<MetaObject> {
 	 * @return
 	 */
 	public String getView() {
-		String view = this.getStr("viewName");
+		String view = this.getStr("view_name");
 		if (xx.isEmpty(view)) {
 			view = getTable();
 		}

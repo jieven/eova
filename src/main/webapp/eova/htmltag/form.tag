@@ -14,16 +14,16 @@
 				
 			<%// 该字段是否允许编辑%>
 			<%if(isTrue(isUpdate!)){%>
-				<%if(isTrue(item.isUpdate)){%>
+				<%if(isTrue(item.is_update)){%>
 					<div class="eova-form-field" title="${item.cn}[${item.en}]" ${item.type == '文本域' || item.type == '编辑框' ? 'style="width:98%"' : ''} >
-					<div class="eova-form-lbl${isTrue(item.isNotNull!) ? ' red' : ''}">${item.cn}:${item.hint!}</div>
+					<div class="eova-form-lbl${isTrue(item.is_required!) ? ' red' : ''}">${item.cn}:${item.hint!}</div>
 					<#formfield item="${item}" />
 					</div>
 				<%}%>
 			<%} else {%>
-				<%if(isTrue(item.isAdd)){%>
+				<%if(isTrue(item.is_add)){%>
 				<div class="eova-form-field" title="${item.cn}[${item.en}]" ${item.type == '文本域' || item.type == '编辑框' ? 'style="width:98%"' : ''} >
-				<div class="eova-form-lbl${isTrue(item.isNotNull!) ? ' red' : ''}">${item.cn}:${item.hint!}</div>
+				<div class="eova-form-lbl${isTrue(item.is_required!) ? ' red' : ''}">${item.cn}:${item.hint!}</div>
 				<#formfield item="${item}" />
 				</div>
 				<%}%>

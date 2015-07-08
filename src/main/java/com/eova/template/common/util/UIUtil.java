@@ -8,7 +8,7 @@ package com.eova.template.common.util;
 
 import java.util.List;
 
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -28,13 +28,13 @@ public class UIUtil {
 	 * @param dataList 数据集合
 	 * @return
 	 */
-	public static String getTableBody(MetaObject obj, List<MetaItem> itemList, List<Record> dataList) {
+	public static String getTableBody(MetaObject obj, List<MetaField> itemList, List<Record> dataList) {
 		StringBuilder sb = new StringBuilder();
 
 		// 遍历数据集
 		for (Record record : dataList) {
 			// 主键
-			String pkName = obj.get("pkName");
+			String pkName = obj.get("pk_name");
 			// 获取当前数据对象的主键值
 			String pkValue = record.get(pkName).toString();
 
@@ -45,9 +45,9 @@ public class UIUtil {
 				sb.append("<td><input name=\"ids\" \" type=\"checkbox\" value=\"" + pkValue + "\"></td>");
 			}
 
-			for (MetaItem item : itemList) {
+			for (MetaField item : itemList) {
 				// 是否显示字段
-				boolean isShow = item.getBoolean("isShow");
+				boolean isShow = item.getBoolean("is_show");
 				if (isShow) {
 					String itemKey = item.getEn();
 					sb.append("<td>" + record.get(itemKey).toString() + "</td>");

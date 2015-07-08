@@ -34,7 +34,7 @@ public class DbUtil {
 		String ds = xx.DS_EOVA;
 		List<String> tables = DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE);
 		// List<String> tables = new ArrayList<String>();
-		// tables.add("eova_item");
+		// tables.add("eova_field");
 		for (String table : tables) {
 
 			String drop = "drop table " + table + ";\n";
@@ -55,15 +55,15 @@ public class DbUtil {
 	            Record re = new Record();
 				re.set("en", o.getString("COLUMN_NAME"));
 				re.set("cn", o.getString("REMARKS"));
-	            re.set("indexNum", o.getIntValue("ORDINAL_POSITION"));
-				re.set("isNotNull", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? true : false);
+	            re.set("order_num", o.getIntValue("ORDINAL_POSITION"));
+				re.set("is_required", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? true : false);
 
 				// 是否自增
 				boolean isAuto = "YES".equalsIgnoreCase(o.getString("IS_AUTOINCREMENT")) ? true : false;
-				re.set("isAuto", isAuto);
+				re.set("is_auto", isAuto);
 				// 字段类型
 				String typeName = o.getString("TYPE_NAME");
-				re.set("dataType", convertDataType(typeName));
+				re.set("data_type", convertDataType(typeName));
 				// 字段长度
 				int size = o.getIntValue("COLUMN_SIZE");
 				if(size == 0){
@@ -71,11 +71,11 @@ public class DbUtil {
 				}
 				// 默认值
 				String def = o.getString("COLUMN_DEF");
-				re.set("valueExp", def);
+				re.set("defaulter", def);
 
 				// create table
-				sb.append("    " + re.getStr("en") + " " + re.getStr("dataType") + "(" + size + ")");
-				if (re.getBoolean("isNotNull")) {
+				sb.append("    " + re.getStr("en") + " " + re.getStr("data_type") + "(" + size + ")");
+				if (re.getBoolean("is_required")) {
 					sb.append(" NOT NULL");
 				}
 				sb.append(",\n");

@@ -18,7 +18,7 @@
 			</tr>
 			<tr>
 				<th>序号</th>
-				<td><#text id="index" name="indexNum" value="${menu.indexNum!1}" isNoN="true" /></td>
+				<td><#text id="index" name="indexNum" value="${menu.order_num!1}" isNoN="true" /></td>
 				<th>业务类型</th>
 				<td>
 				<select class="easyui-combobox" id="type" name="type" style="width: 179px;" isNoN="true" data-options="editable:false, onChange:typeChange">
@@ -43,7 +43,7 @@
 			</tr>
 			<tr>
 				<th>业务拦截器</th>
-				<td><#texts id="singleGrid_Interceptor" name="bizIntercept" value="${menu.bizIntercept!}" style="width:90%;height:50px;" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
+				<td><#texts id="singleGrid_Interceptor" name="bizIntercept" value="${menu.biz_intercept!}" style="width:90%;height:50px;" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
 			</tr>
 		</table>
 	</fieldset>

@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eova.common.utils.xx;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 
 public class EovaExp {
 	public static void main(String[] args) {
-//		String exp = "select id ID,nickName 昵称, loginId 帐号 from eova_user where id = ?;ds=eova";
 		String exp = "select id ID,name 昵称 from game where 1=1;ds=main";
-//		String exp = "select value ID,name 状态 from `dict` where `table` = 'game' and field = 'status';ds=main";
 
 		System.out.println("select="+getSelectNoAlias(exp));
 		System.out.println("from="+getFrom(exp));
@@ -138,13 +136,13 @@ public class EovaExp {
 	 */
 	public static MetaObject getEo(String exp) {
 		MetaObject eo = new MetaObject();
-		eo.put("dataSource", getDs(exp));
+		eo.put("data_source", getDs(exp));
 //		eo.put("code", code);
 		eo.put("name", "");
-		eo.put("tableName", "");
-		eo.put("isDefaultPkDesc", false);
+		eo.put("table_name", "");
+		eo.put("is_default_pk_desc", false);
 		// 获取第一的值作为主键
-		eo.put("pkName", getPk(exp));
+		eo.put("pk_name", getPk(exp));
 		// 获取第二列的值作为CN
 		eo.put("cn", getCn(exp));
 		return eo;
@@ -155,18 +153,16 @@ public class EovaExp {
 	 * @param exp 表达式
 	 * @return
 	 */
-	public static List<MetaItem> getEis(String exp) {
+	public static List<MetaField> getEis(String exp) {
 
-		// select id ID,nickName 昵称,loginId 帐号 from eova_user where id = ?
+		// select id id,nickname 昵称,loginid 帐号 from eova_user where id = ?
 		int a = 7;
 		int b = exp.indexOf("from");
 
-		// id ID,nickName 昵称,loginId 帐号
+		// id id,nickname 昵称,loginid 帐号
 		String items = exp.substring(a, b);
 
-		// MetaItem ei = new MetaItem();
-
-		List<MetaItem> eis = new ArrayList<MetaItem>();
+		List<MetaField> eis = new ArrayList<MetaField>();
 		int index = 0;
 		for (String item : items.split(",")) {
 			index++;
@@ -197,18 +193,18 @@ public class EovaExp {
 	 * @param isQuery 是否可查询
 	 * @return
 	 */
-	public static MetaItem buildItem(int index, String en, String cn, boolean isQuery) {
+	public static MetaField buildItem(int index, String en, String cn, boolean isQuery) {
 
 		en = en.toLowerCase();
 
-		MetaItem ei = new MetaItem();
-		ei.put("indexNum", index);
-		//ei.put("objectCode", code);
+		MetaField ei = new MetaField();
+		ei.put("order_num", index);
+		//ei.put("object_code", code);
 		ei.put("en", en);
 		ei.put("cn", cn);
-		ei.put("dataType", "string");
+		ei.put("data_type", "string");
 		ei.put("type", "文本框");
-		ei.put("isQuery", isQuery);
+		ei.put("is_query", isQuery);
 		return ei;
 	}
 }

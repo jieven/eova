@@ -15,7 +15,7 @@ import com.jfinal.core.ActionInvocation;
 
 /**
  * 权限验证
- *
+ * 
  * @author Jieven
  * @date 2014-9-18
  */
@@ -35,7 +35,7 @@ public class AuthInterceptor implements Interceptor {
 			// 查询当前角色可以访问的URI集合
 			// 角色已授权菜单
 //			String sql = "select urlCmd from eova_menu where";
-//			sql += " code in (select menuCode from eova_button b where b.isBase = 1 AND b.id in (select bid from eova_role_btn where rid = ?))";
+			// sql += " code in (select menu_code from eova_button b where b.isBase = 1 AND b.id in (select bid from eova_role_btn where rid = ?))";
 //			String sql = "select m.urlCmd from eova_menu m where m.urlCmd != ''";
 //			sql +=" and m.id in(select bid from eova_role_btn where rid = ?)";
 			
@@ -43,7 +43,7 @@ public class AuthInterceptor implements Interceptor {
 			StringBuilder sb = new StringBuilder();
 			sb.append("select m.urlCmd from eova_button b");
 			sb.append(" LEFT JOIN eova_role_btn rf on rf.bid = b.id");
-			sb.append(" LEFT JOIN eova_menu m on b.menuCode = m.code");
+			sb.append(" LEFT JOIN eova_menu m on b.menu_code = m.code");
 			sb.append(" where rid = ? and b.name = '查询'");
 			List<Menu> menus = Menu.dao.find(sb.toString(), rid);
 			
@@ -63,7 +63,7 @@ public class AuthInterceptor implements Interceptor {
 //				}
 //			}
 //			if (!flag) {
-//				ai.getController().renderText("对不起，您没有权限进行该操作！");
+			// ai.getController().renderText("对不起，您没有权限进行该操作！");
 //				return;
 //			}
 		}

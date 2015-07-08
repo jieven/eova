@@ -42,7 +42,7 @@ public class EovaLog extends BaseModel<EovaLog> {
 		el.set("type", type);
 		// UID
 		User user = con.getSessionAttr("user");
-		el.set("userId", user.getInt("id"));
+		el.set("user_id", user.getInt("id"));
 		// IP
 		String ip = RequestUtil.getIp(con.getRequest());
 		el.set("ip", ip);

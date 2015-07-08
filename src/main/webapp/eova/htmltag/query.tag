@@ -5,21 +5,21 @@
 		<%for(item in items){%>
 		
 			<%// 只输出允许查询的条件,count累计一共有多少个查询条件%>
-			<%if(!isTrue(item.isQuery)){continue;}%>
+			<%if(!isTrue(item.is_query)){continue;}%>
 			<%count++;%>
 			
 			<div class="eova-form-field" title="${item.cn}[${item.en}]">
 			<div class="eova-form-lbl">${item.cn}:</div>
 				<%if(item.type == "下拉框"){%>
 					<%// 是否多选%>
-					<%if(isTrue(item.isMultiple)){%>
-						<div><#combo id="${item.en}" name="${item.en}" code="${item.objectCode}" value="${item.value!}" isQuery="true" multiple="true" /></div>
+					<%if(isTrue(item.is_multiple)){%>
+						<div><#combo id="${item.en}" name="${item.en}" code="${item.object_code}" value="${item.value!}" isQuery="true" multiple="true" /></div>
 					<%}else{%>
 						<div>
 							<div id="${item.en}" name="${QUERY + item.en}" value="${item.value!}" class="eova-combo"></div>
 	                        <script>
 	                        $('#${item.en}').eovacombo({
-	                            url: '/widget/comboJson/${item.objectCode}-${item.en}',
+	                            url: '/widget/comboJson/${item.object_code}-${item.en}',
 	                            valueField : 'ID',
 	                            textField : 'CN'
 	                        });
@@ -27,11 +27,11 @@
                         </div>
 					<%}%>
 				<%}else if(item.type == "查找框"){%>
-                   	<div><#find isQuery="true" id="${item.en}" name="${item.en}" code="${item.objectCode}" field="${item.en}" value="${item.value!}" isNoN="true" /></div>
+                   	<div><#find isQuery="true" id="${item.en}" name="${item.en}" code="${item.object_code}" field="${item.en}" value="${item.value!}" isNoN="true" /></div>
 				<%}else if(item.type == "时间框"){%>
-					<div><#time id="${item.en}" name="${item.en}" code="${item.objectCode }" isQuery="true" /></div>
+					<div><#time id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
 				<%}else if(item.type == "数字框"){%>
-					<div><#number id="${item.en}" name="${item.en}" code="${item.objectCode }" isQuery="true" /></div>
+					<div><#number id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
 				<%}else if(item.type == "复选框"){%>
 					<div><#check id="${item.en}" name="${item.en}" isQuery="true" /></div>
 				<%}else {%>

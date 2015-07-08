@@ -34,7 +34,7 @@ public class AuthService extends BaseService {
 	 * @return
 	 */
 	public List<String> queryMenuCodeByRid(int rid) {
-		String sql = "select DISTINCT(b.menuCode) from eova_role_btn rf LEFT JOIN eova_button b on rf.bid = b.id where b.name = '查询' and rf.rid = ?";
+		String sql = "select DISTINCT(b.menu_code) from eova_role_btn rf LEFT JOIN eova_button b on rf.bid = b.id where b.name = '查询' and rf.rid = ?";
 		return Db.use(xx.DS_EOVA).query(sql, rid);
 	}
 
@@ -89,7 +89,7 @@ public class AuthService extends BaseService {
 		Object obj = BaseCache.getSer(EovaConst.ALL_MENU);
 		if (xx.isEmpty(obj)) {
 			// 获取所有菜单信息
-			String sql = "select * from eova_menu order by parentId,indexNum";
+			String sql = "select * from eova_menu order by parentId,order_num";
 			List<Record> records = Db.use(xx.DS_EOVA).find(sql);
 
 			// List转有序Map

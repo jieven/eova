@@ -43,20 +43,10 @@ public class AuthController extends Controller {
 	 * 获取功能JSON
 	 */
 	public void getFunJson() {
-		// Mysql 5.1 需手工转换GROUP_CONCAT结果类型
-		// StringBuilder sb = new StringBuilder();
-		// sb.append("select m.id,m.parentId,m.name,m.code,m.icon,m.indexNum,GROUP_CONCAT(b.name) btnName,GROUP_CONCAT(CAST(b.id AS CHAR(11))) btnId");
-		// sb.append(" from eova_menu m left join eova_button b on m.code = b.menuCode");
-		// sb.append(" where FIND_IN_SET(m.id, queryChild(0)) group by m.code order by m.indexNum,b.indexNum");
-		// List<Record> list = Db.use(xx.DS_EOVA).find(sb.toString());
-		// String json = WidgetUtil.toTreeJson(list);
-
-		// 因为递归函数兼容性问题，改用Java实现递归查询菜单
-
 		// 获取所有菜单信息
 		LinkedHashMap<Integer, Record> menus = (LinkedHashMap<Integer, Record>) sm.auth.queryByParentId(0);
 		// 获取所有按钮信息
-		List<Button> btns = Button.dao.find("select * from eova_button order by menuCode,indexNum");
+		List<Button> btns = Button.dao.find("select * from eova_button order by menu_code,order_num");
 
 		// 构建菜单对应功能点 eg. [玩家管理] 口查询 口新增 口修改 口删除
 		for (Map.Entry<Integer, Record> map : menus.entrySet()) {
@@ -78,7 +68,7 @@ public class AuthController extends Controller {
 
 		String btnId = "", btnName = "";
 		for (Button btn : btns) {
-			if (btn.getStr("menuCode").equals(code)) {
+			if (btn.getStr("menu_code").equals(code)) {
 				btnId += btn.getInt("id") + ",";
 				btnName += btn.getStr("name") + ",";
 			}
@@ -130,114 +120,11 @@ public class AuthController extends Controller {
 		for (String id : ids) {
 			RoleBtn rf = new RoleBtn();
 			rf.set("rid", rid);
-			// if (id.startsWith("btn_")) {
-			// rf.set("isBtn", 1);
-			// id = id.replace("btn_", "");
-			// }
 			rf.set("bid", id);
 			rf.save();
 		}
 
-		// 保存授权
-		// Role role = Role.dao.findById(rid);
-		// role.set("fun", checks);
-		// role.update();
-
 		renderJson(new Easy());
 	}
 
-	/**
-	 * 显示已授权功能点(废弃)
-	 */
-	// public void showFunTree() {
-	// int rid = getParaToInt(0);
-	// if (xx.isEmpty(rid)) {
-	// renderJson(new Easy("参数缺失!"));
-	// return;
-	// }
-	// // 获取角色授权
-	// List<RoleBtn> funList = RoleBtn.dao.queryByRid(rid);
-	// // String[] ids = role.getStr("fun").split(",");
-	// // 已授权集合
-	// // List<String> funList = Arrays.asList(ids);
-	//
-	// // 获取菜单
-	// // List<Menu> menuList = Menu.dao.queryByParentId(0);
-	// // 获取所有菜单信息
-	// LinkedHashMap<Integer, Record> menus = (LinkedHashMap<Integer, Record>) sm.eova.queryByParentId(0);
-	//
-	// // 获取所有按钮
-	// List<Button> btnList = Button.dao.queryAllByCache();
-	//
-	// StringBuilder sb = new StringBuilder("[");
-	// for (Map.Entry<Integer, Record> map : menus.entrySet()) {
-	// Menu menu = new Menu();
-	// menu.setAttrs(map.getValue().getColumns());
-	//
-	// int id = menu.getInt("id");
-	// String code = menu.getStr("code");
-	// String icon = menu.getStr("icon");
-	// String state = "open";
-	//
-	// sb.append("{");
-	// sb.append("\"attributes\": {");
-	// sb.append("\"target\": \"\",");
-	// sb.append("\"url\": \"" + menu.getStr("urlCmd") + "\"");
-	// sb.append("},\n");
-	// sb.append("\"iconCls\": \"" + icon + "\",");
-	// sb.append("\"id\": \"" + id + "\", ");
-	// // 是否已授权
-	// boolean isCheck = isExist(funList, false, id);
-	// sb.append("\"checked\": " + isCheck + ",");
-	//
-	// int pid = menu.getInt("parentId");
-	// if (pid != 0) {
-	// sb.append("\"pid\": \"" + pid + "\",");
-	// }
-	// sb.append("\"state\": \"" + state + "\", \n");
-	// sb.append("\"text\": \"" + menu.getStr("name") + "\"");
-	//
-	// sb.append("},");
-	//
-	// for (Button btn : btnList) {
-	// if (code.equals(btn.getStr("menuCode"))) {
-	// sb.append("{");
-	// sb.append("\"attributes\": {");
-	// sb.append("\"target\": \"\",");
-	// sb.append("\"url\": \"#\"");
-	// sb.append("},\n");
-	// sb.append("\"iconCls\": \"ext-icon-shape_square\",");
-	// sb.append("\"id\": \"btn_" + btn.getInt("id") + "\", ");
-	// sb.append("\"pid\": \"" + id + "\",");
-	// sb.append("\"state\": \"" + state + "\", \n");
-	// sb.append("\"text\": \"" + btn.getStr("name") + "\",");
-	//
-	// boolean isCheckBtn = isExist(funList, true, btn.getInt("id"));
-	// sb.append("\"checked\": " + isCheckBtn);
-	//
-	// sb.append("},");
-	// }
-	// }
-	// }
-	// sb.delete(sb.length() - 1, sb.length());
-	// sb.append("]");
-	//
-	// renderJson(sb.toString());
-	// }
-
-	// private boolean isExist(List<RoleBtn> funList, boolean isBtn, int id) {
-	// for (RoleBtn x : funList) {
-	// int fid = x.getInt("bid");
-	// if (isBtn && x.getBoolean("isBtn")) {
-	// if (fid == id) {
-	// return true;
-	// }
-	// } else {
-	// if (fid == id) {
-	// return true;
-	// }
-	// }
-	// }
-	// return false;
-	// }
 }

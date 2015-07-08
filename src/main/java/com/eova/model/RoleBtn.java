@@ -8,9 +8,9 @@ package com.eova.model;
 
 import java.util.List;
 
-import com.jfinal.plugin.activerecord.Db;
 import com.eova.common.base.BaseModel;
 import com.eova.common.utils.xx;
+import com.jfinal.plugin.activerecord.Db;
 
 /**
  * 角色已授权功能点
@@ -39,7 +39,7 @@ public class RoleBtn extends BaseModel<RoleBtn> {
 	 * @param menuCode
 	 */
 	public void deleteByMenuCode(String menuCode){
-		String sql = "delete from eova_role_btn where bid in (select id from eova_button where menuCode = ?)";
+		String sql = "delete from eova_role_btn where bid in (select id from eova_button where menu_code = ?)";
 		Db.use(xx.DS_EOVA).update(sql, menuCode);
 	}
 	

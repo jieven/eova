@@ -8,13 +8,13 @@ package com.eova.service;
 
 import java.util.List;
 
-import com.eova.model.Menu;
 import com.eova.common.base.BaseService;
+import com.eova.model.Menu;
 
 public class IndexService extends BaseService {
 
 
 	public List<Menu> queryMenu() {
-		return Menu.dao.find("select * from eova_menu order by parentId,indexNum desc");
+		return Menu.dao.find("select * from eova_menu order by parentId,order_num desc");
 	}
 }

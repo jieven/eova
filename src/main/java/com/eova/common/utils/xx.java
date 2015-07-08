@@ -161,17 +161,5 @@ public class xx {
 	public static double toDouble(Object obj) {
 		return Double.parseDouble(obj.toString());
 	}
-
-	/**
-	 * 判断字符串是否存在
-	 * @param str 原始字符串
-	 * @param target 目标字符
-	 * @return
-	 */
-	public static boolean contains(String str, String target){
-		if (str.indexOf(target) != -1) {
-			return true;
-		}
-		return false;
-	}
+	
 }

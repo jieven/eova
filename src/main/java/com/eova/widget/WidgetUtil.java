@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.eova.common.utils.xx;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -23,10 +23,10 @@ public class WidgetUtil {
 	 * @param reList Grid数据集
 	 * @param pkName 当前Eova_Object的主键名
 	 */
-	public static void copyValueColumn(List<Record> reList, String pkName, List<MetaItem> eis) {
+	public static void copyValueColumn(List<Record> reList, String pkName, List<MetaField> eis) {
 		// 复制主键列
 		for (Record re : reList) {
-			for (MetaItem x : eis) {
+			for (MetaField x : eis) {
 				// 如果有表达式，说明会被翻译，所以需要备份列
 				String exp = x.getStr("exp");
 				if (!xx.isEmpty(exp)) {
@@ -54,7 +54,7 @@ public class WidgetUtil {
 			x.set("iconCls", x.get("icon"));
 			// 是否默认折叠
 			String state = "open";
-			Boolean isCollapse = x.getBoolean("isCollapse");
+			Boolean isCollapse = x.getBoolean("is_collapse");
 			if (!xx.isEmpty(isCollapse) && isCollapse) {
 				state = "closed";
 			}
@@ -110,7 +110,7 @@ public class WidgetUtil {
 			Record x = map.getValue();
 			// 是否默认折叠
 			String state = "open";
-			Boolean isCollapse = x.getBoolean("isCollapse");
+			Boolean isCollapse = x.getBoolean("is_collapse");
 			if (!xx.isEmpty(isCollapse) && isCollapse) {
 				state = "closed";
 			}

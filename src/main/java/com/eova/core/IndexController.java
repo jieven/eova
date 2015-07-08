@@ -33,9 +33,6 @@ import com.jfinal.ext.render.CaptchaRender;
  */
 public class IndexController extends Controller {
 
-	private final String LOGINID = "loginId";
-	private final String LOGINPWD = "loginPwd";
-
 	public void toMain() {
 		render("/eova/main.html");
 	}
@@ -118,17 +115,8 @@ public class IndexController extends Controller {
 	}
 
 	public void doLogin() {
-		String loginId = getPara(LOGINID);
-		String loginPwd = getPara(LOGINPWD);
-		// if (loginId.equals("admin")) {
-		// renderJson(new Easy());
-		// }
-		// 登录校验
-		// validateRequiredString("loginId", "msg", "请输入用户名");
-		// validateRequiredString("loginPwd", "msg", "请输入密码");
-		//
-		// c.keepPara("loginId","loginPwd");
-		// c.render("/eova/login.html");
+		String loginId = getPara("loginId");
+		String loginPwd = getPara("loginPwd");
 
 		User user = sm.user.getUserByLoginId(loginId);
 		if (user == null) {
@@ -136,9 +124,9 @@ public class IndexController extends Controller {
 			toLogin();
 			return;
 		}
-		if (!user.getStr(LOGINPWD).equals(loginPwd)) {
+		if (!user.getStr("login_pwd").equals(loginPwd)) {
 			setAttr("msg", "密码错误");
-			keepPara(LOGINID);
+			keepPara("loginId");
 			toLogin();
 			return;
 		}
@@ -155,7 +143,7 @@ public class IndexController extends Controller {
 	public void updatePwd() {
 		// 当前用户
 		User eu = getSessionAttr("user");
-		String pwd = eu.getStr("loginPwd");
+		String pwd = eu.getStr("login_pwd");
 		// 旧密码
 		String oldPwd = getPara("oldPwd");
 		// 旧密码是否正确
@@ -174,7 +162,7 @@ public class IndexController extends Controller {
 		}
 
 		// 修改密码
-		eu.set("loginPwd", newPwd).update();
+		eu.set("login_pwd", newPwd).update();
 
 		renderJson(new Easy());
 	}
@@ -234,7 +222,7 @@ public class IndexController extends Controller {
 			// 格式化序号,用于字符串排序
 			DecimalFormat df = new java.text.DecimalFormat("00000");
 			// 序号+ID 作为索引进行排序(防止不同节点的数据会互相覆盖)
-			sortMap.put(df.format(x.getInt("indexNum")) + x.getInt("id"), x);
+			sortMap.put(df.format(x.getInt("order_num")) + x.getInt("id"), x);
 		}
 		// System.out.println(sortMap);
 
@@ -284,7 +272,7 @@ public class IndexController extends Controller {
 		String icon = menu.getStr("icon");
 		String state = "open";
 		// 是否默认折叠
-		boolean isCollapse = menu.getBoolean("isCollapse");
+		boolean isCollapse = menu.getBoolean("is_collapse");
 		if (isCollapse) {
 			state = "closed";
 		}

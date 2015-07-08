@@ -18,11 +18,11 @@ import com.jfinal.plugin.activerecord.Db;
  * @author Jieven
  * @date 2014-9-10
  */
-public class MetaItem extends BaseModel<MetaItem> {
+public class MetaField extends BaseModel<MetaField> {
 
 	private static final long serialVersionUID = -7381270435240459528L;
 
-	public static final MetaItem dao = new MetaItem();
+	public static final MetaField dao = new MetaField();
 	
 	public static final String TYPE_TEXT = "文本框";
 	public static final String TYPE_COMBO = "下拉框";
@@ -62,8 +62,8 @@ public class MetaItem extends BaseModel<MetaItem> {
 	 * @param objectCode 对象Code
 	 * @return 对象详情集合
 	 */
-	public List<MetaItem> queryByObjectCode(String objectCode) {
-		return MetaItem.dao.find("select * from eova_item where objectCode = ? order by indexNum", objectCode);
+	public List<MetaField> queryByObjectCode(String objectCode) {
+		return MetaField.dao.find("select * from eova_field where object_code = ? order by order_num", objectCode);
 	}
 	
 	/**
@@ -73,8 +73,8 @@ public class MetaItem extends BaseModel<MetaItem> {
 	 * @param en 字段Key
 	 * @return
 	 */
-	public MetaItem getByObjectCodeAndEn(String objectCode, String en) {
-		MetaItem ei = MetaItem.dao.findFirst("select * from eova_item where objectCode = ? and en = ? order by indexNum", objectCode, en);
+	public MetaField getByObjectCodeAndEn(String objectCode, String en) {
+		MetaField ei = MetaField.dao.findFirst("select * from eova_field where object_code = ? and en = ? order by order_num", objectCode, en);
 		return ei;
 	}
 
@@ -84,7 +84,7 @@ public class MetaItem extends BaseModel<MetaItem> {
 	 * @param objectId
 	 */
 	public void deleteByObjectCode(String objectId) {
-		String sql = "delete from eova_item where objectCode = (select code from eova_object where id in(?))";
+		String sql = "delete from eova_field where object_code = (select code from eova_object where id in(?))";
 		Db.use(xx.DS_EOVA).update(sql, objectId);
 	}
 
@@ -94,7 +94,7 @@ public class MetaItem extends BaseModel<MetaItem> {
 	 * @param objectCode 视图对象编码
 	 * @return
 	 */
-	public List<MetaItem> queryPoCodeByObjectCode(String objectCode) {
-		return MetaItem.dao.find("SELECT DISTINCT(poCode) from eova_item where objectCode = ?", objectCode);
+	public List<MetaField> queryPoCodeByObjectCode(String objectCode) {
+		return MetaField.dao.find("SELECT DISTINCT(po_code) from eova_field where object_code = ?", objectCode);
 	}
 }

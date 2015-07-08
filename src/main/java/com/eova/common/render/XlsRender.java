@@ -20,7 +20,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import com.eova.common.utils.excel.ExcelUtil;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.Record;
@@ -33,12 +33,12 @@ public class XlsRender extends Render {
 	private final static String CONTENT_TYPE = "application/msexcel;charset=" + getEncoding();
 
 	private final MetaObject object;
-	private final List<MetaItem> items;
+	private final List<MetaField> items;
 	private final List<Record> data;
 
 	private final String fileName;
 
-	public XlsRender(List<Record> data, List<MetaItem> items, MetaObject object) {
+	public XlsRender(List<Record> data, List<MetaField> items, MetaObject object) {
 		this.data = data;
 		this.items = items;
 		this.object = object;

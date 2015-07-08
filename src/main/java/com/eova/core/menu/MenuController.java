@@ -68,13 +68,13 @@ public class MenuController extends Controller {
 		menu.set("icon", getPara("icon",""));
 		menu.set("name", getPara("name"));
 		menu.set("code", menuCode);
-		menu.set("indexNum", getPara("indexNum"));
+		menu.set("order_num", getPara("indexNum"));
 		menu.set("type", type);
-		menu.set("bizIntercept", getPara("bizIntercept", ""));
+		menu.set("biz_intercept", getPara("bizIntercept", ""));
 		menu.set("url", getPara("url", ""));
 		menu.save();
 		
-		// 新增菜单使缓存失效 
+		// 新增菜单使缓存失效
 		BaseCache.delSer(EovaConst.ALL_MENU);
 		
 		// 如果是父级目录菜单没有按钮也无需关联对象
@@ -86,7 +86,7 @@ public class MenuController extends Controller {
 		// 初始化查询按钮
 		{
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_QUERY);
 			btn.save();
 			// 自动授权给超级管理员
@@ -98,7 +98,7 @@ public class MenuController extends Controller {
 		// 添加
 		{
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_ADD);
 			btn.set("ui", EovaConst.FUN_ADD_UI);
 			btn.set("bs", EovaConst.FUN_ADD_BS);
@@ -112,7 +112,7 @@ public class MenuController extends Controller {
 		// 修改
 		{
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_UPDATE);
 			btn.set("ui", EovaConst.FUN_UPDATE_UI);
 			btn.set("bs", EovaConst.FUN_UPDATE_BS);
@@ -126,7 +126,7 @@ public class MenuController extends Controller {
 		// 删除
 		{
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_DELETE);
 			btn.set("ui", EovaConst.FUN_DELETE_UI);
 			btn.set("bs", EovaConst.FUN_DELETE_BS);
@@ -142,8 +142,8 @@ public class MenuController extends Controller {
 		if (type.equals(Menu.TYPE_SINGLEGRID)) {
 			// 单表只有一个对象
 			MenuObject mo = new MenuObject();
-			mo.set("menuCode", menuCode);
-			mo.set("objectCode", getPara("objectCode"));
+			mo.set("menu_code", menuCode);
+			mo.set("object_code", getPara("objectCode"));
 			mo.save();
 		}
 		
@@ -169,7 +169,7 @@ public class MenuController extends Controller {
 		// 添加
 		if (!xx.isEmpty(isAdd)) {
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_ADD);
 			btn.set("ui", EovaConst.FUN_ADD_UI);
 			btn.set("bs", EovaConst.FUN_ADD_BS);
@@ -178,7 +178,7 @@ public class MenuController extends Controller {
 		// 修改
 		if (!xx.isEmpty(isUpdate)) {
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_UPDATE);
 			btn.set("ui", EovaConst.FUN_UPDATE_UI);
 			btn.set("bs", EovaConst.FUN_UPDATE_BS);
@@ -187,7 +187,7 @@ public class MenuController extends Controller {
 		// 删除
 		if (!xx.isEmpty(isDelete)) {
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_DELETE);
 			btn.set("ui", EovaConst.FUN_DELETE_UI);
 			btn.set("bs", EovaConst.FUN_DELETE_BS);
@@ -196,7 +196,7 @@ public class MenuController extends Controller {
 		// 导入
 		if (!xx.isEmpty(isImport)) {
 			Button btn = new Button();
-			btn.set("menuCode", menuCode);
+			btn.set("menu_code", menuCode);
 			btn.set("name", EovaConst.FUN_IMPORT);
 			btn.set("ui", EovaConst.FUN_IMPORT_UI);
 			btn.set("bs", EovaConst.FUN_IMPORT_BS);

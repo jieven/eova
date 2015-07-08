@@ -17,7 +17,7 @@ import com.eova.common.Easy;
 import com.eova.common.utils.xx;
 import com.eova.common.utils.db.DsUtil;
 import com.eova.engine.EovaExp;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.eova.template.common.config.TemplateConfig;
 import com.jfinal.aop.Before;
@@ -54,16 +54,16 @@ public class MetaDataController extends Controller {
 		String type = getPara(1);
 		// 根据表达式手工构建Eova_Object
 		MetaObject eo = new MetaObject();
-		eo.put("dataSource", ds);
+		eo.put("data_source", ds);
 		eo.put("name", "");
-		eo.put("tableName", "");
-		eo.put("isDefaultPkDesc", false);
+		eo.put("table_name", "");
+		eo.put("is_default_pk_desc", false);
 		// 获取第一的值作为主键
-		eo.put("pkName", "table_name");
+		eo.put("pk_name", "table_name");
 		// 获取第二列的值作为CN
 		eo.put("cn", "table_name");
 		// 根据表达式手工构建Eova_Item
-		List<MetaItem> eis = new ArrayList<MetaItem>();
+		List<MetaField> eis = new ArrayList<MetaField>();
 		eis.add(EovaExp.buildItem(1, "table_name", "编码", false));
 		eis.add(EovaExp.buildItem(2, "table_name", "表名", true));
 		setAttr("obj", eo);
@@ -123,23 +123,23 @@ public class MetaDataController extends Controller {
 	private void importMetaField(String code, JSONArray list) {
 		for (int i = 0; i < list.size(); i++) {
 			JSONObject o = list.getJSONObject(i);
-			MetaItem mi = new MetaItem();
+			MetaField mi = new MetaField();
 			mi.set("en", o.getString("COLUMN_NAME"));
 			mi.set("cn", o.getString("REMARKS"));
-			mi.set("indexNum", o.getIntValue("ORDINAL_POSITION"));
-			mi.set("isNotNull", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? "1" : "0");
+			mi.set("order_num", o.getIntValue("ORDINAL_POSITION"));
+			mi.set("is_required", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? "1" : "0");
 
 			// 是否自增
 			boolean isAuto = "YES".equalsIgnoreCase(o.getString("IS_AUTOINCREMENT")) ? true : false;
-			mi.set("isAuto", isAuto);
+			mi.set("is_auto", isAuto);
 			// 字段类型
 			String typeName = o.getString("TYPE_NAME");
-			mi.set("dataType", getDataType(typeName));
+			mi.set("data_type", getDataType(typeName));
 			// 字段长度
 			int size = o.getIntValue("COLUMN_SIZE");
 			// 默认值
 			String def = o.getString("COLUMN_DEF");
-			mi.set("valueExp", def);
+			mi.set("defaulter", def);
 
 			// 控件类型
 			mi.set("type", getFormType(isAuto, typeName, size));
@@ -148,13 +148,14 @@ public class MetaDataController extends Controller {
 				mi.set("cn", mi.getEn());
 			}
 			// 默认值
-			if (xx.isEmpty(mi.getStr("valueExp"))) {
-				mi.set("valueExp", "");
+			if (xx.isEmpty(mi.getStr("defaulter"))) {
+				mi.set("defaulter", "");
 			}
 			// 对象编码
-			mi.set("objectCode", code);
-
-			MetaItem.dao.save();
+			mi.set("object_code", code);
+			
+			mi.save();
+			
 		}
 	}
 
@@ -166,14 +167,14 @@ public class MetaDataController extends Controller {
 		// 名称
 		mo.set("name", name);
 		// 主键
-		mo.set("pkName", pkName);
+		mo.set("pk_name", pkName);
 		// 数据源
-		mo.set("dataSource", ds);
+		mo.set("data_source", ds);
 		// 表或视图
-		if (type.equals("tableName")) {
-			mo.set("tableName", table);
+		if (type.equalsIgnoreCase(DsUtil.TABLE)) {
+			mo.set("table_name", table);
 		} else {
-			mo.set("viewName", table);
+			mo.set("view_name", table);
 		}
 		mo.save();
 	}
@@ -204,16 +205,16 @@ public class MetaDataController extends Controller {
 	 */
 	private String getFormType(boolean isAuto, String typeName, int size) {
 		if (typeName.contains("time")) {
-			return MetaItem.TYPE_TIME;
+			return MetaField.TYPE_TIME;
 		} else if (isAuto) {
-			return MetaItem.TYPE_AUTO;
+			return MetaField.TYPE_AUTO;
 		} else if (size > 255) {
-			return MetaItem.TYPE_TEXTS;
+			return MetaField.TYPE_TEXTS;
 		} else if (size > 500) {
-			return MetaItem.TYPE_EDIT;
+			return MetaField.TYPE_EDIT;
 		} else {
 			// 默认都是文本框
-			return MetaItem.TYPE_TEXT;
+			return MetaField.TYPE_TEXT;
 		}
 	}
 

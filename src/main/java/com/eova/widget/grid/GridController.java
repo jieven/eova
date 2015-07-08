@@ -18,7 +18,7 @@ import com.eova.common.Easy;
 import com.eova.common.render.XlsRender;
 import com.eova.common.utils.xx;
 import com.eova.config.PageConst;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.eova.widget.WidgetManager;
 import com.eova.widget.WidgetUtil;
@@ -46,7 +46,7 @@ public class GridController extends Controller {
 
 		// Get MetaObject and MetaItem List
 		MetaObject eo = MetaObject.dao.getByCode(code);
-		List<MetaItem> eis = MetaItem.dao.queryByObjectCode(code);
+		List<MetaField> eis = MetaField.dao.queryByObjectCode(code);
 
 		// 获取分页参数
 		int pageNumber = getParaToInt(PageConst.PAGENUM, 1);
@@ -55,9 +55,7 @@ public class GridController extends Controller {
 		// 获取条件
 		String where = "";
 		List<String> parmList = new ArrayList<String>();
-		if (!xx.isEmpty(parmList)) {
-			where = WidgetManager.getWhere(this, eis, parmList, ' ' + eo.getStr("filterWhere"));
-		}
+		where = WidgetManager.getWhere(this, eis, parmList, eo.getStr("filter"));
 
 		// 转换SQL参数为Obj[]
 		Object[] parm = new Object[parmList.size()];
@@ -89,7 +87,7 @@ public class GridController extends Controller {
 	public void add() {
 		String objectCode = getPara(0);
 		MetaObject object = MetaObject.dao.getByCode(objectCode);
-		List<MetaItem> items = MetaItem.dao.queryByObjectCode(objectCode);
+		List<MetaField> items = MetaField.dao.queryByObjectCode(objectCode);
 
 		String json = getPara("rows");
 		System.out.println(json);
@@ -108,7 +106,7 @@ public class GridController extends Controller {
 	public void delete() {
 		String objectCode = getPara(0);
 		MetaObject object = MetaObject.dao.getByCode(objectCode);
-		List<MetaItem> items = MetaItem.dao.queryByObjectCode(objectCode);
+		List<MetaField> items = MetaField.dao.queryByObjectCode(objectCode);
 
 		String json = getPara("rows");
 		System.out.println(json);
@@ -130,7 +128,7 @@ public class GridController extends Controller {
 
 		String objectCode = getPara(0);
 		MetaObject object = MetaObject.dao.getByCode(objectCode);
-		List<MetaItem> items = MetaItem.dao.queryByObjectCode(objectCode);
+		List<MetaField> items = MetaField.dao.queryByObjectCode(objectCode);
 
 		String json = getPara("rows");
 		System.out.println(json);
@@ -149,7 +147,7 @@ public class GridController extends Controller {
 	public void export() {
 		String objectCode = getPara(0);
 		MetaObject object = MetaObject.dao.getByCode(objectCode);
-		List<MetaItem> items = MetaItem.dao.queryByObjectCode(objectCode);
+		List<MetaField> items = MetaField.dao.queryByObjectCode(objectCode);
 		List<Record> data = Db.use(object.getDs()).find("select * from " + object.getTable());
 		render(new XlsRender(data, items, object));
 	}
@@ -158,10 +156,10 @@ public class GridController extends Controller {
 	 * json转List
 	 * 
 	 * @param json
-	 * @param pkName TODO
+	 * @param pkName
 	 * @return
 	 */
-	private static List<Record> getRecordsByJson(String json, List<MetaItem> items, String pkName) {
+	private static List<Record> getRecordsByJson(String json, List<MetaField> items, String pkName) {
 		List<Record> records = new ArrayList<Record>();
 
 		List<JSONObject> list = JSON.parseArray(json, JSONObject.class);
@@ -171,7 +169,7 @@ public class GridController extends Controller {
 			Record re = new Record();
 			re.setColumns(map);
 			// 将Text翻译成Value,然后删除val字段
-			for (MetaItem x : items) {
+			for (MetaField x : items) {
 				String en = x.getEn();// 字段名
 				String exp = x.getStr("exp");// 表达式
 				String type = x.getStr("type");// 控件类型
@@ -185,7 +183,7 @@ public class GridController extends Controller {
 					re.remove(valField);
 				}
 				// 复选框需要特转换值
-				if (type.equals(MetaItem.TYPE_CHECK)) {
+				if (type.equals(MetaField.TYPE_CHECK)) {
 					value = Boolean.parseBoolean(value.toString());
 				}
 				re.set(en, value);

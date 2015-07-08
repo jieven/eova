@@ -3,7 +3,7 @@
 					fit : true,
 					border : false,
 					striped : true,
-					singleSelect : ${obj.isSingleSelect!true},
+					singleSelect : ${obj.is_single!true},
 					align : 'right',
 					collapsible : false,
 					remoteSort : true,
@@ -21,18 +21,18 @@
 					<%//title : '${obj.title}',%>
 					idField : '${obj.pkName}',
 					<%// 默认主键排序%>
-					<%if(obj.isDefaultPkDesc){%>
+					<%if(obj.is_default_pk_desc){%>
 					sortName : '${obj.pkName}',
 					sortOrder : 'desc',
 					<%}%>
 					pageSize : 15,
 					pageList : [ 15, 30, 50, 100, 200, 500, 1500, 2000],
-					<%//frozenColumns : [[{field:'nickName',title:'昵称',width:80}]],%>
+					<%//frozenColumns : [[{field:'nickname',title:'昵称',width:80}]],%>
 					toolbar : '#toolbar'
 				">
 			<thead>
 				<tr>
-				<%if(obj.isSingleSelect == false){%>
+				<%if(obj.is_single == false){%>
 					<th data-options="field:'ck',checkbox:true,"></th>
 				<%}%>
 
@@ -45,15 +45,15 @@
 		var gridId = "#${id}";
 		var myGrid = $(gridId).datagrid({
 			columns:[[
-				<%if(obj.isSingleSelect == false){%>
+				<%if(obj.is_single == false){%>
 					{field:'ck',checkbox:true,},
 				<%}%>
 				<%for(item in items){%>
-					<%if(item.isShow!true){%>
+					<%if(item.is_show!true){%>
 						{
                         field:'${item.en}',
 						title:'${item.cn}',
-                        <%if(item.isOrder!true){%>
+                        <%if(item.is_order!true){%>
                         sortable:true,
                         <%}%>
 						<%if(item.type == '复选框'){%>
@@ -77,9 +77,9 @@
 							},
 						<%}%>
                         <%// Grid Cell Editor,对象和字段允许行内编辑自增，自增长禁止编辑%>
-                        <%if(isTrue(obj.isCellEdit) && isTrue(item.isEdit) && !isTrue(item.isAuto)){%>
+                        <%if(isTrue(obj.is_celledit) && isTrue(item.is_edit) && !isTrue(item.is_auto)){%>
                             editor:{type:'${item.editor}',options:{
-                                url: '/widget/comboJson/${item.objectCode}-${item.en}',
+                                url: '/widget/comboJson/${item.object_code}-${item.en}',
                                 valueField : 'ID',
                                 textField : 'CN'
                             }},
@@ -121,7 +121,7 @@
             });
         };
 
-        <%if(isTrue(obj.isCellEdit)){%>
+        <%if(isTrue(obj.is_celledit)){%>
 		// 开启编辑模式
     	myGrid.datagrid('enableCellEditing');
     	<%}%>
@@ -151,7 +151,7 @@
 					window.location.href='/grid/export/${obj.code}';
 				}
 			});
-			<%if(isTrue(obj.isCellEdit)){%>
+			<%if(isTrue(obj.is_celledit)){%>
 			
 			rowMenu.menu('appendItem', {
 				text: '新增行',

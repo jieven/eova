@@ -9,7 +9,7 @@ package com.eova.template.common.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.jfinal.plugin.activerecord.Record;
 
 public class TemplateUtil {
@@ -22,13 +22,13 @@ public class TemplateUtil {
 	 * @return
 	 */
 	@Deprecated
-	public static List<List<String>> getValueList(List<MetaItem> itemList, List<Record> dataList) {
+	public static List<List<String>> getValueList(List<MetaField> itemList, List<Record> dataList) {
 		List<List<String>> list = new ArrayList<List<String>>();
 		// 获取字段的值
 		for (Record record : dataList) {
 			List<String> temp = new ArrayList<String>();
 			// 获取字段名
-			for (MetaItem item : itemList) {
+			for (MetaField item : itemList) {
 				temp.add(record.get(item.getEn()).toString());
 			}
 			list.add(temp);
@@ -43,9 +43,9 @@ public class TemplateUtil {
 	 * @return
 	 */
 	@Deprecated
-	public static List<String> getKeyList(List<MetaItem> itemList) {
+	public static List<String> getKeyList(List<MetaField> itemList) {
 		List<String> list = new ArrayList<String>();
-		for (MetaItem item : itemList) {
+		for (MetaField item : itemList) {
 			list.add(item.getEn());
 		}
 		return list;

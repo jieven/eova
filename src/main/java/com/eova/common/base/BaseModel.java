@@ -5,7 +5,6 @@ import java.util.List;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
-import com.eova.common.utils.xx;
 
 @SuppressWarnings("rawtypes")
 public class BaseModel<M extends Model> extends Model<M> {
@@ -18,7 +17,7 @@ public class BaseModel<M extends Model> extends Model<M> {
 	@Override
 	public List<M> findByCache(String cacheName, Object key, String sql) {
 		// Base数据缓存30Min
-		if (xx.contains(sql, "from base_")) {
+		if (sql.contains("from base_")) {
 			cacheName = BaseCache.BASE;
 		}
 		return super.findByCache(cacheName, key, sql);

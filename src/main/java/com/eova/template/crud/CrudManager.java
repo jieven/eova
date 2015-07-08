@@ -14,7 +14,7 @@ import java.util.Map;
 
 import com.eova.common.utils.xx;
 import com.eova.config.PageConst;
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
@@ -37,11 +37,11 @@ public class CrudManager {
 	 * @param pkName 主键字段名
 	 * @return 其它对象数据集
 	 */
-	public static Map<String, Record> buildData(Controller c, List<MetaItem> eis, Record record, String pkName, boolean isInsert) {
+	public static Map<String, Record> buildData(Controller c, List<MetaField> eis, Record record, String pkName, boolean isInsert) {
 		Map<String, Record> reMap = new HashMap<String, Record>();
 
 		// 获取字段当前的值
-		for (MetaItem item : eis) {
+		for (MetaField item : eis) {
 			// 控件类型
 			String type = item.getStr("type");
 			// 字段名
@@ -50,25 +50,25 @@ public class CrudManager {
 			String value = c.getPara(key, "");
 
 			// 新增跳过自增长字段(新增时为空)
-			if (xx.isEmpty(value) && type.equals(MetaItem.TYPE_AUTO)) {
+			if (xx.isEmpty(value) && type.equals(MetaField.TYPE_AUTO)) {
 				continue;
 			}
 			
 			// 新增时，移除禁止新增的字段
-			boolean isAdd = item.getBoolean("isAdd");
+			boolean isAdd = item.getBoolean("is_add");
 			if (isInsert && !isAdd) {
 				record.remove(key);
 				continue;
 			}
 			// 更新时，移除禁止更新的字段
-			boolean isUpdate = item.getBoolean("isUpdate");
+			boolean isUpdate = item.getBoolean("is_update");
 			if (!isInsert && !isUpdate) {
 				record.remove(key);
 				continue;
 			}
 
 			// 复选框需要特转换值
-			if (type.equals(MetaItem.TYPE_CHECK)) {
+			if (type.equals(MetaField.TYPE_CHECK)) {
 				if (xx.isEmpty(value)) {
 					value = "0";
 				} else {
@@ -105,17 +105,17 @@ public class CrudManager {
 
 		Record re = reMap.get(objectCode);
 		// 设置主键值
-		String pkName = eo.getStr("pkName");
+		String pkName = eo.getPk();
 		re.set(pkName, pkValue);
 		// 保存的数据值
-		String table = eo.getStr("tableName");
+		String table = eo.getTable();
 		// 主键是否有值
 		if (isUpdate) {
 			// 更新数据到对应的表
-			Db.use(eo.getStr("dataSource")).update(table, pkName, re);
+			Db.use(eo.getDs()).update(table, pkName, re);
 		} else {
 			// 保存数据到对应的表
-			Db.use(eo.getStr("dataSource")).save(table, pkName, re);
+			Db.use(eo.getDs()).save(table, pkName, re);
 		}
 	}
 
@@ -177,8 +177,8 @@ public class CrudManager {
 	public static void deleteView(String objectCode, String pkValue) {
 
 		// 查询视图所属包含的对象Code
-		List<MetaItem> poCodes = MetaItem.dao.queryPoCodeByObjectCode(objectCode);
-		for (MetaItem x : poCodes) {
+		List<MetaField> poCodes = MetaField.dao.queryPoCodeByObjectCode(objectCode);
+		for (MetaField x : poCodes) {
 			// 获取持久化源对象Code
 			String poCode = x.getStr("poCode");
 			MetaObject eo = MetaObject.dao.getByCode(poCode);
@@ -207,8 +207,8 @@ public class CrudManager {
 			}
 		}
 		// 默认根据主键从小到大排列
-		if (order.equals("") && crud.getObject().getBoolean("isDefaultPkDesc")) {
-			return " order by " + crud.getObject().getStr("pkName") + " desc";
+		if (order.equals("") && crud.getObject().getBoolean("is_default_pk_desc")) {
+			return " order by " + crud.getObject().getPk() + " desc";
 		}
 		return order;
 	}
@@ -225,8 +225,8 @@ public class CrudManager {
 		String sort = c.getPara(PageConst.SORT, "");
 		if (xx.isEmpty(sort)) {
 			// 初始默认主键排序
-			if (xx.isEmpty(sort) && crud.getObject().getBoolean("isDefaultPkDesc")) {
-				return " order by " + crud.getPkName() + " desc";
+			if (xx.isEmpty(sort) && crud.getObject().getBoolean("is_default_pk_desc")) {
+				return " order by " + crud.getPk() + " desc";
 			}
 			return " ";
 		}

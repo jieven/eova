@@ -8,7 +8,7 @@ package com.eova.core.object;
 
 import java.util.List;
 
-import com.eova.model.MetaItem;
+import com.eova.model.MetaField;
 import com.eova.template.crud.CrudIntercept;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
@@ -36,7 +36,7 @@ public class ObjectIntercept implements CrudIntercept {
 	@Override
 	public void deleteBefore(Controller ctrl, String pkValues) throws Exception {
 		// 删除对象关联属性
-		MetaItem.dao.deleteByObjectCode(pkValues);
+		MetaField.dao.deleteByObjectCode(pkValues);
 	}
 
 	@Override
