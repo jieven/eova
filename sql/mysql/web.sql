@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50513
-Source Host           : localhost:3306
+Source Server         : 127.0.0.1
+Source Server Version : 50514
+Source Host           : localhost:12581
 Source Database       : web
 
 Target Server Type    : MYSQL
-Target Server Version : 50513
+Target Server Version : 50514
 File Encoding         : 65001
 
-Date: 2015-06-09 09:26:46
+Date: 2015-07-09 13:42:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,17 +46,18 @@ CREATE TABLE `item` (
   `name` varchar(255) NOT NULL COMMENT '名称',
   `info` varchar(1000) DEFAULT NULL COMMENT '介绍',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('1', '皮鞭', '鞭子不仅仅可以驭马');
-INSERT INTO `item` VALUES ('2', '蜡烛', '蜡烛不再是照明工具');
-INSERT INTO `item` VALUES ('3', '红绳', '绳子不再是生活用品');
-INSERT INTO `item` VALUES ('4', '跳跳糖', '跳跳糖不再是童年的回忆');
-INSERT INTO `item` VALUES ('5', '果冻', '果冻不仅可以吃');
-INSERT INTO `item` VALUES ('6', '黄瓜', '<p>黄瓜不再是蔬菜佛挡杀佛第三方惹我让432432423</p>');
+INSERT INTO `item` VALUES ('1', '灭世者的死亡之帽', '+140点法术强度。唯一被动：提升30%法术强度。');
+INSERT INTO `item` VALUES ('2', '麦瑞德裂血手套', '+40点攻击、+40%攻击速度、+25点护甲、唯一被动：物理攻击会造成目标最大生命值的4%的魔法伤害。');
+INSERT INTO `item` VALUES ('3', '多兰之盾', '+120点生命值、+10点护甲、+8点生命回复/5秒');
+INSERT INTO `item` VALUES ('4', '黑色切割者', '+55点攻击力、+30%攻击速度。唯一被动：物理攻击减少目标15点护甲，持续5秒（最多叠加3次）。');
+INSERT INTO `item` VALUES ('5', '长剑', '+10点攻击力');
+INSERT INTO `item` VALUES ('6', '灵巧披风', '+18%暴击几率');
+INSERT INTO `item` VALUES ('7', '多兰之刃', '+80点生命值、+10点攻击力、+3%生命偷取');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -71,82 +72,38 @@ CREATE TABLE `users` (
   `reg_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `info` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '0', 'test1', '000000', '小鸠美爱', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('2', '0', 'test2', '000000', '浅仓舞', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('3', '0', 'test3', '000000', '饭岛爱', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('4', '0', 'test4', '000000', '小泽圆', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('5', '0', 'test5', '000000', '光月夜也', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('6', '0', 'test6', '000000', '吉野纱莉', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('7', '0', 'test7', '000000', '葵实野理', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('8', '0', 'test8', '000000', '安倍夏树', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('9', '0', 'test9', '000000', '及川奈央', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('10', '0', 'test10', '000000', '早坂瞳', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('11', '0', 'test11', '000000', '萩原沙耶香', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('12', '0', 'test12', '000000', '大泽惠', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('13', '0', 'test13', '000000', '星崎未来', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('14', '0', 'test14', '000000', '西田美沙', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('15', '0', 'test15', '000000', '大石彩香', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('16', '0', 'test16', '000000', '桃井望', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('17', '0', 'test17', '000000', '柳田弥生', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('18', '0', 'test18', '000000', '伊东怜', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('19', '0', 'test19', '000000', '青木玲', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('20', '0', 'test20', '000000', '黑木麻衣', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('21', '0', 'test21', '000000', '天衣美津', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('22', '0', 'test22', '000000', '二宫沙树', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('23', '0', 'test23', '000000', '小峰由衣', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('24', '0', 'test24', '000000', '桃子美优', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('25', '213', 'test25', '000000', '萩原舞', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('26', '432423', 'test26', '000000', '小川麻美', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('27', '43242', 'test27', '000000', '小泽玛丽亚', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('28', '344233242', 'test28', '000000', '天海丽', '2014-12-01 00:10:49', '4324324234');
-INSERT INTO `users` VALUES ('33', '3211', '2323', '', '稲森しほり', '2015-05-07 19:59:01', '');
-INSERT INTO `users` VALUES ('34', '12311', '231', '', '早川濑里奈', '2015-05-07 23:28:17', '');
-INSERT INTO `users` VALUES ('35', '0', 'test2111', '000000', '阿立未来', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('36', '1', 'test3111', '000000', '姬野爱', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('37', '1', 'test4111', '000000', '佐藤江梨花', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('38', '0', 'test2111', '000000', '稻森诗织', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('39', '0', 'test3111', '000000', '北条麻妃', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('40', '0', 'test4111', '000000', '前嶋美步', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('41', '0', 'test2111', '000000', '加护范子', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('42', '0', 'test3111', '000000', '爱原翼', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('43', '0', 'test4111', '000000', '石黑京香', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('44', '0', 'test2111', '000000', '村上里沙', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('45', '0', 'test3111', '000000', '心有花', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('46', '0', 'test4111', '000000', '明日花绮罗', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('47', '0', 'test2111', '000000', '鲇川奈绪', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('48', '0', 'test3111', '000000', '月野姬', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('49', '0', 'test4111', '000000', '伊藤青叶', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('50', '0', 'test2111', '000000', '仁科沙也加', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('51', '0', 'test3111', '000000', '花井美沙', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('52', '0', 'test4111', '000000', '赤西凉', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('53', '0', 'test2111', '000000', '美优千奈', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('54', '0', 'test3111', '000000', '绫濑美音', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('55', '0', 'test4111', '000000', '白鸟凉子', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('56', '0', 'test2111', '000000', '日向真昼', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('57', '0', 'test3111', '000000', '爱叶渚', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('58', '0', 'test4111', '000000', '筱原凉', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('59', '1', 'test2111', '000000', '石原莉奈', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('60', '0', 'test3111', '000000', '朝日奈明', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('61', '0', 'test4111', '000000', '石川铃华', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('62', '0', 'test2111', '000000', '原明奈', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('63', '0', 'test3111', '000000', '栗林里莉', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('64', '0', 'test4111', '000000', '莲井志帆', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('65', '0', 'test2111', '000000', '松下怜', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('66', '0', 'test3111', '000000', '羽月希', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('67', '0', 'test4111', '000000', '大槻响', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('68', '0', 'test2111', '000000', '伊东遥', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('69', '0', 'test3111', '000000', '雨宫琴音', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('70', '0', 'test4111', '000000', '坂田美影', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('71', '0', 'test2111', '000000', '松生彩', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('72', '0', '333', '000000', '樱井莉亚', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('73', '0', '222', '000000', '森美咲', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('74', '0', '11122', '000000', '并木优', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('84', '0', 'test2', '000000', '浅仓舞', '2014-12-30 00:55:49', '11111');
+INSERT INTO `users` VALUES ('1', '3', 'test1', '000000', '无极剑圣', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('2', '0', 'test2', '000000', '雪人骑士', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('3', '0', 'test3', '000000', '战争女神', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('4', '0', 'test4', '000000', '众星之子', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('5', '0', 'test5', '000000', '审判天使', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('6', '0', 'test6', '000000', '寒冰射手', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('7', '0', 'test7', '000000', '德玛西亚之力', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('8', '0', 'test8', '000000', '流浪法师', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('9', '0', 'test9', '000000', '卡牌大师', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('10', '0', 'test10', '000000', '堕落天使', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('11', '0', 'test11', '000000', '炼金术士', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('12', '0', 'test12', '000000', '熔岩巨兽', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('13', '0', 'test13', '000000', '祖安狂人', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('14', '0', 'test14', '000000', '钢铁大使', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('15', '0', 'test15', '000000', '寡妇制造者', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('16', '0', 'test16', '000000', '时光守护者', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('17', '0', 'test17', '000000', '末日使者', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('18', '0', 'test18', '000000', '殇之木乃伊', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('19', '0', 'test19', '000000', '牛头酋长', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('20', '0', 'test20', '000000', '邪恶小法师', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('21', '0', 'test21', '000000', '风暴之怒', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('22', '0', 'test22', '000000', '麦林炮手', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('23', '0', 'test23', '000000', '黑暗之女', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('24', '0', 'test24', '000000', '亡灵勇士', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('25', '0', 'test25', '000000', '沙漠死神', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('26', '0', 'test26', '000000', '蛮族之王', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('27', '0', 'test27', '000000', '德邦总管', '2014-12-30 00:55:49', '');
 
 -- ----------------------------
 -- Table structure for `users_exp`
