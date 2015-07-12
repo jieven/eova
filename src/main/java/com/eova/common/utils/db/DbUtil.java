@@ -5,6 +5,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eova.common.utils.xx;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
 public class DbUtil {
@@ -27,19 +28,31 @@ public class DbUtil {
 		}
 	}
 
-	public static void createOracleSql() {
+	public static void createOracleSql(String ds, String tableNamePattern) {
 		
 		StringBuilder sbs = new StringBuilder();
 		StringBuilder sbDrop = new StringBuilder();
+		StringBuilder sbDropSeq = new StringBuilder();
+		StringBuilder sbCreateSeq = new StringBuilder();
 		
-		String ds = xx.DS_EOVA;
-		List<String> tables = DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE, null, "EOVA%");
-		// List<String> tables = new ArrayList<String>();
-		// tables.add("eova_field");
+		List<String> tables = DsUtil.getTableNamesByConfigName(ds, DsUtil.TABLE, null, tableNamePattern);
+
 		for (String table : tables) {
 
+			String pk = DsUtil.getPkName(ds, table);
+			
 			String drop = "drop table " + table + ";\n";
 			sbDrop.append(drop);
+			
+			String dropSeq = "drop sequence seq_" + table + ";\n";
+			sbDropSeq.append(dropSeq);
+			
+			// 获取表中最大值
+			String sql = "select max("+ pk +") from " + table;
+			Object max = Db.use(ds).queryColumn(sql);
+
+			String createSeq = "create sequence seq_" + table + " increment by 1 start with "+ max + 1 +" maxvalue 9999999999;\n";
+			sbCreateSeq.append(createSeq);
 
 			JSONArray list = DsUtil.getColumnInfoByConfigName(ds, table);
 
@@ -47,7 +60,7 @@ public class DbUtil {
 			StringBuilder sb2 = new StringBuilder();
 			StringBuilder sb3 = new StringBuilder();
 
-			System.out.println(list);
+			 System.out.println(list);
 
 			sb.append("create table " + table);
 			sb.append("(\n");
@@ -123,6 +136,8 @@ public class DbUtil {
 		}
 
 		System.out.println(sbDrop.toString());
+		System.out.println(sbDropSeq.toString());
+		System.out.println(sbCreateSeq.toString());
 		System.out.println(sbs.toString());
 	}
 }

@@ -80,8 +80,8 @@
                         <%if(isTrue(obj.is_celledit) && isTrue(item.is_edit) && !isTrue(item.is_auto)){%>
                             editor:{type:'${item.editor}',options:{
                                 url: '/widget/comboJson/${item.object_code}-${item.en}',
-                                valueField : 'ID',
-                                textField : 'CN'
+                                valueField : 'id',
+                                textField : 'cn'
                             }},
                         <%}%>
                         width:${isEmpty(item.width!)?"150":item.width}

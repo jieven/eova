@@ -3,6 +3,17 @@ drop table item;
 drop table users;
 drop table users_exp;
 drop table users_item;
+purge recyclebin;
+
+drop sequence seq_dict;
+drop sequence seq_item;
+drop sequence seq_users;
+drop sequence seq_users_item;
+
+create sequence seq_dict increment by 1 start with 41 maxvalue 9999999999;
+create sequence seq_item increment by 1 start with 61 maxvalue 9999999999;
+create sequence seq_users increment by 1 start with 841 maxvalue 9999999999;
+create sequence seq_users_item increment by 1 start with 71 maxvalue 9999999999;
 
 create table dict(
     id NUMBER(10) NOT NULL,

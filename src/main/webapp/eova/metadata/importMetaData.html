@@ -5,9 +5,9 @@
 		<tr>
 			<th>数据源</th>
 			<td>
-			<select class="easyui-combobox" id="ds" name="ds" style="width: 179px;" data-options="editable:false,onChange:valueChange">
-				<%for(db in dbMap){%>
-				<option value="${db.key}">${db.key}[${db.value}]</option> 
+			<select class="easyui-combobox" id="ds" name="ds" style="width: 180px;" data-options="editable:false,onChange:valueChange">
+				<%for(ds in dataSources){%>
+				<option value="${ds}">${ds}</option> 
 				<%}%>
 			</select>
 			</td>
@@ -15,7 +15,7 @@
 		<tr>
 			<th>元类型</th>
 			<td>
-			<select class="easyui-combobox" id="type" name="type" style="width: 179px;" data-options="editable:false,onChange:valueChange">
+			<select class="easyui-combobox" id="type" name="type" style="width: 180px;" data-options="editable:false,onChange:valueChange">
 					<option value="table">Table</option>
 					<option value="view">View</option>
 			</select>
@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<th>元数据表</th>
-			<td><#find id="table" name="table" isNoN="true" url="/metadata/find/eova-table" /></td>
+			<td><#find id="table" name="table" isNoN="true" url="/metadata/find/main-table" /></td>
 		</tr>
 		<tr>
 			<th>元对象名称</th>

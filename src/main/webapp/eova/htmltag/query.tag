@@ -20,8 +20,8 @@
 	                        <script>
 	                        $('#${item.en}').eovacombo({
 	                            url: '/widget/comboJson/${item.object_code}-${item.en}',
-	                            valueField : 'ID',
-	                            textField : 'CN'
+	                            valueField : 'id',
+	                            textField : 'cn'
 	                        });
 	                        </script>
                         </div>

@@ -11,7 +11,7 @@ import java.util.List;
 import com.eova.model.Menu;
 import com.eova.model.User;
 import com.jfinal.aop.Interceptor;
-import com.jfinal.core.ActionInvocation;
+import com.jfinal.aop.Invocation;
 
 /**
  * 权限验证
@@ -23,13 +23,13 @@ public class AuthInterceptor implements Interceptor {
 
 	@Override
 	@SuppressWarnings("unused")
-	public void intercept(ActionInvocation ai) {
-		String actionKey = ai.getActionKey();
-		String uri = ai.getController().getRequest().getRequestURI();
+	public void intercept(Invocation inv) {
+		String actionKey = inv.getActionKey();
+		String uri = inv.getController().getRequest().getRequestURI();
 
 		// 查询当前角色已授权菜单关联有效对象的集合
 		if (actionKey.startsWith("/crud/toList")) {
-			User user = ai.getController().getSessionAttr("user");
+			User user = inv.getController().getSessionAttr("user");
 			int rid = user.getInt("rid");
 
 			// 查询当前角色可以访问的URI集合
@@ -68,7 +68,7 @@ public class AuthInterceptor implements Interceptor {
 //			}
 		}
 
-		ai.invoke();
+		inv.invoke();
 		// if (actionKey.startsWith("/crud/") ||
 		// actionKey.startsWith("/widget/")) {
 		// System.out.println("权限验证！");

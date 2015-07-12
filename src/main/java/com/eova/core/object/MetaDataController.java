@@ -7,15 +7,14 @@
 package com.eova.core.object;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eova.common.Easy;
 import com.eova.common.utils.xx;
 import com.eova.common.utils.db.DsUtil;
+import com.eova.config.EovaConfig;
 import com.eova.engine.EovaExp;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
@@ -23,6 +22,8 @@ import com.eova.template.common.config.TemplateConfig;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
 
 /**
@@ -37,13 +38,7 @@ public class MetaDataController extends Controller {
 	 * 导入页面
 	 */
 	public void toImport() {
-		// 获取当前配置数据库
-		Map<String, String> dbMap = new HashMap<String, String>();
-		String eova = xx.DS_EOVA;
-		String main = xx.DS_MAIN;
-		dbMap.put(eova, DsUtil.getDbNameByConfigName(eova));
-		dbMap.put(main, DsUtil.getDbNameByConfigName(main));
-		setAttr("dbMap", dbMap);
+		setAttr("dataSources", EovaConfig.dataSources);
 		render("/eova/metadata/importMetaData.html");
 	}
 
@@ -79,7 +74,21 @@ public class MetaDataController extends Controller {
 		// 获取数据库
 		String ds = getPara(0);
 		String type = getPara(1);
-		List<String> tables = DsUtil.getTableNamesByConfigName(ds, type, null, null);
+
+		// 用户过滤
+		String schemaPattern = null;
+		// Oracle需要根据用户名过滤表
+		if (xx.isOracle()) {
+			schemaPattern = DsUtil.getUserNameByConfigName(ds);
+		}
+
+		// 表名过滤
+		String tableNamePattern = getPara("query_table_name");
+		if (!xx.isEmpty(tableNamePattern)) {
+			tableNamePattern = "%" + tableNamePattern + "%";
+		}
+
+		List<String> tables = DsUtil.getTableNamesByConfigName(ds, type, schemaPattern, tableNamePattern);
 		JSONArray tableArray = new JSONArray();
 		for (String tableName : tables) {
 			JSONObject jsonObject = new JSONObject();
@@ -103,9 +112,10 @@ public class MetaDataController extends Controller {
 		String code = getPara("code");
 
 		JSONArray list = DsUtil.getColumnInfoByConfigName(ds, table);
+		System.out.println(list);
 
 		// 导入元字段
-		importMetaField(code, list);
+		importMetaField(code, list, ds, table);
 
 		// 导入视图默认第一列为主键
 		String pkName = DsUtil.getPkName(ds, table);
@@ -120,14 +130,30 @@ public class MetaDataController extends Controller {
 	}
 
 	// 导入元字段
-	private void importMetaField(String code, JSONArray list) {
+	private void importMetaField(String code, JSONArray list, String ds, String table) {
+		// 因为 Oralce 配置参数 DatabaseMetaData 无法获取注释，手工从表中查询字段注释
+		List<Record> comments = null;
+		if(xx.isOracle()){
+			String sql = "select column_name,comments from all_col_comments where table_name = ?";
+			comments = Db.use(ds).find(sql, table);
+		}
 		for (int i = 0; i < list.size(); i++) {
 			JSONObject o = list.getJSONObject(i);
 			MetaField mi = new MetaField();
-			mi.set("en", o.getString("COLUMN_NAME"));
+			mi.set("en", o.getString("COLUMN_NAME").toLowerCase());
 			mi.set("cn", o.getString("REMARKS"));
 			mi.set("order_num", o.getIntValue("ORDINAL_POSITION"));
 			mi.set("is_required", "YES".equalsIgnoreCase(o.getString("IS_NULLABLE")) ? "1" : "0");
+			
+			// Oracle 导入注释 特殊处理
+			if (comments != null) {
+				for(Record x : comments){
+					if(mi.getEn().equals(x.getStr("column_name").toLowerCase())){
+						mi.set("cn", x.getStr("comments"));
+						break;
+					}
+				}
+			}
 
 			// 是否自增
 			boolean isAuto = "YES".equalsIgnoreCase(o.getString("IS_AUTOINCREMENT")) ? true : false;
@@ -147,6 +173,7 @@ public class MetaDataController extends Controller {
 			if (xx.isEmpty(mi.getCn())) {
 				mi.set("cn", mi.getEn());
 			}
+			
 			// 默认值
 			if (xx.isEmpty(mi.getStr("defaulter"))) {
 				mi.set("defaulter", "");
@@ -167,14 +194,14 @@ public class MetaDataController extends Controller {
 		// 名称
 		mo.set("name", name);
 		// 主键
-		mo.set("pk_name", pkName);
+		mo.set("pk_name", pkName.toLowerCase());
 		// 数据源
 		mo.set("data_source", ds);
 		// 表或视图
 		if (type.equalsIgnoreCase(DsUtil.TABLE)) {
-			mo.set("table_name", table);
+			mo.set("table_name", table.toLowerCase());
 		} else {
-			mo.set("view_name", table);
+			mo.set("view_name", table.toLowerCase());
 		}
 		mo.save();
 	}
@@ -186,9 +213,10 @@ public class MetaDataController extends Controller {
 	 * @return
 	 */
 	private String getDataType(String typeName) {
-		if (typeName.contains("INT") || typeName.contains("BIT")) {
+		typeName = typeName.toLowerCase();
+		if (typeName.contains("int") || typeName.contains("bit") || typeName.equals("number")) {
 			return TemplateConfig.DATATYPE_NUMBER;
-		} else if (typeName.indexOf("time") != -1) {
+		} else if (typeName.contains("time") || typeName.contains("date")) {
 			return TemplateConfig.DATATYPE_TIME;
 		} else {
 			return TemplateConfig.DATATYPE_STRING;

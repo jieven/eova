@@ -9,6 +9,7 @@ package com.eova.config;
 import java.io.File;
 import java.io.IOException;
 
+import com.eova.common.utils.xx;
 import com.eova.common.utils.db.DbUtil;
 import com.eova.common.utils.io.FileUtil;
 import com.eova.common.utils.io.NetUtil;
@@ -56,9 +57,16 @@ public class EovaInit {
 		Thread t = new Thread() {
 			@Override
 			public void run() {
-				System.out.println("正在生成Oracle Sql ing...");
-				DbUtil.createOracleSql();
-				System.out.println("生成成功:/sql/oracle/*.sql");
+				System.out.println("正在生成 eova oracle sql ing...");
+				DbUtil.createOracleSql(xx.DS_EOVA, "EOVA%");
+				//System.out.println("生成成功:/sql/oracle/eova.sql");
+				
+				System.out.println();
+				System.out.println();
+				
+				System.out.println("正在生成 web oracle sql ing...");
+				DbUtil.createOracleSql(xx.DS_MAIN, "%");
+				//System.out.println("生成成功:/sql/oracle/*.sql");
 			}
 		};
 		t.start();

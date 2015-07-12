@@ -66,6 +66,11 @@ public class GridController extends Controller {
 		// 分页查询Grid数据
 		String view = eo.getView();
 		String sql = "from " + view + where + sort;
+		// SQL优化
+		if (sql.endsWith(" where 1=1 ")) {
+			sql = sql.replace(" where 1=1 ", "");
+		}
+		
 		Page<Record> page = Db.use(eo.getDs()).paginate(pageNumber, pageSize, "select *", sql, parm);
 
 		// 备份Value列，然后将值列转换成Key列

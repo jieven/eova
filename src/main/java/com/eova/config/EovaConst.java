@@ -21,6 +21,8 @@ public class EovaConst {
 	public static final String DS_MAIN = "main";
 	/** EOVA 数据源名称 **/
 	public static final String DS_EOVA = "eova";
+	/** Oracle 默认Sequence前缀 **/
+	public static final String SEQ_ = "seq_";
 
 	/** 基本通用功能-新增 **/
 	public static final String FUN_QUERY = "查询";

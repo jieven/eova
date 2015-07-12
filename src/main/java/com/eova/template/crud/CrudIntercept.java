@@ -19,7 +19,7 @@ import com.jfinal.plugin.activerecord.Record;
  * @author Jieven
  * @date 2014-8-29
  */
-public interface CrudIntercept {
+public class CrudIntercept {
 
 	/**
 	 * 新增前置任务(事务内)
@@ -29,7 +29,8 @@ public interface CrudIntercept {
 	 * 
 	 * @throws Exception
 	 */
-	public void addBefore(Controller ctrl, Record record) throws Exception;
+	public void addBefore(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 新增后置任务(事务内)
@@ -38,7 +39,8 @@ public interface CrudIntercept {
 	 * @param record 当前操作数据
 	 * @throws Exception
 	 */
-	public void addAfter(Controller ctrl, Record record) throws Exception;
+	public void addAfter(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 新增成功之后(事务外)
@@ -47,7 +49,8 @@ public interface CrudIntercept {
 	 * @param record 当前操作数据
 	 * @throws Exception
 	 */
-	public void addSucceed(Controller ctrl, Record record) throws Exception;
+	public void addSucceed(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 删除前置任务(事务内)
@@ -56,7 +59,8 @@ public interface CrudIntercept {
 	 * @param pkValues 选中行主键值
 	 * @throws Exception
 	 */
-	public void deleteBefore(Controller ctrl, String pkValues) throws Exception;
+	public void deleteBefore(Controller ctrl, String pkValues) throws Exception {
+	}
 
 	/**
 	 * 删除后置任务(事务内)
@@ -65,7 +69,8 @@ public interface CrudIntercept {
 	 * @param pkValues 选中行主键值
 	 * @throws Exception
 	 */
-	public void deleteAfter(Controller ctrl, String pkValues) throws Exception;
+	public void deleteAfter(Controller ctrl, String pkValues) throws Exception {
+	}
 
 	/**
 	 * 删除成功之后(事务外)
@@ -74,7 +79,8 @@ public interface CrudIntercept {
 	 * @param pkValues 选中行主键值
 	 * @throws Exception
 	 */
-	public void deleteSucceed(Controller ctrl, String pkValues) throws Exception;
+	public void deleteSucceed(Controller ctrl, String pkValues) throws Exception {
+	}
 
 	/**
 	 * 更新前置任务(事务内)
@@ -83,7 +89,8 @@ public interface CrudIntercept {
 	 * @param record 当前操作数据
 	 * @throws Exception
 	 */
-	public void updateBefore(Controller ctrl, Record record) throws Exception;
+	public void updateBefore(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 更新后置任务(事务内)
@@ -92,7 +99,8 @@ public interface CrudIntercept {
 	 * @param record 当前操作数据
 	 * @throws Exception
 	 */
-	public void updateAfter(Controller ctrl, Record record) throws Exception;
+	public void updateAfter(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 更新成功之后(事务外)
@@ -101,7 +109,8 @@ public interface CrudIntercept {
 	 * @param record 当前操作数据
 	 * @throws Exception
 	 */
-	public void updateSucceed(Controller ctrl, Record record) throws Exception;
+	public void updateSucceed(Controller ctrl, Record record) throws Exception {
+	}
 
 	/**
 	 * 导入前置任务(事务内)
@@ -110,7 +119,8 @@ public interface CrudIntercept {
 	 * @param records 当前操作数据
 	 * @throws Exception
 	 */
-	public void importBefore(Controller ctrl, List<Record> records) throws Exception;
+	public void importBefore(Controller ctrl, List<Record> records) throws Exception {
+	}
 
 	/**
 	 * 导入后置任务(事务内)
@@ -119,7 +129,8 @@ public interface CrudIntercept {
 	 * @param records 当前操作数据
 	 * @throws Exception
 	 */
-	public void importAfter(Controller ctrl, List<Record> records) throws Exception;
+	public void importAfter(Controller ctrl, List<Record> records) throws Exception {
+	}
 
 	/**
 	 * 导入成功之后(事务外)
@@ -128,5 +139,6 @@ public interface CrudIntercept {
 	 * @param records 当前操作数据
 	 * @throws Exception
 	 */
-	public void importSucceed(Controller ctrl, List<Record> records) throws Exception;
+	public void importSucceed(Controller ctrl, List<Record> records) throws Exception {
+	}
 }

@@ -7,7 +7,9 @@
 package com.eova.config;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.beetl.core.GroupTemplate;
@@ -61,6 +63,8 @@ public class EovaConfig extends JFinalConfig {
 
 	/** EOVA所在数据库的类型 **/
 	public static String EOVA_DBTYPE = "mysql";
+	/** 数据源列表 **/
+	public static List<String> dataSources = new ArrayList<String>();
 
 	/**
 	 * 系统启动之后
@@ -79,14 +83,14 @@ public class EovaConfig extends JFinalConfig {
 		}
 		{
 			Boolean isInit = getPropertyToBoolean("initSql", false);
-			if (isInit) {
+			if (isInit && EOVA_DBTYPE.equals(JdbcUtils.MYSQL)) {
 				EovaInit.initCreateSql();
 			}
 		}
-		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_MAIN));
+		// System.out.println(DsUtil.getDbNameByConfigName(xx.DS_EOVA));
 		// System.out.println(DsUtil.getPkName(xx.DS_EOVA, "eova_field"));
-		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE));
-		// System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "EOVA_USER"));
+		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE, null, null));
+//		 System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "EOVA_USER"));
 		// DbUtil.createOracleSql();
 	}
 
@@ -116,6 +120,8 @@ public class EovaConfig extends JFinalConfig {
 
 		@SuppressWarnings("unused")
 		GroupTemplate group = BeetlRenderFactory.groupTemplate;
+		
+		// String templateRoot = PathKit.getWebRootPath() + PropKit.get("Beetl_ViewPath");
 
 		// 设置全局变量
 		Map<String, Object> sharedVars = new HashMap<String, Object>();
@@ -288,18 +294,17 @@ public class EovaConfig extends JFinalConfig {
 			throw new RuntimeException(e);
 		}
 
+		// 统一全部默认小写
+		arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));
+		
 		Dialect dialect;
 		if (JdbcUtils.MYSQL.equalsIgnoreCase(dbType) || JdbcUtils.H2.equalsIgnoreCase(dbType)) {
 			dialect = new MysqlDialect();
 		} else if (JdbcUtils.ORACLE.equalsIgnoreCase(dbType)) {
 			dialect = new OracleDialect();
-			// 默认小写
-			arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));
 			((DruidPlugin) dp).setValidationQuery("select 1 FROM DUAL");
 		} else if (JdbcUtils.POSTGRESQL.equalsIgnoreCase(dbType)) {
 			dialect = new PostgreSqlDialect();
-			// 默认小写
-			arp.setContainerFactory(new CaseInsensitiveContainerFactory(true));
 		} else {
 			// 默认使用标准SQL方言
 			dialect = new AnsiSqlDialect();
@@ -311,6 +316,9 @@ public class EovaConfig extends JFinalConfig {
 		if (isShow != null) {
 			arp.setShowSql(isShow);
 		}
+
+		// 记录数据源
+		dataSources.add(ds);
 
 		return arp;
 	}

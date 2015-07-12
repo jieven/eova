@@ -2,9 +2,13 @@ package com.eova.common.base;
 
 import java.util.List;
 
+import com.eova.common.utils.xx;
+import com.eova.config.EovaConst;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Table;
+import com.jfinal.plugin.activerecord.TableMapping;
 
 @SuppressWarnings("rawtypes")
 public class BaseModel<M extends Model> extends Model<M> {
@@ -128,5 +132,27 @@ public class BaseModel<M extends Model> extends Model<M> {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 保存
+	 */
+	@Override
+	public boolean save() {
+		String pk = null;
+		if (xx.isOracle()) {
+			Table table = TableMapping.me().getTable(getClass());
+			pk = table.getPrimaryKey()[0];
+			// 序列默认值
+			if (this.get(pk) == null) {
+				this.set(pk, EovaConst.SEQ_ + table.getName() + ".nextval");
+			}
+		}
+		boolean isSave = super.save();
+		if (xx.isOracle()) {
+			// 新增成功后 主键 BigDecimal->Integer
+			this.set(pk, Integer.valueOf(this.get(pk).toString()));
+		}
+		return isSave;
 	}
 }

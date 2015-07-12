@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eova.common.utils.xx;
 import com.jfinal.plugin.activerecord.Config;
 import com.jfinal.plugin.activerecord.DbKit;
 
@@ -40,8 +41,9 @@ public class DsUtil {
 				throw new SQLException(ds + " datasrouce can not get config");
 			}
 			conn = config.getDataSource().getConnection();
+			// TODO Mysql Test is OK!
 			if (props != null) {
-				// conn.setClientInfo(props);
+				conn.setClientInfo(props);
 			}
 			DatabaseMetaData md = conn.getMetaData();
 			return md;
@@ -70,15 +72,31 @@ public class DsUtil {
 			if (config == null) {
 				throw new SQLException(ds + " datasrouce can not get config");
 			}
-			conn = config.getDataSource().getConnection();
+			conn = config.getConnection();
 			dbName = conn.getCatalog();
-			// TODO Oracle 无法获取数据库名称
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
 			closeConn(conn);
 		}
 		return dbName;
+	}
+
+	/**
+	 * 获取数据源的用户名
+	 * 
+	 * @param ds 数据源
+	 * @return
+	 */
+	public static String getUserNameByConfigName(String ds) {
+		try {
+			DatabaseMetaData databaseMetaData = getDatabaseMetaData(ds);
+			
+			return databaseMetaData.getUserName();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -139,9 +157,12 @@ public class DsUtil {
 		JSONArray array = new JSONArray();
 		ResultSet rs = null;
 		try {
-			Properties props = new Properties();
-			props.setProperty("REMARKS", "true");// 获取注释
-			props.setProperty("COLUMN_DEF", "true");// 获取默认值
+			Properties props = null;
+			if(xx.isMysql()){
+				props = new Properties();
+				props.setProperty("REMARKS", "true");// 获取注释
+				props.setProperty("COLUMN_DEF", "true");// 获取默认值
+			}
 			DatabaseMetaData md = getDatabaseMetaData(ds, props);
 			rs = md.getColumns(null, null, tableNamePattern, null);
 			// 获取列数
@@ -149,6 +170,7 @@ public class DsUtil {
 			int columnCount = metaData.getColumnCount();
 			// 遍历ResultSet中的每条数据
 			while (rs.next()) {
+				System.out.println("Remarks: "+ rs.getObject(12));
 				JSONObject json = new JSONObject();
 				// 遍历每一列
 				for (int i = 1; i <= columnCount; i++) {

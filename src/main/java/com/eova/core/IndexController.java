@@ -68,8 +68,8 @@ public class IndexController extends Controller {
 	 * 修改密码
 	 */
 	public void toUpdatePwd() {
-		User eu = getSessionAttr("user");
-		if (xx.isEmpty(eu)) {
+		User user = getSessionAttr("user");
+		if (xx.isEmpty(user)) {
 			setAttr("msg", "请先登录");
 			toLogin();
 			return;

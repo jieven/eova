@@ -8,7 +8,7 @@ package com.eova.interceptor;
 
 import com.eova.model.User;
 import com.jfinal.aop.Interceptor;
-import com.jfinal.core.ActionInvocation;
+import com.jfinal.aop.Invocation;
 
 /**
  * 常量加载拦截器
@@ -16,24 +16,24 @@ import com.jfinal.core.ActionInvocation;
  * @author Jieven
  * 
  */
-public class LoginInterceptor implements Interceptor{
+public class LoginInterceptor implements Interceptor {
 
 	@Override
-	public void intercept(ActionInvocation ai) {
-		if (ai.getActionKey().equals("/toLogin") || ai.getActionKey().equals("/vcodeImg") || ai.getActionKey().equals("/doLogin") || ai.getActionKey().equals("/init")
-				|| ai.getActionKey().equals("/doInit")) {
-			ai.invoke();
+	public void intercept(Invocation inv) {
+		if (inv.getActionKey().equals("/toLogin") || inv.getActionKey().equals("/vcodeImg") || inv.getActionKey().equals("/doLogin") || inv.getActionKey().equals("/init")
+				|| inv.getActionKey().equals("/doInit")) {
+			inv.invoke();
 			return;
 		}
 
 		// 获取登录用户的角色
-		User user = ai.getController().getSessionAttr("user");
+		User user = inv.getController().getSessionAttr("user");
 		if (user == null) {
-			ai.getController().redirect("/toLogin");
+			inv.getController().redirect("/toLogin");
 			return;
 		}
-		
-		ai.invoke();
+
+		inv.invoke();
 	}
 
 }

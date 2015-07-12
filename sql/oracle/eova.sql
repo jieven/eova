@@ -23,6 +23,29 @@ drop table eova_object;
 drop table eova_role;
 drop table eova_role_btn;
 drop table eova_user;
+purge recyclebin;
+
+drop sequence seq_eova_button;
+drop sequence seq_eova_dict;
+drop sequence seq_eova_field;
+drop sequence seq_eova_log;
+drop sequence seq_eova_menu;
+drop sequence seq_eova_menu_object;
+drop sequence seq_eova_object;
+drop sequence seq_eova_role;
+drop sequence seq_eova_role_btn;
+drop sequence seq_eova_user;
+
+create sequence seq_eova_button increment by 1 start with 991 maxvalue 9999999999;
+create sequence seq_eova_dict increment by 1 start with 161 maxvalue 9999999999;
+create sequence seq_eova_field increment by 1 start with 1571 maxvalue 9999999999;
+create sequence seq_eova_log increment by 1 start with 11 maxvalue 9999999999;
+create sequence seq_eova_menu increment by 1 start with 301 maxvalue 9999999999;
+create sequence seq_eova_menu_object increment by 1 start with 191 maxvalue 9999999999;
+create sequence seq_eova_object increment by 1 start with 201 maxvalue 9999999999;
+create sequence seq_eova_role increment by 1 start with 81 maxvalue 9999999999;
+create sequence seq_eova_role_btn increment by 1 start with 14011 maxvalue 9999999999;
+create sequence seq_eova_user increment by 1 start with 21 maxvalue 9999999999;
 
 create table eova_button(
     id NUMBER(10) NOT NULL,

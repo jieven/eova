@@ -67,6 +67,7 @@ public class CrudController extends Controller {
 	 * @param e 异常
 	 */
 	private void buildException(Exception e) {
+		e.printStackTrace();
 		String type = e.getClass().getName();
 		type = type.replace("java.lang.", "");
 		info = ExceptionUtil.getStackTrace(e);
@@ -98,7 +99,7 @@ public class CrudController extends Controller {
 		// 获取主键的值
 		Object pkValue = getPara(1);
 		// 根据主键获取对象
-		Record record = Db.use(crud.getDs()).findById(crud.getView(), crud.getPk(), pkValue, "*");
+		Record record = Db.use(crud.getDs()).findById(crud.getView(), crud.getPk(), pkValue);
 
 		// 分别根据字段获取值
 		for (MetaField ei : eis) {
@@ -232,7 +233,7 @@ public class CrudController extends Controller {
 		// 获取主键的值 格式:pkval1,pkval2,pkval3
 		String str = getPara(1);
 		final String pkValues = str.substring(0, str.length() - 1);
-		
+
 		// 事务(默认为TRANSACTION_READ_COMMITTED)
 		boolean flag = Db.tx(new IAtom() {
 			@Override
@@ -415,7 +416,7 @@ public class CrudController extends Controller {
 	private void uploadCallback(boolean succeed, String msg) {
 		renderHtml("<script>parent.callback(\"" + msg + "\", " + succeed + ");</script>");
 	}
-	
+
 	// 异步传图(返回必须是html,否则无法解析)
 	public void uploadImg() {
 

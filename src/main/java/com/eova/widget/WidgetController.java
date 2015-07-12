@@ -105,6 +105,7 @@ public class WidgetController extends Controller {
 
 		// 分页查询Grid数据
 		String sql = from + where + sort;
+		System.out.println(sql);
 		Page<Record> page = Db.use(ds).paginate(pageNumber, pageSize, select, sql, parm);
 
 		// 将分页数据转换成JSON
@@ -163,7 +164,7 @@ public class WidgetController extends Controller {
 		List<MetaField> eis = EovaExp.getEis(exp);
 		
 		// 根据表达式获取SQL进行查询
-		// 下拉框表达式 别名固定为 ID,CN,否则页面无法获取
+		// 下拉框表达式 别名固定为 id,cn,否则页面无法获取
 		String select = EovaExp.getSelect(exp);
 		String from = EovaExp.getFrom(exp);
 		String where = EovaExp.getWhere(exp);
@@ -185,8 +186,8 @@ public class WidgetController extends Controller {
 		
 		// 添加下拉框默认值
 		Record re = new Record();
-		re.set("ID", "");
-		re.set("CN", "");
+		re.set("id", "");
+		re.set("cn", "");
 		jsList.add(0, re);
 
 		// 转换成JSON

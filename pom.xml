@@ -16,28 +16,15 @@
         <jdk.version>1.6</jdk.version>
         <junit.version>4.11</junit.version>
 
-        <db.driver.groupId>mysql</db.driver.groupId>
-        <db.driver.artifactId>mysql-connector-java</db.driver.artifactId>
-        <db.driver.version>5.1.20</db.driver.version>
-
-        <db.driver.groupId>com.oracle</db.driver.groupId>
-        <db.driver.artifactId>ojdbc14</db.driver.artifactId>
-        <db.driver.version>10.2.0.4.0</db.driver.version>
-
-        <!--<db.driver.groupId>com.h2database</db.driver.groupId>
-        <db.driver.artifactId>h2</db.driver.artifactId>
-        <db.driver.version>1.4.187</db.driver.version>-->
-        
-        <!--<db.driver.groupId>postgresql</db.driver.groupId>-->
-        <!--<db.driver.artifactId>postgresql</db.driver.artifactId>-->
-        <!--<db.driver.version>9.1-901-1.jdbc4</db.driver.version>-->
+        <mysql.version>5.1.20</mysql.version>
+        <oracle.version>10.2.0.4.0</oracle.version>
 
         <druid.version>1.0.5</druid.version>
         <ehcache.version>2.5.2</ehcache.version>
 
         <jetty.version>8.1.8</jetty.version>
-        <jfinal.version>1.9</jfinal.version>
-        <beetl.version>2.2.2</beetl.version>
+        <jfinal.version>2.0</jfinal.version>
+        <beetl.version>2.2.3</beetl.version>
 
         <cos.version>26Dec2008</cos.version>
         <fastjson.version>1.2.0</fastjson.version>
@@ -49,7 +36,31 @@
     </properties>
 
     <dependencies>
-
+    
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>${oracle.version}</version>
+        </dependency>
+        
+<!--         <dependency> -->
+<!--             <groupId>postgresql</groupId> -->
+<!--             <artifactId>postgresql</artifactId> -->
+<!--             <version>9.1-901-1.jdbc4</version> -->
+<!--         </dependency> -->
+        
+<!--         <dependency> -->
+<!--             <groupId>com.h2database</groupId> -->
+<!--             <artifactId>h2</artifactId> -->
+<!--             <version>1.4.187</version> -->
+<!--         </dependency> -->
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -92,12 +103,6 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${db.driver.groupId}</groupId>
-            <artifactId>${db.driver.artifactId}</artifactId>
-            <version>${db.driver.version}</version>
         </dependency>
 
         <dependency>

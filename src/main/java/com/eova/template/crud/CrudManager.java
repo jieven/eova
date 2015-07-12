@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.eova.common.utils.xx;
-import com.eova.config.PageConst;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
@@ -51,9 +50,14 @@ public class CrudManager {
 
 			// 新增跳过自增长字段(新增时为空)
 			if (xx.isEmpty(value) && type.equals(MetaField.TYPE_AUTO)) {
+				// 自增字段使用默认值
+				String defaulter = item.getStr("defaulter");
+				if (!xx.isEmpty(defaulter)) {
+					record.set(key, item.getStr("defaulter"));
+				}
 				continue;
 			}
-			
+
 			// 新增时，移除禁止新增的字段
 			boolean isAdd = item.getBoolean("is_add");
 			if (isInsert && !isAdd) {
@@ -186,53 +190,4 @@ public class CrudManager {
 		}
 
 	}
-
-	/**
-	 * 获得排序参数
-	 * 
-	 * @param orderField 本次需要排序的字段
-	 * @param orderLast 上次排序记录
-	 * @return
-	 */
-	public static String getOrder(Controller c, Crud crud, String orderField, String orderLast) {
-		String order = "";
-		if (!orderField.equals("")) {
-			String nowOrder = orderField + " desc";
-			// 如果上次排序和本次排序不同 || 上次未排序
-			if ((!orderLast.equals(nowOrder)) || orderLast.equals("")) {
-				order = " order by " + nowOrder;
-				// 保存上一次排序方式
-				c.setAttr("orderLast", nowOrder);
-				c.keepPara("orderField");
-			}
-		}
-		// 默认根据主键从小到大排列
-		if (order.equals("") && crud.getObject().getBoolean("is_default_pk_desc")) {
-			return " order by " + crud.getObject().getPk() + " desc";
-		}
-		return order;
-	}
-
-	/**
-	 * 获取排序
-	 * 
-	 * @param c Controller
-	 * @param crud CRUDVO
-	 * @return
-	 */
-	public static String getSort(Controller c, Crud crud) {
-		// 获取排序字段
-		String sort = c.getPara(PageConst.SORT, "");
-		if (xx.isEmpty(sort)) {
-			// 初始默认主键排序
-			if (xx.isEmpty(sort) && crud.getObject().getBoolean("is_default_pk_desc")) {
-				return " order by " + crud.getPk() + " desc";
-			}
-			return " ";
-		}
-		// 获取排序方式
-		String order = c.getPara(PageConst.ORDER, "");
-		return " order by " + sort + ' ' + order;
-	}
-
 }

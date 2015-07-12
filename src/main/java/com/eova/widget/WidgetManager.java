@@ -38,11 +38,17 @@ public class WidgetManager {
 		// 获取排序字段
 		String sort = c.getPara(PageConst.SORT, "");
 		if (xx.isEmpty(sort)) {
-			return "";
+			if (eo == null) {
+				return " ";
+			}
+			// 初始默认主键排序
+			if (xx.isEmpty(sort) && eo.getBoolean("is_default_pk_desc")) {
+				return " order by " + eo.getPk() + " desc";
+			}
+			return " ";
 		}
-
 		// 获取排序方式
-		String order = c.getPara(PageConst.ORDER, "desc");
+		String order = c.getPara(PageConst.ORDER, "");
 		return " order by " + sort + ' ' + order;
 	}
 

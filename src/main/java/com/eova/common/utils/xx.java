@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.alibaba.druid.util.JdbcUtils;
+import com.eova.config.EovaConfig;
+
 /**
  * What：高频常用方法集合<br>
  * Where：xx.xxx简短快捷的输入操作<br>
@@ -160,6 +163,22 @@ public class xx {
 	 */
 	public static double toDouble(Object obj) {
 		return Double.parseDouble(obj.toString());
+	}
+	
+	/**
+	 * 是否Oracle数据源
+	 * @return
+	 */
+	public static boolean isOracle(){
+		return EovaConfig.EOVA_DBTYPE.equals((JdbcUtils.ORACLE));
+	}
+	
+	/**
+	 * 是否Mysql数据源
+	 * @return
+	 */
+	public static boolean isMysql(){
+		return EovaConfig.EOVA_DBTYPE.equals((JdbcUtils.MYSQL));
 	}
 	
 }
