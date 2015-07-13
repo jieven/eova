@@ -134,8 +134,10 @@ public class MetaDataController extends Controller {
 		// 因为 Oralce 配置参数 DatabaseMetaData 无法获取注释，手工从表中查询字段注释
 		List<Record> comments = null;
 		if(xx.isOracle()){
-			String sql = "select column_name,comments from all_col_comments where table_name = ?";
-			comments = Db.use(ds).find(sql, table);
+			// 获取用户名
+			String userName = DsUtil.getUserNameByConfigName(ds);
+			String sql = "select column_name,comments from all_col_comments where owner = ? and table_name = ?";
+			comments = Db.use(ds).find(sql, userName, table);
 		}
 		for (int i = 0; i < list.size(); i++) {
 			JSONObject o = list.getJSONObject(i);

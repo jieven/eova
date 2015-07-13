@@ -164,7 +164,11 @@ public class DsUtil {
 				props.setProperty("COLUMN_DEF", "true");// 获取默认值
 			}
 			DatabaseMetaData md = getDatabaseMetaData(ds, props);
-			rs = md.getColumns(null, null, tableNamePattern, null);
+			String schemaPattern = null;
+			if (xx.isOracle()) {
+				schemaPattern = getUserNameByConfigName(ds);
+			}
+			rs = md.getColumns(null, schemaPattern, tableNamePattern, null);
 			// 获取列数
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columnCount = metaData.getColumnCount();
