@@ -195,6 +195,10 @@ public class GridController extends Controller {
 			}
 			// 删除主键备份值列
 			re.remove("pk_val");
+			// 删除Orcle分页产生的rownum_
+			if(xx.isOracle()){
+				re.remove("rownum_");
+			}
 			records.add(re);
 		}
 
