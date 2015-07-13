@@ -154,7 +154,12 @@ public class WidgetUtil {
 		sb.delete(sb.length()-1, sb.length());
 		sb.append("]");
 		System.out.println(sb.toString());
-		return sb.toString();
+		
+		// 大小写与EasyUI兼容问题：
+		String json = sb.toString();
+		json = json.replaceAll("iconcls", "iconCls");
+		
+		return json;
 	}
 	
 }

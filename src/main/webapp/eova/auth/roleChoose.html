@@ -82,13 +82,13 @@ $(function() {
             width: '180'
         },
         {
-            field: 'btnName',
+            field: 'btnname',
             title: '功能',
             width: '800',
             formatter: function(value, row, field) {
                 if (value) {
                     var names = value.split(",");
-                    var ids = row['btnId'].split(",");
+                    var ids = row['btnid'].split(",");
                     var s = "";
                     for (i = 0; i < names.length; i++) {
                         s += '<label><input type="checkbox" id="'+ ids[i] +'" value="' + ids[i] + '" name="funBtn" fun="'+ names[i] +'">' + names[i] + '</label>&nbsp;&nbsp;&nbsp;';

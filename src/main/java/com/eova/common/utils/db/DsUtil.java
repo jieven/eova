@@ -91,7 +91,6 @@ public class DsUtil {
 	public static String getUserNameByConfigName(String ds) {
 		try {
 			DatabaseMetaData databaseMetaData = getDatabaseMetaData(ds);
-			
 			return databaseMetaData.getUserName();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,8 +132,12 @@ public class DsUtil {
 	public static String getPkName(String ds, String table) {
 		ResultSet rs = null;
 		try {
+			String schemaPattern = null;
+			if (xx.isOracle()) {
+				schemaPattern = getUserNameByConfigName(ds);
+			}
 			DatabaseMetaData md = getDatabaseMetaData(ds);
-			rs = md.getPrimaryKeys(null, null, table);
+			rs = md.getPrimaryKeys(null, schemaPattern, table);
 			while (rs.next()) {
 				return rs.getString("COLUMN_NAME");
 			}
