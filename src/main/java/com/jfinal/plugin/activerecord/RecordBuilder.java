@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.eova.common.utils.xx;
+import com.eova.common.utils.db.DbUtil;
+
 /**
  * RecordBuilder.
  */
@@ -62,24 +65,9 @@ public class RecordBuilder {
 				else
 					value = rs.getObject(i);
 				
-				// 自动类型转换
-				if (value != null) {
-					String str = value.toString();
-					if (types[i] == Types.NUMERIC) {
-						if (str.length() < 11) {
-							value = Integer.parseInt(str);
-						} else if (str.contains(".")) {
-							value = Double.parseDouble(str);
-						} else {
-							value = Long.valueOf(str);
-						}
-					} else if (types[i] == Types.CHAR) {
-						if (str.equals("1")) {
-							value = new Boolean(true);
-						} else {
-							value = new Boolean(false);
-						}
-					}
+				// Oracle强制类型转换
+				if (value != null && xx.isOracle()) {
+					value = DbUtil.convertOracleValue(value, types[i]);
 				}
 
 				columns.put(labelNames[i], value);
