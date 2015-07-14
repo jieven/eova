@@ -1,5 +1,6 @@
 package com.eova.common.utils.db;
 
+import java.sql.Types;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
@@ -140,4 +141,28 @@ public class DbUtil {
 		System.out.println(sbCreateSeq.toString());
 		System.out.println(sbs.toString());
 	}
+
+	public static Object convertOracleValue(Object value, int type){
+		String s = value.toString();
+		if (type == Types.NUMERIC) {
+			if (s.contains(".")) {
+				return Double.valueOf(s);
+			}
+			if (s.length() > 11) {
+				return Long.valueOf(s);
+			}
+			if (s.length() <= 11) {
+				return Integer.valueOf(s);
+			}
+		}
+		if (type == Types.CHAR) {
+			if (s.equals("1")) {
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
+		}
+		return value;
+	}
+	
 }
