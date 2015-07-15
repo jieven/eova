@@ -15,6 +15,7 @@ import java.util.Map;
 import com.eova.common.utils.xx;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
+import com.eova.template.common.util.TemplateUtil;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -46,7 +47,7 @@ public class CrudManager {
 			// 字段名
 			String key = item.getEn();
 			// 获当前字段更新后的值,默认空值
-			String value = c.getPara(key, "");
+			Object value = c.getPara(key, "");
 
 			// 新增跳过自增长字段(新增时为空)
 			if (xx.isEmpty(value) && type.equals(MetaField.TYPE_AUTO)) {
@@ -71,15 +72,6 @@ public class CrudManager {
 				continue;
 			}
 
-			// 复选框需要特转换值
-			if (type.equals(MetaField.TYPE_CHECK)) {
-				if (xx.isEmpty(value)) {
-					value = "0";
-				} else {
-					value = "1";
-				}
-			}
-
 			// 当前字段的持久化对象
 			String objectCode = item.getStr("poCode");
 			// 当前字段的持久化关联字段
@@ -92,7 +84,7 @@ public class CrudManager {
 				reMap.put(objectCode, re);
 				continue;
 			}
-			record.set(key, value);
+			record.set(key, TemplateUtil.convertValue(item, value));
 		}
 		return reMap;
 	}

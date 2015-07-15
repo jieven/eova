@@ -54,6 +54,10 @@ public class RecordBuilder {
 					value = rs.getFloat(i);
 				else if (types[i] == Types.DOUBLE)
 					value = rs.getDouble(i);
+				else if (types[i] == Types.TIMESTAMP || (xx.isOracle() && types[i] == Types.DATE ))
+					value = rs.getTimestamp(i);
+				else if (types[i] == Types.DATE)
+					value = rs.getDate(i);
 				else if (types[i] < Types.BLOB)
 					value = rs.getObject(i);
 				else if (types[i] == Types.CLOB)
@@ -67,7 +71,9 @@ public class RecordBuilder {
 				
 				// Oracle强制类型转换
 				if (value != null && xx.isOracle()) {
+//					System.out.println("convert before:" + value.getClass());
 					value = DbUtil.convertOracleValue(value, types[i]);
+//					System.out.println("convert after:" + value.getClass());
 				}
 
 				columns.put(labelNames[i], value);

@@ -142,6 +142,12 @@ public class DbUtil {
 		System.out.println(sbs.toString());
 	}
 
+	/**
+	 * 对Oracle部分类型做强转
+	 * @param value
+	 * @param type
+	 * @return
+	 */
 	public static Object convertOracleValue(Object value, int type){
 		String s = value.toString();
 		if (type == Types.NUMERIC) {
@@ -163,6 +169,15 @@ public class DbUtil {
 			}
 		}
 		return value;
+	}
+	
+	/**
+	 * 格式化Oracle Date
+	 * @param value
+	 * @return
+	 */
+	public static String buildDateValue(Object value){
+		return "to_date('"+ value +"','yyyy-mm-dd HH24:MI:SS')";
 	}
 	
 }

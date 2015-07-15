@@ -20,6 +20,7 @@ import com.eova.common.utils.xx;
 import com.eova.config.PageConst;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
+import com.eova.template.common.util.TemplateUtil;
 import com.eova.widget.WidgetManager;
 import com.eova.widget.WidgetUtil;
 import com.jfinal.core.Controller;
@@ -177,7 +178,6 @@ public class GridController extends Controller {
 			for (MetaField x : items) {
 				String en = x.getEn();// 字段名
 				String exp = x.getStr("exp");// 表达式
-				String type = x.getStr("type");// 控件类型
 				Object value = re.get(en);// 值
 
 				if (!xx.isEmpty(exp)) {
@@ -187,11 +187,8 @@ public class GridController extends Controller {
 					// 获得值之后删除值列防止持久化报错
 					re.remove(valField);
 				}
-				// 复选框需要特转换值
-				if (type.equals(MetaField.TYPE_CHECK)) {
-					value = Boolean.parseBoolean(value.toString());
-				}
-				re.set(en, value);
+
+				re.set(en, TemplateUtil.convertValue(x, value));
 			}
 			// 删除主键备份值列
 			re.remove("pk_val");

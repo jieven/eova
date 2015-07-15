@@ -42,6 +42,10 @@ public class ModelBuilder {
 					value = rs.getFloat(i);
 				else if (types[i] == Types.DOUBLE)
 					value = rs.getDouble(i);
+				else if (types[i] == Types.TIMESTAMP || (xx.isOracle() && types[i] == Types.DATE ))
+					value = rs.getTimestamp(i);
+				else if (types[i] == Types.DATE)
+					value = rs.getDate(i);
 				else if (types[i] == Types.CLOB)
 					value = handleClob(rs.getClob(i));
 				else if (types[i] == Types.NCLOB)

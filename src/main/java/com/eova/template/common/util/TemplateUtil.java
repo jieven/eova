@@ -9,7 +9,9 @@ package com.eova.template.common.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eova.common.utils.xx;
 import com.eova.model.MetaField;
+import com.eova.template.common.config.TemplateConfig;
 import com.jfinal.plugin.activerecord.Record;
 
 public class TemplateUtil {
@@ -35,19 +37,32 @@ public class TemplateUtil {
 		}
 		return list;
 	}
-
+	
 	/**
-	 * 获取字段名集合
-	 * 
-	 * @param itemList 对象详情集合
+	 * 值的类型转换
+	 * @param item 元字段
+	 * @param value
 	 * @return
 	 */
-	@Deprecated
-	public static List<String> getKeyList(List<MetaField> itemList) {
-		List<String> list = new ArrayList<String>();
-		for (MetaField item : itemList) {
-			list.add(item.getEn());
+	public static Object convertValue(MetaField item, Object value){
+		// 控件类型
+		String type = item.getStr("type");
+		// 数据类型
+		String dataType = item.getStr("data_type");
+		// 复选框需要特转换值
+		if (type.equals(MetaField.TYPE_CHECK)) {
+			if (xx.isEmpty(value)) {
+				return "0";
+			} else {
+				return "1";
+			}
 		}
-		return list;
+		
+		// Oracle Date格式化
+		if (xx.isOracle() && dataType.equals(TemplateConfig.DATATYPE_TIME)) {
+			return java.sql.Timestamp.valueOf(value.toString());
+		}
+		return value;
 	}
+	
 }

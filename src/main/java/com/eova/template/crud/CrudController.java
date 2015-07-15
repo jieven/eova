@@ -20,6 +20,7 @@ import com.eova.model.EovaLog;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.JsonKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Record;
@@ -319,6 +320,7 @@ public class CrudController extends Controller {
 
 					if (!xx.isEmpty(crud.getTable())) {
 						// update table
+						System.out.println(JsonKit.toJson(record));
 						Db.use(crud.getDs()).update(crud.getTable(), crud.getPk(), record);
 					} else {
 						// update view
