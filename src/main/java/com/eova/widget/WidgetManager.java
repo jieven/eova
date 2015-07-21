@@ -91,7 +91,10 @@ public class WidgetManager {
 			String key = ei.getEn();
 			// 给查询表单添加前缀，防止和系统级别字段重名
 			String value = c.getPara(PageConst.QUERY + key, "").trim();
-			if (xx.isEmpty(value) || value.equals("-1")) {
+			String startTime = c.getPara(PageConst.START + key, "").trim();
+			String endTime = c.getPara(PageConst.END + key, "").trim();
+			// 当前字段 既无文本值 也无时间值，说明没填，直接跳过
+			if ((xx.isEmpty(value) || value.equals("-1")) && xx.isOneEmpty(startTime, endTime)) {
 				continue;
 			}
 			
@@ -105,10 +108,14 @@ public class WidgetManager {
 			}
 			// 文本框查询条件为模糊匹配
 			if (ei.getStr("type").equals(MetaField.TYPE_TEXT)) {
-				sb.append("and " + key + " like ? ");
+				sb.append(" and " + key + " like ?");
 				parmList.add("%" + value + "%");
+			} else if (ei.getStr("type").equals(MetaField.TYPE_TIME)) {
+				sb.append(" and date(" + key + ") > ? and date(" + key + ") < ?");
+				parmList.add(startTime);
+				parmList.add(endTime);
 			} else {
-				sb.append("and " + key + " = ? ");
+				sb.append(" and " + key + " = ?");
 				parmList.add(value);
 			}
 			

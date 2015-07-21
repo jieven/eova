@@ -16,10 +16,10 @@ Date: 2015-07-09 13:42:40
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `dict`
+-- Table structure for `webdict`
 -- ----------------------------
-DROP TABLE IF EXISTS `dict`;
-CREATE TABLE `dict` (
+DROP TABLE IF EXISTS `webdict`;
+CREATE TABLE `webdict` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -32,10 +32,10 @@ CREATE TABLE `dict` (
 -- ----------------------------
 -- Records of dict
 -- ----------------------------
-INSERT INTO `dict` VALUES ('1', '0', '正常', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('2', '1', '封号', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('3', '2', '禁言', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('4', '3', '删除', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('1', '0', '正常', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('2', '1', '封号', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('3', '2', '禁言', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('4', '3', '删除', 'users', 'status', '');
 
 -- ----------------------------
 -- Table structure for `item`

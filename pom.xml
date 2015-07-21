@@ -24,7 +24,9 @@
 
         <jetty.version>8.1.8</jetty.version>
         <jfinal.version>2.0</jfinal.version>
-        <beetl.version>2.2.3</beetl.version>
+        <cglib.version>3.1</cglib.version>
+        
+        <beetl.version>2.2.4</beetl.version>
 
         <cos.version>26Dec2008</cos.version>
         <fastjson.version>1.2.0</fastjson.version>
@@ -43,11 +45,11 @@
             <version>${mysql.version}</version>
         </dependency>
         
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>${oracle.version}</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>com.oracle</groupId> -->
+<!--             <artifactId>ojdbc14</artifactId> -->
+<!--             <version>${oracle.version}</version> -->
+<!--         </dependency> -->
         
 <!--         <dependency> -->
 <!--             <groupId>postgresql</groupId> -->
@@ -73,6 +75,12 @@
             <artifactId>jfinal</artifactId>
             <version>${jfinal.version}</version>
         </dependency>
+        
+        <dependency>
+    		<groupId>cglib</groupId>
+    		<artifactId>cglib-nodep</artifactId>
+    		<version>${cglib.version}</version>
+		</dependency>
 
         <dependency>
             <groupId>com.jfinal</groupId>

@@ -12,8 +12,8 @@ import java.util.Map;
 
 import com.eova.common.Easy;
 import com.eova.common.utils.xx;
-import com.eova.common.utils.file.FileUtil;
-import com.eova.common.utils.file.ImageUtil;
+import com.eova.common.utils.io.FileUtil;
+import com.eova.common.utils.io.ImageUtil;
 import com.eova.common.utils.util.ExceptionUtil;
 import com.eova.config.EovaConst;
 import com.eova.model.EovaLog;
@@ -456,6 +456,13 @@ public class CrudController extends Controller {
 			String suffix = FileUtil.getFileType(fileName);
 			// 创建新的随机文件名
 			fileName = System.currentTimeMillis() + suffix;
+			
+			// 新文件 Path
+			String path = file.getSaveDirectory() + fileName;
+			
+			FileUtil.rename(file.getFile().getPath(), path);
+			System.out.println(file.getFile().getPath());
+			System.out.println(path);
 
 		} catch (Exception e) {
 			e.printStackTrace();

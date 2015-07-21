@@ -6,7 +6,9 @@
 .project
 .classpath
 .settings/
+target/
 src/main/webapp/plugins
 src/main/webapp/upload
 src/main/webapp/upimg
 src/main/webapp/WEB-INF/classes
+

@@ -105,6 +105,7 @@
         // 初始宽度
         this.setWidth(this.options.width);
     };
+    
     /**
      * 绑定事件
      */

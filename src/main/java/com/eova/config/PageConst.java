@@ -27,6 +27,10 @@ public class PageConst {
 	public static final String ORDER = "order";
 	/** 表单名-查询表单前缀 **/
 	public static final String QUERY = "query_";
+	/** 表单名-时间查询表单前缀 **/
+	public static final String START = "start_";
+	/** 表单名-时间查询表单前缀 **/
+	public static final String END = "end_";
 
 	/**
 	 * 系统启动初始化加载 将常量全局化

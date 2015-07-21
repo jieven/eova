@@ -11,7 +11,7 @@
 <%} else if(item.type == "复选框"){%>
 	<div><#check id="${item.en}" name="${item.en}" value="${item.value!item.defaulter}" isNoN="${item.is_required!}" /></div>
 <%} else if(item.type == "图片框"){%>
-	<div><#file id="${item.en}" name="${item.en}" value="${item.value!item.defaulter}" isNoN="${item.is_required!}" /></div>
+	<div><#img id="${item.en}" name="${item.en}" value="${item.value!item.defaulter}" isNoN="${item.is_required!}" /></div>
 <%} else if(item.type == "图标框"){%>
     <div><#icon id="${item.en}" name="${item.en}" value="${item.value!item.defaulter}" isNoN="${item.is_required!}" /></div>
 <%} else {// 默认为文本框%>

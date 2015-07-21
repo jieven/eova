@@ -1,4 +1,4 @@
-package com.eova.common.utils.file;
+package com.eova.common.utils.io;
 
 import java.io.File;
 import java.io.FileInputStream;

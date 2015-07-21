@@ -29,7 +29,7 @@
 				<%}else if(item.type == "查找框"){%>
                    	<div><#find isQuery="true" id="${item.en}" name="${item.en}" code="${item.object_code}" field="${item.en}" value="${item.value!}" isNoN="true" /></div>
 				<%}else if(item.type == "时间框"){%>
-					<div><#time id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
+					<div><#times id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
 				<%}else if(item.type == "数字框"){%>
 					<div><#number id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
 				<%}else if(item.type == "复选框"){%>

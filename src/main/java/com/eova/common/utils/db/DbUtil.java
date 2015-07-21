@@ -90,8 +90,9 @@ public class DbUtil {
 				String def = o.getString("COLUMN_DEF");
 				re.set("defaulter", def);
 
+				String dataType = re.getStr("data_type");
 				// create table
-				sb.append("    " + re.getStr("en") + " " + re.getStr("data_type") + "(" + size + ")");
+				sb.append("    " + re.getStr("en") + " " + dataType + (dataType.equals("DATE") ? "" : "(" + size + ")"));
 				if (re.getBoolean("is_required")) {
 					sb.append(" NOT NULL");
 				}

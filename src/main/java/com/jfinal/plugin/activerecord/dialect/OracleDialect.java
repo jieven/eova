@@ -98,7 +98,7 @@ public class OracleDialect extends Dialect {
 				if (isKey)
 					continue ;
 				
-				if (paras.size() > 0)
+				if (!sql.toString().endsWith(", ") && !sql.toString().endsWith("set "))
 					sql.append(", ");
 				sql.append(colName);
 				if (e.getValue() instanceof java.sql.Date || e.getValue() instanceof java.sql.Timestamp) {
@@ -202,7 +202,7 @@ public class OracleDialect extends Dialect {
 		for (Entry<String, Object> e: record.getColumns().entrySet()) {
 			String colName = e.getKey();
 			if (!isPrimaryKey(colName, pKeys)) {
-				if (paras.size() > 0) {
+				if (!sql.toString().endsWith(", ") && !sql.toString().endsWith("set ")) {
 					sql.append(", ");
 				}
 				sql.append(colName);

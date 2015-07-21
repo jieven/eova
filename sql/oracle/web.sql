@@ -1,31 +1,20 @@
-drop table dict;
 drop table item;
 drop table users;
 drop table users_exp;
 drop table users_item;
+drop table webdict;
 purge recyclebin;
 
-drop sequence seq_dict;
 drop sequence seq_item;
 drop sequence seq_users;
+drop sequence seq_users_exp;
 drop sequence seq_users_item;
+drop sequence seq_webdict;
 
-create sequence seq_dict increment by 1 start with 41 maxvalue 9999999999;
-create sequence seq_item increment by 1 start with 61 maxvalue 9999999999;
-create sequence seq_users increment by 1 start with 841 maxvalue 9999999999;
+create sequence seq_item increment by 1 start with 71 maxvalue 9999999999;
+create sequence seq_users increment by 1 start with 271 maxvalue 9999999999;
 create sequence seq_users_item increment by 1 start with 71 maxvalue 9999999999;
-
-create table dict(
-    id NUMBER(10) NOT NULL,
-    value VARCHAR2(50) NOT NULL,
-    name VARCHAR2(50) NOT NULL,
-    object VARCHAR2(50) NOT NULL,
-    field VARCHAR2(50) NOT NULL,
-    ext VARCHAR2(255) NOT NULL
-);
-
-alter table dict add constraint pk_dict primary key(id);
-comment on column dict.ext is '扩展Json';
+create sequence seq_webdict increment by 1 start with 41 maxvalue 9999999999;
 
 create table item(
     id NUMBER(10) NOT NULL,
@@ -43,7 +32,7 @@ create table users(
     login_id VARCHAR2(255),
     login_pwd VARCHAR2(255),
     nickname VARCHAR2(255),
-    reg_time DATE(19),
+    reg_time DATE,
     info VARCHAR2(255)
 );
 
@@ -82,13 +71,25 @@ comment on column users_item.id is 'ID';
 comment on column users_item.users_id is '艺人';
 comment on column users_item.item_id is '道具';
 
+create table webdict(
+    id NUMBER(10) NOT NULL,
+    value VARCHAR2(50) NOT NULL,
+    name VARCHAR2(50) NOT NULL,
+    object VARCHAR2(50) NOT NULL,
+    field VARCHAR2(50) NOT NULL,
+    ext VARCHAR2(255) NOT NULL
+);
+
+alter table webdict add constraint pk_webdict primary key(id);
+comment on column webdict.ext is '扩展Json';
+
 -- ----------------------------
--- Records of dict
+-- Records of webdict
 -- ----------------------------
-INSERT INTO `dict` VALUES ('1', '0', '正常', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('2', '1', '封号', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('3', '2', '禁言', 'users', 'status', '');
-INSERT INTO `dict` VALUES ('4', '3', '删除', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('1', '0', '正常', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('2', '1', '封号', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('3', '2', '禁言', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('4', '3', '删除', 'users', 'status', '');
 
 -- ----------------------------
 -- Records of item

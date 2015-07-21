@@ -76,6 +76,14 @@
                                 return value;
 							},
 						<%}%>
+						<%if(item.type == '图片框'){%>
+							formatter:function(value, row, index, field){
+                                if(value){
+                                    return '<img src="/upimg/'+ value +'">';
+                                }
+                                return value;
+							},
+						<%}%>
                         <%// Grid Cell Editor,对象和字段允许行内编辑自增，自增长禁止编辑%>
                         <%if(isTrue(obj.is_celledit) && isTrue(item.is_edit) && !isTrue(item.is_auto)){%>
                             editor:{type:'${item.editor}',options:{
