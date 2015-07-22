@@ -24,6 +24,9 @@ public class EovaConst {
 	/** Oracle 默认Sequence前缀 **/
 	public static final String SEQ_ = "seq_";
 
+	/** 登录用户标识 **/
+	public static final String USER = "user";
+	
 	/** 基本通用功能-新增 **/
 	public static final String FUN_QUERY = "查询";
 	/** 基本通用功能-新增 **/

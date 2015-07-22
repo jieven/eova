@@ -92,6 +92,7 @@ public class EovaConfig extends JFinalConfig {
 		// System.out.println(DsUtil.getTableNamesByConfigName(xx.DS_EOVA, DsUtil.TABLE, null, null));
 //		 System.out.println(DsUtil.getColumnInfoByConfigName(xx.DS_EOVA, "EOVA_USER"));
 		// DbUtil.createOracleSql();
+		
 	}
 
 	/**

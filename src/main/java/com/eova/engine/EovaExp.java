@@ -25,7 +25,6 @@ public class EovaExp {
 		System.out.println("cn="+getCn(exp));
 		
 		System.out.println("sa="+getSelectItem(exp));
-		
 	}
 
 	public static String getWhere(String exp){

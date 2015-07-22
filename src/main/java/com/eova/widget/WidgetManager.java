@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.eova.common.utils.xx;
+import com.eova.config.EovaConst;
 import com.eova.config.PageConst;
 import com.eova.engine.EovaExp;
+import com.eova.engine.SqlEngine;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
 import com.jfinal.core.Controller;
@@ -81,6 +83,7 @@ public class WidgetManager {
 					} else {
 						sb.append(" ");
 					}
+					where = SqlEngine.buildSql(where, c.getSessionAttr(EovaConst.USER));
 					sb.append(where + " ");
 				} else {
 					sb.append(" where 1=1 ");
@@ -111,7 +114,11 @@ public class WidgetManager {
 				sb.append(" and " + key + " like ?");
 				parmList.add("%" + value + "%");
 			} else if (ei.getStr("type").equals(MetaField.TYPE_TIME)) {
-				sb.append(" and date(" + key + ") > ? and date(" + key + ") < ?");
+				if (xx.isOracle()) {
+					sb.append(" and " + key + " >= to_date(?,'yyyy-mm-dd') and " + key + " < to_date(?,'yyyy-mm-dd')+1");
+				} else {
+					sb.append(" and date(" + key + ") >= ? and date(" + key + ") <= ?");
+				}
 				parmList.add(startTime);
 				parmList.add(endTime);
 			} else {

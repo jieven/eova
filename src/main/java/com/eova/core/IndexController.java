@@ -6,6 +6,7 @@
  */
 package com.eova.core;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -16,11 +17,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.beetl.core.Configuration;
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
+import org.beetl.core.resource.StringTemplateResourceLoader;
+
 import com.eova.common.Easy;
 import com.eova.common.utils.xx;
 import com.eova.common.utils.db.JdbcUtil;
+import com.eova.config.EovaConst;
 import com.eova.model.Menu;
 import com.eova.model.User;
+import com.eova.service.ServiceManager;
 import com.eova.service.sm;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.CaptchaRender;
@@ -38,7 +46,6 @@ public class IndexController extends Controller {
 	}
 
 	public void toIndex() {
-
 		render("/eova/index.html");
 	}
 
@@ -61,6 +68,19 @@ public class IndexController extends Controller {
 	}
 
 	public void toLogin() {
+		System.out.println(ServiceManager.user);
+		StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
+		Configuration cfg;
+		try {
+			cfg = Configuration.defaultConfiguration();
+			GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
+			Template t = gt.getTemplate("select * from users_item where users_id = ${user.id} and nickname like '%${user.nickname}%'");
+			t.binding("user", new User().set("id", 1).set("nickname", "黑哥"));
+			String str = t.render();
+			System.out.println(str);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		render("/eova/login.html");
 	}
 
@@ -131,7 +151,7 @@ public class IndexController extends Controller {
 			return;
 		}
 		// 登录成功
-		setSessionAttr("user", user);
+		setSessionAttr(EovaConst.USER, user);
 		// 重定向到首页
 		redirect("/");
 

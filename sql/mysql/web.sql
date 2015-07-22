@@ -16,28 +16,6 @@ Date: 2015-07-09 13:42:40
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `webdict`
--- ----------------------------
-DROP TABLE IF EXISTS `webdict`;
-CREATE TABLE `webdict` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `value` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `object` varchar(50) NOT NULL,
-  `field` varchar(50) NOT NULL,
-  `ext` varchar(255) NOT NULL COMMENT '扩展Json',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of dict
--- ----------------------------
-INSERT INTO `webdict` VALUES ('1', '0', '正常', 'users', 'status', '');
-INSERT INTO `webdict` VALUES ('2', '1', '封号', 'users', 'status', '');
-INSERT INTO `webdict` VALUES ('3', '2', '禁言', 'users', 'status', '');
-INSERT INTO `webdict` VALUES ('4', '3', '删除', 'users', 'status', '');
-
--- ----------------------------
 -- Table structure for `item`
 -- ----------------------------
 DROP TABLE IF EXISTS `item`;
@@ -45,19 +23,20 @@ CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '名称',
   `info` varchar(1000) DEFAULT NULL COMMENT '介绍',
+  `img` varchar(255) DEFAULT NULL COMMENT '物品图片',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('1', '灭世者的死亡之帽', '+140点法术强度。唯一被动：提升30%法术强度。');
-INSERT INTO `item` VALUES ('2', '麦瑞德裂血手套', '+40点攻击、+40%攻击速度、+25点护甲、唯一被动：物理攻击会造成目标最大生命值的4%的魔法伤害。');
-INSERT INTO `item` VALUES ('3', '多兰之盾', '+120点生命值、+10点护甲、+8点生命回复/5秒');
-INSERT INTO `item` VALUES ('4', '黑色切割者', '+55点攻击力、+30%攻击速度。唯一被动：物理攻击减少目标15点护甲，持续5秒（最多叠加3次）。');
-INSERT INTO `item` VALUES ('5', '长剑', '+10点攻击力');
-INSERT INTO `item` VALUES ('6', '灵巧披风', '+18%暴击几率');
-INSERT INTO `item` VALUES ('7', '多兰之刃', '+80点生命值、+10点攻击力、+3%生命偷取');
+INSERT INTO `item` VALUES ('1', '灭世者的死亡之帽', '<p>+140点法术强度。唯一被动：提升30%法术强度。</p>', null);
+INSERT INTO `item` VALUES ('2', '麦瑞德裂血手套', '<p>+40点攻击、+40%攻击速度、+25点护甲、唯一被动：物理攻击会造成目标最大生命值的4%的魔法伤害。</p>', null);
+INSERT INTO `item` VALUES ('3', '多兰之盾', '<p>+120点生命值、+10点护甲、+8点生命回复/5秒</p>', null);
+INSERT INTO `item` VALUES ('4', '黑色切割者', '<p>+55点攻击力、+30%攻击速度。唯一被动：物理攻击减少目标15点护甲，持续5秒（最多叠加3次）。</p>', null);
+INSERT INTO `item` VALUES ('5', '长剑', '<p>+10点攻击力</p>', '1437496392574.gif');
+INSERT INTO `item` VALUES ('6', '灵巧披风', '<p>+18%暴击几率</p>', '1437495216704.png');
+INSERT INTO `item` VALUES ('7', '多兰之刃', '<p>+80点生命值、+10点攻击力、+3%生命偷取</p>', '1437494908238.png');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -171,6 +150,28 @@ INSERT INTO `users_item` VALUES ('4', '2', '2');
 INSERT INTO `users_item` VALUES ('5', '2', '3');
 INSERT INTO `users_item` VALUES ('6', '4', '4');
 INSERT INTO `users_item` VALUES ('7', '10', '1');
+
+-- ----------------------------
+-- Table structure for `webdict`
+-- ----------------------------
+DROP TABLE IF EXISTS `webdict`;
+CREATE TABLE `webdict` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `object` varchar(50) NOT NULL,
+  `field` varchar(50) NOT NULL,
+  `ext` varchar(255) NOT NULL COMMENT '扩展Json',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of webdict
+-- ----------------------------
+INSERT INTO `webdict` VALUES ('1', '0', '正常', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('2', '1', '封号', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('3', '2', '禁言', 'users', 'status', '');
+INSERT INTO `webdict` VALUES ('4', '3', '删除', 'users', 'status', '');
 
 -- ----------------------------
 -- View structure for `v_users`

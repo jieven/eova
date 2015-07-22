@@ -67,22 +67,10 @@
 							    ck += ' />';
 							 	return ck;
 							},
-						<%}%>
-						<%if(item.type == '文本框'){%>
-							formatter:function(value, row, index, field){
-                                if(value && value.length > 10){
-                                    return '<span title="' + value + '">' + value + '</span>';
-                                }
-                                return value;
-							},
-						<%}%>
-						<%if(item.type == '图片框'){%>
-							formatter:function(value, row, index, field){
-                                if(value){
-                                    return '<img src="/upimg/'+ value +'">';
-                                }
-                                return value;
-							},
+						<%} else {%>
+							<%if(!isEmpty(item.formatter!)){%>
+								formatter:${item.formatter},
+							<%}%>
 						<%}%>
                         <%// Grid Cell Editor,对象和字段允许行内编辑自增，自增长禁止编辑%>
                         <%if(isTrue(obj.is_celledit) && isTrue(item.is_edit) && !isTrue(item.is_auto)){%>
