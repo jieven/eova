@@ -95,6 +95,13 @@
                     top:e.pageY
                 });
             },
+            <%if(isTrue(obj.is_celledit)){%>
+            onLoadSuccess : function(data){
+            	if(data.total < 1){
+            		myGrid.datagrid('insertRow',{index: 0,row: {}});	
+            	}
+            },
+            <%}%>
             onRowContextMenu: function(e, rowIndex, rowData){
                 e.preventDefault();
                 if (!rowMenu){

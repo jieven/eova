@@ -1,41 +1,17 @@
-不想使用Maven可以手工下载部署：
-------------------------
-#. Eova相关下载：Jar Sql Static Project http://pan.baidu.com/s/1jGgonfo
-#. JFinal使用手册：http://www.jfinal.com/download?file=jfinal-1.8-manual.pdf
-#. Beetl使用手册：http://ibeetl.com/guide
-
 ===========================
-J2EE 快速开发平台 EOVA
+Eova快速开发QQ群欢迎您的加入: 424665115
 ===========================
 
-大家好我是Java的表弟Eova，中文名:伊哇 :)
-
-我的全称是——Easy Object View Admin 简单对象视图管理系统
+传送门：
 ------------------------
-#. Easy    简单，方便，快速，快速开发 So Easy
-#. Object  万物皆对象，以元数据驱动业务
-#. View    各种功能界面
-#. Admin   信息管理和维护
+#. 新手入门视频教程 `在线观看 <http://pan.baidu.com/s/1qWr7v20>`_
+#. Eova Demo `在线访问 <http://myhzj.wicp.net/>`_ (无法访问请加群@群主)
+#. Eova 文档 `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_
+#. Maven无法下载 可以手工获取Eova依赖Jar `点击下载 <http://pan.baidu.com/s/1jGgonfo>`_
 
-我的个性：
+相关说明：
 ------------------------
-#. 以出自KingDee的元数据驱动业务为核心思想
-#. 使用了极速框架JFinal，站在巨人的肩膀上
-#. 套上了众所周知的EasyUI，五官端正，不卑不亢
-#. 使用Beetl粘合JFinal-EasyUI，融为一体
-#. 采用了最流行的MySQL，术业专攻
-#. 可以一键完成CRUD，但不仅限于CRUD
-#. 灵动迅捷，多快好省，不影响你你实现任何功能
+#. master 为最新代码，稳定版->请下载最新的Tag版本
+#. Eova仅兼容webkit 内核浏览器，IE和火狐是不兼容的，推荐使用谷歌浏览器
 
-使用说明：
-------------------------
-EOVA 为Eclipse工程,可直接Import
-
-#. /sql 数据库初始化脚本
-#. /src/eova.config 修改Mysql数据连接
-#. /src/com/Eova_Main.java Run Application 启动服务,默认80端口
-#. Eova默认登录帐号/密码:admin/000000
-
-**Eova快速开发QQ群欢迎您的加入: 424665115**
-
-EOVA文档: `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_
+其它疑问请加群！
