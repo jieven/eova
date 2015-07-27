@@ -108,16 +108,50 @@
      * 重写事件绑定
      */
     FindBox.prototype.bindEvents = function () {
+        var options = this.options;
         var $valuebox = this.$valuebox;
         var $textbox = this.$textbox;
         var $dom = this.$dom;
         this.$textbox.bind('click', function () {
-            eova_findDialog($valuebox, $textbox, $dom.attr('url') );
+            var url = $dom.attr('url');
+            if (!url) {
+                url = options.url;
+            }
+            eova_findDialog($valuebox, $textbox, url );
         });
         // 点按钮和文本框都触发事件
         this.$btn.bind('click', function(){
             $textbox.trigger('click');
         });
+    };
+
+    /**
+     * 获取值
+     * @returns {*}
+     */
+    FindBox.prototype.getValue = function () {
+        return this.$valuebox.val();
+    };
+    /**
+     * 设置值
+     * @param value
+     */
+    FindBox.prototype.setValue = function (value) {
+        this.$valuebox.val(value);
+    };
+    /**
+     * 获取显示文本
+     * @returns {*}
+     */
+    FindBox.prototype.getText = function () {
+        return this.$textbox.val();
+    };
+    /**
+     * 设置显示文本
+     * @param text
+     */
+    FindBox.prototype.setText = function (text) {
+        this.$textbox.val(text);
     };
 
 })(jQuery);

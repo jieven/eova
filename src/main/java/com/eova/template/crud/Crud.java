@@ -114,11 +114,13 @@ public class Crud {
 		// 获取Edit 控件类型
 		for(MetaField item : itemList){
 			String type = item.getStr("type");
-			if (type.equals("复选框")) {
+			if (type.equals(MetaField.TYPE_CHECK)) {
 				item.put("editor", "eovacheck");
-			} else if (type.equals("下拉框")) {
+			} else if (type.equals(MetaField.TYPE_COMBO)) {
 				item.put("editor", "eovacombo");
-			} else if (type.equals("时间框")) {
+			} else if (type.equals(MetaField.TYPE_FIND)) {
+				item.put("editor", "eovafind");
+			} else if (type.equals(MetaField.TYPE_TIME)) {
 				item.put("editor", "eovatime");
 			} else {
 				item.put("editor", "eovatext");

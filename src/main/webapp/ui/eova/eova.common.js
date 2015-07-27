@@ -58,7 +58,6 @@
      * 拓展EasyUI DataGrid编辑器
      */
     $.extend($.fn.datagrid.defaults.editors, {
-        // 文本框
         eovatext: {
             init: function(container, options) {
                 var editor = $("<div class=\"eova-text\"></div>").appendTo(container);
@@ -75,7 +74,6 @@
                 $(jq).eovatext().setWidth(value);
             }
         },
-        // 时间框
         eovatime: {
             init: function(container, options) {
                 var editor = $("<div class=\"eova-time\"></div>").appendTo(container);
@@ -92,7 +90,6 @@
                 $(jq).eovatime().setWidth(value);
             }
         },
-        // 下拉框
         eovacombo: {
             init: function(container, options) {
                 var editor = $("<div class=\"eova-combo\"></div>").appendTo(container);
@@ -115,7 +112,25 @@
                 $(jq).eovacombo().setWidth(value);
             }
         },
-        // 复选框
+        eovafind: {
+            init: function(container, options) {
+                var editor = $("<div class=\"eova-find\"></div>").appendTo(container);
+                editor.eovafind(options);
+                return editor;
+            },
+            getText: function(jq) {
+                return $(jq).eovafind().getText();
+            },
+            getValue: function(jq) {
+                return $(jq).eovafind().getValue();
+            },
+            setValue: function(jq, value) {
+                $(jq).eovafind().setText(value);
+            },
+            resize: function(jq, value) {
+                $(jq).eovafind().setWidth(value);
+            }
+        },
         eovacheck: {
             init: function(container, options) {
                 var editor = $("<div class=\"eova-check\"></div>").appendTo(container);

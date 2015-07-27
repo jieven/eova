@@ -260,7 +260,7 @@ INSERT INTO `eova_field` VALUES ('154', 'users_exp_code', null, 'exp', '经验�
 INSERT INTO `eova_field` VALUES ('155', 'users_exp_code', null, 'avg', '年龄', '0', 'number', '文本框', '3', null, '0', '1', '1', '1', '1', '1', '1', null, null, '0', null, '130', '20', '0');
 INSERT INTO `eova_field` VALUES ('156', 'users_exp_code', null, 'qq', 'QQ', '0', 'string', '文本框', '4', null, '0', '1', '1', '1', '1', '1', '1', null, null, null, null, '130', '20', '0');
 INSERT INTO `eova_field` VALUES ('157', 'eova_field_code', null, 'placeholder', '输入提示', '0', 'string', '文本框', '28', null, '0', '1', '1', '1', '1', '1', '0', 'input的placeholder属性', null, null, null, '130', '20', '0');
-INSERT INTO `eova_field` VALUES ('158', 'eova_field_code', null, 'formatter', '格式化器', '0', 'string', '文本域', '33', '', '0', '1', '1', '1', '1', '1', '0', '格式化的JS,参考EasyUI datagrid formatter', null, null, null, '130', '50', '0');
+INSERT INTO `eova_field` VALUES ('158', 'eova_field_code', null, 'formatter', '格式化器', '0', 'string', '文本域', '33', '', '0', '0', '1', '1', '1', '1', '0', '格式化的JS,参考EasyUI datagrid formatter', null, null, null, '130', '50', '0');
 INSERT INTO `eova_field` VALUES ('159', 'item_code', null, 'img', '图片', '0', 'string', '图片框', '3', '', '0', '1', '1', '1', '1', '1', '1', '', null, '', 'function(value, row, index, field) {\r\n    if (value) {\r\n        return \'<img src=\"/upimg/\' + value + \'\">\';\r\n    }\r\n    return value;\r\n}', '200', '20', '1');
 
 -- ----------------------------

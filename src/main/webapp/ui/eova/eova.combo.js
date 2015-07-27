@@ -240,8 +240,5 @@
         $item.siblings().removeClass('eova-combo-selected');
         $item.addClass('eova-combo-selected');
     };
-    function loadData($dom, json) {
-
-    }
 
 })(jQuery);

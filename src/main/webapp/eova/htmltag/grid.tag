@@ -74,11 +74,14 @@
 						<%}%>
                         <%// Grid Cell Editor,对象和字段允许行内编辑自增，自增长禁止编辑%>
                         <%if(isTrue(obj.is_celledit) && isTrue(item.is_edit) && !isTrue(item.is_auto)){%>
-                            editor:{type:'${item.editor}',options:{
-                                url: '/widget/comboJson/${item.object_code}-${item.en}',
-                                valueField : 'id',
-                                textField : 'cn'
-                            }},
+                            editor:{type:'${item.editor}'
+                            	<%if(item.type == '下拉框'){%>
+                            	,options:{url: '/widget/comboJson/${item.object_code}-${item.en}',valueField : 'id',textField : 'cn'}
+                            	<%}%>
+                            	<%if(item.type == '查找框'){%>
+                            	,options:{url: '/widget/find?code=${item.object_code}&field=${item.en}'}
+                            	<%}%>
+                            },
                         <%}%>
                         width:${isEmpty(item.width!)?"150":item.width}
                         },

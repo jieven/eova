@@ -6,7 +6,6 @@
  */
 package com.eova.core;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -17,18 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.beetl.core.Configuration;
-import org.beetl.core.GroupTemplate;
-import org.beetl.core.Template;
-import org.beetl.core.resource.StringTemplateResourceLoader;
-
 import com.eova.common.Easy;
 import com.eova.common.utils.xx;
 import com.eova.common.utils.db.JdbcUtil;
 import com.eova.config.EovaConst;
 import com.eova.model.Menu;
 import com.eova.model.User;
-import com.eova.service.ServiceManager;
 import com.eova.service.sm;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.CaptchaRender;
@@ -68,19 +61,6 @@ public class IndexController extends Controller {
 	}
 
 	public void toLogin() {
-		System.out.println(ServiceManager.user);
-		StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
-		Configuration cfg;
-		try {
-			cfg = Configuration.defaultConfiguration();
-			GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
-			Template t = gt.getTemplate("select * from users_item where users_id = ${user.id} and nickname like '%${user.nickname}%'");
-			t.binding("user", new User().set("id", 1).set("nickname", "黑哥"));
-			String str = t.render();
-			System.out.println(str);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		render("/eova/login.html");
 	}
 
@@ -161,18 +141,21 @@ public class IndexController extends Controller {
 	 * 修改密码
 	 */
 	public void updatePwd() {
+		String oldPwd = getPara("oldPwd");
+		String newPwd = getPara("newPwd");
+		
+		if (xx.isOneEmpty(oldPwd, newPwd)) {
+			renderJson(new Easy("新旧密码都不能为空"));
+			return;
+		}
+		
 		// 当前用户
 		User eu = getSessionAttr("user");
 		String pwd = eu.getStr("login_pwd");
-		// 旧密码
-		String oldPwd = getPara("oldPwd");
 		// 旧密码是否正确
 		if (!oldPwd.equals(pwd)) {
-			renderJson(new Easy("旧密码输入错误"));
-			return;
+			
 		}
-		// 新密码
-		String newPwd = getPara("newPwd");
 		// 确认密码
 		String confirm = getPara("confirm");
 		// 新密码和确认密码是否一致
