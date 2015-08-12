@@ -46,7 +46,7 @@ public class AuthController extends Controller {
 		// 获取所有菜单信息
 		LinkedHashMap<Integer, Record> menus = (LinkedHashMap<Integer, Record>) sm.auth.queryByParentId(0);
 		// 获取所有按钮信息
-		List<Button> btns = Button.dao.find("select * from eova_button order by menu_code,order_num");
+		List<Button> btns = Button.dao.find("select * from eova_button order by menu_code,group_num,order_num");
 
 		// 构建菜单对应功能点 eg. [玩家管理] 口查询 口新增 口修改 口删除
 		for (Map.Entry<Integer, Record> map : menus.entrySet()) {

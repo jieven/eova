@@ -106,7 +106,7 @@ public class AuthService extends BaseService {
 			}
 
 			// Cache 转换后的菜单信息
-			// BaseCache.putSer(EovaConst.ALL_MENU, temp);
+			BaseCache.putSer(EovaConst.ALL_MENU, temp);
 		} else {
 			temp = new LinkedHashMap<Integer, Record>();
 			temp.putAll((LinkedHashMap<Integer, Record>) obj);

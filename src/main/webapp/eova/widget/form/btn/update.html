@@ -1,0 +1,19 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-pageedit',plain:true"
+   onclick="crud_update_${object.code}()">
+    修改
+</a>
+<script type="text/javascript">
+    var crud_update_${object.code} = function () {
+        var grid = $('#${gridId}');
+        var row = grid.datagrid('getSelected');
+        var array = grid.datagrid('getSelections');
+        var num = array.length;//获取要删除信息的个数
+        if (num > "1") {
+        	$.slideMsg("请勿选择多行数据！");
+            return;
+        }
+        if (isSelected(row)) {
+            loadDialog(grid, '修改${object.name}', '/form/update/${object.code}-' + row.pk_val);
+        }
+    };
+</script>

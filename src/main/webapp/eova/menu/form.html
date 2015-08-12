@@ -1,150 +1,265 @@
 <%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
 
-<form id="myForm" method="post" class="form">
-	<fieldset>
-		<legend>菜单信息</legend>
-		<table class="table" style="width: 100%;">
-			<tr>
-				<th style="width:110px;">父级</th>
-				<td><#find id="pid" name="parentId" code="eova_menu_code" field="parentId" value="${menu.parentId!}" isNoN="true" /></td>
-				<th style="width:110px;">图标</th>
-				<td><#icon id="icon" name="icon" isNoN="true" value="${menu.icon!}" /></td>
-			</tr>
-			<tr>
-				<th>名称</th>
-				<td><#text id="name" name="name" value="${menu.name!}" isNoN="true" /></td>
-				<th>编码</th>
-				<td><#text id="code" name="code" value="${menu.code!}" isNoN="true" /></td>
-			</tr>
-			<tr>
-				<th>序号</th>
-				<td><#text id="index" name="indexNum" value="${menu.order_num!1}" isNoN="true" /></td>
-				<th>业务类型</th>
-				<td>
-				<select class="easyui-combobox" id="type" name="type" style="width: 179px;" isNoN="true" data-options="editable:false, onChange:typeChange">
-					<option value="dir">父目录菜单[dir]</option>
-					<option value="diy">自定义业务[diy]</option>
-					<option value="singleGrid" selected="selected">单表[singleGrid]</option>
-				</select>
-				</td>
-			</tr>
-			<tr id="trUrl" style="display: none;">
-				<th>业务URL</th>
-				<td colspan="3"><#text id="url" name="url" width="501" height="20" value="${menu.url!}" isNoN="false" htmlattrs="placeholder='请输入自定义功能的访问URL'" /></td>
-			</tr>
-		</table>
-	</fieldset>
-	<fieldset id="singleGrid">
-		<legend>业务模版配置(单表)</legend>
-		<table class="table" style="width: 100%;">
-			<tr>
-				<th style="width:110px;">元对象</th>
-				<td><#find id="singleGrid_Object" name="objectCode" code="eova_object" field="code" exp="select code 编码,name 名称 from eova_object where 1=1;ds=eova" isNoN="false" /></td>
-			</tr>
-			<tr>
-				<th>业务拦截器</th>
-				<td><#texts id="singleGrid_Interceptor" name="bizIntercept" value="${menu.biz_intercept!}" style="width:90%;height:50px;" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
-			</tr>
-		</table>
-	</fieldset>
-	<fieldset id="twoGrid" style="display: none;">
-		<legend>业务模版配置(主子表)</legend>
-		<table class="table" style="width: 100%;">
-			<tr>
-				<th>主元对象</th>
-				<td><#text id="name" name="name" /></td>
-				<th>关联主字段</th>
-				<td><#text id="name" name="name" /></td>
-			</tr>
-			<tr>
-				<th>子元对象</th>
-				<td><#text id="name" name="name" /></td>
-				<th>关联子字段</th>
-				<td><#text id="name" name="name" /></td>
-			</tr>
-			<tr>
-				<th>业务拦截器</th>
-				<td colspan="3"><#text id="twoGrid_Interceptor" name="diyIntercept" width="500" height="20" value="" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" /></td>
-			</tr>
-		</table>
-	</fieldset>
+<form id="myForm" method="post" class="form" style="padding: 5px;">
+    <fieldset>
+        <legend>菜单信息</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">父级</th>
+                <td>
+                    <#find id="pid" name="parentId" code="eova_menu_code" field="parentId" value="${menu.parentId!}" />
+                </td>
+                <th style="width:110px;">图标</th>
+                <td>
+                    <#icon id="icon" name="icon" value="${menu.icon!}" />
+                </td>
+            </tr>
+            <tr>
+                <th>名称</th>
+                <td>
+                    <#text id="name" name="name" value="${menu.name!}" />
+                </td>
+                <th>编码</th>
+                <td>
+                    <#text id="code" name="code" value="${menu.code!}" />
+                </td>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <td>
+                    <#text id="index" name="indexNum" value="${menu.order_num!1}" />
+                </td>
+                <th>业务类型</th>
+                <td>
+                    <select class="easyui-combobox" id="type" name="type" style="width: 179px;"
+                            data-options="editable:false, onChange:typeChange">
+                        <option value="dir">父目录菜单[dir]</option>
+                        <option value="diy">自定义业务[diy]</option>
+                        <option value="singleGrid" selected="selected">单表[singleGrid]</option>
+                        <option value="masterSlaveGrid">主子表[masterSlaveGrid]</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="trUrl" style="display: none;">
+                <th>自定义业务URL</th>
+                <td colspan="3">
+                    <#text id="url" name="url" width="501" height="20" value="${menu.url!}" htmlattrs="placeholder='请输入自定义功能的访问URL'" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="singleGrid">
+        <legend>业务模版配置(单表)</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">元对象</th>
+                <td>
+                    <#find id="singleGrid_Object" name="objectCode" code="eova_field_code" field="object_code" />
+                </td>
+            </tr>
+            <tr>
+                <th>业务拦截器</th>
+                <td>
+                    <#texts id="singleGrid_Interceptor" name="bizIntercept" value="${menu.biz_intercept!}" style="width:90%;height:50px;" htmlattrs="placeholder='请输入自定义业务拦截器的类路径'" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="masterSlaveGrid" style="display: none;">
+        <legend>业务模版配置(主子表)</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">主对象</th>
+                <td>
+                    <#find id="masterObjectCode" name="masterObjectCode" code="eova_field_code" field="object_code" />
+                </td>
+                <th style="width:110px;">主外键字段</th>
+                <td>
+                    <#find id="masterFieldCode" name="masterFieldCode" exp=" " />
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">子对象</th>
+                <td>
+                    <#find id="slaveObjectCode" name="slaveObjectCode" code="eova_field_code" field="object_code" />
+                </td>
+                <th style="width:110px;">子关联字段</th>
+                <td>
+                    <#find id="slaveFieldCode" name="slaveFieldCode" exp=" " />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
 </form>
+
 <script type="text/javascript">
-$(function(){
-	console.log('init');
-});
 
-function typeChange(newValue, oldValue){
-	// 切换显示模版配置项
-	if(newValue == 'diy'){
-		$('#trUrl').show();
-	} else {
-		$('#trUrl').hide();
-	}
+    var $form = $('#myForm');
 
-	$('#' + newValue).show();
-	$('#' + oldValue).hide();
-}
+    function typeChange(newValue, oldValue) {
+        // diy 需要显示 自定义URL字段,并启用校验
+        if (newValue == 'diy') {
+            $('#trUrl').show();
+            $form.validator("setField", "url", "自定义业务URL:required;");
+        } else {
+            if (oldValue == 'diy') {
+                $form.validator("setField", "url", null);
+                $('#trUrl').hide();
+            }
+        }
 
-var fm = $('#myForm');
+        if (newValue == 'singleGrid') {
+            $form.validator('setField', {
+            	objectCode: '元对象:required;'
+            });
+        } else {
+            if (oldValue == 'singleGrid') {
+                $form.validator('setField', {
+                	objectCode: null
+                });
+            }
+        }
 
-var submitForm = function($dialog, $grid, $pjq) {
-	buildUrl($pjq);
-	if (fm.form('validate')) {
-		submitNow($dialog, $grid, $pjq);
-	}
-};
+        if (newValue == 'masterSlaveGrid') {
+            $form.validator('setField', {
+                masterObjectCode: '主对象:required;',
+                slaveObjectCode: '子对象:required;',
+                masterFieldCode: '主外键字段:required;',
+                slaveFieldCode: '子关联字段:required;'
+            });
+        } else {
+            if (oldValue == 'masterSlaveGrid') {
+                $form.validator('setField', {
+                    masterObjectCode: null,
+                    slaveObjectCode: null,
+                    masterFieldCode: null,
+                    slaveFieldCode: null
+                });
+            }
+        }
 
-function buildUrl($pjq){
-	
-	var type = $('#type').combo('getValue');
-	var $singleGrid_Object = $('#singleGrid_Object');
-	var $url = $('#url');
-	
-	// 如果是目录直接返回
-	if(type == 'dir'){
-		return;
-	}
-	
-	// 自定义菜单
-	if(type == 'diy'){
-		// url 不能为空
-		if($url.val() == ''){
-			$pjq.messager.alert('提示', '请输入业务URL', 'error');
-			return;
-		}
-	}
-	
-	// 单表模版，如果元对象为空，则弹必填提示
-	if(type == 'singleGrid'){
-		// 元对象不能为空
-		if($singleGrid_Object.eovafind().getValue() == ''){
-			$pjq.messager.alert('提示', '请选择元对象', 'error');
-			return;
-		}
-	}
-}
+        $('#' + newValue).show();
+        $('#' + oldValue).hide();
+    }
 
-function submitNow($dialog, $grid, $pjq) {
-	var url = "/menu/add";
-	$.post(url, sy.serializeObject(fm), function(result) {
-		if (result.success) {
-			slideMsg("添加菜单成功！", $pjq);
-			$grid.datagrid('load');
-			$dialog.dialog('destroy');
-		} else {
-			$pjq.messager.alert('提示', result.msg, 'error');
-		}
-	}, 'json');
-};
-var slideMsg = function(str,$pjq){
-	$pjq.messager.show({
-        title:'操作提示',
-        msg:str,
-        timeout:1500,
-        showType:'slide'
+    $(function () {
+
+        var $masterObjectCode = $('#masterObjectCode');
+        var $slaveObjectCode = $('#slaveObjectCode');
+
+        var $masterFieldCode = $('#masterFieldCode');
+        var $slaveFieldCode = $('#slaveFieldCode');
+
+        // 初始化禁用子字段
+        $masterFieldCode.mask();
+        $slaveFieldCode.mask();
+
+        // 查找框级联
+        $masterObjectCode.eovafind({onChange: function (oldValue, newValue) {
+            //console.log(oldValue +'|'+newValue);
+            if (newValue == '') {
+                $masterFieldCode.mask();
+                return;
+            }
+            var url = '/widget/find?exp=select en Field,cn Name from eova_field where object_code = \\\'' + newValue + '\\\';ds=eova';
+            $masterFieldCode.attr('url', url);
+            $masterFieldCode.unmask();
+        }});
+        $slaveObjectCode.eovafind({onChange: function (oldValue, newValue) {
+            //console.log(oldValue +'|'+newValue);
+            if (newValue == '') {
+                $slaveFieldCode.mask();
+                return;
+            }
+            var url = '/widget/find?exp=select en Field,cn Name from eova_field where object_code = \\\'' + newValue + '\\\';ds=eova';
+            $slaveFieldCode.attr('url', url);
+            $slaveFieldCode.unmask();
+        }});
+
+        $form.validator({
+            debug: false,
+            stopOnError: true,
+            focusInvalid: false,
+            showOk: false,
+            timely: false,
+            msgMaker: false,
+            fields: {
+                parentId: {rule: '父级:required;'},
+                name: {rule: '名称:required;'},
+                code: {rule: '编码:required;eovacode;'},
+                indexNum: {rule: '序号:required;'},
+                type: {rule: '业务类型:required;'},
+                objectCode: {rule: '元对象:required;'}
+            }
+        });
+
+        $form.on("validation", function(e, current){
+            // 当前字段未验证通过，Tip提示
+            if(!current.isValid){
+                var tip = $.tipwarn($(current.element).parent(), current.msg);
+                //alert(current.msg);
+                // 开始输入销毁提示
+                $(current.element).keydown(function(event){
+                    tip.tooltip('destroy');
+                    $(this).unbind("keydown");
+                });
+            }
+        });
     });
-};
+
+    var submitForm = function ($dialog, $grid, $pjq) {
+        //buildUrl($pjq);
+        $form.isValid(function(isValied){
+            if(isValied){
+                submitNow($dialog, $grid, $pjq);
+            }
+        });
+    };
+
+    var submitNow = function($dialog, $grid, $pjq) {
+        var url = "/menu/add";
+        $.post(url, sy.serializeObject($form), function (result) {
+            if (result.success) {
+                $.slideMsg("添加菜单成功！", $pjq);
+                $grid.datagrid('load');
+                $dialog.dialog('destroy');
+            } else {
+                $pjq.messager.alert('提示', result.msg, 'error');
+            }
+        }, 'json');
+    };
+
+    function buildUrl($pjq) {
+
+        var type = $('#type').combo('getValue');
+        var $singleGrid_Object = $('#singleGrid_Object');
+        var $url = $('#url');
+
+        // 如果是目录直接返回
+        if (type == 'dir') {
+            return;
+        }
+
+        // 自定义菜单
+        if (type == 'diy') {
+            // url 不能为空
+            if ($url.val() == '') {
+                $pjq.messager.alert('提示', '请输入业务URL', 'error');
+                return;
+            }
+        }
+
+        // 单表模版，如果元对象为空，则弹必填提示
+        if (type == 'singleGrid') {
+            // 元对象不能为空
+//            if ($singleGrid_Object.eovafind().getValue() == '') {
+//                $pjq.messager.alert('提示', '请选择元对象', 'error');
+//                return;
+//            }
+        }
+
+    }
+
 </script>
 
 

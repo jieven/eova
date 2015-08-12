@@ -134,16 +134,15 @@ public class EovaExp {
 	 * @return
 	 */
 	public static MetaObject getEo(String exp) {
-		MetaObject eo = new MetaObject();
+		// 获取元对象模版
+		MetaObject eo = MetaObject.dao.getTemplate();
 		eo.put("data_source", getDs(exp));
-//		eo.put("code", code);
 		eo.put("name", "");
-		eo.put("table_name", "");
-		eo.put("is_default_pk_desc", false);
 		// 获取第一的值作为主键
 		eo.put("pk_name", getPk(exp));
 		// 获取第二列的值作为CN
 		eo.put("cn", getCn(exp));
+		
 		return eo;
 	}
 	
@@ -161,7 +160,7 @@ public class EovaExp {
 		// id id,nickname 昵称,loginid 帐号
 		String items = exp.substring(a, b);
 
-		List<MetaField> eis = new ArrayList<MetaField>();
+		List<MetaField> fields = new ArrayList<MetaField>();
 		int index = 0;
 		for (String item : items.split(",")) {
 			index++;
@@ -175,13 +174,9 @@ public class EovaExp {
 			if (index == 1) {
 				isQuery = false;
 			}
-			eis.add(buildItem(index, en, cn, isQuery));
-
-//			System.out.print("en=" + en);
-//			System.out.print(",");
-//			System.out.println("cn=" + cn);
+			fields.add(buildItem(index, en, cn, isQuery));
 		}
-		return eis;
+		return fields;
 	}
 
 	/**
@@ -195,10 +190,9 @@ public class EovaExp {
 	public static MetaField buildItem(int index, String en, String cn, boolean isQuery) {
 
 		en = en.toLowerCase();
-
-		MetaField ei = new MetaField();
+		// 获取元模版字段
+		MetaField ei = MetaField.dao.getTemplate();
 		ei.put("order_num", index);
-		//ei.put("object_code", code);
 		ei.put("en", en);
 		ei.put("cn", cn);
 		ei.put("data_type", "string");

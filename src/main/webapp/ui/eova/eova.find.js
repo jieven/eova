@@ -35,10 +35,12 @@
     var FindBox = $.fn.eovafind.FindBox = function (dom, options) {
         TextBox.apply(this, arguments);
         this.defaults = {
+            width: 180,
             btnTitle: '点击查找内容',
-            isReadonly: true
+            isReadonly: true,
+            onChange : function(oldValue, newValue) {}
         };
-        // 参数优先级：JS参数 > HTML参数 > 默认参数 > 父类参数
+        // 用户参数 覆盖 默认参数 覆盖父类参数
         this.options = $.extend({}, this.options, this.defaults, options);
         // 编码
         this.code = this.$dom.attr('code');
@@ -57,7 +59,7 @@
         // 添加隐藏框
         var $valuebox = $("<input type='hidden' />").appendTo(this.$dom);
         var $textbox = $("<input type='text' />").appendTo(this.$dom);// 文本显示
-        var $btn = $("<i></i>").appendTo(this.$dom);// 添加按钮
+        var $btn = $("<i class='ei'></i>").appendTo(this.$dom);// 添加按钮
 
         $btn.attr('title', this.options.btnTitle);
         if (this.name) {
@@ -72,7 +74,11 @@
         if(this.options.required){
             $textbox.attr('required', 'required');
         }
-        // 查找框禁止编辑
+        if (this.options.disable) {
+            // 灰色遮罩实现禁用
+            this.$dom.mask();
+        }
+
         $textbox.attr('readonly', 'readonly');
         $textbox.css('cursor', 'pointer');
         $textbox.attr('title', this.options.btnTitle);
@@ -108,6 +114,7 @@
      * 重写事件绑定
      */
     FindBox.prototype.bindEvents = function () {
+        var findBox = this;
         var options = this.options;
         var $valuebox = this.$valuebox;
         var $textbox = this.$textbox;
@@ -117,7 +124,8 @@
             if (!url) {
                 url = options.url;
             }
-            eova_findDialog($valuebox, $textbox, url );
+            // 弹出查询选择Diglog
+            eova_findDialog(findBox, url );
         });
         // 点按钮和文本框都触发事件
         this.$btn.bind('click', function(){
@@ -152,6 +160,24 @@
      */
     FindBox.prototype.setText = function (text) {
         this.$textbox.val(text);
+    };
+
+    // Find 查询框
+    var eova_findDialog = function(findBox, url) {
+        // 弹出窗口
+        var dialog = parent.sy.modalDialog({
+            title : '请选择数据',
+            url : url,
+            buttons : [ {
+                id : 'find_ok',
+                text : '确定',
+                handler : function() {
+                    dialog.find('iframe').get(0).contentWindow.selectData(dialog, findBox);
+                    // 初始化焦点
+                    window.focus();
+                }
+            } ]
+        },650,600);
     };
 
 })(jQuery);

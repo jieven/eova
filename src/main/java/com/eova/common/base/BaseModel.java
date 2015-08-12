@@ -3,8 +3,10 @@ package com.eova.common.base;
 import java.util.List;
 
 import com.eova.common.utils.xx;
+import com.eova.common.utils.data.CloneUtil;
 import com.eova.config.EovaConst;
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.DbKit;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Table;
@@ -15,20 +17,34 @@ public class BaseModel<M extends Model> extends Model<M> {
 
 	private static final long serialVersionUID = 1702469565872353932L;
 
-	/**
-	 * 重写父类查询缓存方法(基础数据缓存30分钟)
-	 */
 	@Override
 	public List<M> findByCache(String cacheName, Object key, String sql) {
 		// Base数据缓存30Min
-		if (sql.contains("from base_")) {
-			cacheName = BaseCache.BASE;
+		// if (sql.contains("from base_")) {
+		// cacheName = BaseCache.BASE;
+		// }
+		// Ehcache cache 对象是引用传递，所以特此克隆对象，保证使用cache安全
+		try {
+			return CloneUtil.clone(super.findByCache(cacheName, key, sql));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return super.findByCache(cacheName, key, sql);
+		return null;
+	}
+	
+	@Override
+	public List<M> findByCache(String cacheName, Object key, String sql, Object... paras) {
+		try {
+			return CloneUtil.clone(super.findByCache(cacheName, key, sql, paras));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
 	 * 查询当前Model所有数据
+	 * 
 	 * @return
 	 */
 	public List<M> queryAll() {
@@ -37,15 +53,17 @@ public class BaseModel<M extends Model> extends Model<M> {
 
 	/**
 	 * 查询当前Model所有数据并Cache
+	 * 
 	 * @return
 	 */
 	public List<M> queryAllByCache() {
 		String sql = "select * from " + this.getClass().getSimpleName().toLowerCase();
-		return super.findByCache(BaseCache.SER, sql, sql);
+		return findByCache(BaseCache.SER, sql, sql);
 	}
 
 	/**
 	 * 根据主键获取对象(cache 3 min)
+	 * 
 	 * @param id 主键
 	 * @return
 	 */
@@ -62,21 +80,28 @@ public class BaseModel<M extends Model> extends Model<M> {
 				BaseCache.putSer(key, me);
 			}
 		}
-		return me;
+		try {
+			return CloneUtil.clone(me);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
 	 * 查询自动缓存
+	 * 
 	 * @param sql
 	 * @return
 	 */
 	public List<M> queryByCache(String sql) {
 		// 查询SQL作为Key值
-		return super.findByCache(BaseCache.SER, sql, sql);
+		return findByCache(BaseCache.SER, sql, sql);
 	}
 
 	/**
 	 * 查询自动缓存
+	 * 
 	 * @param sql
 	 * @param paras
 	 * @return
@@ -87,11 +112,41 @@ public class BaseModel<M extends Model> extends Model<M> {
 		for (Object obj : paras) {
 			key += "_" + obj.toString();
 		}
-		return super.findByCache(BaseCache.SER, key, sql, paras);
+		return findByCache(BaseCache.SER, key, sql, paras);
+	}
+
+	/**
+	 * 缓存查询第一项
+	 * 
+	 * @param sql
+	 * @return
+	 */
+	public M queryFisrtByCache(String sql) {
+		List<M> list = queryByCache(sql);
+		if (xx.isEmpty(list)) {
+			return null;
+		}
+		return list.get(0);
+	}
+
+	/**
+	 * 缓存查询第一项
+	 * 
+	 * @param sql
+	 * @param paras
+	 * @return
+	 */
+	public M queryFisrtByCache(String sql, Object... paras) {
+		List<M> list = queryByCache(sql, paras);
+		if (xx.isEmpty(list)) {
+			return null;
+		}
+		return list.get(0);
 	}
 
 	/**
 	 * 缓存分页查询
+	 * 
 	 * @param pageNumber 页码
 	 * @param pageSize 数量
 	 * @param select 查询前缀
@@ -100,34 +155,47 @@ public class BaseModel<M extends Model> extends Model<M> {
 	 */
 	public Page<M> pagerByCache(int pageNumber, int pageSize, String select, String sqlExceptSelect) {
 		String key = select + sqlExceptSelect + "_" + pageNumber + "_" + pageSize;
-		return super.paginateByCache(BaseCache.SER, key, pageNumber, pageSize, select, sqlExceptSelect);
+		try {
+			return CloneUtil.clone(super.paginateByCache(BaseCache.SER, key, pageNumber, pageSize, select, sqlExceptSelect));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
 	 * 缓存分页查询
+	 * 
 	 * @param pageNumber 页码
 	 * @param pageSize 数量
 	 * @param select 查询前缀
 	 * @param sqlExceptSelect 查询条件
 	 * @param paras SQL参数
-	 * @return 
+	 * @return
 	 */
 	public Page<M> pagerByCache(int pageNumber, int pageSize, String select, String sqlExceptSelect, Object... paras) {
 		String key = select + sqlExceptSelect + "_" + pageNumber + "_" + pageSize;
 		for (Object obj : paras) {
 			key += "_" + obj.toString();
 		}
-		return super.paginateByCache(BaseCache.SER, key, pageNumber, pageSize, select, sqlExceptSelect, paras);
+		try {
+			return CloneUtil.clone(super.paginateByCache(BaseCache.SER, key, pageNumber, pageSize, select, sqlExceptSelect, paras));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
 	 * 是否存在
+	 * 
 	 * @param sql
 	 * @param paras
 	 * @return
 	 */
-	public boolean isExist(String sql, Object... paras){
-		long count = Db.queryLong(sql, paras);
+	public boolean isExist(String sql, Object... paras) {
+		String configName = DbKit.getConfig(this.getClass()).getName();
+		long count = Db.use(configName).queryLong(sql, paras);
 		if (count != 0) {
 			return true;
 		}

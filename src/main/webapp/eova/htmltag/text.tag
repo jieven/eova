@@ -1,6 +1,6 @@
-<div class="eova-text" id="${id!}" name="${(isQuery!)=='true' ? QUERY+name:name}" value="${value!}" 
+<div enable="false" class="eova-text" id="${id!}" name="${(isQuery!)=='true' ? QUERY+name:name}" value="${value!}"
 data-options="
-required : ${isNoN!false}, placeholder : ${format(placeholder!)} 
+placeholder : ${format(placeholder!)} 
 ${!isEmpty(options!) ? ', ' + options : '' } 
-${!isEmpty(validator!) ? ', ' + validator : '' }"
+"
 ></div>

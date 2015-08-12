@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<th>元数据表</th>
-			<td><#find id="table" name="table" isNoN="true" url="/metadata/find/main-table" /></td>
+			<td><#find id="table" name="table" isNoN="true" url="/meta/find/main-table" /></td>
 		</tr>
 		<tr>
 			<th>元对象名称</th>
@@ -38,25 +38,18 @@
 <script type="text/javascript">
 // 元类型变更时级联变更元数据表查找框URL
 var valueChange = function(){
-	var url = '/metadata/find/' + $('#ds').combobox('getValue') + '-' + $('#type').combobox('getValue');
+	var url = '/meta/find/' + $('#ds').combobox('getValue') + '-' + $('#type').combobox('getValue');
 	console.log(url);
 	$('#table').attr('url', url);
 }
-var slideMsg = function(str,$pjq){
-	$pjq.messager.show({
-        title:'操作提示',
-        msg:str,
-        timeout:1500,
-        showType:'slide'
-    });
-};
+
 var fm = $('#myForm');
 var submitNow = function($dialog, $grid, $pjq) {
-	var url = "/metadata/importData";
+	var url = "/meta/doImports";
 	$.post(url, sy.serializeObject(fm), function(result) {
 		if (result.success) {
 			//$pjq.messager.alert('提示', result.msg, 'info');
-			slideMsg("导入元数据成功！", $pjq);
+			$.slideMsg("导入元数据成功！", $pjq);
 			$grid.datagrid('load');
 			$dialog.dialog('destroy');
 		} else {

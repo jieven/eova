@@ -102,6 +102,18 @@ public class xx {
 		}
 		return true;
 	}
+	
+	/**
+	 * 字符串是否为 true
+	 * @param str
+	 * @return
+	 */
+	public static boolean isTrue(Object str) {
+		if (!xx.isEmpty(str) && str.toString().trim().equalsIgnoreCase("true")) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 格式化字符串->'str'

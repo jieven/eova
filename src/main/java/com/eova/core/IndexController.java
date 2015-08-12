@@ -35,6 +35,14 @@ import com.jfinal.ext.render.CaptchaRender;
 public class IndexController extends Controller {
 
 	public void toMain() {
+//		List<Record> ms = Db.use(xx.DS_EOVA).find("select * from eova_menu");
+//		for(Record r : ms){
+//			if (r.getStr("type").equals(TemplateConfig.SINGLEGRID)) {
+//				List<Record> mos = Db.use(xx.DS_EOVA).find("select * from eova_menu_object where menu_code = ?", r.getStr("code"));
+//				r.set("config", "{\"objectCode\":\""+ mos.get(0).getStr("object_code") +"\"}");
+//				Db.use(xx.DS_EOVA).update("eova_menu", r);
+//			}
+//		}
 		render("/eova/main.html");
 	}
 
@@ -57,7 +65,13 @@ public class IndexController extends Controller {
 	}
 
 	public void toTest() {
-		render("/eova/icon.html");
+		setAttr("id", "testGrid");
+		setAttr("objectCode", getPara(0));
+		render("/eova/test.html");
+	}
+	
+	public void toForm() {
+		render("/eova/test/form.html");
 	}
 
 	public void toLogin() {

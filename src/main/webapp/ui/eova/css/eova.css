@@ -25,31 +25,31 @@
 	border: 1px solid #95B8E7;
 }
 
-.eova-text i {
+.eova-text .ei {
 	background-position: center 0;
 }
 
-.eova-combo i {
+.eova-combo .ei {
 	background-position: center -20px;
 }
 
-.eova-find i {
+.eova-find .ei {
 	background-position: center -40px;
 }
 
-.eova-time i {
+.eova-time .ei {
 	background-position: center -60px;
 }
 
-.eova-icon i {
+.eova-icon .ei {
 	background-position: center -80px;
 }
 
-.eova-file i {
+.eova-file .ei {
 	background-position: center -100px;
 }
 
-.eova-auto i {
+.eova-auto .ei {
 	background-position: center -120px;
 }
 
@@ -93,7 +93,7 @@ div[class^="eova"] input[type="text"]:focus, .eova-texts:focus {
 	border-color: #66afe9;
 }
 
-div[class^="eova"] i {
+div[class^="eova"] .ei {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
@@ -104,7 +104,7 @@ div[class^="eova"] i {
 	cursor: pointer;
 }
 
-div[class^="eova"] i:hover {
+div[class^="eova"] .ei:hover {
 	background-color: #D7E3F3;
 }
 
@@ -173,11 +173,15 @@ div[class^="eova"] i:hover {
 	width: 90px;
 }
 
-/* plugin validate error,提升优先级 */
-.error {
-	box-shadow: 0 0 6px #ff4136 !important; 
-}
-
 .red {
 	color: #CC3300  ;
+}
+
+.ck0 {
+	font-size: 20px;
+	color: #B0B0B0;
+}
+.ck1 {
+	font-size: 22px;
+	color: #686868;
 }

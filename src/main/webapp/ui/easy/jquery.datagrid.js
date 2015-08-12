@@ -1404,10 +1404,10 @@
             var ed = $.data(this, "datagrid.editor");
             ed.actions.setValue(ed.target, row[filed]);
         });
-        _131(target, index);
+        validateRow(target, index);
         opts.onBeginEdit.call(target, index, row);
     };
-    function _132(_133, _134, _135) {
+    function stopEdit(_133, _134, _135) {
         var opts = $.data(_133, "datagrid").options;
         var _136 = $.data(_133, "datagrid").updatedRows;
         var _137 = $.data(_133, "datagrid").insertedRows;
@@ -1417,7 +1417,7 @@
             return;
         }
         if (!_135) {
-            if (!_131(_133, _134)) {
+            if (!validateRow(_133, _134)) {
                 return;
             }
             var changed = false;
@@ -1544,7 +1544,7 @@
             }
         });
     };
-    function _131(_14f, _150) {
+    function validateRow(_14f, _150) {
         var tr = $.data(_14f, "datagrid").options.finder.getTr(_14f, _150);
         if (!tr.hasClass("datagrid-row-editing")) {
             return true;
@@ -1555,24 +1555,33 @@
         var _151 = tr.find(".validatebox-invalid");
         return _151.length == 0;
     };
-    function _152(_153, _154) {
-        var _155 = $.data(_153, "datagrid").insertedRows;
-        var _156 = $.data(_153, "datagrid").deletedRows;
-        var _157 = $.data(_153, "datagrid").updatedRows;
-        if (!_154) {
+    function getChanges(jq, type) {
+        // 自动结束所有编辑单元格
+        var data = $.data(jq, "datagrid").data;
+        for ( var i = 0, len = data.rows.length; i < len; i++) {
+            if (validateRow(jq, i)) {
+                stopEdit(jq, i, false);
+            }
+        }
+        // 自动结束所有编辑单元格END
+
+        var _155 = $.data(jq, "datagrid").insertedRows;
+        var _156 = $.data(jq, "datagrid").deletedRows;
+        var _157 = $.data(jq, "datagrid").updatedRows;
+        if (!type) {
             var rows = [];
             rows = rows.concat(_155);
             rows = rows.concat(_156);
             rows = rows.concat(_157);
             return rows;
         } else {
-            if (_154 == "inserted") {
+            if (type == "inserted") {
                 return _155;
             } else {
-                if (_154 == "deleted") {
+                if (type == "deleted") {
                     return _156;
                 } else {
-                    if (_154 == "updated") {
+                    if (type == "updated") {
                         return _157;
                     }
                 }
@@ -1642,8 +1651,8 @@
         var ok = true;
         for (var i = 0,
         len = data.rows.length; i < len; i++) {
-            if (_131(_16a, i)) {
-                _132(_16a, i, false);
+            if (validateRow(_16a, i)) {
+                stopEdit(_16a, i, false);
             } else {
                 ok = false;
             }
@@ -1676,7 +1685,7 @@
             }
         };
         for (var i = 0; i < data.rows.length; i++) {
-            _132(_16c, i, true);
+            stopEdit(_16c, i, true);
         }
         var _177 = _173(_171);
         var _178 = _173(_172);
@@ -2296,12 +2305,12 @@
         },
         endEdit: function(jq, _1f1) {
             return jq.each(function() {
-                _132(this, _1f1, false);
+                stopEdit(this, _1f1, false);
             });
         },
         cancelEdit: function(jq, _1f2) {
             return jq.each(function() {
-                _132(this, _1f2, true);
+                stopEdit(this, _1f2, true);
             });
         },
         getEditors: function(jq, _1f3) {
@@ -2317,7 +2326,7 @@
             });
         },
         validateRow: function(jq, _1f6) {
-            return _131(jq[0], _1f6);
+            return validateRow(jq[0], _1f6);
         },
         updateRow: function(jq, _1f7) {
             return jq.each(function() {
@@ -2341,7 +2350,7 @@
             });
         },
         getChanges: function(jq, _1fa) {
-            return _152(jq[0], _1fa);
+            return getChanges(jq[0], _1fa);
         },
         acceptChanges: function(jq) {
             return jq.each(function() {

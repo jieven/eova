@@ -6,8 +6,12 @@
  */
 package com.eova.widget;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.eova.common.utils.xx;
@@ -17,6 +21,8 @@ import com.eova.engine.EovaExp;
 import com.eova.engine.SqlEngine;
 import com.eova.model.MetaField;
 import com.eova.model.MetaObject;
+import com.eova.template.common.config.TemplateConfig;
+import com.eova.template.common.util.TemplateUtil;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -44,8 +50,9 @@ public class WidgetManager {
 				return " ";
 			}
 			// 初始默认主键排序
-			if (xx.isEmpty(sort) && eo.getBoolean("is_default_pk_desc")) {
-				return " order by " + eo.getPk() + " desc";
+			String defaultOrder = eo.getStr("default_order");
+			if (xx.isEmpty(sort) && !xx.isEmpty(defaultOrder)) {
+				return " order by " + defaultOrder;
 			}
 			return " ";
 		}
@@ -102,13 +109,8 @@ public class WidgetManager {
 			}
 			
 			// 复选框需要转换值
-			if (ei.getStr("type").equals(MetaField.TYPE_CHECK)) {
-				if (xx.isEmpty(value)) {
-					value = "0";
-				} else {
-					value = "1";
-				}
-			}
+			value = TemplateUtil.convertValue(ei, value).toString();
+			
 			// 文本框查询条件为模糊匹配
 			if (ei.getStr("type").equals(MetaField.TYPE_TEXT)) {
 				sb.append(" and " + key + " like ?");
@@ -211,6 +213,135 @@ public class WidgetManager {
 			}
 
 		}
+	}
+
+	/**
+	 * 通过Form构建数据
+	 * 
+	 * @param c 控制器
+	 * @param eis 对象属性
+	 * @param record 主对象数据集
+	 * @param pkName 主键字段名
+	 * @return 其它对象数据集
+	 */
+	public static Map<String, Record> buildData(Controller c, List<MetaField> eis, Record record, String pkName, boolean isInsert) {
+		Map<String, Record> reMap = new HashMap<String, Record>();
+	
+		// 获取字段当前的值
+		for (MetaField item : eis) {
+			// 控件类型
+			String type = item.getStr("type");
+			// 字段名
+			String key = item.getEn();
+			// 获当前字段更新后的值,默认空值
+			Object value = c.getPara(key, "");
+	
+			// 新增跳过自增长字段(新增时为空)
+			if (xx.isEmpty(value) && type.equals(MetaField.TYPE_AUTO)) {
+				// 自增字段使用默认值
+				String defaulter = item.getStr("defaulter");
+				if (!xx.isEmpty(defaulter)) {
+					record.set(key, item.getStr("defaulter"));
+				}
+				continue;
+			}
+	
+			// 新增时，移除禁止新增的字段
+			boolean isAdd = item.getBoolean("is_add");
+			if (isInsert && !isAdd) {
+				record.remove(key);
+				continue;
+			}
+			// 更新时，移除禁止更新的字段
+			boolean isUpdate = item.getBoolean("is_update");
+			if (!isInsert && !isUpdate) {
+				record.remove(key);
+				continue;
+			}
+	
+			// 当前字段的持久化对象
+			String objectCode = item.getStr("poCode");
+			// 当前字段的持久化关联字段
+			if (!xx.isEmpty(objectCode)) {
+				Record re = reMap.get(objectCode);
+				if (re == null) {
+					re = new Record();
+				}
+				re.set(key, value);
+				reMap.put(objectCode, re);
+				continue;
+			}
+			record.set(key, TemplateUtil.convertValue(item, value));
+		}
+		return reMap;
+	}
+
+	/**
+	 * 更新/插入 View
+	 * 
+	 * @param viewPkName 视图主键名
+	 * @param reMap 视图对象集
+	 * @param isUpdate 是否更新操作
+	 */
+	@SuppressWarnings("rawtypes")
+	public static void operateView(String viewPkName, Map<String, Record> reMap, String operate) {
+		// 主键值
+		Object pkValue = null;
+	
+		// 获取主键值
+		Iterator iter = reMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			Record record = (Record) entry.getValue();
+			// 如果当前对象存在主键字段，说明是主对象
+			List cols = Arrays.asList(record.getColumnNames());
+			if (cols.contains(viewPkName)) {
+				pkValue = record.get(viewPkName);
+			}
+		}
+	
+		// 获取主对象
+		iter = reMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			Record record = (Record) entry.getValue();
+	
+			// 获取对象信息
+			String objectCode = entry.getKey().toString();
+			MetaObject eo = MetaObject.dao.getByCode(objectCode);
+	
+			// 设置主键值
+			record.set(eo.getPk(), pkValue);
+	
+			if (operate.equals(TemplateConfig.UPDATE)) {
+				// 更新
+				Db.use(eo.getDs()).update(eo.getTable(), eo.getPk(), record);
+			} else if (operate.equals(TemplateConfig.ADD)) {
+				// 新增
+				Db.use(eo.getDs()).save(eo.getTable(), eo.getPk(), record);
+				// 新增之后产生主键值
+				pkValue = record.get(eo.getPk());
+			}
+		}
+	}
+
+	/**
+	 * 自动删除视图关联对象数据
+	 * 
+	 * @param objectCode 视图对象Code
+	 * @param pkValue 删除选中值
+	 */
+	public static void deleteView(String objectCode, String pkValue) {
+	
+		// 查询视图所属包含的对象Code
+		List<MetaField> poCodes = MetaField.dao.queryPoCodeByObjectCode(objectCode);
+		for (MetaField x : poCodes) {
+			// 获取持久化源对象Code
+			String poCode = x.getStr("poCode");
+			MetaObject eo = MetaObject.dao.getByCode(poCode);
+			Db.use(eo.getDs()).deleteById(eo.getTable(), eo.getPk(), pkValue);
+		}
+	
 	}
 
 }

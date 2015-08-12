@@ -41,19 +41,18 @@
             btnTitle: '点击清空文本',
             btnIcon: '',
             isReadonly: false,
-            required: false,
-            min: undefined,
-            max: undefined,
-            other: undefined
+            disable: false,
+            required: false
         };
         // HTML参数覆盖覆盖默认参数
         var htmlOptions = undefined;
-        var stroptions = this.$dom.data('options');
-        if(stroptions){
-            console.log(stroptions);
-            htmlOptions = eval('({' + stroptions + '})');
+        var strOptions = this.$dom.data('options');
+        if(strOptions){
+            //console.log(strOptions);
+            htmlOptions = eval('({' + strOptions + '})');
+        	
             // 获取参数后移除参数
-            //this.$dom.removeAttr('data-options');
+            this.$dom.removeAttr('data-options');
         }
         // 参数优先级：JS参数 > HTML参数 > 默认参数
         this.options = $.extend({}, this.defaults, htmlOptions, options);
@@ -72,7 +71,7 @@
      */
     TextBox.prototype.render = function () {
         var $textbox = $("<input type='text' autocomplete='off' />").appendTo(this.$dom);// 文本显示
-        var $btn = $("<i></i>").appendTo(this.$dom);// 添加按钮
+        var $btn = $("<i class='ei'></i>").appendTo(this.$dom);// 添加按钮
 
         $btn.attr('title', this.options.btnTitle);
         if (this.name) {
@@ -90,13 +89,10 @@
         if (this.options.isReadonly) {
             $textbox.attr('readonly', 'readonly');
             $textbox.css('cursor', 'pointer');
-            $textbox.attr('title', this.options.btnTitle);
         }
-        if(this.options.min){
-            $textbox.attr('data-min', this.options.min);
-        }
-        if(this.options.max){
-            $textbox.attr('data-max', this.options.max);
+        if (this.options.disable) {
+            // 灰色遮罩实现禁用
+            this.$dom.mask();
         }
 
         this.$textbox = $textbox;

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1
-Source Server Version : 50514
-Source Host           : localhost:12581
+Source Server         : localhost
+Source Server Version : 50513
+Source Host           : localhost:3306
 Source Database       : web
 
 Target Server Type    : MYSQL
-Target Server Version : 50514
+Target Server Version : 50513
 File Encoding         : 65001
 
-Date: 2015-07-09 13:42:40
+Date: 2015-08-13 02:50:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,7 +51,7 @@ CREATE TABLE `users` (
   `reg_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `info` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -80,9 +80,10 @@ INSERT INTO `users` VALUES ('21', '0', 'test21', '000000', '风暴之怒', '2014
 INSERT INTO `users` VALUES ('22', '0', 'test22', '000000', '麦林炮手', '2014-12-30 00:55:49', '');
 INSERT INTO `users` VALUES ('23', '0', 'test23', '000000', '黑暗之女', '2014-12-30 00:55:49', '');
 INSERT INTO `users` VALUES ('24', '0', 'test24', '000000', '亡灵勇士', '2014-12-30 00:55:49', '');
-INSERT INTO `users` VALUES ('25', '0', 'test25', '000000', '沙漠死神', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('25', '0', 'test2511', '000000', '沙漠死神1', '2014-12-30 00:55:49', '');
 INSERT INTO `users` VALUES ('26', '0', 'test26', '000000', '蛮族之王', '2014-12-30 00:55:49', '');
 INSERT INTO `users` VALUES ('27', '0', 'test27', '000000', '德邦总管', '2014-12-30 00:55:49', '');
+INSERT INTO `users` VALUES ('28', '0', '1111', '1111', '死神传说', '2015-07-26 23:26:19', '');
 
 -- ----------------------------
 -- Table structure for `users_exp`
@@ -118,7 +119,6 @@ INSERT INTO `users_exp` VALUES ('16', '0', '33', '1623736465');
 INSERT INTO `users_exp` VALUES ('17', '0', '34', '1623736466');
 INSERT INTO `users_exp` VALUES ('18', '0', '35', '1623736467');
 INSERT INTO `users_exp` VALUES ('19', '0', '36', '1623736468');
-INSERT INTO `users_exp` VALUES ('20', '0', '37', '1623736469');
 INSERT INTO `users_exp` VALUES ('21', '0', '38', '1623736470');
 INSERT INTO `users_exp` VALUES ('22', '0', '39', '1623736471');
 INSERT INTO `users_exp` VALUES ('23', '0', '40', '1623736472');
@@ -127,7 +127,6 @@ INSERT INTO `users_exp` VALUES ('25', '0', '42', '1623736474');
 INSERT INTO `users_exp` VALUES ('26', '0', '43', '1623736475');
 INSERT INTO `users_exp` VALUES ('27', '0', '44', '1623736476');
 INSERT INTO `users_exp` VALUES ('28', '0', '45', '1623736477');
-INSERT INTO `users_exp` VALUES ('30', '0', '47', '1623736479');
 
 -- ----------------------------
 -- Table structure for `users_item`
@@ -138,7 +137,7 @@ CREATE TABLE `users_item` (
   `users_id` int(11) NOT NULL COMMENT '艺人',
   `item_id` int(11) NOT NULL COMMENT '道具',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_item
@@ -149,7 +148,6 @@ INSERT INTO `users_item` VALUES ('3', '2', '5');
 INSERT INTO `users_item` VALUES ('4', '2', '2');
 INSERT INTO `users_item` VALUES ('5', '2', '3');
 INSERT INTO `users_item` VALUES ('6', '4', '4');
-INSERT INTO `users_item` VALUES ('7', '10', '1');
 
 -- ----------------------------
 -- Table structure for `webdict`

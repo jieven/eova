@@ -14,6 +14,11 @@ package com.eova.template.common.config;
  */
 public class TemplateConfig {
 
+	/** 模版Code-单表 **/
+	public static final String SINGLEGRID = "singleGrid";
+	/** 模版Code-主子表 **/
+	public static final String MASTERSLAVEGRID = "masterSlaveGrid";
+	
 	/** 字段数据类型-字符 **/
 	public static final String DATATYPE_STRING = "string";
 	/** 字段数据类型-数值 **/
@@ -25,5 +30,16 @@ public class TemplateConfig {
 	public static final String BUTTON_DIALOG = "dialog";
 	/** 工具栏按钮类型-ajaxTodo **/
 	public static final String BUTTON_AJAXTODO = "ajaxTodo";
-
+	
+	/** 新增处理方法名 **/
+	public static final String ADD = "add";
+	/** 删除处理方法名 **/
+	public static final String DELETE = "delete";
+	/** 更新处理方法名 **/
+	public static final String UPDATE = "update";
+	/** 查询处理方法名 **/
+	public static final String LIST = "list";
+	/** 导入处理方法名 **/
+	public static final String IMPORTXLS = "importXls";
+	
 }

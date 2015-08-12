@@ -177,7 +177,7 @@ public class DsUtil {
 			int columnCount = metaData.getColumnCount();
 			// 遍历ResultSet中的每条数据
 			while (rs.next()) {
-				System.out.println("Remarks: "+ rs.getObject(12));
+//				System.out.println("Remarks: "+ rs.getObject(12));
 				JSONObject json = new JSONObject();
 				// 遍历每一列
 				for (int i = 1; i <= columnCount; i++) {

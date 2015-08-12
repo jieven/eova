@@ -1,9 +1,18 @@
 <div class="eova-file">
-	<input type="text" id="${id!}" name="${name!}" style="width: 158px;"><img src="" style="width: 20px; height: 20px;">
+	<input type="text" id="${id!}" name="${name!}" value="${value!}" style="width: 158px;"><img src="${isEmpty(value!) ? '' : IMG + value	}" style="width: 20px; height: 20px;">
 	<input type="file" id="${id!}_file" name="${name!}_file" accept="image/*" style="left: 49px; top: 216px; width: 190px;border:1px solid red;cursor: pointer;">
 </div>
 <script>
 $(function() {
+	
+	var $input = $('#${id!}');
+	
+	var htmlOptions = eval('({${options!}})');
+	if (htmlOptions.disable) {
+        // 灰色遮罩实现禁用
+        $input.parent().mask();
+    }
+	
 	// init input file
 	$('.eova-file').each(function() {
 		var offset = $(this).find('input[type=text]').offset();
@@ -13,8 +22,6 @@ $(function() {
 			width : $(this).width()
 		});
 	});
-	
-	var $input = $('#${id!}');
 	
 	// 异步传图(动态绑定事件)
 	$(document).on("change","#${id!}_file",function(){
@@ -29,7 +36,7 @@ $(function() {
 		}
 		
 		$.ajaxFileUpload({
-			url : '/singleGrid/uploadImg?name=${name!}_file',
+			url : '/upload/img?name=${name!}_file',
 			secureuri : false,
 			fileElementId : '${id!}_file',
 			dataType : 'json',

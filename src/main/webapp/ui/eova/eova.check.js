@@ -35,10 +35,21 @@
     var CheckBox = $.fn.eovacheck.CheckBox = function (dom, options) {
         this.$dom = $(dom);
         this.defaults = {
-            isCheck: false
+            isCheck: false,
+            disable: false
         };
-        // 用户参数覆盖默认参数
-        this.options = $.extend({}, this.defaults, options);
+        // HTML参数覆盖覆盖默认参数
+        var htmlOptions = undefined;
+        var strOptions = this.$dom.data('options');
+        if(strOptions){
+            //console.log(strOptions);
+            htmlOptions = eval('({' + strOptions + '})');
+
+            // 获取参数后移除参数
+            this.$dom.removeAttr('data-options');
+        }
+        // 参数优先级：JS参数 > HTML参数 > 默认参数
+        this.options = $.extend({}, this.defaults, htmlOptions, options);
 
         this.name = this.$dom.attr('name');
         this.value = this.$dom.attr('value');
@@ -58,6 +69,9 @@
         }
         if (this.options.isCheck) {
             this.setChecked(true);
+        }
+        if (this.options.disable) {
+            $checkbox.attr('disabled', 'disabled');
         }
 
         this.$checkbox = $checkbox;

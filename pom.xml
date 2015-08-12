@@ -5,7 +5,7 @@
     <groupId>com.eova</groupId>
     <artifactId>eova</artifactId>
     <packaging>war</packaging>
-    <version>1.0.1</version>
+    <version>1.4</version>
 
     <name>eova</name>
     <url>http://git.oschina.net/eova/eova</url>
@@ -26,7 +26,7 @@
         <jfinal.version>2.0</jfinal.version>
         <cglib.version>3.1</cglib.version>
         
-        <beetl.version>2.2.4</beetl.version>
+        <beetl.version>2.2.5</beetl.version>
 
         <cos.version>26Dec2008</cos.version>
         <fastjson.version>1.2.0</fastjson.version>
@@ -154,7 +154,7 @@
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
         <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
-        <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+        <testOutputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</testOutputDirectory>
 
         <plugins>
             <!-- compiler插件, 设定JDK版本 -->

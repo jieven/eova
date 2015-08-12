@@ -6,26 +6,23 @@
  */
 package com.eova.service;
 
-
 /**
- * 数据访问集中管理
+ * 服务管理中心
+ * 
  * @author Jieven
  *
  */
 public class ServiceManager {
-	/**初始数据访问**/
-	public static IndexService index;
-	/**用户数据访问**/
+	/** 用户服务 **/
 	public static UserService user;
-	/**EOVA数据访问**/
-	public static EovaService eova;
-	/**权限数据访问**/
+	/** 权限服务 **/
 	public static AuthService auth;
-	
-	public static void init(){
-		index = new IndexService();
+	/** 元服务 **/
+	public static MetaService meta;
+
+	public static void init() {
 		user = new UserService();
-		eova = new EovaService();
 		auth = new AuthService();
+		meta = new MetaService();
 	}
 }

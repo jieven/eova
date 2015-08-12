@@ -9,12 +9,12 @@ var crud_update = function() {
 	var array = grid.datagrid('getSelections');
 	var num = array.length;//获取要删除信息的个数
 	if (num > "1"){
-		slideMsg("请勿选择多行数据！");
+		$.slideMsg("请勿选择多行数据！");
 	 	return ;
 	}
 	if (isSelected(row)){
-		//${obj.pkName}
-	 	loadDialog(grid, '修改${obj.name}', '/menu/toUpdate/${obj.code}-' + row.pk_val);
+		//${object.pkName}
+	 	loadDialog(grid, '修改${object.name}', '/menu/toUpdate/${object.code}-' + row.pk_val);
 	}
 };
 </script>

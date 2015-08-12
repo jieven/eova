@@ -9,25 +9,11 @@
 			<%count++;%>
 			
 			<div class="eova-form-field" title="${item.cn}[${item.en}]">
-			<div class="eova-form-lbl">${item.cn}:</div>
+			<div class="eova-form-lbl">${item.cn}:${item.value!}</div>
 				<%if(item.type == "下拉框"){%>
-					<%// 是否多选%>
-					<%if(isTrue(item.is_multiple)){%>
-						<div><#combo id="${item.en}" name="${item.en}" code="${item.object_code}" value="${item.value!}" isQuery="true" multiple="true" /></div>
-					<%}else{%>
-						<div>
-							<div id="${item.en}" name="${QUERY + item.en}" value="${item.value!}" class="eova-combo"></div>
-	                        <script>
-	                        $('#${item.en}').eovacombo({
-	                            url: '/widget/comboJson/${item.object_code}-${item.en}',
-	                            valueField : 'id',
-	                            textField : 'cn'
-	                        });
-	                        </script>
-                        </div>
-					<%}%>
+					<div><#combo id="${item.en}" name="${item.en}" code="${item.object_code}" field="${item.en}" isQuery="true" multiple="${item.is_multiple}" /></div>
 				<%}else if(item.type == "查找框"){%>
-                   	<div><#find isQuery="true" id="${item.en}" name="${item.en}" code="${item.object_code}" field="${item.en}" value="${item.value!}" isNoN="true" /></div>
+                   	<div><#find id="${item.en}" name="${item.en}" code="${item.object_code}" isQuery="true" field="${item.en}" isNoN="true" /></div>
 				<%}else if(item.type == "时间框"){%>
 					<div><#times id="${item.en}" name="${item.en}" code="${item.object_code }" isQuery="true" /></div>
 				<%}else if(item.type == "数字框"){%>
@@ -63,4 +49,10 @@ if(max != 0){
 	//console.log('共需：'+ zs);
 	//console.log('height：'+ y);
 }
+
+$('div[class="eova-text"]').eovatext();
+$('div[class="eova-time"]').eovatime();
+$('div[class="eova-combo"]').eovacombo();
+$('div[class="eova-find"]').eovafind();
+$('div[class="eova-check"]').eovacheck();
 </script>

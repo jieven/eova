@@ -32,11 +32,35 @@
 	</div>
 </form>
 <script>
-$('#${id}').html5Validate(function() {
-	alert("全部通过！");
-	//this.submit();	
-}, {
-	novalidate: true,
-	// labelDrive: false
+$(function(){
+    var formId = '${id}';
+    var $form = $('#' + formId);
+    $form.validator({
+        debug: false,
+        stopOnError: true,
+        focusInvalid : false,
+        showOk: false,
+        timely: 0,
+        msgMaker: false,
+        fields: {
+        <%for(item in items){%>
+        <%if(isTrue(item.is_required)){%>
+                ${item.en} : { rule: '${item.cn}:required;${item.validator!}' },
+            <%}%>
+        <%}%>
+        }
+    });
+
+    $form.on("validation", function(e, current){
+        // 当前字段未验证通过，Tip提示
+        if(!current.isValid){
+            var tip = $.tipwarn($(current.element).parent(), current.msg);
+            // 开始输入销毁提示
+            $(current.element).keydown(function(event){
+                tip.tooltip('destroy');
+                $(this).unbind("keydown");
+            });
+        }
+    });
 });
 </script>

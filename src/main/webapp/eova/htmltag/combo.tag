@@ -4,6 +4,7 @@ data-options="required : ${isNoN!false} ${!isEmpty(options!) ? ', ' + options : 
 $('#${id!}').eovacombo({
     url: '/widget/comboJson/${code}-${field}',
     valueField : 'id',
-    textField : 'cn'
+    textField : 'cn',
+    multiple : ${multiple}
 });
 </script>

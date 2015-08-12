@@ -33,9 +33,9 @@
            maxEntriesLocalDisk="20000"
            eternal="false"
            overflowToDisk="false"
-           diskSpoolBufferSizeMB="50"
+           diskSpoolBufferSizeMB="0"
            timeToIdleSeconds="0"
-           timeToLiveSeconds="20"
+           timeToLiveSeconds="5"
            memoryStoreEvictionPolicy="LRU"
            transactionalMode="off"
             />

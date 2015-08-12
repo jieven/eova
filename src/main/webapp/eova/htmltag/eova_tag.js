@@ -66,21 +66,3 @@ var eova_iconDialog = function(input, span) {
 		} ]
 	}, 572, 390);
 };
-
-// Find 查询框
-var eova_findDialog = function(input, inputcn, url) {
-	// 弹出窗口
-	var dialog = parent.sy.modalDialog({
-		title : '请选择数据',
-		url : url,
-		buttons : [ {
-			id : 'find_ok',
-			text : '确定',
-			handler : function() {
-				dialog.find('iframe').get(0).contentWindow.selectData(dialog, input, inputcn);
-				// 初始化焦点
-				window.focus();
-			}
-		} ]
-	},650,600);
-};

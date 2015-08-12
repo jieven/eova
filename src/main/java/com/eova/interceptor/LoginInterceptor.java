@@ -6,6 +6,8 @@
  */
 package com.eova.interceptor;
 
+import java.util.ArrayList;
+
 import com.eova.model.User;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
@@ -17,11 +19,20 @@ import com.jfinal.aop.Invocation;
  * 
  */
 public class LoginInterceptor implements Interceptor {
+	
+	private static ArrayList<String> urls = new ArrayList<String>();
+	static{
+		urls.add("/toLogin");
+		urls.add("/vcodeImg");
+		urls.add("/doLogin");
+		urls.add("/init");
+		urls.add("/doInit");
+		urls.add("/toTest");
+	}
 
 	@Override
 	public void intercept(Invocation inv) {
-		if (inv.getActionKey().equals("/toLogin") || inv.getActionKey().equals("/vcodeImg") || inv.getActionKey().equals("/doLogin") || inv.getActionKey().equals("/init")
-				|| inv.getActionKey().equals("/doInit")) {
+		if (urls.contains(inv.getActionKey())) {
 			inv.invoke();
 			return;
 		}

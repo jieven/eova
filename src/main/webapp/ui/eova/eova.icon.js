@@ -1,4 +1,7 @@
 ;
+function extracted($, options) {
+
+}
 (function ($) {
 
     // import
@@ -40,6 +43,7 @@
         };
         // 用户参数 覆盖 默认参数 覆盖父类参数
         this.options = $.extend({}, this.options, this.defaults, options);
+
     }
 
     $.extendPrototype(IconBox, TextBox);
@@ -53,6 +57,10 @@
         $btn.bind('click', function () {
             $btn.addClass("ext-icon-zoom");
             eova_iconDialog($textbox, $btn);
+        });
+        // 点按钮和文本框都触发事件
+        this.$textbox.bind('click', function(){
+            $btn.trigger('click');
         });
     };
 

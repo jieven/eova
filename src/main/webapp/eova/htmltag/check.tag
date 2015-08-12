@@ -1,4 +1,4 @@
-<div class="eova-check" id="${id!}" name="${(isQuery!)=='true' ? QUERY+name:name}" value="${value!}"></div>
+<div class="eova-check" id="${id!}" name="${(isQuery!)=='true' ? QUERY+name:name}" value="${value!}" data-options="${!isEmpty(options!) ? options : '' }"></div>
 <script>
 var val = '${value!}';
 var flag = false;

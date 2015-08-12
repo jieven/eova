@@ -22,8 +22,7 @@ import com.eova.common.utils.xx;
 import com.eova.core.IndexController;
 import com.eova.core.auth.AuthController;
 import com.eova.core.menu.MenuController;
-import com.eova.core.object.MetaDataController;
-import com.eova.interceptor.AuthInterceptor;
+import com.eova.core.meta.MetaController;
 import com.eova.interceptor.LoginInterceptor;
 import com.eova.model.Button;
 import com.eova.model.EovaLog;
@@ -35,10 +34,13 @@ import com.eova.model.Role;
 import com.eova.model.RoleBtn;
 import com.eova.model.User;
 import com.eova.service.ServiceManager;
-import com.eova.template.crud.CrudConfig;
-import com.eova.template.crud.CrudController;
+import com.eova.template.common.config.TemplateConfig;
+import com.eova.template.masterslave.MasterSlaveController;
+import com.eova.template.single.SingleController;
 import com.eova.widget.WidgetController;
+import com.eova.widget.form.FormController;
 import com.eova.widget.grid.GridController;
+import com.eova.widget.upload.UploadController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -130,6 +132,8 @@ public class EovaConfig extends JFinalConfig {
 		if (!xx.isEmpty(CDN)) {
 			sharedVars.put("CDN", CDN);
 		}
+		// 图片默认上传目录
+		sharedVars.put("IMG", '/' + EovaConst.DIR_UPIMG + '/');
 
 		// Load Template Const
 		PageConst.init(sharedVars);
@@ -144,16 +148,20 @@ public class EovaConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		System.err.println("Config Routes Starting...");
 		me.add("/", IndexController.class);
-		me.add(CrudConfig.contro, CrudController.class);
+		me.add(TemplateConfig.SINGLEGRID, SingleController.class);
+		me.add(TemplateConfig.MASTERSLAVEGRID, MasterSlaveController.class);
+		
 		me.add("/widget", WidgetController.class);
+		me.add("/upload", UploadController.class);
+		me.add("/form", FormController.class);
 		me.add("/grid", GridController.class);
-		me.add("/metadata", MetaDataController.class);
+		
+		me.add("/meta", MetaController.class);
 		me.add("/menu", MenuController.class);
 		me.add("/auth", AuthController.class);
 
 		/* 自定义业务 */
 		// me.add("/user", UserController.class);
-
 	}
 
 	/**
@@ -236,8 +244,8 @@ public class EovaConfig extends JFinalConfig {
 		// JFinal.me().getServletContext().setAttribute("KING", "我笑了");
 		// 登录验证
 		me.add(new LoginInterceptor());
-		// 权限验证拦截
-		me.add(new AuthInterceptor());
+		// 权限验证拦截(暂时屏蔽权限拦截，待后续完善)
+		// me.add(new AuthInterceptor());
 	}
 
 	/**
@@ -337,4 +345,5 @@ public class EovaConfig extends JFinalConfig {
 	private void costTime(long time) {
 		System.err.println("Load Cost Time:" + (System.currentTimeMillis() - time) + "ms\n");
 	}
+
 }

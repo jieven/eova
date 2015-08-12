@@ -6,10 +6,13 @@
  */
 package com.eova.widget;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eova.common.base.BaseCache;
 import com.eova.common.utils.xx;
+import com.eova.common.utils.data.CloneUtil;
 import com.eova.config.PageConst;
 import com.eova.engine.EovaExp;
 import com.eova.model.MetaField;
@@ -41,7 +44,7 @@ public class WidgetController extends Controller {
 	public void find() {
 
 		String url = "/widget/findJson?";
-		
+
 		String exp = getPara("exp");
 		String code = getPara("code");
 		String field = getPara("field");
@@ -59,10 +62,11 @@ public class WidgetController extends Controller {
 		MetaObject eo = EovaExp.getEo(exp);
 		// 根据表达式手工构建Eova_Item
 		List<MetaField> eis = EovaExp.getEis(exp);
-
-		setAttr("obj", eo);
+		setAttr("objectJson", JsonKit.toJson(eo));
+		setAttr("fieldsJson", JsonKit.toJson(eis));
 		setAttr("itemList", eis);
 		setAttr("action", url);
+		System.out.println(JsonKit.toJson(eis));
 
 		toFind();
 	}
@@ -71,7 +75,7 @@ public class WidgetController extends Controller {
 	 * Find Dialog Grid Get JSON
 	 */
 	public void findJson() {
-		
+
 		String exp = getPara("exp");
 		String code = getPara("code");
 		String en = getPara("field");
@@ -162,7 +166,7 @@ public class WidgetController extends Controller {
 
 		// 根据表达式手工构建Eova_Item
 		List<MetaField> eis = EovaExp.getEis(exp);
-		
+
 		// 根据表达式获取SQL进行查询
 		// 下拉框表达式 别名固定为 id,cn,否则页面无法获取
 		String select = EovaExp.getSelect(exp);
@@ -171,30 +175,43 @@ public class WidgetController extends Controller {
 		String ds = EovaExp.getDs(exp);
 
 		// 获取条件
-		List<String> parmList = new ArrayList<String>();
-		where = WidgetManager.getWhere(this, eis, parmList, where);
-		// 转换SQL参数为Obj[]
-		Object[] parm = new Object[parmList.size()];
-		parmList.toArray(parm);
+		// List<String> parmList = new ArrayList<String>();
+		// where = WidgetManager.getWhere(this, eis, parmList, where);
+		// // 转换SQL参数为Obj[]
+		// Object[] parm = new Object[parmList.size()];
+		// parmList.toArray(parm);
 
 		// 获取排序
 		String sort = WidgetManager.getSort(this);
 
 		// 分页查询Grid数据
 		String sql = select + from + where + sort;
-		List<Record> jsList = Db.use(ds).find(sql, parm);
-		
+		// System.out.println(sql);
+		List<Record> list = null;
+		try {
+			list = CloneUtil.clone(Db.use(ds).findByCache(BaseCache.SER, sql, sql));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// 添加下拉框默认值
 		Record re = new Record();
-		re.set("id", "");
-		re.set("cn", "");
-		jsList.add(0, re);
+		// 单选时添加默认空选项
+		if (!ei.getBoolean("is_multiple")) {
+			re.set("id", "");
+			re.set("cn", "");
+			list.add(0, re);
+		}
 
 		// 转换成JSON
-		String json = JsonKit.toJson(jsList);
+		String json = JsonKit.toJson(list);
 		// json = "[value,name]";
-		System.out.println(json);
+//		 System.out.println(json);
 		renderJson(json);
 	}
-	
+
 }

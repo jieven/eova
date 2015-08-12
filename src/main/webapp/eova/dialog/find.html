@@ -6,36 +6,44 @@
     <#query id="queryFindForm" items="${itemList}" />
     </div>
     <div data-options="region:'center',fit:false,border:false">
-	    <%include("/eova/widget/queryBtn.html"){}%>
-	    <#grid id="findGrid" obj="${obj}" items="${itemList}" url="${action!}" />
+	    <%include("/eova/widget/find/toolbar.html"){}%>
+	    <#grid id="findGrid" objectJson="${objectJson}" fieldsJson="${fieldsJson}" url="${action!}" />
     </div>
 </body>
 <script>
+
+var object = JSON.parse('${objectJson}');
 
 var init = function($dialog, $input, $inputcn) {
 	alert(inputcn.attr('id'));
 }
 
-var selectData = function($dialog, $input, $inputcn) {
+var selectData = function($dialog, findBox) {
 
     var grid = $('#findGrid');
     var row = grid.datagrid('getSelected');
     try{
     	// 有选中行
+        var oldValue = findBox.$valuebox.val();
+        var newValue = '';
         if (row) {
         	// 获取主键值(第一列)
-        	$input.val(row.${obj.pk});
+            findBox.$valuebox.val(row[object.pk_name]);
         	// 获取翻译值(第二列)
-            $inputcn.val(row.${obj.cn});
-            $inputcn.validatebox('validate');
+            findBox.$textbox.val(row[object.cn]);
+            newValue = findBox.$valuebox.val();
     	} else {
     		// 没选值，就清空
-    		$input.val("");
-            $inputcn.val("");
+            findBox.$valuebox.val("");
+            findBox.$textbox.val("");
             //$inputcn.addClass("validatebox-invalid");
-            $inputcn.validatebox('validate');
+            //$inputcn.validatebox('validate');
     	}
-        
+        // 值变更回调
+        if (oldValue != newValue) {
+            console.log(oldValue +'|'+newValue);
+            findBox.options.onChange.call(findBox.$dom, oldValue, newValue);
+        }
     }catch(err){
     	console.log("查找框validate异常:" + err);
     }finally{

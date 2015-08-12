@@ -69,31 +69,6 @@ public class AuthInterceptor implements Interceptor {
 		}
 
 		inv.invoke();
-		// if (actionKey.startsWith("/crud/") ||
-		// actionKey.startsWith("/widget/")) {
-		// System.out.println("权限验证！");
-		// }
-
-		// 自定义功能-过滤URI权限
-
-		// /crud/ + /widget/
-		// 访问权限
-		//
-		// 查询
-		// /crud/toList/menuCode=sys_auth_user&objectCode=eova_user_code
-		// 修改
-		// /crud/update/eova_user_code
-		// 新增
-		// /crud/add/eova_user_code
-		//
-		//
-		// 数据权限
-		//
-		// 翻译值
-		// /widget/findCnByEn/eova_user_code-rid-12
-		// JSON数据
-		// /grid/query/eova_user_code
-
 	}
 
 }

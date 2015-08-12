@@ -161,5 +161,4 @@ public class WidgetUtil {
 		
 		return json;
 	}
-	
 }

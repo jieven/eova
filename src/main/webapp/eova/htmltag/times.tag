@@ -7,7 +7,7 @@
 	float: left;
 	height: 20px;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	width: 170px;
+	width: 176px;
 	padding-left: 2px;
 }
 .tag_to{
@@ -20,7 +20,7 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url(eova_icon.png);
+  background-image: url(/ui/eova/css/eova_icon.png);
   background-repeat: no-repeat;
   background-color: #ECF3FF;
   border: 0;

@@ -16,6 +16,12 @@
 		color:blue;
 		text-decoration:underline;
 	}
+	#pay td {
+		border: 1px solid;
+		text-align: center;
+		padding-right: 5px;
+		padding-left: 5px;
+	}
 </style>
 
 <script>
@@ -54,7 +60,7 @@
 	<div region="center" border="false">
 		<div id="pp" style="position:relative">
 			<div style="width:15%;">
-			    <div title="互动交流" closable="true" style="height:430px;padding:5px;">
+			    <div title="互动交流" closable="true" style="height:420px;padding:5px;">
 					<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=ceaa329c68a2288d5c8aa65ece30d28844d9bc640b88043d23287a2256198227"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="EOVA快速开发" title="EOVA快速开发"></a>
 					<br>
 					进行快速开发,走向人生巅峰！<br>
@@ -81,11 +87,31 @@
 					<br>
 				</div>
 			</div>
-			<div style="width:32%;">
-			    <div title="更新日志" closable="true" style="height:430px;padding:5px;">
+			<div style="width:25%;">
+			    <div title="更新日志" closable="true" style="height:420px;padding:2px;">
 <a target="_blank" href="http://www.oschina.net/p/eova">Eova项目主页</a>
 <br><br>
 <pre>
+Eova V1.4(推荐版)
+-----------------------
+史诗级的一个版本，对Eova进行了巨大重构和优化，以支撑更强大复杂的业务场景。
+[新增]快速配置主子表业务
+[新增]完整的UI校验解决方案
+[新增]支持下拉框多选
+[新增]查找框级联效果
+[新增]控件只读遮罩
+[新增]自定义文本域高度
+[新增]自定义默认排序字段
+
+Q:Eova支持工作流吗？
+A:工作流太笨重了，Eova能轻松实现常见的，订单流程，支付流程...等流程管理
+
+Q：EOVA 支持oracle数据库吗?
+A：Eova 1.3 已经兼容Oracle.
+
+Q:你好，请问EOVA支持sql server吗？ 
+A：JFinal2.0已支持sql server方言，Eova支持JFinal所支持的所有数据库.
+
 Eova V1.3.1
 -----------------------
 完全开源：所有源码都可以获得，任何人都可以贡献代码
@@ -103,38 +129,38 @@ Eova V1.3.1
 [优化]Maven依赖更新
 [优化]SQL脚本更新
 
-Eova V1.3
------------------------
-Q：EOVA 支持oracle数据库吗?
-A：Eova 1.3 已经兼容Oracle.
-
-Q:你好，请问EOVA支持sql server吗？ 
-A：JFinal2.0已支持sql server方言，Eova支持JFinal所支持的所有数据库.
-
-[新增]数据源优化兼容各种数据库
-[新增]兼容Oracle数据
-[新增]升级到JFinal2.0，支持SqlServer方言
-[新增]Mysql自动生成兼容Oracle脚本
-[新增]系统启动时自动下载JS插件包
-
-[修复]Excel导入导出缺少一行数据
-
-[优化]元数据导入实现 @yourOnlyJack
-[优化]DB字段小写，敏感词改名
-[优化]eova.config配置优化
-[优化]maven依赖Jar版本更新
-
-Eova Oracle 自增长的处理：
-http://note.youdao.com/share/?id=da74936c944c613ef5e84e1bf23f0925&type=note
-
-ONE MORE THING：
-Eova其实还未完善 ，UI校验还不够完善，各种表达式能力还不够，查询还不支持区间时间选择，仅支持单表模版，Eova组件还不能独立运行，不能自定义插件，未完待续...
 </pre>
 				</div>
 			</div>
-			<div style="width:50%;">
-				<div title="EOVA简介" closable="true" style="height:430px;padding:5px;">
-					<div class="note-content"><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">大家好我是Java的表弟Eova，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">中文名:伊哇 </span><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2">:)</font></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 19px;"><font face="微软雅黑, Verdana, sans-serif, 宋体" size="2"><br></font></span></div><div style="background-color: rgb(255, 255, 255);">我的全称是——Easy Object View Admin(<span style="background-color:rgb(255, 255, 255);">简单对象视图管理系统</span>)</div><div style="background-color: rgb(255, 255, 255);">Easy-----简单，方便，快速，快速开发 So Easy</div><div style="background-color: rgb(255, 255, 255);">Object--万物皆对象，以元数据驱动业务</div><div style="background-color: rgb(255, 255, 255);">View----各种功能界面</div><div style="background-color: rgb(255, 255, 255);">Admin--信息管理和维护</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);"><br></span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">我的个性：</span></div><div style="background-color: rgb(255, 255, 255);">0xx01：<span style="line-height: 1.5; background-color: rgb(255, 255, 255);">以出自</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">KingDee</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">的元数据驱动业务为核心思想</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx02：使用了极速框架JFinal</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">，站在巨人的肩膀上</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx03：套上</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">了众所周知的EasyUI，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">五官端正，</span><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">不卑不亢</span></div><div style="background-color: rgb(255, 255, 255);"><span style="line-height: 1.5; background-color: rgb(255, 255, 255);">0xx04：使用</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">Beetl粘合JFinal-EasyUI，融为一体</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx05：采用了最流行的MySQL，术业专攻</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx06：可以一键完成CRUD，但不仅限于CRUD</span></div><div style="background-color: rgb(255, 255, 255);"><span style="background-color: rgb(255, 255, 255);">0xx07：灵动迅捷，多快好省，</span><span style="background-color: rgb(255, 255, 255); line-height: 1.5;">不影响你你实现任何功能</span></div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><div style="background-color: rgb(255, 255, 255);">我可以快速完成开发任务，信手拈来</div><div style="background-color: rgb(255, 255, 255);"><span style="background-color:rgb(255, 255, 255);">我会10大控件,4大组件,N种业务模型</span></div><div style="background-color: rgb(255, 255, 255);">常见的增删改查、条件查询、数据校验、前后置业务处理、批量操作、权限管理...通通能帮你快速搞定</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);">更多高级功能等你来玩，开发不再苦逼，生活由此美丽！</div><div style="background-color: rgb(255, 255, 255);"><br></div><div style="background-color: rgb(255, 255, 255);"><br></div></div></div>
+			<div style="width:45%;">
+				<div title="捐赠鼓励(支付宝)" closable="true" style="height:420px;padding:2px;">
+					<table id="pay">
+						<tr>
+							<td style="color: #FF0033">VIP捐赠(已有6人)</td>
+							<td style="color: #0066CC">天使捐赠(已有21人)</td>
+							<td style="color: #99CC66">自由捐赠(已有10人)</td>
+						</tr>
+						<tr>
+							<td><img width="180" height="180" src="/ui/pay/500.jpg"></td>
+							<td><img width="180" height="180" src="/ui/pay/100.jpg"></td>
+							<td><img width="180" height="180" src="/ui/pay/diy.jpg"></td>
+						</tr>
+						<tr>
+							<td>完成VIP捐赠可成为<b style="color: #FF0033">VIP用户</b><br>($ _ $)</td>
+							<td>完成天使捐赠可成为<b style="color: #0066CC">天使用户</b><br>\(^o^)/</td>
+							<td>自由捐赠屌丝与土豪的一念之差<br>^_^</td>
+						</tr>
+					</table>
+<p>
+企业用户：企业培训，定制化服务，项目外包，技术顾问等请使用自由捐赠土豪模式<br>
+VIP用户：Eova的上帝，可参与决策Eova的发展，零距离交流<br>
+天使用户：Eova的天使，为Eova的发展做出各种贡献，优先获得各种资源<br>
+普通用户：默认为普通用户，永久免费使用Eova<br>
+PS:VIP和天使捐赠完毕，请主动联系作者！<br>
+<br>
+非捐赠养成天使用户攻略：<br>
+提交重大BUG并被采纳 || 贡献代码并被采纳 || 在群里热心帮助新人 || 推广和宣传Eova
+</p>
 				</div>				
 			</div>
 			

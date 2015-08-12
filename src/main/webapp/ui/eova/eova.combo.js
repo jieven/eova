@@ -8,6 +8,47 @@
 
     const COMBOBOX = "combobox";
 
+    /**
+     * 选中value所在项
+     * @param comboBox
+     * @param value
+     */
+    function selectByValue (comboBox, value) {
+        // 多选：准备好所有待选中项的value
+        if (comboBox.options.multiple) {
+            var values = comboBox.getValues();
+            // 该项是否已经选中
+            for ( var i = 0; i < values.length; i++) {
+                if (values[i] == value) {
+                    return;
+                }
+            }
+            // 没选中添加到待选中列表
+            values.push(value);
+            comboBox.setValues(values);
+        } else {
+            // 单选：仅选中一项
+            comboBox.setValues([ value ]);
+        }
+    };
+
+    /**
+     * 取消value所在项
+     * @param comboBox
+     * @param value
+     */
+    function unselectByValue (comboBox, value) {
+        var values = comboBox.getValues();
+        for ( var i = 0; i < values.length; i++) {
+            if (values[i] == value) {
+                // 排除选中项
+                values.splice(i, 1);
+                comboBox.setValues(values);
+                break;
+            }
+        }
+    };
+
     $.fn.eovacombo = function (options) {
 //        $.eovaInit(this, FindBox, FINDBOX, options);
 
@@ -45,12 +86,15 @@
             btnTitle: '点击选择内容',
             btnIcon: '',
             isReadonly: true,
+            multiple : false,// 多选
+            separator : ",",// 多选值的分隔符号
+            editable : true,// 可编辑
             valueField: 'value',
             textField: 'text'
         };
         // 参数优先级：JS参数 > HTML参数 > 默认参数 > 父类参数
         this.options = $.extend({}, this.options, this.defaults, options);
-
+        console.log(this.options);
     }
     /**
      * 下拉框 继承 文本框 原型方法
@@ -64,7 +108,7 @@
         // 添加隐藏框
         var $valuebox = $("<input type='hidden' />").appendTo(this.$dom);
         var $textbox = $("<input type='text' />").appendTo(this.$dom);// 文本显示
-        var $btn = $("<i></i>").appendTo(this.$dom);// 添加按钮
+        var $btn = $("<i class='ei'></i>").appendTo(this.$dom);// 添加按钮
         var $panel = $("<div class='eova-combo-panel'></div>").appendTo("body"); // 添加到body保证不被遮盖
 //        $("<div value=''>&nbsp;</div>").appendTo($panel); 屏蔽默认项，默认项由服务端控制默认第一项
 
@@ -81,6 +125,10 @@
         }
         if(this.options.required){
             $textbox.attr('required', 'required');
+        }
+        if (this.options.disable) {
+            // 灰色遮罩实现禁用
+            this.$dom.mask();
         }
         if (this.options.isReadonly) {
             $textbox.attr('readonly', 'readonly');
@@ -100,10 +148,10 @@
      * 重写事件绑定
      */
     ComboBox.prototype.bindEvents = function () {
-        var comboBox = this;
+        //var comboBox = this;
         var $textbox = this.$textbox;
         var $panel = this.$panel;
-        var $btn = this.$btn;
+        //var $btn = this.$btn;
 
         // 弹出下拉面板Panel
         this.$dom.click(function (e) {
@@ -121,15 +169,15 @@
         });
 
 
-        // 选择下拉项
-        $panel.children('div').click(function (e) {
-
-            comboBox.setValue($(this).attr('value'));
-            $panel.hide();
-
-            console.log('bindEvents combo panel div click');
-            e.stopPropagation();
-        });
+        // 选择下拉项 reload 重新绑定事件
+//        $panel.children('div').click(function (e) {
+//
+//            comboBox.setValue($(this).attr('value'));
+//            $panel.hide();
+//
+//            console.log('bindEvents combo panel div click');
+//            e.stopPropagation();
+//        });
 
         // 点击其它部分关闭Panel
         $(document).click(function (e) {
@@ -148,6 +196,7 @@
         // 删除面板(面板添在body里，需要单独删除)
         this.$panel.remove();
     };
+
     /**
      * 重写值操作，自动更新text和css
      * @param value
@@ -159,6 +208,7 @@
         if (!url) {
             return;
         }
+
         var comboBox = this;
         // 同步请求，保证数据先加载，再赋值
         $.ajax({
@@ -174,10 +224,23 @@
                 });
                 // 选择下拉项
                 comboBox.$panel.children('div').click(function (e) {
+                    var selectItem = $(this);//单击选中的选项
+                    var value = selectItem.attr('value');
 
-                    comboBox.setValue($(this).attr('value'));
-
-                    comboBox.$panel.hide();
+                    // 多选
+                    if (options.multiple) {
+                        if (selectItem.hasClass("eova-combo-selected")) {
+                            // 反选
+                            unselectByValue(comboBox, value);
+                        } else {
+                            // 选中
+                            selectByValue(comboBox, value);
+                        }
+                    } else {
+                        // 单选，选完立即隐藏panel
+                        selectByValue(comboBox, value);
+                        comboBox.$panel.hide();
+                    }
 
                     console.log('reload combo panel div click');
                     e.stopPropagation();
@@ -204,19 +267,49 @@
         return this.$valuebox.val();
     };
     /**
+     * 获取值
+     * @returns {*|Array|Node}
+     */
+    ComboBox.prototype.getValues = function () {
+        var val = this.$valuebox.val();
+        if(val == ''){
+            return [];
+        }
+        return val.split(this.options.separator);
+    };
+    /**
      * 设置值
-     * @param value
+     * @param value 单项
      */
     ComboBox.prototype.setValue = function (value) {
-        this.$valuebox.val(value);
+        this.setValues([value]);
+    };
+    /**
+     * 设置值
+     * @param values 多项
+     */
+    ComboBox.prototype.setValues = function (values) {
+        // 清空所有选中项
+        this.$panel.children().removeClass('eova-combo-selected');
 
-        // 命中值所在选项
-        var $item = this.$panel.children("div[value='"+ value +"']");
+        // 重新根据值选中所有项
+        var vals = [], txts = [];
+        for ( var i = 0; i < values.length; i++) {
+            var val = values[i];
+            // value 匹配项
+            var $item = this.$panel.children("div[value='"+ val +"']");
+
+            vals.push(val);
+            txts.push($item.text());
+
+            // 选中匹配项
+            $item.addClass('eova-combo-selected');
+        }
+
+        // 更新值
+        this.$valuebox.val(vals.join(this.options.separator));
         // 更新文本
-        this.$textbox.val($item.text());
-        // 修改选中样式
-        $item.siblings().removeClass('eova-combo-selected');
-        $item.addClass('eova-combo-selected');
+        this.$textbox.val(txts.join(this.options.separator));
     };
     /**
      * 获取显示文本
@@ -226,19 +319,49 @@
         return this.$textbox.val();
     };
     /**
+     * 获取显示文本
+     * @returns {*}
+     */
+    ComboBox.prototype.getTexts = function () {
+        var val = this.$textbox.val();
+        if(val == ''){
+            return [];
+        }
+        return val.split(this.options.separator);
+    };
+    /**
      * 设置显示文本
      * @param text
      */
     ComboBox.prototype.setText = function (text) {
-        this.$textbox.val(text);
+        return this.setTexts([text]);
+    };
+    /**
+     * 设置显示文本
+     * @param text
+     */
+    ComboBox.prototype.setTexts = function (texts) {
+        // 清空所有选中项
+        this.$panel.children().removeClass('eova-combo-selected');
 
-        // 命中文本所在选项
-        var $item = this.$panel.find("div:contains('"+ text +"')");
+        // 重新根据文本选中所有项
+        var vals = [], txts = [];
+        for ( var i = 0; i < texts.length; i++) {
+            var text = texts[i];
+            // value 匹配项
+            var $item = this.$panel.children("div:contains('"+ text +"')");
+
+            vals.push($item.attr("value"));
+            txts.push(text);
+
+            // 选中匹配项
+            $item.addClass('eova-combo-selected');
+        }
+
         // 更新值
-        this.$valuebox.val($item.attr('value'));
-        // 修改选中样式
-        $item.siblings().removeClass('eova-combo-selected');
-        $item.addClass('eova-combo-selected');
+        this.$valuebox.val(vals.join(this.options.separator));
+        // 更新文本
+        this.$textbox.val(txts.join(this.options.separator));
     };
 
 })(jQuery);

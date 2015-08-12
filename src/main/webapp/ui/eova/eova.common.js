@@ -41,15 +41,38 @@
 
             return list;
         },
-        /** 同步Post **/
-        mypost: function(url, data, success, async){
-            $.ajax({
-                async: false,
-                type: 'POST',
-                url: url,
-                data: data,
-                success: success,
-                dataType: "json"
+        // Tip 警告
+        tipwarn: function($el , msg){
+            var $tip = $el.tooltip({
+                position: 'bottom',
+                deltaY : -6,
+                showEvent: null,
+                hideEvent: 'mousemove',
+                content: '<span><span class="pd5 icon-exclamation">&nbsp;</span>'+ msg +'</span>',
+                onShow: function () {
+                    $(this).tooltip('tip').css({
+                        'border': '1px solid transparent',
+                        'background-color': '#fffcef',
+                        'border-color': '#ffbb76',
+                        'color': '#db7c22'});
+                }
+            }).tooltip('show');
+            setTimeout(function () {
+                $tip.tooltip('destroy');
+            }, 5000);
+            return $tip;
+        },
+        // 右下角弹窗提示
+        slideMsg: function(str,$pjq){
+        	var $jq = $;
+        	if($pjq){
+        		$jq = $pjq;
+        	}
+            $jq.messager.show({
+                title:'操作提示',
+                msg:str,
+                timeout:1500,
+                showType:'slide'
             });
         }
     });
@@ -203,5 +226,19 @@
             });
         }
     });
+
+    // 屏蔽控件
+    $.fn.mask = function () {
+        var divHtml = '<div class="divMask" style="position: absolute; width: 100%; height: 22px; left: 0px; top: -3px; background: #DADADA; opacity: 0.5; filter: alpha(opacity=0)"> </div>';
+        $(this).wrap('<span style="position: relative"></span>');
+        $(this).parent().append(divHtml);
+        $(this).data("mask","true");
+    }
+    //取消屏蔽
+    $.fn.unmask = function () {
+        $(this).parent().find(".divMask").remove();
+        $(this).unwrap();
+        $(this).data("mask", "false");
+    }
 
 })(jQuery);

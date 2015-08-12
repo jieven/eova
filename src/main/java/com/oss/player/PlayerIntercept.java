@@ -8,11 +8,11 @@ package com.oss.player;
 
 import java.util.List;
 
-import com.eova.template.crud.CrudIntercept;
+import com.eova.template.single.SingleIntercept;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 
-public class PlayerIntercept extends CrudIntercept {
+public class PlayerIntercept extends SingleIntercept {
 
 	@Override
 	public void importBefore(Controller ctrl, List<Record> records) throws Exception {

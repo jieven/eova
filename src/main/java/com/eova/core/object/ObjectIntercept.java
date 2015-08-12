@@ -6,16 +6,17 @@
  */
 package com.eova.core.object;
 
+import com.eova.core.meta.MetaObjectIntercept;
 import com.eova.model.MetaField;
-import com.eova.template.crud.CrudIntercept;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
 
-public class ObjectIntercept extends CrudIntercept {
+public class ObjectIntercept extends MetaObjectIntercept {
 
 	@Override
-	public void deleteBefore(Controller ctrl, String pkValues) throws Exception {
-		// 删除对象关联属性
-		MetaField.dao.deleteByObjectCode(pkValues);
+	public void deleteBefore(Controller ctrl, Record record) throws Exception {
+		// 删除对象关联元字段属性
+		MetaField.dao.deleteByObjectId(record.getInt("id"));
 	}
-
+	
 }

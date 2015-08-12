@@ -8,6 +8,7 @@ package com.eova.model;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import com.eova.common.base.BaseModel;
 import com.eova.common.utils.xx;
 import com.jfinal.plugin.activerecord.Db;
@@ -23,7 +24,7 @@ public class MetaField extends BaseModel<MetaField> {
 	private static final long serialVersionUID = -7381270435240459528L;
 
 	public static final MetaField dao = new MetaField();
-	
+
 	public static final String TYPE_TEXT = "文本框";
 	public static final String TYPE_COMBO = "下拉框";
 	public static final String TYPE_FIND = "查找框";
@@ -33,6 +34,19 @@ public class MetaField extends BaseModel<MetaField> {
 	public static final String TYPE_CHECK = "复选框";
 	public static final String TYPE_AUTO = "自增框";
 	public static final String TYPE_IMG = "图片框";
+	public static final String TYPE_FILE = "文件框";
+
+	public MetaFieldConfig getConfig() {
+		String json = this.getStr("config");
+		if (xx.isEmpty(json)) {
+			return null;
+		}
+		return new MetaFieldConfig(json);
+	}
+
+	public void setConfig(MetaFieldConfig config) {
+		this.set("config", JSON.toJSONString(config));
+	}
 
 	/**
 	 * 获取字段英文名
@@ -40,10 +54,6 @@ public class MetaField extends BaseModel<MetaField> {
 	 * @return
 	 */
 	public String getEn() {
-		// POSTGRE 数据库,默认小写
-		// if (JdbcUtils.POSTGRESQL.equalsIgnoreCase(EovaConfig.EOVA_DBTYPE)) {
-		// return this.getStr("en").toLowerCase();
-		// }
 		return this.getStr("en");
 	}
 
@@ -57,15 +67,25 @@ public class MetaField extends BaseModel<MetaField> {
 	}
 
 	/**
+	 * 获取元字段数据模版(用于模拟元数据)
+	 * 
+	 * @return
+	 */
+	public MetaField getTemplate() {
+		MetaField mf = this.queryFisrtByCache("select * from eova_field where id = 1");
+		return mf;
+	}
+
+	/**
 	 * 获取对象详情
 	 * 
 	 * @param objectCode 对象Code
 	 * @return 对象详情集合
 	 */
 	public List<MetaField> queryByObjectCode(String objectCode) {
-		return MetaField.dao.find("select * from eova_field where object_code = ? order by order_num", objectCode);
+		return MetaField.dao.queryByCache("select * from eova_field where object_code = ? order by order_num", objectCode);
 	}
-	
+
 	/**
 	 * 获取字段
 	 * 
@@ -74,17 +94,17 @@ public class MetaField extends BaseModel<MetaField> {
 	 * @return
 	 */
 	public MetaField getByObjectCodeAndEn(String objectCode, String en) {
-		MetaField ei = MetaField.dao.findFirst("select * from eova_field where object_code = ? and en = ? order by order_num", objectCode, en);
+		MetaField ei = MetaField.dao.queryFisrtByCache("select * from eova_field where object_code = ? and en = ? order by order_num", objectCode, en);
 		return ei;
 	}
 
 	/**
-	 * 删除对象关联属性
+	 * 删除元对象关联元字段
 	 * 
 	 * @param objectId
 	 */
-	public void deleteByObjectCode(String objectId) {
-		String sql = "delete from eova_field where object_code = (select code from eova_object where id in(?))";
+	public void deleteByObjectId(int objectId) {
+		String sql = "delete from eova_field where object_code = (select code from eova_object where id = ?)";
 		Db.use(xx.DS_EOVA).update(sql, objectId);
 	}
 

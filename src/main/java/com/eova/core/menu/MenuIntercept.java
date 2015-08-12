@@ -6,22 +6,21 @@
  */
 package com.eova.core.menu;
 
+import java.util.List;
+
 import com.eova.common.base.BaseCache;
 import com.eova.config.EovaConst;
+import com.eova.core.meta.MetaObjectIntercept;
 import com.eova.model.Button;
-import com.eova.model.Menu;
 import com.eova.model.RoleBtn;
-import com.eova.template.crud.CrudIntercept;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 
-public class MenuIntercept extends CrudIntercept {
+public class MenuIntercept extends MetaObjectIntercept {
 
 	@Override
-	public void deleteBefore(Controller ctrl, String pkValues) throws Exception {
-		Menu menu = Menu.dao.findById(pkValues);
-
-		String code = menu.getStr("code");
+	public void deleteBefore(Controller ctrl, Record record) throws Exception {
+		String code = record.getStr("code");
 
 		// 删除菜单按钮关联权限
 		RoleBtn.dao.deleteByMenuCode(code);
@@ -35,14 +34,20 @@ public class MenuIntercept extends CrudIntercept {
 	}
 
 	@Override
-	public void deleteSucceed(Controller ctrl, String pkValues) throws Exception {
-		// 新增菜单使缓存失效
+	public void addSucceed(Controller ctrl, List<Record> records) throws Exception {
+		// 菜单使缓存失效
+		BaseCache.delSer(EovaConst.ALL_MENU);
+	}
+	
+	@Override
+	public void deleteSucceed(Controller ctrl, List<Record> records) throws Exception {
+		// 菜单使缓存失效
 		BaseCache.delSer(EovaConst.ALL_MENU);
 	}
 
 	@Override
-	public void updateSucceed(Controller ctrl, Record record) throws Exception {
-		// 新增菜单使缓存失效
+	public void updateSucceed(Controller ctrl, List<Record> records) throws Exception {
+		// 菜单使缓存失效
 		BaseCache.delSer(EovaConst.ALL_MENU);
 	}
 
