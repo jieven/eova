@@ -28,6 +28,8 @@ public class LoginInterceptor implements Interceptor {
 		urls.add("/init");
 		urls.add("/doInit");
 		urls.add("/toTest");
+		urls.add("/form");
+		urls.add("/doForm");
 	}
 
 	@Override

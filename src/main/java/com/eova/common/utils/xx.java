@@ -108,8 +108,8 @@ public class xx {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isTrue(Object str) {
-		if (!xx.isEmpty(str) && str.toString().trim().equalsIgnoreCase("true")) {
+	public static boolean isFalse(Object str) {
+		if (xx.isEmpty(str) || str.toString().trim().equalsIgnoreCase("false")) {
 			return true;
 		}
 		return false;

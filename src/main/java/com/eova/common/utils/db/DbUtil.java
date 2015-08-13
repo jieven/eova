@@ -61,7 +61,7 @@ public class DbUtil {
 			StringBuilder sb2 = new StringBuilder();
 			StringBuilder sb3 = new StringBuilder();
 
-			 System.out.println(list);
+			// System.out.println(list);
 
 			sb.append("create table " + table);
 			sb.append("(\n");

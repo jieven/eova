@@ -133,7 +133,9 @@ public class EovaConfig extends JFinalConfig {
 			sharedVars.put("CDN", CDN);
 		}
 		// 图片默认上传目录
-		sharedVars.put("IMG", '/' + EovaConst.DIR_UPIMG + '/');
+		String IMG = '/' + EovaConst.DIR_UPIMG + '/';
+		sharedVars.put("IMG", IMG);
+		System.out.println("默认IMG:" + IMG);
 
 		// Load Template Const
 		PageConst.init(sharedVars);

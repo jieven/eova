@@ -27,11 +27,16 @@ public class TemplateUtil {
 		String dataType = item.getStr("data_type");
 		// 复选框需要特转换值
 		if (type.equals(MetaField.TYPE_CHECK)) {
-			if (xx.isTrue(value)) {
-				return "1";
-			} else {
+			if (xx.isFalse(value)) {
 				return "0";
+			} else {
+				return "1";
 			}
+//			if (xx.isEmpty(value) || value.toString().trim().equalsIgnoreCase("false")) {
+//				return "0";
+//			} else {
+//				return "1";
+//			}
 		}
 
 		// Oracle Date格式化
