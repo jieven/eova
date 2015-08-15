@@ -1,6 +1,8 @@
-<textarea class="eova-texts" 
-id="${id!}" 
-name="${(isQuery!)=='true' ? QUERY+name:name}" ${isTrue(isNoN!) ? 'required' : ''}
-placeholder='${placeholder!}'  
-${htmlattrs!} 
-style="${style!}">${value!}</textarea>
+<%
+// name
+if(isTrue(isQuery!)){
+	name = QUERY + name;
+}
+%>
+<textarea class="eova-texts" id="${id!}" name="${name}" placeholder="${placeholder!}" ${htmlattrs!} 
+style="${style!}" ${isTrue(disable!) ? 'disabled' : ''} >${value!}</textarea>

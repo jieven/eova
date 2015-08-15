@@ -1,24 +1,28 @@
 package com.eova.common;
 
-public class KeyValue {
+import java.io.Serializable;
 
-	private String key;
+public class KeyValue implements Serializable {
+	
+	private static final long serialVersionUID = -4224457388996192467L;
+	
+	private Object key;
 	private Object value;
 
 	public KeyValue() {
 	}
 
-	public KeyValue(String key, Object value) {
+	public KeyValue(Object key, Object value) {
 		super();
 		this.key = key;
 		this.value = value;
 	}
 
-	public String getKey() {
+	public Object getKey() {
 		return key;
 	}
 
-	public void setKey(String key) {
+	public void setKey(Object key) {
 		this.key = key;
 	}
 
