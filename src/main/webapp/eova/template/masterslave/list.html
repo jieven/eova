@@ -36,7 +36,7 @@
 		                    </tr>
 		                </table>
 		            </div>
-                    <#grid id="slaveGrid" toolbar="slaveGridToolbar" objectCode="${slaveObject.code}" isFirstLoad="false" isPaging="false" cellEdit="add,update,delete" />
+                    <#grid id="slaveGrid" masterId="grid" toolbar="slaveGridToolbar" configJson="${configJson!}" objectCode="${slaveObject.code}" isFirstLoad="false" isPaging="false" cellEdit="add,update,delete" />
                 </div>
             </div>
         </div>

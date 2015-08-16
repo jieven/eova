@@ -40,6 +40,7 @@ public class MasterSlaveController extends Controller {
 		setAttr("itemList", fields);
 
 		setAttr("config", config);
+		setAttr("configJson", menu.getStr("config"));
 
 		setAttr("objectCode", objectCode);
 		setAttr("isQuery", MetaObject.dao.isExistQuery(objectCode));

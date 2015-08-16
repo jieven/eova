@@ -3,6 +3,14 @@
 $(function () {
 
     // init param
+    var id = "${id!}";
+    var masterId = "${masterId!}";
+    var $grid = $("#" + id);
+    var $masterGrid;
+    if(masterId != ""){
+    	$masterGrid = $("#" + masterId);
+    }
+    
     var objectCode = '${objectCode!}';// medaobject code
     var toolbar = '${toolbar!}';// grid ref toolbar
     var isFirstLoad = eval('${isFirstLoad!true}');// first is load data,default=true
@@ -10,6 +18,7 @@ $(function () {
     var url = '${url!}';// diy grid load data url
     var objectJson = '${objectJson!}';// object is json
     var fieldsJson = '${fieldsJson!}';// fiedlds is json
+    var configJson = '${configJson!}';// config is json
 
     if (url == '') {
         url = '/grid/query/' + objectCode;
@@ -17,8 +26,11 @@ $(function () {
 
     // console.log(objectCode + 'isFirstLoad' + isFirstLoad);
 
-    var object, fields;
+    var config, object, fields;
 
+    if(configJson != '') {
+        config = JSON.parse(configJson);
+    }
     if(objectJson != '') {
         object = JSON.parse(objectJson);
     } else {
@@ -118,8 +130,7 @@ $(function () {
 	}
 
     var selectIndex;
-    var gridId = "#${id}";
-    var myGrid = $(gridId).datagrid({
+    var myGrid = $grid.datagrid({
         fit: true,
         border: false,
         striped: true,
@@ -210,6 +221,17 @@ $(function () {
             }
         });
         if (object.is_celledit) {
+        	var rowData = {};
+        	if($masterGrid){
+        		// alert('masterGrid is ok!');
+	        	// 获取主表选中行
+	        	var gridSelectRow = $masterGrid.datagrid('getSelected');
+        		if(gridSelectRow){
+                    var val = gridSelectRow[config.objectField];
+        			rowData[config.fields[0]] = val;
+        			rowData[config.fields[0]+'_val'] = val;
+        		}
+        	}
             rowMenu.menu('appendItem', {
                 text: '新增行',
                 name: 'add',
@@ -217,7 +239,7 @@ $(function () {
                 onclick: function () {
                     myGrid.datagrid('insertRow', {
                         index: 0,
-                        row: {}
+                        row: rowData
                     });
                 }
             });

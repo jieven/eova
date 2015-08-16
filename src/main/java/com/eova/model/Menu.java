@@ -42,6 +42,7 @@ public class Menu extends BaseModel<Menu> {
 		if (xx.isEmpty(json)) {
 			return null;
 		}
+		System.out.println("fdsfdsfds");
 		return new MenuConfig(json);
 	}
 
@@ -62,7 +63,7 @@ public class Menu extends BaseModel<Menu> {
 
 	public Menu findByCode(String code) {
 		String sql = "select * from eova_menu where code = ?";
-		return Menu.dao.findFirst(sql, code);
+		return Menu.dao.queryFisrtByCache(sql, code);
 	}
 
 	/**
