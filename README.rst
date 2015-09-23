@@ -4,6 +4,7 @@ Eova快速开发QQ群欢迎您的加入: 424665115
 
 传送门：
 ------------------------
+#. [精]新手引导 `快速上手 <http://pan.baidu.com/s/1qWr7v20>`_
 #. 新手入门视频教程 `在线观看 <http://pan.baidu.com/s/1qWr7v20>`_
 #. Eova Demo `在线访问 <http://myhzj.wicp.net/>`_ (无法访问请加群@群主)
 #. Eova 文档 `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_
