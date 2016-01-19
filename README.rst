@@ -2,12 +2,21 @@
 Eova快速开发QQ群欢迎您的加入: 424665115
 ===========================
 
+项目介绍：
+------------------------
+基于JFinal的快速开发平台，灵动迅捷，多快好省，可快速完成各种软件系统业务的开发！
+
+我的全称是——Easy Object View Admin(简单对象视图管理系统)
+------------------------
+Easy-----简单，方便，快速，快速开发 So Easy
+Object--万物皆对象，以元数据驱动业务
+View----各种功能界面
+Admin--信息管理和维护
+
 传送门：
 ------------------------
 #. [精]新手引导 `快速上手 <http://note.youdao.com/share/?id=df8de9adaf8bf6d13646812a12f2e17f&type=note>`_
-#. 新手入门视频教程 `在线观看 <http://pan.baidu.com/s/1qWr7v20>`_
-#. Eova 文档 `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.0.pdf>`_
-#. Maven无法下载 可以手工获取Eova依赖Jar `点击下载 <http://pan.baidu.com/s/1jGgonfo>`_
+#. Eova 文档 `点击查看 <http://7xign9.com1.z0.glb.clouddn.com/eova_doc_1.5.pdf>`_
 
 相关说明：
 ------------------------
