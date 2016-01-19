@@ -1,4 +1,0 @@
-#系统启动时根据当前Eova数据源生成Oracle SQL
-initSql = true
-
-连接Mysql数据库，系统启动时会自动将 Mysql中的 Eova和Web库 生成SQL脚本，显示在控制台。
