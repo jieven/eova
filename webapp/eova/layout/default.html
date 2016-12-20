@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>${title!}</title>
+<%include("/eova/meta.html"){}%>
+<%include("/eova/include.html"){}%>
+</head>
+${layoutContent}
+<script>
+$(function(){
+	$('div[class="eova-text"]').eovatext();
+    $('div[class="eova-time"]').eovatime();
+    $('div[class="eova-auto"]').eovaauto();
+    $('div[class="eova-check"]').eovacheck();
+    $('div[class="eova-find"]').eovafind();
+    $('div[class="eova-combo"]').eovacombo();
+    $('div[class="eova-icon"]').eovaicon();
+});
+</script>
+</html>
