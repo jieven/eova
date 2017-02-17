@@ -1,0 +1,14 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon732',plain:true" onclick="singleDeletes()">删除</a>
+<script type="text/javascript">
+    var singleDeletes = function () {
+    	var $grid = $('#grid');
+        var rows = $grid.datagrid('getSelections');
+        var num = rows.length; //获取要删除信息的个数
+        if (num == "0") {
+        	$.slideMsg("请选择一条记录！");
+            return;
+        }
+        confirmDel($grid, '${object.code}', rows);
+    };
+
+</script>

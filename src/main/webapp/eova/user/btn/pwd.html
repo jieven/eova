@@ -1,0 +1,31 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true"
+onclick="eova_user_pwd()">
+	${button.name!}
+</a>
+<script type="text/javascript">
+var eova_user_pwd = function() {
+	var grid = $('#${gridId}');
+    if (!isSelected(grid)) {
+    	return;
+    }
+    
+	var row = $.getWidgetSelected(grid);
+    $.messager.prompt('提示信息', '请输入新的密码', function(val){
+    	if(val){
+    		$.ajax({
+    			url : '/user/pwd/' + row.id + '-' + val,
+    			dataType : 'json',
+    			success : function(o) {
+    				if (o.success) {
+    					grid.datagrid('load');	
+    					grid.datagrid('unselectAll');
+    					$.slideMsg("修改密码成功！");
+    				} else {
+    					$.messager.alert("操作错误", o.msg ,'error');
+    				}
+    			}
+    		});
+    	}
+	});
+};
+</script>

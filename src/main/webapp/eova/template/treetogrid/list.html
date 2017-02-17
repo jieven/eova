@@ -1,0 +1,69 @@
+<%layout("/eova/layout/default.html",{'title' : object.name + '列表'}){%>
+<%
+	var tree = menu.config.tree;
+%>
+<body class="easyui-layout">
+<%if(isTrue(isQuery!)){%>
+<div id="layoutNorth" region="north" title="快速查询" split="true">
+    <#query id="queryForm" objectCode="${menu.config.objectCode}" />
+</div>
+<%}%>
+<div data-options="region:'center',fit:false,border:false,split:false">
+    <div id="contentLayout" class="easyui-layout" data-options="fit:true">
+    	<div data-options="region:'west',split:true" style="width:250px">
+            <#tree id="master_tree" menuCode="${menu.code}" objectCode="${tree.objectCode}" idKey="${tree.idField}" nameKey="${tree.treeField}" pidKey="${tree.parentField}" iconKey="${tree.iconField!}" rootPid="${tree.rootPid}" expandAll="true" />
+        </div>
+        <div data-options="region:'center'">
+            <div id="gridToolbar" style="display: none;">
+				<table>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<%if(isQuery){%>
+									<td><%include("/eova/template/treetogrid/btn/query.html",{'queryId':'queryForm', 'gridId':'grid', 'menu': menu}){}%></td>
+									<%}%>
+									<%// 自定义功能按钮%>
+									<%for(btn in btnList){%>
+									<td><%include(btn.ui,{'menu': menu, 'object':object, 'button': btn, 'gridId': 'grid'}){}%></td>
+									<%}%>
+
+									<%// 仅超级管理员可见%>
+	        						<%if(session.user.isAdmin){%>
+	        						<td><%include("/eova/button/btn/quick.html",{'menu': menu, 'object':object, 'queryId':'queryForm', 'parentId': 'grid'}){}%></td>
+									<%}%>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<#grid id="grid" objectCode="${menu.config.objectCode}" toolbar="gridToolbar" menuCode="${menu.code}" isFirstLoad="false"/>
+        </div>
+    </div>
+</div>
+<script>
+// Tree Node OnClick
+var nodeClick = function(e, treeId, node) {
+	if (!node.isParent) {
+		var code = node.${tree.objectField};
+		// 按Tree选中节点来初始化显示Grid内容
+        $('#grid').datagrid('load',{
+            'query_${menu.config.objectField}': code
+        });
+	}
+};
+
+$(function(){
+	$.fn.zTree.getZTreeObj("master_tree").setting.callback.onClick = nodeClick;
+});
+</script>
+<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
+<%if(!isEmpty(menu.diy_js!)){%>
+<script type="text/javascript" src="${menu.diy_js}"></script>
+<%}%>
+<%if(!isEmpty(object.diy_js!)){%>
+<script type="text/javascript" src="${object.diy_js}"></script>
+<%}%>
+</body>
+<%}%>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>${title!}</title>
+<%include("/eova/meta.html"){}%>
+<%if(isTrue(isEditor!)){%>
+	<link rel="stylesheet" type="text/css" href="/plugins/wangEditor/dist/css/wangEditor.min.css">
+	<link rel="stylesheet" type="text/css" href="/plugins/jsoneditor/jsoneditor.min.css">
+<%}%>
+<%include("/eova/include.html"){}%>
+${headContent!}
+</head>
+<body>
+${layoutContent!}
+<%if(isTrue(isEditor!)){%>
+	<script type="text/javascript" src="/plugins/wangEditor/dist/js/wangEditor.min.js"></script>
+	<script type="text/javascript" src="/plugins/jsoneditor/jsoneditor.min.js"></script>
+	<script>
+	//配置表情包
+	wangEditor.config.emotions = {'default' : {title : '默认',data : '/plugins/wangEditor/static/emotions/default.data'}};
+	// 配置上传图片
+	wangEditor.config.uploadImgUrl = '/upload/editor/';
+	</script>
+<%}%>
+
+<script>
+$(function(){
+	$('div[class="eova-text"]').eovatext();
+    $('div[class="eova-time"]').eovatime();
+    $('div[class="eova-auto"]').eovaauto();
+    $('div[class="eova-bool"]').eovabool();
+    $('div[class="eova-find"]').eovafind();
+    $('div[class="eova-combo"]').eovacombo();
+    $('div[class="eova-icon"]').eovaicon();
+});
+</script>
+</body>
+</html>

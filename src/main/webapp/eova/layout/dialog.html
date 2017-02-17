@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>${title!}</title>
+<%include("/eova/meta.html"){}%>
+<%include("/eova/include.html", {'isPortal' : false, 'isNice' : false, 'isOther' : false }){}%>
+</head>
+${layoutContent}
+<script>
+$(function(){
+	$('div[class="eova-text"]').eovatext();
+});
+</script>
+</html>

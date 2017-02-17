@@ -1,0 +1,62 @@
+<style>
+label{
+	font-size: 13px;
+}
+</style>
+<div id="mycheck_${field.en}">
+	<input type="hidden" name="${name}" value="${value!field.defaulter}">
+</div>
+<script>
+// JS 可以干预控件所在页面的任何效果
+$('#mycheck_${field.en}').parent().parent().css("width", "95.5%");
+
+$(function(){
+
+	var idName = "mycheck_${field.en}";
+	var $checks = $('#' + idName);
+	var $checkValue = $checks.find("input:hidden");
+
+	// 加载数据(复选框其实和下拉一样，只是展现方式不一样，所以直接用下拉的API获取数据)
+	var url = "/widget/comboJson/${field.object_code}-${field.en}";
+	$.ajax({
+        type: 'get',
+        async: true,
+        url: url,
+        dataType: "json",
+        success: function (json) {
+        	// 生成复选框Dom
+            $.each(json, function (index, o) {
+                $("<label><input type=\"checkbox\" value=\"" + o.id + "\">" + o.cn + "&nbsp;</label>").appendTo($checks);
+            });
+        	// 初始化选中
+        	var vals = $checkValue.val().split(",");
+        	$checks.find('input:checkbox').each(function(i, o){
+        		for (var i = 0; i < vals.length; i++) {
+        			if(vals[i] == $(o).val()){
+        				o.checked = true;
+        				break;
+        			}
+        		}
+        	});
+        	// 绑定复选框事件
+            $checks.find('input:checkbox').change(function(){
+        		var vals = getCheckIds();
+        		$checkValue.val(vals);
+        	});
+        },
+        error: function () {
+            alert('复选框加载数据失败,URL=' + url);
+        }
+    });
+
+	// 获取所有选中ID
+	function getCheckIds(){
+	    var vals = [];
+	    $checks.find("input:checked").each(function() {
+	        vals.push($(this).val());
+		});
+	    return vals.join(",");
+	}
+
+});
+</script>

@@ -1,0 +1,13 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon752',plain:true" onclick="singleTreeHide()"> ${button.name!} </a>
+<script type="text/javascript">
+	var singleTreeHide = function() {
+		var $treegrid = $('#treegrid');
+		var rows = $treegrid.treegrid('getSelections');
+		var num = rows.length;
+		if (num == "0") {
+			$.slideMsg("请选择一条记录！");
+			return;
+		}
+		confirmHide($treegrid, '${object.code}', rows);
+	};
+</script>

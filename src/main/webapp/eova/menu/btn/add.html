@@ -1,0 +1,19 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true" onclick="eova_add()"> ${button.name!} </a>
+<script type="text/javascript">
+	var eova_add = function() {
+		var $treegrid = $('#treegrid');
+		var row = $.getWidgetSelected($treegrid);
+		if (row && row.type != 'dir') {
+			$.slideMsg("只能选择目录才可以新增，不选默认新增到根目录！");
+			return;
+		}
+		// 默认新增到根下
+		var menuId = 0;
+		if (row != null) {
+			menuId = row.id;
+		}
+		var param = "?parent_id=" + menuId;
+
+		loadDialog($treegrid, '新功能配置', '/menu/toAdd' + param, 1100);
+	};
+</script>

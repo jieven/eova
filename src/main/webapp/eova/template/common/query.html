@@ -1,0 +1,15 @@
+<a id="btnQuery" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query()">快速查询 </a>
+<script type="text/javascript">
+    function eova_query() {
+    	var $widget = $('#${parentId}');
+    	// post query form and reload widget data
+    	$.widgetReLoad($widget, $.getFormParasObj($('#${queryId}')));
+		$.widgetClearSelections($widget);
+    };
+
+    $('#${queryId}').keydown(function (event) {
+        if (event.keyCode == 13) {
+        	eova_query();
+        }
+    });
+</script>

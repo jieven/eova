@@ -1,0 +1,29 @@
+<a id="btn_query_${gridId}" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query()"> 快速查询 </a>
+<script type="text/javascript">
+    var gridId = '${gridId}', queryId = '${queryId}';
+    var eova_query = function () {
+    	var data = $.getFormParasObj($('#' + queryId));
+
+    	var $zt = $.fn.zTree.getZTreeObj("master_tree");
+		var node = $zt.getSelectedNodes()[0];
+		if (!node) {
+			$.slideMsg("请选择一个树节点");
+			return;
+		}
+		if (node.isParent) {
+			$.slideMsg("不允许为目录添加按钮");
+			return;
+		}
+		var treeNodeValue = node.${menu.config.tree.objectField};
+
+    	data['query_${menu.config.objectField}'] = treeNodeValue;
+        $('#' + gridId).datagrid('load', data);
+    };
+
+    $('#' + queryId).keydown(function (event) {
+        if (event.keyCode == 13) {
+        	eova_query();
+        }
+    });
+
+</script>

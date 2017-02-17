@@ -1,0 +1,16 @@
+<%var head = {%>
+
+<%};%>
+<%var body = {%>
+
+<body class="easyui-layout">
+    <div id="layoutNorth" region="north" title="Eova Diy 快速拼凑功能" split="true" style="height: 250px;">
+		<#form id="myForm" objectCode="chenzi_orders" />
+	</div>
+    <div data-options="region:'center'" data-options="fit:true,border:false">
+		<#grid id="grid" objectCode="chenzi_orders" />
+	</div>
+</body>
+
+<%};%>
+<%include("/eova/layout/default.html",{'title' : 'test001', 'head': head, 'layoutContent': body}){}%>

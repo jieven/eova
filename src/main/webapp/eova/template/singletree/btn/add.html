@@ -1,0 +1,22 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="singleTreeAdd()">新增</a>
+<script type="text/javascript">
+    var singleTreeAdd = function () {
+    	var $treegrid = $('#treegrid');
+
+    	var row = $.getWidgetSelected($treegrid);
+
+        var rootPid = '${menu.config.tree.rootPid}';
+        var treeIdField = '${menu.config.tree.idField!}';
+        var treeParentField = '${menu.config.tree.parentField!}';
+
+     	// 默认新增到根下
+        var parentId = rootPid;
+        if(row != null){
+        	parentId = row[treeIdField];
+        }
+
+    	var ref = "?ref=" + treeParentField + ":" + parentId;
+
+        loadDialog($treegrid, '新增${object.name}', '/form/add/${object.code}' + ref);
+    };
+</script>

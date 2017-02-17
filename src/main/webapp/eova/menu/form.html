@@ -1,0 +1,289 @@
+<%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
+
+<form id="myForm" method="post" class="form" style="padding: 5px;">
+	<input type="hidden" name="parent_id" value="${parent_id!3}">
+    <fieldset>
+        <legend>菜单信息</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th>名称</th>
+                <td>
+                    <#text id="name" name="name" value="${menu.name!}" />
+                </td>
+                <th style="width:110px;">图标</th>
+                <td>
+                    <#icon id="icon" name="icon" value="${menu.icon!}" />
+                </td>
+            </tr>
+            <tr>
+                <th>编码</th>
+                <td>
+                    <#text id="code" name="code" value="${menu.code!}" />
+                </td>
+                <th>序号</th>
+                <td>
+                    <#text id="index" name="indexNum" value="${menu.order_num!1}" />
+                </td>
+            </tr>
+            <tr>
+                <th>业务模版</th>
+                <td>
+                    <select class="easyui-combobox" id="type" name="type" style="width: 180px;" data-options="editable:false, onChange:typeChange">
+                        <option value="dir">父目录菜单[dir]</option>
+                        <option value="diy">自定义业务[diy]</option>
+                        <option value="single_grid" selected="selected">单表[single_grid]</option>
+                        <option value="single_tree">单表树[single_tree]</option>
+                        <option value="single_chart">单表图[single_chart]</option>
+                        <option value="master_slave_grid">主子表[master_slave_grid]</option>
+                        <option value="tree_grid">树&表[tree_grid]</option>
+                    </select>
+                </td>
+				<th></th>
+				<td></td>
+			</tr>
+            <tr id="trUrl" style="display: none;">
+                <th>自定义业务URL</th>
+                <td colspan="3">
+                    <#texts id="url" name="url" value="${menu.url!}" placeholder="请输入自定义功能的访问URL" style="width:713px;height:20px;" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="single_grid">
+        <legend>(单表)模版配置</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">元对象</th>
+                <td>
+                    <#find id="single_grid_object" name="objectCode" code="eova_field_code" field="object_code" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="single_tree" style="display: none;">
+        <legend>(单表树)模版配置</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">树元对象</th>
+                <td>
+                    <#find id="single_tree_object" name="singleTreeObjectCode" code="eova_field_code" field="object_code" />(必选)
+                </td>
+                <th style="width:110px;">根节点父级值</th>
+                <td>
+                    <#text id="single_tree_rootpid" name="rootPid" />(必选,根节点PID值)
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">PID字段</th>
+                <td>
+                    <#find id="single_tree_parent" name="parentField" />(必选,例如parent_id)
+                </td>
+                <th style="width:110px;">ID字段</th>
+                <td>
+                    <#find id="single_tree_id" name="idField" />(可选,默认为id)
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">树形字段</th>
+                <td>
+                    <#find id="single_tree_field" name="treeField" />(必选,以树形展示的列)
+                </td>
+                <th style="width:110px;">图标字段</th>
+                <td>
+                    <#find id="single_tree_icon" name="iconField" />(可选)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="tree_grid" style="display: none;">
+        <legend>(树&表)模版配置</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">树元对象</th>
+                <td>
+                    <#find id="tree_grid_tree_object" name="treeGridTreeObjectCode" code="eova_field_code" field="object_code" />(必选)
+                </td>
+                <th style="width:110px;">树关联字段</th>
+                <td>
+                    <#find id="tree_grid_tree_field" name="treeGridTreeFieldCode" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">PID字段</th>
+                <td>
+                    <#find id="tree_grid_parent" name="treeGridParentField" />(必选,例如parent_id)
+                </td>
+                <th style="width:110px;">ID字段</th>
+                <td>
+                    <#find id="tree_grid_id" name="treeGridIdField" />(可选,默认为id)
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">树形字段</th>
+                <td>
+                    <#find id="tree_grid_tree" name="treeGridTreeField" />(必选,以树形展示的列)
+                </td>
+                <th style="width:110px;">图标字段</th>
+                <td>
+                    <#find id="tree_grid_icon" name="treeGridIconField" />(可选)
+                </td>
+            </tr>
+            <tr>
+				<th style="width:110px;">根节点父级值</th>
+                <td>
+                    <#text id="tree_grid_rootpid" name="treeGridRootPid" />(必选,根节点PID值)
+                </td>
+                <th></th>
+                <td></td>
+            </tr>
+            <tr>
+            	<td colspan="2" style="height: 15px;"></td>
+            </tr>
+            <tr>
+                <th style="width:110px;">Grid元对象</th>
+                <td>
+                    <#find id="tree_grid_object_code" name="treeGridObjectCode" code="eova_field_code" field="object_code" />
+                </td>
+                <th style="width:110px;">Grid外键字段</th>
+                <td>
+                    <#find id="tree_grid_field_code" name="treeGridFieldCode" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="single_chart" style="display: none;">
+        <legend>(单表图)模版配置</legend>
+        <table class="table" style="width: 100%;">
+            <tr>
+                <th style="width:110px;">元对象</th>
+                <td>
+                    <#find id="single_chart_object" name="singleChartObjectCode" code="eova_field_code" field="object_code" />(必选)
+                </td>
+                <th style="width:110px;">Y轴单位</th>
+                <td>
+                	<#text id="single_chart_yunit" name="singleChartYunit" />(例：100人,50元)
+                </td>
+            </tr>
+            <tr>
+                <th style="width:110px;">X轴字段</th>
+                <td>
+                    <#find id="single_chart_x" name="singleChartX" />(必选)
+                </td>
+                <th style="width:110px;">Y轴字段</th>
+                <td>
+                    <#find id="single_chart_y" name="singleChartY" multiple="true" />(多选)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset id="master_slave_grid" style="display: none;">
+        <legend>(主子表)模版配置-默认允许配置5个子</legend>
+       	<table class="table" style="width:1017px;">
+            <tr>
+                <th style="width:110px;">主对象</th>
+                <td>
+                    <#find id="masterObjectCode" name="masterObjectCode" code="eova_field_code" field="object_code" />
+                </td>
+                <th style="width:110px;">主外键字段</th>
+                <td>
+                    <#find id="masterFieldCode" name="masterFieldCode" />
+                </td>
+            </tr>
+            <tr>
+            	<td colspan="4">
+            	<p style="font-size: 10px; color: red">PS:子关联字段的控件类型如果是文本类(文本框，文本域，编辑框),则子表数据为模糊查询,而(数字框，下拉框，查找框)为精确查询</p>
+            	</td>
+            </tr>
+        </table>
+        <div id="sonTab" class="easyui-tabs" data-options="fit:false,border:true" style="width:1017px;height:80px;" title="23432432">
+        	<div title="子1">
+	        	<table class="table" style="width: 100%;">
+		            <tr>
+		                <th style="width:110px;">对象</th>
+		                <td>
+		                    <#find id="slaveObjectCode1" name="slaveObjectCode1" code="eova_field_code" field="object_code" />
+		                </td>
+		                <th style="width:110px;">关联字段</th>
+		                <td>
+		                    <#find id="slaveFieldCode1" name="slaveFieldCode1" />
+		                </td>
+		            </tr>
+		        </table>
+        	</div>
+        	<div title="子2">
+	        	<table class="table" style="width: 100%;">
+		            <tr>
+		                <th style="width:110px;">对象</th>
+		                <td>
+		                    <#find id="slaveObjectCode2" name="slaveObjectCode2" code="eova_field_code" field="object_code" />
+		                </td>
+		                <th style="width:110px;">关联字段</th>
+		                <td>
+		                    <#find id="slaveFieldCode2" name="slaveFieldCode2" exp=" " />
+		                </td>
+		            </tr>
+		        </table>
+        	</div>
+        	<div title="子3">
+	        	<table class="table" style="width: 100%;">
+		            <tr>
+		                <th style="width:110px;">对象</th>
+		                <td>
+		                    <#find id="slaveObjectCode3" name="slaveObjectCode3" code="eova_field_code" field="object_code" />
+		                </td>
+		                <th style="width:110px;">关联字段</th>
+		                <td>
+		                    <#find id="slaveFieldCode3" name="slaveFieldCode3" exp=" " />
+		                </td>
+		            </tr>
+		        </table>
+        	</div>
+        	<div title="子4">
+	        	<table class="table" style="width: 100%;">
+		            <tr>
+		                <th style="width:110px;">对象</th>
+		                <td>
+		                    <#find id="slaveObjectCode4" name="slaveObjectCode4" code="eova_field_code" field="object_code" />
+		                </td>
+		                <th style="width:110px;">关联字段</th>
+		                <td>
+		                    <#find id="slaveFieldCode4" name="slaveFieldCode4" exp=" " />
+		                </td>
+		            </tr>
+		        </table>
+        	</div>
+        	<div title="子5">
+	        	<table class="table" style="width: 100%;">
+		            <tr>
+		                <th style="width:110px;">对象</th>
+		                <td>
+		                    <#find id="slaveObjectCode5" name="slaveObjectCode5" code="eova_field_code" field="object_code" />
+		                </td>
+		                <th style="width:110px;">关联字段</th>
+		                <td>
+		                    <#find id="slaveFieldCode5" name="slaveFieldCode5" exp=" " />
+		                </td>
+		            </tr>
+		        </table>
+        	</div>
+        </div>
+    </fieldset>
+</form>
+<style>
+#template img{
+	border: 5px solid #D1D7DC;
+}
+hr{
+height:1px;border:none;border-top:1px dashed #0066CC;padding-bottom: 10px;
+}
+</style>
+<hr>
+<div id="template" style="text-align: center;">
+	<div><span id="templatename">[单表]</span>业务模版风格预览：</div>
+	<div id="templateimg">
+		<img src="/ui/images/template/single_grid.png" >
+	</div>
+</div>
+
+<script type="text/javascript" src="/eova/menu/form.js"></script>
+<%}%>

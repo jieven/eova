@@ -1,0 +1,10 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon733',plain:true" onclick="single_update()">修改</a>
+<script type="text/javascript">
+    var single_update = function () {
+    	var $grid = $('#grid');
+        if (isSelected($grid)) {
+	        var row = $.getWidgetSelected($grid);
+            loadDialog($grid, '修改${object.name}', '/form/update/${object.code}-' + row.pk_val);
+        }
+    };
+</script>

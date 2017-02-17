@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="${CDN!STATIC!}/plugins/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${CDN!STATIC!}/plugins/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="${CDN!STATIC!}/ui/icon/icon.css">
+
+<link rel="stylesheet" type="text/css" href="${STATIC!}/ui/css/common.css">
+<link rel="stylesheet" type="text/css" href="${STATIC!}/ui/eova/css/eova.css">
+
+<script type="text/javascript" src="${STATIC!}/ui/js/jquery.min.js"></script>
+<script type="text/javascript" src="${STATIC!}/ui/js/json2-min.js"></script>
+
+<script type="text/javascript" src="${STATIC!}/ui/js/common.js"></script>
+<script type="text/javascript" src="${STATIC!}/ui/js/string.js"></script>
+
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${STATIC!}/ui/easy/jquery.datagrid.js"></script>
+
+<%if(isEmpty(isNice!)){%>
+<link rel="stylesheet" type="text/css" href="${CDN!STATIC!}/plugins/nice/jquery.validator.css">
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/nice/jquery.validator.js"></script>
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/nice/zh-CN.js"></script>
+<%}%>
+<%if(isEmpty(isPortal!)){// 更好用的Portal插件寻找中，欢迎推荐！%>
+<%}%>
+<%if(isEmpty(isTree!)){%>
+<link rel="stylesheet" href="/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="/plugins/ztree/js/jquery.ztree.core.js"></script>
+<%}%>
+<%if(isEmpty(isOther!)){%>
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/upload/jquery-upload.js"></script>
+<%}%>
+
+<script type="text/javascript" src="${CDN!STATIC!}/plugins/format/jsformat.js"></script>
+
+<script type="text/javascript" src="${STATIC!}/ui/easy/easy.min.js"></script>
+<script type="text/javascript" src="${STATIC!}/ui/eova/eova.js"></script>
+<script type="text/javascript" src="${STATIC!}/ui/eova/src/eova.common.js"></script>
+
+<script>
+// 全局JS常量配置
+var IMG = "${IMG!}";
+var FILE = "${FILE!}";
+</script>

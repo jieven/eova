@@ -1,0 +1,10 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon723',plain:true" onclick="singleTreeDetail()">查看</a>
+<script type="text/javascript">
+    var singleTreeDetail = function () {
+    	var $treegrid = $('#treegrid');
+        if (isSelected($treegrid)) {
+	        var row = $.getWidgetSelected($treegrid);
+            loadDialog($treegrid, '${object.name}详情', '/form/detail/${object.code}-' + row.pk_val);
+        }
+    };
+</script>

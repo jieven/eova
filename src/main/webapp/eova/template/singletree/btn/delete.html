@@ -1,0 +1,13 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon732',plain:true" onclick="singleTreeDeletes()">删除</a>
+<script type="text/javascript">
+	var singleTreeDeletes = function() {
+		var $treegrid = $('#treegrid');
+		var rows = $treegrid.treegrid('getSelections');
+		var num = rows.length;
+		if (num == "0") {
+			$.slideMsg("请选择一条记录！");
+			return;
+		}
+		confirmDel($treegrid, '${object.code}', rows);
+	};
+</script>

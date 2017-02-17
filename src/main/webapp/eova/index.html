@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Easy Object View Admin</title>
+		<meta http-equiv="Expires" CONTENT="0">
+		<meta http-equiv="Cache-Control" CONTENT="no-cache">
+		<meta http-equiv="Pragma" CONTENT="no-cache">
+		<%include("/eova/meta.html"){}%>
+		<%include("/eova/include.html"){}%>
+		<link rel="stylesheet" type="text/css" href="/ui/css/index.css" />
+	</head>
+	<body id="mainLayout" class="easyui-layout">
+		<div data-options="region:'north',href:'/toHeader'" style="height: 62px; overflow: hidden;"></div>
+		<div data-options="region:'west',href:'',split:true" title="菜单导航" style="width: 220px; overflow: hidden;">
+			<!--Left Menu Tree-->
+			<div class="easyui-panel" data-options="fit:true" style="border: 1px solid rgba(0, 134, 179, 0.38)">
+				<ul id="menu" class="ztree"></ul>
+			</div>
+		</div>
+		<!--<div data-options="region:'east',href:'',split:true" title="全局搜索" style="width: 230px; overflow: hidden;">-->
+		<!--<input type="text" name="test001" id="test001" value="" />-->
+		<!--</div>-->
+		<div data-options="region:'center'" style="overflow: hidden;">
+			<div id="mainTabs"></div>
+		</div>
+		<div data-options="region:'south',href:'/eova/footer.html',border:false" style="height: 30px; overflow: hidden;"></div>
+
+		<div id="tabsMenu">
+			<div data-options="iconCls:'eova-icon198'" type="close">关闭</div>
+			<div data-options="iconCls:'eova-icon198'" type="closeOther">关闭其他</div>
+			<div data-options="iconCls:'eova-icon357'" type="closeAll">关闭所有</div>
+		</div>
+	<script src="/ui/js/index.js"></script>
+	</body>
+
+</html>

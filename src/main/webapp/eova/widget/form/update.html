@@ -1,0 +1,38 @@
+<%var body = {
+	var formId = 'updateForm' + object.code;
+	var url = '/form/doUpdate/' + object.code;
+%>
+
+<#form id="${formId}" objectCode="${object.code}" data="${record!}" fixed="${fixed!}" />
+
+<script type="text/javascript">
+var $form = $('#${formId}');
+
+var submitNow = function($dialog, $widget, $pjq) {
+    $.post('${url}', $.getFormParasObj($form), function(result) {
+        if (result.success) {
+        	$.slideMsg("修改${object.name}成功！", $pjq);
+        	$.widgetReLoad($widget);
+            $dialog.dialog('destroy');
+
+        } else {
+        	$.alert($pjq, result.msg);
+        }
+    }, 'json');
+};
+
+var btnSaveCallback = function($dialog, $widget, $pjq) {
+    // nice validator
+    $form.isValid(function(isValied){
+        if(isValied){
+            submitNow($dialog, $widget, $pjq);
+        }
+    });
+};
+
+</script>
+<%if(!isEmpty(object.diy_js!)){%>
+<script type="text/javascript" src="${object.diy_js}"></script>
+<%}%>
+
+<%};include("/eova/layout/default.html",{'title' : '新增' + object.name, 'layoutContent' : body, 'isEditor' : true}){}%>

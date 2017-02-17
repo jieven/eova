@@ -1,0 +1,11 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon733',plain:true" onclick="singleTreeUpdate()">修改</a>
+<script type="text/javascript">
+	var singleTreeUpdate = function() {
+		var $treegrid = $('#treegrid');
+
+		if (isSelected($treegrid)) {
+			var row = $.getWidgetSelected($treegrid);
+			loadDialog($treegrid, '修改${object.name}', '/form/update/${object.code}-' + row.pk_val);
+		}
+	};
+</script>

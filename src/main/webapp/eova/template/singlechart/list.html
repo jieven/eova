@@ -1,0 +1,137 @@
+<%layout("/eova/layout/default.html",{'title' : object.name + '列表'}){%>
+<body class="easyui-layout">
+	<%if(isTrue(isQuery!)){%>
+	<div id="layoutNorth" region="north" title="快速查询" split="true">
+    <#query id="queryForm" objectCode="${object.code}" />
+    </div>
+	<%}%>
+<div data-options="region:'center',fit:false,border:false,split:false">
+    <div id="contentLayout" class="easyui-layout" data-options="fit:true">
+    	<div data-options="region:'center',fit:false,border:false,split:true">
+    		<div id="gridToolbar" style="display: none;">
+				<table>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<%if(isQuery){%>
+									<td><%include("/eova/template/common/query.html",{'queryId':'queryForm', 'parentId':'grid'}){}%></td>
+									<%}%>
+									<%// 自定义功能按钮%>
+									<%for(btn in btnList){%>
+									<td><%include(btn.ui,{'menu': menu, 'object':object, 'button': btn, 'gridId': 'grid'}){}%></td>
+									<%}%>
+
+									<%// 仅超级管理员可见%>
+	        						<%if(session.user.isAdmin){%>
+	        						<td><%include("/eova/button/btn/quick.html",{'menu': menu, 'object':object, 'queryId':'queryForm', 'parentId': 'grid'}){}%></td>
+									<%}%>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<#grid id="grid" objectCode="${object.code}" toolbar="gridToolbar" menuCode="${menu.code}" isPaging="false" isFirstLoad="true" />
+        </div>
+        <div data-options="region:'south',fit:false,border:false,split:true" style="height:400px">
+		    <div id="mainChart" style="height:380px;"></div>
+        </div>
+    </div>
+</div>
+<script src="/plugins/echarts/echarts.min.js"></script>
+<script>
+$(function () {
+	var $grid = $('#grid');
+	$grid.datagrid({
+		// 表格数据加载时，同步刷新Chart
+		onLoadSuccess: function(data){
+			syncChart(data);
+		}
+	});
+});
+
+<%
+var chart = menu.config.chart;
+%>
+function syncChart(data){
+
+	// 构建X轴数据
+	var xdata = [];
+	for (var i = 0; i < data.total; i++) {
+		xdata.push(data.rows[i].${chart.x});
+    }
+
+	var myChart = echarts.init(document.getElementById('mainChart'));
+    var option = {
+    	    title : {
+    	        text: '${menu.name}',
+				// subtext: 'EOVA智能BI'
+    	    },
+    	    tooltip : {
+    	        trigger: 'axis'
+    	    },
+    	    legend: {
+    	        data: [<%for(cn in chart.ycn){%>'${cn}',<%}%>]
+    	    },
+    	    toolbox: {
+    	        show : true,
+    	        feature : {
+    	            mark : {show: true},
+    	            dataView : {show: true, readOnly: false},
+    	            magicType : {show: true, type: ['line', 'bar']},
+    	            restore : {show: true},
+    	            saveAsImage : {show: true}
+    	        }
+    	    },
+    	    calculable : true,
+    	    xAxis : [
+    	        {
+    	            type : 'category',
+    	            boundaryGap : false,
+    	            data : xdata
+    	        }
+    	    ],
+    	    yAxis : [
+    	        {
+    	            type : 'value',
+    	            axisLabel : {
+    	                formatter: '{value}${chart.yunit}'
+    	            }
+    	        }
+    	    ],
+    	    series : [
+						<%for(var i = 0; i < chart.y.~size; i++){%>
+    	    	        {
+    	    	        	name:'${chart.ycn[i]}',
+    	    	            type:'line',
+    	    	            data: function (){
+    	    	            	var list = [];
+    	    	            	for (var i = 0; i < data.total; i++) {
+    	    	            		list.push(data.rows[i].${chart.y[i]});
+    	    	                }
+    	    	            	return list;
+    	    	            }(),
+    	    	            markLine : {
+    	    	                data : [
+    	    	                    {type : 'average', name : '平均值'}
+    	    	                ]
+    	    	            }
+    	    	        },
+    	    	        <%}%>
+    	    	    ]
+    	};
+
+    myChart.setOption(option);
+}
+
+</script>
+<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
+<%if(!isEmpty(menu.diy_js!)){%>
+<script type="text/javascript" src="${menu.diy_js}"></script>
+<%}%>
+<%if(!isEmpty(object.diy_js!)){%>
+<script type="text/javascript" src="${object.diy_js}"></script>
+<%}%>
+</body>
+<%}%>

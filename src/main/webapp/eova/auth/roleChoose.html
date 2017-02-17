@@ -1,0 +1,209 @@
+<%layout("/eova/layout/default.html",{'title' : 'CRUD'}){%>
+<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
+<style>
+.extends, label{
+	font-size: 14px;
+}
+input[type="checkbox"]{
+    font-family:Tahoma;
+    vertical-align:middle;
+	height: 14px;
+    width: 14px;
+}
+.extends{
+	line-height: 20px;
+	padding: 5px;
+}
+</style>
+<body class="easyui-layout" data-options="fit:true,border:false">
+	<div data-options="region:'north'" data-options="fit:false,border:false,split:false" style="height: 32px;">
+		<div class="extends" title="自动继承选择角色的权限到当前角色(复制权限数据)">
+			 继承角色 ：
+			 <%for(x in roles){%>
+			<label><input type="checkbox" name="extends" value="${x.id}" onclick="chooseFun(${x.id}, this);">${x.name}</label>
+			 <%}%>
+		</div>
+	</div>
+	<div data-options="region:'center'" data-options="fit:true,border:false,split:false">
+	<div id="toolbar" style="display: none;">
+		<table>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkAll()">
+									全选
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkAllNo()">
+									反选
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('查询')">
+									选择所有查询
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('新增')">
+									选择所有新增
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('修改')">
+									选择所有修改
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('删除')">
+									选择所有删除
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('查看')">
+									选择所有查看
+								</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon521',plain:true"
+								onclick="checkKey('导入')">
+									选择所有导入
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<table id="roleMenu"></table>
+	</div>
+</body>
+
+<script>
+// 全选
+var checkAll = function(){
+	$('.datagrid-view input:checkbox').each(function() {
+		this.checked = true;
+	});
+};
+// 反选
+var checkAllNo = function(){
+	$('.datagrid-view input:checkbox').each(function() {
+		if (this.checked) {
+			this.checked = false;
+		} else {
+		    this.checked = true;
+		}
+	});
+};
+// 选择目标所有
+var checkKey = function(key){
+	$('input:checkbox[fun="'+ key +'"]').each(function() {
+		 this.checked = true;
+	});
+};
+
+$(function() {
+	$("#roleMenu").treegrid({
+        url: '/auth/getFunJson',
+        method: 'get',
+        rownumbers: true,
+        idField: 'id',
+        treeField: 'name',
+        fit: true,
+        border: false,
+        align: 'right',
+        nowrap: false,
+        toolbar: '#toolbar',
+        autoRowHeight: true,
+
+        columns: [[{
+            field: 'name',
+            title: '菜单',
+            width: '200'
+        },
+        {
+            field: 'btnname',
+            title: '功能(双击单元格，全选/反选所有功能)',
+            width: '1150',
+            formatter: function(value, row, field) {
+                if (value) {
+                    var names = value.split(",");
+                    var ids = row['btnid'].split(",");
+                    var s = "";
+                    for (i = 0; i < names.length; i++) {
+                        s += '<label><input type="checkbox" id="'+ ids[i] +'" value="' + ids[i] + '" name="funBtn" fun="'+ names[i] +'">' + names[i] + '</label>&nbsp;';
+                    }
+                }
+                return s;
+            }
+        }]],
+        onLoadSuccess : function (){
+        	// 功能加载完成之后加载已分配功能
+        	chooseFun(${rid});
+        },
+		onDblClickCell:function(field,row){
+			var checkboxs = $(".datagrid-row-checked :checkbox");
+			if (checkboxs.prop("checked")) {
+				checkboxs.prop("checked", false);
+			} else {
+				checkboxs.prop("checked", true);
+			}
+		}
+    })
+});
+// 选中指定角色已授权功能
+function chooseFun(rid, ck){
+	$.ajax({
+        url: '/auth/getRoleFunJson/' + rid,
+        dataType: 'json',
+        success: function(data) {
+            // 将返回数据转换为JSON对象
+        	var list = eval(data);
+        	var isCheck = true;
+    		if(ck){isCheck = ck.checked;}
+        	for(i = 0; i < list.length; i++){
+        		var bid = list[i];
+        		$('#'+ bid).prop('checked', isCheck);
+        	}
+        }
+    });
+}
+
+// 获取所有选中ID
+function getCheckIds(){
+	// 获取选中和不确定节点
+    var ids = '';
+	$(".datagrid-row input:checked").each(function() {
+		if (ids != '') ids += ',';
+        ids += $(this).val();
+	});
+    return ids;
+}
+
+// 获取所有选中ID
+function getExtendsIds(){
+	// 获取选中和不确定节点
+    var ids = '';
+	$(".extends input:checked").each(function() {
+		if (ids != '') ids += ',';
+        ids += $(this).val();
+	});
+    return ids;
+}
+
+var btnSaveCallback = function($dialog, $widget, $pjq) {
+	var url = "/auth/roleChoose/" + ${rid};
+	var o ={
+			'checks': getCheckIds(),
+			'extends': getExtendsIds()
+	};
+	$.post(url, o, function(result) {
+		if (result.success) {
+			$.slideMsg("操作成功！", $pjq);
+			$.widgetReLoad($widget);
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+</script>
+
+<%}%>

@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>EOVA简单开发 - 常用代码块</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="renderer" content="webkit">
+<link type="text/css" rel="stylesheet" href="/ui/css/code.css"/>
+<script src="/ui/js/jquery.min.js" type="text/javascript"></script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+
+<div class="tab">
+
+<div class="tab_menu">
+	<ul>
+		<li class="selected">EOVA控件/组件</li>
+		<li>格式化</li>
+		<li>下拉&查找表达式</li>
+		<li>UI校验</li>
+		<li>前端代码</li>
+	</ul>
+</div>
+<div class="tab_box">
+
+<!-- tab0 -->
+<div>
+
+<pre>
+公共属性：
+id=唯一标识，必填
+name=表单名称，必填
+value=表单值
+isNoN=是否不为空
+disable=是否只读
+
+下拉框&查找框 特有属性：
+code=元对象编码，必填
+field=元字段名称，必填
+multiple是否多选
+
+文本框框&文本域 特有属性：
+placeholder=框内友好提示信息
+
+文本域&编辑框&JSON框 特有属性：
+style=自定义CSS
+
+图片框&文件框 特有属性：
+filedir=自定义上传目录，必填
+
+其它：
+options=自定义高级属性，详情参见EovaUI源码！
+
+</pre>
+<hr/>
+EOVA控件
+<hr/>
+<pre>
+
+// 文本框
+&lt;#text id="txtInfo" name="info" value="一句话构建文本框" placeholder="请输入信息..." isNoN="" validator="" options="" disable="" />
+// 下拉框
+&lt;#combo id="" name="" code="" field="" value="" isNoN="" multiple="" disable="" />
+// 查找框
+&lt;#find id="" name="" code="" field="" value="" isNoN="" multiple="" disable="" />
+// 时间框
+&lt;#time id="" name="" value="" isNoN="" disable="" options="format:'yyyy-MM-dd HH:mm:ss'" />
+// 日期框
+&lt;#time id="" name="" value="" isNoN="" disable="" options="format:'yyyy-MM-dd'"/>
+// 文本域
+&lt;#texts id="" name="" value="" isNoN="" placeholder="" validator="" style="width:99.9%;height:20px;" disable="" />
+// 编辑框
+&lt;#edit id="" name="" value="" isNoN="" style="width: auto;height:250px;" disable="" />
+// 布尔框
+&lt;#bool id="" name="" value="" isNoN="" disable="" />
+// 图片框
+&lt;#img id="" name="" value="" isNoN="" filedir="" options="" />
+// 文件框
+&lt;#file id="" name="" value="" isNoN="" disable="" filedir="" />
+// 图标框
+&lt;#icon id="" name="" value="" isNoN="" disable="" />
+// JSON框
+&lt;#json id="" name="" value="" isNoN="" style="margin-top: 3px;width:99.9%;height:200px;" disable="" />
+
+</pre>
+<hr/>
+EOVA组件
+<hr/>
+<pre>
+
+objectCode=元对象编码(给我一个对象编码，我就能给你一个宇宙)
+toolbar=绑定工具栏ID
+menuCode=当前菜单编码(会自动获取当前菜单的相关限制，比如过滤条件等)
+
+// 表格 
+&lt;#grid id="" objectCode="" toolbar="" menuCode="" />
+// 树表
+&lt;#treegrid id="" objectCode="" toolbar="" menuCode="" treeField="以树方式展现的字段" />
+// 树
+&lt;#tree id="" objectCode="" menuCode=""  idKey="" nameKey="" pidKey="" iconKey="" rootPid="" expandAll="true" />(故名思意，自解！)
+
+</pre>
+
+</div>
+<!-- tab0 -->
+
+<!-- tab1 -->
+<div class="hide">
+<hr/>
+格式化-红色加粗
+<hr/>
+<pre>
+function(value, row, index, field) {
+    if (value) {
+        return '&lt;b style="color: red">' + value + '&lt;/b>';
+    }
+    return value;
+}
+</pre>
+
+<hr/>
+格式化-图片
+<hr/>
+<pre>
+function(value, row, index, field) {
+    if (value) {
+        return '&lt;img src="http://图片域名/图片目录/' + value + '" height=25>'
+    }
+    return value
+}
+</pre>
+
+<hr/>
+格式化-链接
+<hr/>
+<pre>
+function(value, row, index, field) {
+    return '&lt;a target="_blank" href="http://eova.cn" style="color:blue">' + value + '</a>'
+}
+</pre>
+
+<hr/>
+格式化-新开关联页面 to 浏览器Tab
+<hr/>
+<pre>
+function(value, row, index, field) {
+    return '&lt;a target="_blank" href="/single_grid/list/biz_demo_hotel_stock?query_hotel_id=' + row.id + '" style="color:blue">' + value + '&lt;/a>';
+}
+</pre>
+
+<hr/>
+格式化-新开关联页面 to Eova Tab
+<hr/>
+<pre>
+function(value, row, index, field) {
+    var url = '/single_grid/list/biz_demo_hotel_stock?query_hotel_id=' + row.id;
+    return '&lt;a href="javascript:parent.addTab(\'' + row.name + '库存\',\'' + url + '\',\'eova-icon1\');" style="color:blue">' + value + '&lt;/a>';
+}
+PS:JS是万能的，只有你想不到的，没有你做不到的！大胆猜测，小心验证！
+</pre>
+
+</div>
+<!-- tab1 -->
+
+<!-- tab2 -->
+<div class="hide">
+
+<hr/>
+查询来自eova库中的字典，构建下拉框
+<hr/>
+select value ID,name CN from eova_dict where object = '表名' and field = '字段名';ds=eova
+<br>
+<br>
+
+<hr/>
+查询来自main库中的字典，构建下拉框（默认为main库，不用写ds=main）
+<hr/>
+select value ID,name CN from dicts where object = '表名' and field = '字段'
+<br>
+<br>
+
+<hr/>
+查找表达式
+<hr/>
+<pre>
+select id ID,name 酒店名 from hotel
+select id ID,name 酒店名,address 地址 from hotel
+</pre>
+<br>
+
+<hr/>
+查找表达式-逻辑判断SQL条件（Beetl语法）
+<hr/> 
+${exp1!}
+
+<br>
+<br>
+
+</div>
+<!-- tab2 -->
+
+<!-- tab3 -->
+<div class="hide">
+<pre>
+规则	参数	描述	例子
+required		必填项	
+required        //不能为空
+required(xxx)   //满足xxx规则，才验证required
+required(not, xxx) //如果值为空，或者xxx也认为是空
+integer	可选，标识	整数	
+integer         //请输入整数
+integer[*]      //请输入整数
+integer[+]      //请输入正整数
+integer[+0]     //请输入正整数或0
+integer[-]      //请输入负整数
+integer[-0]     //请输入负整数或0
+match	可选，标识
+必选, 另一字段名	与另一字段匹配，两种用法：
+
+match[name];
+用于验证两个字段的值必须相同
+
+match[condition, name];
+用于比较两个字段大小	
+match[password]  //与password字段的值匹配
+match[lt, money]  //小于money字段的值
+match[lte, money] //小于等于money字段的值
+match[eq, money]  //等于money字段的值匹配
+match[neq, money]  //不能等于money字段的值
+match[gte, money] //大于等于money字段的值
+match[gt, money]  //大于money字段的值
+range	必选，范围值	数值范围	
+range[0~99]      //0到99的整数
+range[~99]       //小于或等于99的整数
+range[0~]        //大于或等于0的整数
+length	必选，范围值
+可选，是否计算真实长度	验证字符长度	
+length[6~16]       //6-16个字符
+length[6]          //6个字符
+length[~6]         //小于6个字符
+length[6~]         //大于6个字符
+
+length[~6, true]   //小于6个字符,全角字符计算双字符
+checked	可选，范围值	对于checkbox或radio
+必须要选中多少项	
+checked             //必填，相当于required
+checked[3~5]        //请选择3到5项
+checked[3]          //请选择3项
+checked[~5]         //请选择少于5项
+checked[3~]         //请选择大于3项
+remote	必选，url地址
+可选，附带额外的字段	远程验证	
+remote[path/to/server.php]
+remote[path/to/server.php, name1, name2, ..]
+</pre>
+</div>
+<!-- tab3 -->
+
+<!-- tab4 -->
+<div class="hide">
+<pre>
+// 自动刷新Eova组件(datagrid+treegrid)
+$.widgetReLoad($widget);
+
+// 自动获取组件选中行(datagrid+treegrid)
+$.getWidgetSelected($widget);
+</pre>
+</div>
+<!-- tab4 -->
+
+</div><!-- tab_box -->
+</div>
+
+<script>
+	$(function() {
+		var $div_li = $("div.tab_menu ul li");
+		$div_li.click(function() {
+			$(this).addClass("selected") //当前<li>元素高亮
+			.siblings().removeClass("selected"); //去掉其它同辈<li>元素的高亮
+			var index = $div_li.index(this); // 获取当前点击的<li>元素 在 全部li元素中的索引。
+			$("div.tab_box > div") //选取子节点。不选取子节点的话，会引起错误。如果里面还有div
+			.eq(index).show() //显示 <li>元素对应的<div>元素
+			.siblings().hide(); //隐藏其它几个同辈的<div>元素
+		}).hover(function() {
+			$(this).addClass("hover");
+		}, function() {
+			$(this).removeClass("hover");
+		})
+	})
+</script>
+</body>
+</html>

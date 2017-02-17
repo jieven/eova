@@ -1,0 +1,16 @@
+#默认数据源
+main_url = jdbc:oracle:thin:@192.168.0.10:1521:CODE
+main_user = coder
+main_pwd = coder
+
+#Eova数据源
+eova_url = jdbc:oracle:thin:@192.168.0.10:1521:CODE
+eova_user = coder
+eova_pwd = coder
+
+transaction_level = 2
+
+#其它数据源连接方式
+#postgresql_url = jdbc:postgresql://127.0.0.1:5432/postgres
+
+##Oralce参考本配置，改好后将本配置 copy到 jdbc.config

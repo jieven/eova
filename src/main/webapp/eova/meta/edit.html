@@ -1,0 +1,40 @@
+<%layout("/eova/layout/default.html",{'title' : '元字段编辑(拖拽行号排序)'}){%>
+<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
+<script type="text/javascript" src="/ui/easy/datagrid-dnd.js"></script>
+
+<body class="easyui-layout">
+	<div data-options="region:'center',fit:false,border:false"><#grid id="fieldGrid" objectCode="eova_field_code" isFirstLoad="false" isPaging="false" /></div>
+	<script>
+		$(function() {
+			var $grid = $('#fieldGrid');
+			$grid.datagrid({
+				isChangeData : false,// 操作不改变grid中的数据
+				onLoadSuccess : function() {
+					$(this).datagrid('enableDnd');
+				},
+				onBeforeDrag : function(row, e) {
+					// 只有拖动行头可以排序
+					if (!$(e.target).parent().hasClass('datagrid-td-rownumber')) {
+						return false;
+					}
+				},
+				onDrop : function(targetRow, sourceRow, point) {
+					var sid = sourceRow.id;
+					var snum = sourceRow.order_num;
+					var tid = targetRow.id;
+					var tnum = targetRow.order_num;
+					console.log(targetRow.order_num, sourceRow.order_num, point);
+					$.syncGetJson("/meta/swap/" + sid + '-' + snum + '-' + tid + '-' + tnum, function(json) {
+						$grid.datagrid('reload');
+						console.log("换序成功！");
+					});
+				}
+			});
+			$grid.datagrid('load', {
+				query_object_code : '${objectCode}'
+			});
+		});
+	</script>
+</body>
+
+<%}%>

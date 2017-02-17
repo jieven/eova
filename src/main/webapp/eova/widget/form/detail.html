@@ -1,0 +1,28 @@
+<%var body = {
+	var formId = 'detailForm' + object.code;
+%>
+
+<body>
+
+<#form id="${formId}" objectCode="${object.code}" data="${record!}" />
+
+<script type="text/javascript">
+
+$(function(){
+	// 禁用表单，注销事件，仅供查看
+	$(document).ready(function(){
+		$(this).find('input,textarea,select').attr('disabled',true);
+		$(this).find('input,i,div').unbind();
+	});
+});
+
+var btnSaveCallback = function($dialog, $widget, $pjq) {
+    $dialog.dialog('destroy');
+};
+</script>
+
+<%if(!isEmpty(object.diy_js!)){%>
+<script type="text/javascript" src="${object.diy_js}"></script>
+<%}%>
+
+<%};include("/eova/layout/default.html",{'title' : object.name + '详情', 'layoutContent' : body, 'isEditor' : true}){}%>

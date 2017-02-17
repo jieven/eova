@@ -1,0 +1,7 @@
+/.classpath
+/.project
+/.externalToolBuilders
+/.settings
+/target
+/src/main/webapp/ui/eova/*.jscompress
+/src/main/webapp/ui/eova/*.JSCompress

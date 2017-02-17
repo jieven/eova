@@ -1,0 +1,62 @@
+<%layout("/eova/layout/default.html",{'title' : '导入数据'}){%>
+<body>
+<div style="padding: 5px;font-size: 10px;">
+新增导入：<br />
+如果导入的Excel表格中没有主键列，则自动新增所有行的数据。<br />
+更新导入：<br />
+如果导入的Excel表格中存在主键列，则自动根据每行主键更新相关数据。<br />
+</div>
+
+<div style="padding: 5px;">
+<form target="ajaxUpload" id="importForm" action="/single_grid/doImportXls/${menuCode}" method="POST" enctype="multipart/form-data">
+	<input type="file" id="upfile" name="upfile" value="上传" formaction="importForm" placeholder="请选择要上传的xls文件" accept=".xls" style="height: 100%">
+</form>
+</div>
+
+<iframe name="ajaxUpload" style="display:none">
+</iframe>
+<script type="text/javascript">
+	var extArray = new Array(".xls");
+	function limit(file){
+	    var allowSubmit = false;
+	    if (!file){
+	        return;
+	    }
+	    while (file.indexOf("\\") != -1){
+	        file = file.slice(file.indexOf("\\") + 1);
+	    }
+	    var ext = file.slice(file.lastIndexOf(".")).toLowerCase();
+	    for (var i = 0; i < extArray.length; i++) {
+	        if (extArray[i] == ext){
+	            allowSubmit = true;
+	            break;
+	        }
+	    }
+	    if (!allowSubmit){
+	    	alert("只能上传以下格式的文件:"+ (extArray.join("")) + "\n请重新选择再上传.");
+	    	return false;
+	    }
+	    return true;
+	}
+
+	var btnSaveCallback = function($dialog, $widget, $pjq) {
+		var $fm = $('#importForm');
+		var $file = $('#upfile');
+		if (limit($file.val())) {
+			$fm.submit();
+		}
+	};
+	
+	// 上传回调:IFrame Ajax上传
+	var callback = function (msg, success){
+		if (success) {
+			$.slideMsg(msg, parent.$);
+		} else {
+			$.alert(parent.$, msg);
+		}
+		parent.$.widgetReLoad($('#grid'));
+		parent.$('#import_dialog').dialog('destroy');
+	}
+</script>
+</body>
+<%}%>

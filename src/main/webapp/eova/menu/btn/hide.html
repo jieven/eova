@@ -1,0 +1,29 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true" onclick="eova_hide()"> ${button.name!} </a>
+<script type="text/javascript">
+	var eova_hide = function() {
+		var $treegrid = $('#treegrid');
+		var rows = $treegrid.treegrid('getSelections');
+		var num = rows.length;
+		if (num == "0") {
+			$.slideMsg("请选择一条记录！");
+			return;
+		}
+		$.messager.confirm('请确认', '您要隐藏当前所选功能？', function(o) {
+			if (o) {
+				var json2 = JSON.stringify(deleted);
+				var $jq = $(this);
+				$.syncPost('/menu/hide/' + objectCode, {
+					rows : json2
+				}, function(result, status) {
+					if (result.success) {
+						$.slideMsg("隐藏成功！");
+						$.widgetReLoad($widget);
+					} else {
+						$.alert($, result.msg);
+					}
+				});
+				$.widgetClearSelections($widget);
+			}
+		});
+	};
+</script>

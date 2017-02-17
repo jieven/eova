@@ -1,0 +1,8 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="easy.js">
+    <auto value="0" />
+    <sourcefile path=".\src\syExtEasyUI.js" />
+    <sourcefile path=".\src\syExtJavascript.js" />
+    <sourcefile path=".\src\syExtJquery.js" />
+</combinefile>
+</jscompress>

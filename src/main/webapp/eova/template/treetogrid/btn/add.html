@@ -1,0 +1,23 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="treeToGridAdd()">新增</a>
+<script type="text/javascript">
+	var treeToGridAdd = function() {
+		
+		var $zt = $.fn.zTree.getZTreeObj("master_tree");
+		var node = $zt.getSelectedNodes()[0];
+		if (!node) {
+			$.slideMsg("请选择一个树节点");
+			return;
+		}
+		if (node.isParent) {
+			$.slideMsg("不允许为目录添加数据");
+			return;
+		}
+		var treeNodeValue = node.${menu.config.tree.objectField};
+		var objectField = '${menu.config.objectField!}';
+		
+		var ref = "?ref=" + objectField + ":" + treeNodeValue;
+
+		var $grid = $('#grid');
+		loadDialog($grid, '新增${object.name}', '/form/add/${object.code}' + ref);
+	};
+</script>

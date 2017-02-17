@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon336',plain:true" onclick="dev_add_button()" title="快速添加按钮(仅超级管理员可见)"></a>
+<script type="text/javascript">
+var dev_add_button = function() {
+	var $widget = $('#${parentId}');
+	loadDialog($widget, '快速添加按钮', '/button/quick/${menu.code!}');
+};
+</script>

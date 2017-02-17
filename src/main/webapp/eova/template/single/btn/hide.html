@@ -1,0 +1,13 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon752',plain:true" onclick="singleHide()"> ${button.name!} </a>
+<script type="text/javascript">
+	var singleHide = function() {
+		var $grid = $('#grid');
+        var rows = $grid.datagrid('getSelections');
+        var num = rows.length; //获取要删除信息的个数
+        if (num == "0") {
+        	$.slideMsg("请选择一条记录！");
+            return;
+        }
+		confirmHide($grid, '${object.code}', rows);
+	};
+</script>

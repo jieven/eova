@@ -1,0 +1,82 @@
+<%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
+
+<form id="myForm" method="post" class="form">
+	<table class="table" style="width: 100%;">
+		<tr>
+			<th>数据源</th>
+			<td>
+			<select class="easyui-combobox" id="ds" name="ds" style="width: 180px;" data-options="editable:false,onChange:valueChange">
+				<%for(ds in dataSources){%>
+				<option value="${ds}" ${ds == 'main' ? 'selected="selected"' : ''} >${ds}</option>
+				<%}%>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<th>元类型</th>
+			<td>
+			<select class="easyui-combobox" id="type" name="type" style="width: 180px;" data-options="editable:false,onChange:valueChange">
+					<option value="table">Table</option>
+					<option value="view">View</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<th>元数据表</th>
+			<td><#find id="table" name="table" url="/meta/find/mian-table" /></td>
+		</tr>
+<!-- 		<tr id="tr_pk" style="display: none;"> -->
+<!-- 			<th>元数据表主键</th> -->
+<!-- 			<td><#find id="pk" name="pk" url="/meta/find/mian-table" /></td> -->
+<!-- 		</tr> -->
+		<tr>
+			<th>元对象名称</th>
+			<td><#text id="name" name="name" /></td>
+		</tr>
+		<tr>
+			<th>元对象编码</th>
+			<td><#text id="code" name="code" /></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+
+$(function(){
+	//init
+	valueChange();
+});
+
+// 元类型变更时级联变更元数据表查找框URL
+var valueChange = function(){
+	var type = $('#type').combobox('getValue');
+	var url = '/meta/find/' + $('#ds').combobox('getValue') + '-' + type;
+	console.log(url);
+	$('#table').eovafind({url: url});
+// 	if(type == 'view'){
+// 		$('#tr_pk').show();
+// 	} else {
+// 		$('#tr_pk').hide();
+// 	}
+}
+
+var fm = $('#myForm');
+var submitNow = function($dialog, $widget, $pjq) {
+	var url = "/meta/doImports";
+	$.post(url, $.getFormParasObj(fm), function(result) {
+		if (result.success) {
+			//$pjq.messager.alert('提示', result.msg, 'info');
+			$.slideMsg("导入元数据成功！", $pjq);
+			$.widgetReLoad($widget);
+			$dialog.dialog('destroy');
+		} else {
+			$pjq.messager.alert('提示', result.msg, 'error');
+		}
+	}, 'json');
+};
+var btnSaveCallback = function($dialog, $widget, $pjq) {
+	submitNow($dialog, $widget, $pjq);
+};
+</script>
+
+
+<%}%>

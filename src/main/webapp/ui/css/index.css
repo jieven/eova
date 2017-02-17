@@ -1,0 +1,52 @@
+/*Menu zTree Exp*/
+.ztree {
+	padding: 0px!important;
+}
+.ztree li ul.level0 {
+/* 	height: calc(100vh - 193px); */
+}
+.ztree li a.level0 {
+	/*width: 100%;*/
+	height: 20px;
+	text-align: center;
+	display: block;
+	background-color: #E0ECFF;
+	border: 1px solid #95B8E7;
+	text-decoration: none;
+	text-align: left;
+	line-height: 19px;
+}
+
+.ztree li a.level0.cur {
+	background-color: #FFE48D;
+}
+
+.ztree li a.level0 span {
+	/*display: block;*/
+	color: #00004A;
+/* 	padding-top: 3px; */
+	font-size: 12px;
+	font-weight: bold;
+	word-spacing: 2px;
+	margin-top: 2px;
+    margin-left: 2px;
+}
+
+.ztree li a.level0 span.button {
+	float: right;
+	margin-left: 10px;
+	visibility: visible;
+	display: none;
+}
+
+.ztree li span.button.switch.level0 {
+	display: none;
+}
+
+.ztree li a.level0 span.tree-icon {
+/* 	padding: 0px 5px 2px 3px; 兼容eova-icon*/
+}
+
+.ztree .level0.line span.tree-icon {
+	margin-top: -1px;
+}

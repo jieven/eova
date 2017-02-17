@@ -1,0 +1,36 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true"
+onclick="eova_syncnew()">
+	${button.name!}
+</a>
+<script type="text/javascript">
+var eova_syncnew = function() {
+	var $grid = $('#${gridId}');
+    var rows = $grid.datagrid('getSelections');
+    var num = rows.length;
+    if (num == 0) {
+    	$.slideMsg("请至少选择一条记录！");
+        return;
+    }
+    var vals = [];
+    for (var i = 0; i < num; i++) { //组成一个字符串，ID主键用逗号隔开
+    	vals.push(rows[i]['id']);
+    }
+    $.messager.confirm('确定对选中对象的元数据进行增量同步？', '增量同步：同步新增字段的元数据', function(o) {
+		if (o) {
+            $.ajax({
+    			url : '/meta/syncnew/' + vals.join(','),
+    			dataType : 'json',
+    			success : function(o) {
+    				if (o.success) {
+    					$grid.datagrid('load');	
+    					$grid.datagrid('unselectAll');
+    					$.slideMsg("${button.name!}成功！");
+    				} else {
+    					$.messager.alert("操作错误", o.msg ,'error');
+    				}
+    			}
+    		});
+		}
+	});
+};
+</script>

@@ -1,0 +1,24 @@
+<div id="header">
+	<div class="headerNav">
+		<a class="logo" href="http://www.eova.cn">LOGO</a>
+		<ul class="nav">
+			<li style="color: #b9ccda;">欢迎${user.role.name}[${user.login_id}]</li>
+			<li><a href="#" onclick="updatePwd();">修改密码</a></li>
+			<li><a href="/doExit">退出</a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	var updatePwd = function() {
+		var dialog = parent.sy.modalDialog({
+			title : '修改密码',
+			url : '/toUpdatePwd',
+			buttons : [ {
+				text : '确定',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog,parent.$);
+				}
+			} ]
+		},400,180);
+	};
+</script>

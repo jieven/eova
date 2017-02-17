@@ -1,0 +1,26 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon733',plain:true" onclick="slave_${object.code}_update()">修改</a>
+<script type="text/javascript">
+	var slave_${object.code}_update = function() {
+		var $grid = $('#${gridId}');
+
+        if (isSelected($grid)) {
+        	// ------------------------------级联
+            var ref = '';
+        	var parent = $('#${parentId!}');
+           	// 主对象关联字段
+            var objectField = '${config.objectField!}';
+            // 子对象关联字段
+            var field = '${field!}';
+        	if(parent && objectField != '' && field != ''){
+        		// 从父组件上获取选中外键值
+        		var parentRow = $.getWidgetSelected(parent);
+        		ref = ref + "?ref=" + field + ":" + parentRow[objectField];
+        	}
+        	// ------------------------------级联
+
+        	var row = $.getWidgetSelected($grid);
+            loadDialog($grid, '修改${object.name}', '/form/update/${object.code}-' + row.pk_val + ref);
+        }
+
+	};
+</script>

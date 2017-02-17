@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="singleAdd()">新增</a>
+<script type="text/javascript">
+    var singleAdd = function () {
+    	var $grid = $('#grid');
+        loadDialog($grid, '新增${object.name}', '/form/add/${object.code}');
+    };
+</script>
