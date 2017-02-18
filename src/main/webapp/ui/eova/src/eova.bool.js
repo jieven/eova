@@ -37,7 +37,7 @@
         this.$dom = $(dom);
         this.defaults = {
             isCheck: false,
-            disable: false
+            isReadonly: false
         };
         // HTML参数覆盖覆盖默认参数
         var htmlOptions = undefined;
@@ -71,7 +71,7 @@
         if (this.options.isCheck) {
             this.setChecked(true);
         }
-        if (this.options.disable) {
+        if (this.options.isReadonly) {
             $boolbox.attr('disabled', 'disabled');
         }
 

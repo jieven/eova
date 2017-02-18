@@ -77,12 +77,7 @@
             $textbox.attr('required', 'required');
         }
         if (this.options.isReadonly) {
-            $textbox.attr('readonly', 'readonly');
-            $textbox.css('cursor', 'pointer');
-        }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
+        	$.fuck($textbox);
         }
 
         this.$textbox = $textbox;
@@ -97,9 +92,11 @@
      */
     TextBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
-        this.$btn.bind('click', function () {
-            $textbox.val('');
-        });
+        if (!this.options.isReadonly) {
+        	this.$btn.bind('click', function () {
+                $textbox.val('');
+            });
+        }
     };
     /**
      * 获取值

@@ -35,6 +35,7 @@
             ,username: [/^\w{3,12}$/, "请填写3-12位数字、字母、下划线"]
             ,password: [/^[\S]{6,16}$/, "请填写6-16位字符，不能包含空格"]
     		,eovacode: [/^\w{3,30}$/, "编码由3-30位数字、字母、下划线组成"]
+    		,money: [/^(?!0\.00)(?:0|[1-9]\d*)(?:\.\d{1,2})?$/, "请填写有效的金额"],
             ,accept: function (element, params){
                 if (!params) return true;
                 var ext = params[0],

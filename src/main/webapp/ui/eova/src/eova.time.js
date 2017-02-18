@@ -55,10 +55,12 @@
      */
     TimeBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
-        // 点按钮和文本框都触发事件
-        this.$btn.bind('click', function(){
-            $textbox.trigger('click');
-        });
+        if (!this.options.isReadonly) {
+        	// 点按钮和文本框都触发事件
+            this.$btn.bind('click', function(){
+                $textbox.trigger('click');
+            });
+        }
     };
 
 

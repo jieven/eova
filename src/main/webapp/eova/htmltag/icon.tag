@@ -7,8 +7,8 @@ if(!isEmpty(options!)){
 if(!isEmpty(placeholder!)){
 	data = data + ", placeholder : '" + placeholder + "'";
 }
-if(!isEmpty(disable!)){
-	data = data +  ", disable : " + disable ;
+if(!isEmpty(isReadonly!)){
+	data = data +  ", isReadonly : " + isReadonly ;
 }
 if(strutil.startWith(data, ",")){
 	data = strutil.subString (data,1);

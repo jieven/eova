@@ -5,3 +5,10 @@
 /target
 /src/main/webapp/ui/eova/*.jscompress
 /src/main/webapp/ui/eova/*.JSCompress
+/src/main/webapp/ui/eova/src/eova.bool.min.js
+/src/main/webapp/ui/eova/src/eova.combo.min.js
+/src/main/webapp/ui/eova/src/eova.common.min.js
+/src/main/webapp/ui/eova/src/eova.find.min.js
+/src/main/webapp/ui/eova/src/eova.text.min.js
+/src/main/webapp/ui/eova/src/eova.time.min.js
+/src/main/resources/dev

@@ -29,6 +29,16 @@
             }
             return htmlOptions;
         },
+        /**
+         * 禁用控件
+         * @param box 控件对象
+         * @returns {undefined}
+         */
+        fuck : function($textbox){
+        	$textbox.attr('disabled', 'disabled');
+        	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
+            $textbox.unbind();
+        },
         // 初始化Eova控件
         eovaInit: function (jq ,EovaType, eovaKey, options) {
             var list = [];

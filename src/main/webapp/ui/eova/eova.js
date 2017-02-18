@@ -30,6 +30,16 @@
             }
             return htmlOptions;
         },
+        /**
+         * 禁用控件
+         * @param box 控件对象
+         * @returns {undefined}
+         */
+        fuck : function($textbox){
+        	$textbox.attr('disabled', 'disabled');
+        	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
+            $textbox.unbind();
+        },
         // 初始化Eova控件
         eovaInit: function (jq ,EovaType, eovaKey, options) {
             var list = [];
@@ -585,12 +595,7 @@ var EovaWidget = (function() {
             $textbox.attr('required', 'required');
         }
         if (this.options.isReadonly) {
-            $textbox.attr('readonly', 'readonly');
-            $textbox.css('cursor', 'pointer');
-        }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
+        	$.fuck($textbox);
         }
 
         this.$textbox = $textbox;
@@ -605,9 +610,11 @@ var EovaWidget = (function() {
      */
     TextBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
-        this.$btn.bind('click', function () {
-            $textbox.val('');
-        });
+        if (!this.options.isReadonly) {
+        	this.$btn.bind('click', function () {
+                $textbox.val('');
+            });
+        }
     };
     /**
      * 获取值
@@ -752,7 +759,7 @@ var EovaWidget = (function() {
         this.$dom = $(dom);
         this.defaults = {
             isCheck: false,
-            disable: false
+            isReadonly: false
         };
         // HTML参数覆盖覆盖默认参数
         var htmlOptions = undefined;
@@ -786,7 +793,7 @@ var EovaWidget = (function() {
         if (this.options.isCheck) {
             this.setChecked(true);
         }
-        if (this.options.disable) {
+        if (this.options.isReadonly) {
             $boolbox.attr('disabled', 'disabled');
         }
 
@@ -877,10 +884,12 @@ var EovaWidget = (function() {
      */
     TimeBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
-        // 点按钮和文本框都触发事件
-        this.$btn.bind('click', function(){
-            $textbox.trigger('click');
-        });
+        if (!this.options.isReadonly) {
+        	// 点按钮和文本框都触发事件
+            this.$btn.bind('click', function(){
+                $textbox.trigger('click');
+            });
+        }
     };
 
 
@@ -1116,7 +1125,7 @@ var EovaWidget = (function() {
         this.defaults = {
             btnTitle: '点击选择内容',
             btnIcon: '',
-            isReadonly: true,
+            isReadonly: false,
             multiple : false,	// 多选
             separator : ",",	// 多选值的分隔符号
             editable : true,	// 可编辑
@@ -1176,14 +1185,8 @@ var EovaWidget = (function() {
         if(this.options.required){
             $textbox.attr('required', 'required');
         }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
-        }
         if (this.options.isReadonly) {
-            $textbox.attr('readonly', 'readonly');
-            $textbox.css('cursor', 'pointer');
-            $textbox.attr('title', this.options.btnTitle);
+        	$.fuck($textbox);
         }
 
         this.$valuebox = $valuebox;
@@ -1202,6 +1205,10 @@ var EovaWidget = (function() {
         var $textbox = this.$textbox;
         var $panel = this.$panel;
         //var $btn = this.$btn;
+        
+        if (this.options.isReadonly) {
+        	return;
+        }
 
         $panel.unbind(".eovacombo");
         
@@ -1546,7 +1553,6 @@ var EovaWidget = (function() {
         var $textbox = $("<input type='text' />").appendTo(this.$dom);// 文本显示
         var $btn = $("<i class='ei'></i>").appendTo(this.$dom);// 添加按钮
 
-        $btn.attr('title', this.options.btnTitle);
         if (this.name) {
             $valuebox.attr("name", this.name);
         }
@@ -1559,14 +1565,17 @@ var EovaWidget = (function() {
         if(this.options.required){
             $textbox.attr('required', 'required');
         }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
-        }
-
+        
+        // 文本框仅展示中文
         $textbox.attr('readonly', 'readonly');
-        $textbox.css('cursor', 'pointer');
-        $textbox.attr('title', this.options.btnTitle);
+        if (!this.options.isReadonly) {
+        	$textbox.css('cursor', 'pointer');
+        	$textbox.attr('title', this.options.btnTitle);
+        	$btn.attr('title', this.options.btnTitle);
+        } else {
+        	$textbox.attr('disabled', 'disabled');
+        	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
+        }
 
         this.$valuebox = $valuebox;
         this.$textbox = $textbox;
@@ -1612,6 +1621,9 @@ var EovaWidget = (function() {
         var $valuebox = this.$valuebox;
         var $textbox = this.$textbox;
         var $dom = this.$dom;
+        if (options.isReadonly) {
+        	return;
+        }
         this.$textbox.bind('click', function () {
             // 弹出查询选择Diglog
             eova_findDialog(findBox);

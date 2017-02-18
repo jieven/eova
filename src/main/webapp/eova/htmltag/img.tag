@@ -6,7 +6,7 @@ if(!isEmpty(value!)){
 	if(isEmpty(uploadDir!)){
 		uploadDir = "temp";
 	}
-	imgUrl = IMG + uploadDir + '/' + value;
+	imgUrl = IMG! + uploadDir + '/' + value;
 	debug(imgUrl);
 }
 %>
@@ -20,9 +20,9 @@ $(function() {
 	var $input = $('#${id!}');
 	
 	var htmlOptions = eval('({${options!}})');
-	if (htmlOptions.disable) {
-        // 灰色遮罩实现禁用
+	if (htmlOptions.isReadonly) {
         $input.parent().mask();
+        return;
     }
 	
 	// init input file

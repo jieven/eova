@@ -1,4 +1,10 @@
-<div class="eova-bool" id="${id!}" name="${name}" data-options="${!isEmpty(options!) ? options : '' }"></div>
+<%
+var data = "";
+if(!isEmpty(isReadonly!)){
+	data = data +  "isReadonly : " + isReadonly ;
+}
+%>
+<div class="eova-bool" id="${id!}" name="${name}" data-options="${data}" "></div>
 <script>
 var val = '${value!}';
 var flag = false;

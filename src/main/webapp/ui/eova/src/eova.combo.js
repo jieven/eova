@@ -121,7 +121,7 @@
         this.defaults = {
             btnTitle: '点击选择内容',
             btnIcon: '',
-            isReadonly: true,
+            isReadonly: false,
             multiple : false,	// 多选
             separator : ",",	// 多选值的分隔符号
             editable : true,	// 可编辑
@@ -181,14 +181,8 @@
         if(this.options.required){
             $textbox.attr('required', 'required');
         }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
-        }
         if (this.options.isReadonly) {
-            $textbox.attr('readonly', 'readonly');
-            $textbox.css('cursor', 'pointer');
-            $textbox.attr('title', this.options.btnTitle);
+        	$.fuck($textbox);
         }
 
         this.$valuebox = $valuebox;
@@ -207,6 +201,10 @@
         var $textbox = this.$textbox;
         var $panel = this.$panel;
         //var $btn = this.$btn;
+        
+        if (this.options.isReadonly) {
+        	return;
+        }
 
         $panel.unbind(".eovacombo");
         

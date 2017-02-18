@@ -91,7 +91,6 @@
         var $textbox = $("<input type='text' />").appendTo(this.$dom);// 文本显示
         var $btn = $("<i class='ei'></i>").appendTo(this.$dom);// 添加按钮
 
-        $btn.attr('title', this.options.btnTitle);
         if (this.name) {
             $valuebox.attr("name", this.name);
         }
@@ -104,14 +103,17 @@
         if(this.options.required){
             $textbox.attr('required', 'required');
         }
-        if (this.options.disable) {
-            // 灰色遮罩实现禁用
-            this.$dom.mask();
-        }
-
+        
+        // 文本框仅展示中文
         $textbox.attr('readonly', 'readonly');
-        $textbox.css('cursor', 'pointer');
-        $textbox.attr('title', this.options.btnTitle);
+        if (!this.options.isReadonly) {
+        	$textbox.css('cursor', 'pointer');
+        	$textbox.attr('title', this.options.btnTitle);
+        	$btn.attr('title', this.options.btnTitle);
+        } else {
+        	$textbox.attr('disabled', 'disabled');
+        	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
+        }
 
         this.$valuebox = $valuebox;
         this.$textbox = $textbox;
@@ -157,6 +159,9 @@
         var $valuebox = this.$valuebox;
         var $textbox = this.$textbox;
         var $dom = this.$dom;
+        if (options.isReadonly) {
+        	return;
+        }
         this.$textbox.bind('click', function () {
             // 弹出查询选择Diglog
             eova_findDialog(findBox);

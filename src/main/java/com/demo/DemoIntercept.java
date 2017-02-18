@@ -145,8 +145,9 @@ public class DemoIntercept extends MetaObjectIntercept {
 
 	@Override
 	public void addInit(AopContext ac) throws Exception {
-		ac.fixed.set("name", "系统管理员");// 新增页，默认强制指定 name=系统管理员
-		// 实际上推荐使用禁用字段，然后addBefore();ac.record.set("reg_time", new Date());
+		// 新增页，默认强制指定 name=系统管理员
+		ac.fixed.set("name", "系统管理员");
+		// 实际上推荐使用禁用字段，然后addBefore();ac.record.set("name", "系统管理员");
 	}
 	
 }

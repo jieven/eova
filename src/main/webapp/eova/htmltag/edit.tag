@@ -4,5 +4,6 @@
 	$(function(){
 		var editor = new wangEditor('${id!}');
 		editor.create();
+		${isTrue(isReadonly!) ? 'editor.disable();' : ''}
 	});
 </script>
