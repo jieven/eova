@@ -114,54 +114,74 @@ $(document).ready(function() {
 			}
 		}
 	});
-	// 初始化选项卡
-	mainTabs.tabs({
-		fit: true,
-		border: false,
-		tools: [{
-			text: '最大化',
-			iconCls: 'eova-icon73',
-			handler: function() {
-				$('#mainLayout').layout("collapse", "north").layout("collapse", "west");
-			}
-		}, {
-			text: '刷新',
-			iconCls: 'eova-icon79',
-			handler: function() {
-				var panel = mainTabs.tabs('getSelected').panel('panel');
-				var frame = panel.find('iframe');
-				try {
-					if (frame.length > 0) {
-						for (var i = 0; i < frame.length; i++) {
-							frame[i].contentWindow.document.write('');
-							frame[i].contentWindow.close();
-							frame[i].src = frame[i].src;
-						}
-						if (navigator.userAgent.indexOf("MSIE") > 0) { // IE特有回收内存方法
-							try {
-								CollectGarbage();
-							} catch (e) {}
-						}
-					}
-				} catch (e) {}
-			}
-		}],
-		onContextMenu: function(e, title) {
-			e.preventDefault();
-			tabsMenu.menu('show', {
-				left: e.pageX,
-				top: e.pageY
-			}).data('tabTitle', title);
+
+	function initTools() {
+		var text;
+		var iconCls;
+	    if (window.isTabCollapse) {
+	        text = '还原';
+	        iconCls = 'eova-icon61';
+	    } else {
+	        text = '最大化';
+	        iconCls = 'eova-icon73'
 		}
-	});
+	    mainTabs.tabs({
+	        fit: true,
+	        border: false,
+	        tools: [{
+	            text: text,
+	            iconCls: iconCls,
+	            handler: function() {
+	                if (window.isTabCollapse) {
+	                    window.isTabCollapse = false;
+	                    $('#mainLayout').layout("expand", "north").layout("expand", "west");
+	                } else {
+	                    window.isTabCollapse = true;
+	                    $('#mainLayout').layout("collapse", "north").layout("collapse", "west");
+	                }
+	                initTools();
+	            }
+	        }, {
+	            text: '刷新',
+	            iconCls: 'eova-icon79',
+	            handler: function() {
+	                var panel = mainTabs.tabs('getSelected').panel('panel');
+	                var frame = panel.find('iframe');
+	                try {
+	                    if (frame.length > 0) {
+	                        for (var i = 0; i < frame.length; i++) {
+	                            frame[i].contentWindow.document.write('');
+	                            frame[i].contentWindow.close();
+	                            frame[i].src = frame[i].src;
+	                        }
+	                        if (navigator.userAgent.indexOf("MSIE") > 0) { // IE特有回收内存方法
+	                            try {
+	                                CollectGarbage();
+	                            } catch (e) {}
+	                        }
+	                    }
+	                } catch (e) {}
+	            }
+	        }],
+	        onContextMenu: function(e, title) {
+	            e.preventDefault();
+	            tabsMenu.menu('show', {
+	                left: e.pageX,
+	                top: e.pageY
+	            }).data('tabTitle', title);
+	        }
+	    });
+	};
+	initTools();
+	
 	// 初始化添加默认主页
 	var mainOpts = {
 		fit: true,
-		title: 'EOVA V1.6',
+		title: APP_MAIN_TITLE,
 		closable: false,
 		border: false,
 		iconCls: 'eova-icon475',
-		content: '<iframe id="mainFrame" name="mainFrame" src="'+ URL_MAIN +'" allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0"></iframe>'
+		content: '<iframe id="mainFrame" name="mainFrame" src="'+ APP_MAIN +'" allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0"></iframe>'
 	};
 	mainTabs.tabs('add', mainOpts);
 

@@ -178,7 +178,18 @@
 			s = s.replace(/\s([\x21\x25\x26\x28\x29\x2a\x2b\x2c\x2d\x2f\x3a\x3b\x3c\x3d\x3e\x3f\x5b\x5d\x5c\x7b\x7c\x7d\x7e])/g, "$1");
 			s = s.replace(/([\x21\x25\x26\x28\x29\x2a\x2b\x2c\x2d\x2f\x3a\x3b\x3c\x3d\x3e\x3f\x5b\x5d\x5c\x7b\x7c\x7d\x7e])\s/g, "$1");
 			return s;
-		}
+		},
+		/**
+		 * 自动获取焦点
+		 * @param $input
+		 * @returns
+		 */
+		autoFocus : function($input) {
+			$input.focus();
+			var s = $input.val();
+			$input.val("");
+			$input.val(s);
+		},
 		
     });
 })(jQuery);
