@@ -50,10 +50,10 @@
     <div id="wrapper">
         <div id="content">
             <div id="header">
-				<img src="/ui/images/logo.png" alt="EOVA">
+				<img src="${APP.logo!'/ui/images/logo.png'}" alt="EOVA">
             </div>
             <div id="darkbanner" class="banner320">
-                <h2 style='font-family: "Microsoft YaHei"'>运营支撑系统 ┇ USER LOGIN</h2>
+                <h2 style='font-family: "Microsoft YaHei"'>${APP.name!'简单开发平台'} ┇ USER LOGIN</h2>
             </div>
 			<div id="darkbannerwrap"></div>
             <form id="loginForm" method="post" action="/doLogin">
@@ -88,10 +88,8 @@
             	</fieldset>
             </form>
         </div>
-    </div>
-    <div id="wrapperbottom_branding">
         <div id="wrapperbottom_branding_text">
-            Powered by <b><a href="http://www.eova.cn" target="dialog">EOVA</a></b> V1.5
+            ${APP.copyright!}
 		</div>
     </div>
     <script type="text/javascript">

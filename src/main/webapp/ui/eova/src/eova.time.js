@@ -17,7 +17,6 @@
                 // 初始化UI
                 obj.render();
                 obj.bindEvents();
-                obj.$dom.attr('onClick', "WdatePicker({dateFmt:'"+ obj.options.format +"'})");
                 $.data(this, TIMEBOX, obj);
             } else {
             	// 覆盖参数
@@ -41,7 +40,7 @@
         TextBox.apply(this, arguments);
         this.defaults = {
             btnTitle: '点击选择时间',
-            isReadonly: true,
+            isReadonly: false,
             format: 'yyyy-MM-dd HH:mm:ss'
         };
         // 参数优先级：父参数 > 子默认参数 > HTML参数 > JS参数
@@ -60,6 +59,7 @@
             this.$btn.bind('click', function(){
                 $textbox.trigger('click');
             });
+            this.$dom.attr('onClick', "WdatePicker({dateFmt:'"+ this.options.format +"'})");
         }
     };
 

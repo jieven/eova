@@ -17,6 +17,20 @@ $(function(){
 		onDblClickRow : function(rowIndex, rowData){
 			// 模拟点击确认
 			parent.$('#find_ok').trigger('click');
+		},
+		onLoadSuccess : function(data){
+			// 初始值选中
+			var val = "${parameter.val}";
+			if(val && val != ''){
+				var vals = val.split(',');
+				$.each(data.rows, function(i, o) {
+					$.each(vals, function(iv, val) {
+						if(o.${pk} == val){
+							$findGrid.datagrid('selectRow', i);							
+						}
+					});
+				});
+			}
 		}
 	});
 });

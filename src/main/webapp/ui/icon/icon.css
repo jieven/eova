@@ -1,4 +1,5 @@
 ﻿div[class*="eova-icon"], span[class*="eova-icon"] {background-image: url("icons.png");}
+.eova-icon{background-image: url(../eova/css/eova_icon.png) !important;}
 .eova-icon1 {background-position: -0px -0px; width: 16px; height: 16px; }
 .eova-icon2 {background-position: -16px -0px; width: 16px; height: 16px; }
 .eova-icon3 {background-position: -32px -0px; width: 16px; height: 16px; }

@@ -35,8 +35,9 @@
          * @returns {undefined}
          */
         fuck : function($textbox){
-        	$textbox.attr('disabled', 'disabled');
-        	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
+            // 禁用会导致，只读模式，服务端无法获取参数
+            $textbox.attr('readonly', 'readonly');
+            $textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
             $textbox.unbind();
         },
         // 初始化Eova控件
@@ -61,44 +62,44 @@
         },
         // 自动计算初始化高度
         eovaAutoHeight: function($widget, count){
-        	var x = $widget.width();
-        	// console.log(x);
-        	var max = parseInt(x/290);
-        	// console.log('每行最多能显示：'+ max);
-        	if(max != 0){
-        		var zs = parseInt(count / max);
-        		var ys = count % max;
-        		if(ys > 0){
-        			zs++;
-        		}
-        		// 计算完整显示所需高度
-        		var y = 40 + 25 * zs;
-        		//console.log('ys'+ ys);
-        		//console.log('共需：'+ zs);
-        		//console.log('height：'+ y);
-        		return y;
-        	}
+            var x = $widget.width();
+            // console.log(x);
+            var max = parseInt(x/290);
+            // console.log('每行最多能显示：'+ max);
+            if(max != 0){
+                var zs = parseInt(count / max);
+                var ys = count % max;
+                if(ys > 0){
+                    zs++;
+                }
+                // 计算完整显示所需高度
+                var y = 40 + 25 * zs;
+                //console.log('ys'+ ys);
+                //console.log('共需：'+ zs);
+                //console.log('height：'+ y);
+                return y;
+            }
         },
         /**
          * 智能识别并刷新组件数据
          * @param $widget Eova组件
          */
         widgetReLoad: function($widget, data){
-        	var type = $.getWidgetType($widget);
+            var type = $.getWidgetType($widget);
 
-        	if(type == 'datagrid'){
-        		if(data){
-        			$widget.datagrid('load', data);
-        		} else {
-        			$widget.datagrid('load');
-        		}
-        	} else if(type == 'treegrid') {
-        		if(data){
-        			$widget.treegrid('load', data);
-        		} else {
-        			$widget.treegrid('load');
-        		}
-        	}
+            if(type == 'datagrid'){
+                if(data){
+                    $widget.datagrid('load', data);
+                } else {
+                    $widget.datagrid('load');
+                }
+            } else if(type == 'treegrid') {
+                if(data){
+                    $widget.treegrid('load', data);
+                } else {
+                    $widget.treegrid('load');
+                }
+            }
         },
         /**
          * 自动获取组件类型
@@ -106,36 +107,36 @@
          * @returns {String}
          */
         getWidgetType: function($widget){
-        	var type = 'datagrid';
-        	if($widget.context.URL.indexOf('/single_tree') != -1){
-        		type = 'treegrid';
-        	}
+            var type = 'datagrid';
+            if($widget.context.URL.indexOf('/single_tree') != -1){
+                type = 'treegrid';
+            }
 
-        	return type;
+            return type;
         },
         /**
          * 获取组件选中行
          * @param $widget Eova组件
          */
         getWidgetSelected: function($widget){
-        	var type = $.getWidgetType($widget);
-        	if(type == 'datagrid'){
-        		return $widget.datagrid('getSelected');
-        	} else if(type == 'treegrid') {
-        		return $widget.treegrid('getSelected');
-        	}
+            var type = $.getWidgetType($widget);
+            if(type == 'datagrid'){
+                return $widget.datagrid('getSelected');
+            } else if(type == 'treegrid') {
+                return $widget.treegrid('getSelected');
+            }
         },
         /**
          * 清空组件选中状态
          * @param $widget Eova组件
          */
         widgetClearSelections: function($widget){
-        	var type = $.getWidgetType($widget);
-        	if(type == 'datagrid'){
-        		return $widget.datagrid('clearSelections');
-        	} else if(type == 'treegrid') {
-        		return $widget.treegrid('clearSelections');
-        	}
+            var type = $.getWidgetType($widget);
+            if(type == 'datagrid'){
+                return $widget.datagrid('clearSelections');
+            } else if(type == 'treegrid') {
+                return $widget.treegrid('clearSelections');
+            }
         },
         // Tip 警告
         tipwarn: function($el , msg){
@@ -172,10 +173,10 @@
         },
         // 右下角弹窗提示
         slideMsg: function(str,$pjq){
-        	var $jq = $;
-        	if($pjq){
-        		$jq = $pjq;
-        	}
+            var $jq = $;
+            if($pjq){
+                $jq = $pjq;
+            }
             $jq.messager.show({
                 title:'操作提示',
                 msg:str,
@@ -185,21 +186,21 @@
         },
         // 弹窗提示
         alert: function($pjq, msg){
-        	if(!msg || msg == null || msg == ""){
-        		msg = "服务异常，请稍后再试！";
-        	}
+            if(!msg || msg == null || msg == ""){
+                msg = "服务异常，请稍后再试！";
+            }
 
             if(msg.startsWith('info')){
-            	msg = msg.replace("info:", "");
-            	$pjq.messager.alert('提示', msg, 'info');
+                msg = msg.replace("info:", "");
+                $pjq.messager.alert('提示', msg, 'info');
             } else if(msg.startsWith('warn')){
-            	msg = msg.replace("warn:", "");
-            	$pjq.messager.alert('警告', msg, 'warning');
+                msg = msg.replace("warn:", "");
+                $pjq.messager.alert('警告', msg, 'warning');
             } else if(msg.startsWith('error')){
-            	msg = msg.replace("error:", "");
-            	$pjq.messager.alert('错误', msg, 'error');
+                msg = msg.replace("error:", "");
+                $pjq.messager.alert('错误', msg, 'error');
             } else {
-            	$pjq.messager.alert('错误', msg, 'error');
+                $pjq.messager.alert('错误', msg, 'error');
             }
         },
         // Grid 导出为
@@ -226,7 +227,7 @@
                     console.log(field);
                     // 布尔框不导出
                     if(field == 'ck'){
-                    	continue;
+                        continue;
                     }
                     var col = $grid.datagrid('getColumnOption', field);
                     var title = col.title;
@@ -239,18 +240,18 @@
 
                 var rows = $grid.datagrid('getRows');
                 for(var x = 0; x < rows.length; x++){
-                	var row = rows[x];
-                	console.log(row);
-                	s = s + "<tr>";
-                	for (var i = 0; i < fields.length; i++) {
+                    var row = rows[x];
+                    console.log(row);
+                    s = s + "<tr>";
+                    for (var i = 0; i < fields.length; i++) {
                         var field = fields[i];
-                     	// 布尔框不导出
+                         // 布尔框不导出
                         if(field == 'ck'){
-                        	continue;
+                            continue;
                         }
                         s=s + "<td>" + row[field] + "</td>";
-                	}
-                	s = s + "</tr>";
+                    }
+                    s = s + "</tr>";
                 }
 
                 var ctx = {
@@ -261,21 +262,21 @@
             }
         })(),
         // 截取字符串，多余的部分用...代替
-		clipStr : function(str, len) {
-			var s = "";
-			for ( var i = 0; i < str.length; i++) {
-				s += str.charAt(i);
-				if (i + 1 == len) {
-					return s + "...";
-				}
-			}
-			return s;
-		}
+        clipStr : function(str, len) {
+            var s = "";
+            for ( var i = 0; i < str.length; i++) {
+                s += str.charAt(i);
+                if (i + 1 == len) {
+                    return s + "...";
+                }
+            }
+            return s;
+        }
     });
 
     /**
-	 * 拓展EasyUI DataGrid编辑器
-	 */
+     * 拓展EasyUI DataGrid编辑器
+     */
     $.extend($.fn.datagrid.defaults.editors, {
         eovatext: {
             init: function(container, options) {
@@ -325,14 +326,14 @@
                 return $(jq).eovacombo().getValue();
             },
             setValue: function(jq, value) {
-            	var texts = [];
-            	if(value && value != ""){
-            		if(value.indexOf(',') == -1 ){
-                		texts = [value];
-                	} else {
-                		texts = value.split(',');
-                	}
-            	}
+                var texts = [];
+                if(value && value != ""){
+                    if(value.indexOf(',') == -1 ){
+                        texts = [value];
+                    } else {
+                        texts = value.split(',');
+                    }
+                }
 
                 $(jq).eovacombo().setTexts(texts);
             },
@@ -456,9 +457,9 @@
 
     // 屏蔽控件
     $.fn.mask = function (height) {
-    	if (!height) {
-    		height = 22;
-		}
+        if (!height) {
+            height = 22;
+        }
         if($(this).data("mask") == 1){
             return;
         }

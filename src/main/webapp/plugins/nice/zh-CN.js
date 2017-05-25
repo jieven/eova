@@ -17,7 +17,7 @@
         //focusCleanup: true,
         //theme: 'yellow_right',
         //timely: 2,
-        
+
         // Custom rules
         rules: {
             digits: [/^\d+$/, "请填写数字"]
@@ -34,8 +34,8 @@
             ,chinese: [/^[\u0391-\uFFE5]+$/, "请填写中文字符"]
             ,username: [/^\w{3,12}$/, "请填写3-12位数字、字母、下划线"]
             ,password: [/^[\S]{6,16}$/, "请填写6-16位字符，不能包含空格"]
-    		,eovacode: [/^\w{3,30}$/, "编码由3-30位数字、字母、下划线组成"]
-    		,money: [/^(?!0\.00)(?:0|[1-9]\d*)(?:\.\d{1,2})?$/, "请填写有效的金额"],
+            ,eovacode: [/^\w{3,50}$/, "编码由3-50位数字、字母、下划线组成"]
+            ,money: [/^(?!0\.00)(?:0|[1-9]\d*)(?:\.\d{1,2})?$/, "请填写有效的金额"]
             ,accept: function (element, params){
                 if (!params) return true;
                 var ext = params[0],
@@ -44,7 +44,7 @@
                        (new RegExp(".(?:" + ext + ")$", "i")).test(value) ||
                        this.renderMsg("只接受{1}后缀的文件", ext.replace(/\|/g, ','));
             }
-            
+
         },
 
         // Default error messages

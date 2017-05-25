@@ -39,7 +39,7 @@
         TextBox.apply(this, arguments);
         this.defaults = {
             btnTitle: '点击选择图标',
-            isReadonly: true
+            isReadonly: false
         };
         // 用户参数 覆盖 默认参数 覆盖父类参数
         this.options = $.extend({}, this.options, this.defaults, options);
@@ -74,6 +74,10 @@
     IconBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
         var $btn = this.$btn;
+        if (this.options.isReadonly) {
+        	$textbox.attr('readonly', 'readonly');
+        	return;
+        }
         $btn.bind('click', function () {
             $btn.addClass("ext-icon-zoom");
             eova_iconDialog($textbox, $btn);

@@ -1,6 +1,6 @@
 <div id="header">
 	<div class="headerNav">
-		<a class="logo" href="http://www.eova.cn">LOGO</a>
+		<a class="logo" href="${APP.domain!'http://www.eova.cn'}" style="background-image: url(${APP.logo!'/ui/login/big.png'});">${APP.name!'EOVA'}</a>
 		<ul class="nav">
 			<li style="color: #b9ccda;">欢迎${user.role.name}[${user.login_id}]</li>
 			<li><a href="#" onclick="updatePwd();">修改密码</a></li>

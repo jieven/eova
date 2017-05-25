@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-02-16 00:43:57
+Date: 2017-03-21 01:36:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3601,7 +3601,7 @@ CREATE TABLE `dicts` (
   `field` varchar(50) NOT NULL COMMENT '字段名',
   `ext` varchar(255) DEFAULT '' COMMENT '扩展Json',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dicts
@@ -3623,8 +3623,6 @@ INSERT INTO `dicts` VALUES ('14', '10', '待支付', 'orders', 'state', '');
 INSERT INTO `dicts` VALUES ('15', '20', '已支付', 'orders', 'state', '');
 INSERT INTO `dicts` VALUES ('16', '30', '已发货', 'orders', 'state', '');
 INSERT INTO `dicts` VALUES ('17', '40', '已收货', 'orders', 'state', '');
-INSERT INTO `dicts` VALUES ('20', '1', '租赁商品', 'product', 'type', '');
-INSERT INTO `dicts` VALUES ('21', '2', '积分商品', 'product', 'type', '');
 INSERT INTO `dicts` VALUES ('28', '1', '在线租赁', 'payment', 'pay_business', '');
 INSERT INTO `dicts` VALUES ('29', '1', '支付宝', 'payment', 'platform', '');
 INSERT INTO `dicts` VALUES ('30', '2', '微信', 'payment', 'platform', '');
@@ -3654,6 +3652,10 @@ INSERT INTO `dicts` VALUES ('158', '0', '国', 'area', 'lv', '');
 INSERT INTO `dicts` VALUES ('159', '1', '省', 'area', 'lv', '');
 INSERT INTO `dicts` VALUES ('160', '2', '市', 'area', 'lv', '');
 INSERT INTO `dicts` VALUES ('161', '3', '区', 'area', 'lv', '');
+INSERT INTO `dicts` VALUES ('198', '1', '普通商户', 'hotel', 'state', '');
+INSERT INTO `dicts` VALUES ('199', '2', '签约商户', 'hotel', 'state', '');
+INSERT INTO `dicts` VALUES ('200', '1', '租赁商品', 'product', 'type', '');
+INSERT INTO `dicts` VALUES ('201', '2', '积分商品', 'product', 'type', '');
 
 -- ----------------------------
 -- Table structure for `hotel`
@@ -3976,7 +3978,7 @@ CREATE TABLE `test_info` (
 -- ----------------------------
 -- Records of test_info
 -- ----------------------------
-INSERT INTO `test_info` VALUES ('1', '1', '1', '123465', '17', '<p>上海虹口区足球场上海虹口</p><p><br></p>', '1475647037704.jpg', '0', '', '1464002566632.jpg', '2016-05-26', '2016-09-18 00:32:48', '00000', '#000000', '2,3,4,5', '{\"domain\":\"http://www.eova.cn\"}', '0', null, '0', '1', '0', null, '2016-10-08 02:39:34');
+INSERT INTO `test_info` VALUES ('1', '1', '0', '123465', '17', '<p>上海虹口区足球场上海虹口666</p>', '1475647037704.jpg', '0', 'eova20175201314', '1464002566632.jpg', '2016-05-26', '2017-02-22 23:54:28', '00000', '#000000', '3,2,4', '{\"domain\":\"http://www.eova.cn\"}', '0', null, '0', '1', '0', null, '2016-10-08 02:39:34');
 INSERT INTO `test_info` VALUES ('4', '2', '0', '4324342', '43423423', '<p>哎哟不错哟！ 发个表情试试&nbsp;<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif\"><br><img src=\"http://127.0.0.1/editor/1464193877187.png\" style=\"max-width: 100%; width: 100.8px; height: 100.8px;\" class=\"\">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src=\"http://127.0.0.1/editor/1464194237135.png\" style=\"max-width: 100%;\"><br></p><p><br></p>', '1475655648414.png', '0', '423432423', '1464193847117.png', '2016-05-26', '2016-05-26 00:30:40', '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
 INSERT INTO `test_info` VALUES ('7', '1', '1', '新增导入1', '17', '<p>222上海虹口区足球场上海虹口222</p><p><br></p>', '1477243093297.png', '0', '更新导入。。。。', '1464002566632.jpg', '2016-05-26', '2016-09-18 00:32:48', '00000', '#000000', '2,4', null, '0', null, '0', null, '0', null, null);
 INSERT INTO `test_info` VALUES ('8', '2', '1', '新增导入2', '43423423', '<p>哎哟不错哟！ 发个表情试试 <img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif\"><br><img src=\"http://127.0.0.1:10086/editor/1464193877187.png\" style=\"max-width: 100%; width: 100.8px; height: 100.8px;\" class=\"\">        <img src=\"http://127.0.0.1:10086/editor/1464194237135.png\" style=\"max-width: 100%;\"><br></p><p><br></p>', '1475647089038.jpg', '0', '423432423', '1464193847117.png', '2016-05-26', '2016-05-26 00:30:40', '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
@@ -4109,10 +4111,10 @@ INSERT INTO `user_info` VALUES ('7', '2', '0', '', null, null, null, null, '2016
 -- View structure for `v_orders`
 -- ----------------------------
 DROP VIEW IF EXISTS `v_orders`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `v_orders` AS select `o`.`id` AS `id`,`o`.`state` AS `state`,`o`.`money` AS `money`,`o`.`memo` AS `memo`,`o`.`update_user_id` AS `update_user_id`,`o`.`create_user_id` AS `create_user_id`,`o`.`create_time` AS `create_time`,`o`.`update_time` AS `update_time`,`o`.`address_id` AS `address_id`,`a`.`name` AS `name`,`a`.`full` AS `full`,`a`.`mobilephone` AS `mobilephone`,`u`.`login_id` AS `login_id`,`u`.`nickname` AS `nickname`,`u`.`info` AS `info` from ((`orders` `o` left join `users` `u` on((`o`.`create_user_id` = `u`.`id`))) left join `address` `a` on((`o`.`address_id` = `a`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_orders` AS select `o`.`id` AS `id`,`o`.`state` AS `state`,`o`.`money` AS `money`,`o`.`memo` AS `memo`,`o`.`update_user_id` AS `update_user_id`,`o`.`create_user_id` AS `create_user_id`,`o`.`create_time` AS `create_time`,`o`.`update_time` AS `update_time`,`o`.`address_id` AS `address_id`,`a`.`name` AS `name`,`a`.`full` AS `full`,`a`.`mobilephone` AS `mobilephone`,`u`.`login_id` AS `login_id`,`u`.`nickname` AS `nickname`,`u`.`info` AS `info` from ((`orders` `o` left join `users` `u` on((`o`.`create_user_id` = `u`.`id`))) left join `address` `a` on((`o`.`address_id` = `a`.`id`))) ;
 
 -- ----------------------------
 -- View structure for `v_userinfo`
 -- ----------------------------
 DROP VIEW IF EXISTS `v_userinfo`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `v_userinfo` AS select `u`.`id` AS `id`,`u`.`status` AS `status`,`u`.`login_id` AS `login_id`,`u`.`login_pwd` AS `login_pwd`,`u`.`nickname` AS `nickname`,`u`.`reg_time` AS `reg_time`,`u`.`info` AS `info`,`u`.`tag` AS `tag`,`ue`.`exp` AS `exp`,`ue`.`avg` AS `avg`,`ue`.`qq` AS `qq` from (`users` `u` join `users_exp` `ue`) where (`u`.`id` = `ue`.`users_id`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_userinfo` AS select `u`.`id` AS `id`,`u`.`status` AS `status`,`u`.`login_id` AS `login_id`,`u`.`login_pwd` AS `login_pwd`,`u`.`nickname` AS `nickname`,`u`.`reg_time` AS `reg_time`,`u`.`info` AS `info`,`u`.`tag` AS `tag`,`ue`.`exp` AS `exp`,`ue`.`avg` AS `avg`,`ue`.`qq` AS `qq` from (`users` `u` join `users_exp` `ue`) where (`u`.`id` = `ue`.`users_id`) ;

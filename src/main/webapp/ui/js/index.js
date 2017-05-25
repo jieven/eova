@@ -157,11 +157,11 @@ $(document).ready(function() {
 	// 初始化添加默认主页
 	var mainOpts = {
 		fit: true,
-		title: 'EOVA V1.6 Alpha12',
+		title: 'EOVA V1.6',
 		closable: false,
 		border: false,
 		iconCls: 'eova-icon475',
-		content: '<iframe id="mainFrame" name="mainFrame" src="http://www.eova.cn:18080/main/main.html" allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0"></iframe>'
+		content: '<iframe id="mainFrame" name="mainFrame" src="'+ URL_MAIN +'" allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0"></iframe>'
 	};
 	mainTabs.tabs('add', mainOpts);
 
@@ -222,5 +222,14 @@ $(document).ready(function() {
 		// 选中当前大类
 		var a = $("#" + zTree_Menu.getNodes()[0].tId + "_a");
 		a.addClass("cur");
+	}
+});
+
+// 双击关闭Tab
+$(document).on("dblclick", ".tabs-inner", {}, function() {
+	var tab = mainTabs.tabs('getSelected');
+	var index = mainTabs.tabs('getTabIndex', tab);
+	if (index != 0) {
+		mainTabs.tabs("close", index);
 	}
 });

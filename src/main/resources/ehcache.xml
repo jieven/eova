@@ -31,7 +31,7 @@
            copyOnRead="true">
     </cache>
 
-	<!--service cache name serviceCache, 3s time out, 交付时可以改成60s-->
+    <!--service cache name serviceCache, 1s time out, 交付时可以改成600s-->
     <cache name="serviceCache"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="20000"
@@ -39,7 +39,7 @@
            overflowToDisk="false"
            diskSpoolBufferSizeMB="0"
            timeToIdleSeconds="0"
-           timeToLiveSeconds="2"
+           timeToLiveSeconds="1"
            memoryStoreEvictionPolicy="LRU"
            transactionalMode="off"
            copyOnWrite="true"
@@ -58,9 +58,9 @@
            timeToLiveSeconds="0"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-	</cache>
+    </cache>
 
-	<!--Action cache name actionCache, session time out 30s-->
+    <!--Action cache name actionCache, session time out 30s-->
     <cache name="actionCache"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="20000"
@@ -71,7 +71,7 @@
            timeToLiveSeconds="30"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-	</cache>
+    </cache>
 
 </ehcache>
 

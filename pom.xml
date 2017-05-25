@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<eova.version>1.5.5</eova.version>
+		<eova.version>1.6-beta1</eova.version>
 		<jetty.version>8.1.8</jetty.version>
 
 	</properties>
@@ -38,7 +38,7 @@
 		<!-- <artifactId>ojdbc14</artifactId> -->
 		<!-- <version>10.2.0.4.0</version> -->
 		<!-- </dependency> -->
-
+		
 	</dependencies>
 
 	<build>
@@ -78,7 +78,7 @@
 					<scanIntervalSeconds>5</scanIntervalSeconds>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>80</port>
+							<port>81</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
@@ -87,4 +87,27 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>ali-maven</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	    <repository>
+	        <id>oss-snapshots</id>
+	        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	        <releases>
+	            <enabled>false</enabled>
+	        </releases>
+	        <snapshots>
+	            <enabled>true</enabled>
+	        </snapshots>
+	    </repository>
+	</repositories>
+	
 </project>

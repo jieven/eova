@@ -37,7 +37,7 @@
         TextBox.apply(this, arguments);
         this.defaults = {
             btnTitle: '点击编辑信息',
-            isReadonly: true
+            isReadonly: false
         };
         // 用户参数 覆盖 默认参数 覆盖父类参数
         this.options = $.extend({}, this.options, this.defaults, options);

@@ -40,6 +40,18 @@
                         return r.join("");
                     });
         },
+        /** 追加URL参数 **/
+        appendUrlPara: function (url, key, val) {
+        	if(!val || val == ''){
+        		return url;
+        	}
+            if(url.indexOf('?') == -1){
+            	url = url + '?';
+            } else {
+            	url = url + '&';
+            }
+            return url + key + '=' + val;
+        },
         /** 获取URL参数 **/
         getUrlPara: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

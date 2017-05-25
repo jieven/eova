@@ -49,7 +49,7 @@
 input[type="checkbox"]{
     font-family:Tahoma;
     vertical-align:middle;
-	height: 15px;
+    height: 15px;
     width: 15px;
 }
 
@@ -69,14 +69,14 @@ input[type="checkbox"]{
 /* } */
 
 fieldset {
-	padding:10px;
-	margin:10px;
-	color:#333;
-	border:#B4CEF7 dashed 1px;
-	-webkit-border-radius: 8px;
+    padding:10px;
+    margin:10px;
+    color:#333;
+    border:#B4CEF7 dashed 1px;
+    -webkit-border-radius: 8px;
 }
 legend {
-	font-size: 12px;
+    font-size: 12px;
     font-weight: bold;
     color: rgb(37, 58, 93);
 }
@@ -98,7 +98,7 @@ legend {
 }
 
 #header .logo {
-    background: url(../images/logo.png) no-repeat;
+    background-repeat: no-repeat;
     float: left;
     width: 280px;
     height: 60px;
@@ -170,6 +170,14 @@ legend {
     font-weight: normal;
 }
 
+.footer a{
+	text-decoration:none;
+}
+
 .pd5 {
     padding: 5px;
+}
+
+.icon-exclamation{
+    background:url(../images/icon/exclamation.png) no-repeat center center;
 }

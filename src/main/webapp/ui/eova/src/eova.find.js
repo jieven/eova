@@ -60,7 +60,7 @@
         this.defaults = {
             width: 180,
             btnTitle: '点击查找内容',
-            isReadonly: true,
+            isReadonly: false,
             multiple : false,	// 多选
             separator : ",",	// 多选值的分隔符号
             url: undefined,		// 异步加载URL
@@ -111,7 +111,6 @@
         	$textbox.attr('title', this.options.btnTitle);
         	$btn.attr('title', this.options.btnTitle);
         } else {
-        	$textbox.attr('disabled', 'disabled');
         	$textbox.css({'background': 'rgba(218, 218, 218, 0.4)' });
         }
 
@@ -139,6 +138,10 @@
                 url: url,
                 dataType: 'json',
                 success: function (json) {
+                	if (json.code == 0) {
+                		$textbox.val(json.data);
+						return;
+					}
                 	var textField = json.text_field;
                 	var txts = [];
                 	$.each(eval(json.data), function (index, obj) {
@@ -211,8 +214,9 @@
         	url = '/widget/find?exp=' + this.options.exp;
         }
         if (this.options.multiple) {
-        	url = url + '&multiple=' + this.options.multiple; 
+        	url = $.appendUrlPara(url, "multiple", this.options.multiple);
 		}
+        url = $.appendUrlPara(url, "val", this.getValue());
         return url;
     };
 
