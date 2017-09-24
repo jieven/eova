@@ -28,23 +28,25 @@
             <tr>
                 <th>业务模版</th>
                 <td>
-                    <select class="easyui-combobox" id="type" name="type" style="width: 180px;" data-options="editable:false, onChange:typeChange">
-                        <option value="dir">父目录菜单[dir]</option>
-                        <option value="diy">自定义业务[diy]</option>
-                        <option value="single_grid" selected="selected">单表[single_grid]</option>
-                        <option value="single_tree">单表树[single_tree]</option>
-                        <option value="single_chart">单表图[single_chart]</option>
-                        <option value="master_slave_grid">主子表[master_slave_grid]</option>
-                        <option value="tree_grid">树&表[tree_grid]</option>
-                    </select>
+                	<#combo id="type" name="type" value="single_grid" />
                 </td>
 				<th></th>
-				<td></td>
+				<td><span id="dirps" style="display: none; color: red;">空目录不会在菜单上显示(必须有子功能-记得哦)</span></td>
 			</tr>
             <tr id="trUrl" style="display: none;">
                 <th>自定义业务URL</th>
                 <td colspan="3">
                     <#texts id="url" name="url" value="${menu.url!}" placeholder="请输入自定义功能的访问URL" style="width:713px;height:20px;" />
+                </td>
+            </tr>
+            <tr id="office" style="display: none;">
+                <th>文件类型</th>
+                <td>
+                    <#combo id="office_type" name="office_type" value="xls" />
+                </td>
+                <th>模版路径</th>
+                <td>
+                    <#texts id="path" name="path" value="${menu.url!}" placeholder="请输入Office模版路径" style="width:400px;height:20px;" />
                 </td>
             </tr>
         </table>
@@ -154,6 +156,15 @@
     <fieldset id="single_chart" style="display: none;">
         <legend>(单表图)模版配置</legend>
         <table class="table" style="width: 100%;">
+        	<tr>
+                <th style="width:110px;">图类型</th>
+                <td colspan="3">
+                    <select class="easyui-combobox" id="single_chart_type" name="singleChartType" style="width: 180px;" data-options="editable:false">
+                        <option value="1">折线图</option>
+                        <option value="2">柱状图</option>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <th style="width:110px;">元对象</th>
                 <td>

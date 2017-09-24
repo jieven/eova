@@ -71,6 +71,28 @@ var selectData = function($dialog, findBox) {
     	$dialog.dialog('destroy');
     }
 };
+
+var clearData = function($dialog, findBox) {
+
+    try{
+        var oldValue = findBox.$valuebox.val();
+        var newValue = '';
+
+        findBox.$valuebox.val("");
+        findBox.$textbox.val("");
+
+        // 值变更回调
+        if (oldValue != newValue) {
+            console.log(oldValue +'|'+newValue);
+            findBox.options.onChange.call(findBox.$dom, oldValue, newValue);
+        }
+    }catch(err){
+        console.log("查找框异常:" + err);
+    }finally{
+        $dialog.dialog('destroy');
+    }
+};
+
 </script>
 </body>
 <%}%>

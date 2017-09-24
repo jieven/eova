@@ -6,7 +6,7 @@
 .mainTable {
     margin: 5px;
     /*     padding: 5px; */
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
 }
 
 .mainTable tr {
@@ -14,14 +14,14 @@
 }
 
 .mainTable td {
-    border: 0px solid #ddd;
+    border: 0px solid #D3D3D3;
     padding: 0px;
 }
 
 .main {
     margin: 5px;
     padding: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
 }
 
 .eova-text .ei {
@@ -67,15 +67,16 @@
 .eova-auto, .eova-text, .eova-info, .eova-combo, .eova-find, .eova-time, .eova-img, .eova-file, .eova-icon, .eova-num {
     display: inline-block;
     height: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
     /*margin: 5px;*/
     vertical-align: middle;
+    width: 178px;
 }
 
 div[class^="eova"]>input[type="text"] {
     float: left;
     height: 20px;
-    border: 0px solid #ddd;
+    border: 0px solid #D3D3D3;
     border-right: 0px;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     width: 170px;
@@ -89,7 +90,7 @@ div[class^="eova-bool"]>input, .eova-bool-input{
 
 div[class^="eova"]>input[type="text"]:focus, .eova-texts:focus {
     outline: 0;
-    border-color: #ddd;
+    border-color: #D3D3D3;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 18px rgba(212, 213, 214, 0.6);
     box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 18px rgba(212, 213, 214, 0.6);
 }
@@ -116,14 +117,14 @@ div[class^="eova"] .ei:hover {
 .eova-file-img {
     display: inline-block;
 /*     vertical-align: middle; */
-/*     border: 1px solid #ddd; */
+/*     border: 1px solid #D3D3D3; */
 /*     display: none; */
 }
 
 .eova-file [type=file] {
     opacity: 0;
     position: absolute;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
 /*     width: 170px; */
     /*     display: none; */
     /*     left: 100px; */
@@ -136,7 +137,7 @@ div[class^="eova"] .ei:hover {
     z-index: 110000;
     display: none;
     width: 169px;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
     background-color: #ffffff;
     text-align: left;
 }
@@ -154,16 +155,18 @@ div[class^="eova"] .ei:hover {
 }
 
 .eova-combo-selected {
-/*     float: left; */
     background-color: #ffe48d;
     color: #000000;
     border-right: #E5E5E5 solid 1px;
 }
 
+.eova-combo-hide {
+	display: none;
+}
 
 .eova-num select, input{
     height: 20px;
-    border: 0px solid #ddd;
+    border: 0px solid #D3D3D3;
 }
 
 .eova-num select{
@@ -185,7 +188,7 @@ div[class^="eova"] .ei:hover {
     font-size: 10px;
     width: 178px;
     height: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
 }
 .eova-num span{
     display: none;
@@ -197,7 +200,7 @@ div[class^="eova"] .ei:hover {
 .eova-times {
     display: inline-block;
     height: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #D3D3D3;
     vertical-align: middle;
     float: left;
     height: 20px;
@@ -273,7 +276,8 @@ div[class^="eova"] .ei:hover {
 }
 
 .eova-form .wangEditor-container{
-    margin-top: 5px;
+    margin-top: 2px;
+    margin-bottom: 5px;
 }
 
 .eova-form div.jsoneditor {

@@ -47,10 +47,25 @@
 
     var eovaInfoDialog = function(input) {
     	var info = input.val();
-    	if(info && info.indexOf('function') != -1 && info.indexOf('return') != -1){
-    		// 格式化js代码
-    		info = js_beautify(info, 4);
+    	if(info){
+    		if(info.indexOf('function') != -1 && info.indexOf('return') != -1){
+    			// 格式化js代码
+        		info = js_beautify(info, 4);
+    		} else {
+    			// 格式化Beetl表达式语法自动换行
+        		info = info.replace(/<%/g, "\n<%");
+        		info = info.replace(/%>/g, "%>\n");
+    		}
     	}
+    	
+    	function setFocus() {
+			var obj = event.srcElement;
+			var txt = obj.createTextRange();
+			txt.moveStart('character', obj.value.length);
+			txt.collapse(true);
+			txt.select();
+		} 
+    	
     	var $dialog = parent.sy.modalDialog({
     		id : 'eova-info-text-dlg',
     		title : '快速编辑',
@@ -70,11 +85,12 @@
     			}
     		} ]
     	}, 650, 390);
+    	$.autoFocus(parent.$('#eova-info-text'));
     };
 
     /**
-     * 重写事件绑定
-     */
+	 * 重写事件绑定
+	 */
     InfoBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
         var $btn = this.$btn;

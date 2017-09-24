@@ -18,13 +18,13 @@ if(isTrue(isQuery!)){
 <%} else if(item.type == "文本域"){%>
 	<div style="margin-left: 90px;"><#texts id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" placeholder="${item.placeholder!}" validator="${item.validator!}" style="width:99.9%;height:${item.height!20}px;" isReadonly="${readnoly!false}" /></div>
 <%} else if(item.type == "编辑框"){%>
-	<div style="margin-left: 90px;"><#edit id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" style="width: auto;height:${item.height!250}px;" isReadonly="${readnoly!false}" /></div>
+	<div style="margin-left: 90px;"><#edit id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" style="width: 100%;height:${item.height!250}px;" isReadonly="${readnoly!false}" /></div>
 <%} else if(item.type == "布尔框"){%>
 	<div><#bool id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" isReadonly="${readnoly!false}" /></div>
 <%} else if(item.type == "图片框"){%>
-	<div><#img id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" filedir="${item.config.filedir!}" options="isReadonly : ${readnoly!false}" /></div>
+	<div><#img id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" filename="${item.config.filename!}" /></div>
 <%} else if(item.type == "文件框"){%>
-	<div><#file id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" /></div>
+	<div><#file id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" filename="${item.config.filename!}" /></div>
 <%} else if(item.type == "图标框"){%>
     <div><#icon id="${item.en}" name="${name}" value="${value!}" isNoN="${item.is_required!}" isReadonly="${readnoly!false}" /></div>
 <%} else if(item.type == "自增框" || item.type == "文本框" || item.type == "数字框"){%>

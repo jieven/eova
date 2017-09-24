@@ -1,0 +1,50 @@
+<%layout("/eova/layout/default.html",{'title' : 'VIP功能'}){%>
+<body class="easyui-layout">
+	<div id="layoutNorth" region="north" split="true" style="height:40px;">
+    <#query1 id="queryFindForm" items="${itemList}" />
+    </div>
+	<div data-options="region:'center'" data-options="fit:true,border:false">
+		<div id="gridToolbar" style="display: none;">
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td><%include("/eova/template/common/query.html",{'queryId':'queryForm', 'parentId':'grid'}){}%></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="toolbar" style="display: none;">
+			<table>
+				<tr>
+					<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="queryFun()">快速查询</a></td>
+					<td><%include("/eova/vip/btn/import.html",{'gridId': 'findGrid'}){}%></td>
+				</tr>
+			</table>
+		</div>
+		<script type="text/javascript">
+			// 回车自动查询
+			document.onkeydown = function(e) {
+				if (e.keyCode == 13) {
+					queryFun();
+				}
+			};
+
+			// 重载Grid
+			var queryFun = function() {
+				$('#findGrid').datagrid('load', $.getFormParasObj($('#queryFindForm')));
+			};
+			// 刷新Grid
+			var resetFun = function() {
+				$('#queryFindForm input').val('');
+				$('#findGrid').datagrid('load', {});
+			};
+		</script>
+		<#grid id="findGrid" toolbar="toolbar" objectJson="${objectJson}" fieldsJson="${fieldsJson}" url="${action!}" isPaging="${isPaging!true}" />
+	</div>
+</body>
+
+<%}%>

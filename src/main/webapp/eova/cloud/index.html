@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Eova · Cloud 开发者注册</title>
+<link rel="stylesheet" type="text/css" href="/eova/cloud/css/main.css" />
+<style type="text/css">
+#wizard {
+	border: 5px solid #789;
+	font-size: 12px;
+	height: 470px;
+	margin: 20px auto;
+	width: 570px;
+	overflow: hidden;
+	position: relative;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#wizard .items {
+	width: 20000px;
+	clear: both;
+	position: absolute;
+}
+
+#wizard .right {
+	float: right;
+}
+
+#wizard #status {
+	height: 35px;
+	background: #123;
+	padding-left: 25px !important;
+}
+
+#status li {
+	float: left;
+	color: #fff;
+	padding: 10px 30px;
+}
+
+#status li.active {
+	background-color: #369;
+	font-weight: normal;
+}
+
+.page {
+	padding: 20px 30px;
+	width: 500px;
+	float: left;
+}
+
+.page h3 {
+	height: 42px;
+	font-size: 16px;
+	border-bottom: 1px dotted #ccc;
+	margin-bottom: 20px;
+	padding-bottom: 5px
+}
+
+.page h3 em {
+	font-size: 12px;
+	font-weight: 500;
+	font-style: normal
+}
+
+.page p {
+	line-height: 24px;
+}
+
+.page p label {
+	font-size: 14px;
+	display: block;
+}
+
+.btn_nav {
+	height: 36px;
+	line-height: 36px;
+	margin: 20px auto;
+}
+
+.prev, .next {
+	width: 100px;
+	height: 32px;
+	line-height: 32px;
+	background: url(btn_bg.gif) repeat-x bottom;
+	border: 1px solid #d3d3d3;
+	cursor: pointer
+}
+
+.input, .select {
+	width: 240px;
+	height: 18px;
+	margin: 10px auto;
+	line-height: 20px;
+	border: 1px solid #d3d3d3;
+	padding: 2px
+}
+
+.select {
+	height: 25px;
+	width: 246px;
+}
+</style>
+<script type="text/javascript" src="/eova/cloud/js/jquery.min.js"></script>
+<script type="text/javascript" src="/eova/cloud/js/scrollable.js"></script>
+</head>
+
+<body>
+
+	<div id="main">
+		<h2 class="top_title">Eova Cloud 开发者注册</h2>
+		<!--    <p style="height:24px; line-height:24px; margin:16px">注：这只是一个演示demo，xw素材网不会记录用户输入的信息，请放心使用。</p> -->
+		<form action="#" method="post">
+			<div id="wizard">
+				<ul id="status">
+					<li class="active"><strong>1.</strong>创建账户</li>
+					<li><strong>2.</strong>开发者信息</li>
+					<li><strong>3.</strong>完成</li>
+				</ul>
+
+				<div class="items">
+					<div class="page">
+						<h3>
+							创建一个账户<br />
+							<em>账户用于Eova社区交流和Eova云服务,请务必认真填写！</em>
+						</h3>
+						<p>
+							<label>QQ：</label><input type="text" class="input" placeholder="请填写常用QQ号" name="qq" />
+						</p>
+						<p>
+							<label>密码：</label><input type="password" class="input" id="pass" name="password" value="eova" />
+						</p>
+						<p>
+							<label>确认密码：</label><input type="password" class="input" id="pass1" name="password1" value="eova" />
+						</p>
+						<p>
+							<label>验证码：</label><input type="text" class="input" id="pass1" name="password1" maxlength="4" value="1234" style="width: 120px"/>
+							<button>发送邮箱验证码</button>
+						</p>
+						<div class="btn_nav">
+							<input type="button" class="next right" value="下一步&raquo;" />
+						</div>
+					</div>
+					<div class="page">
+						<h3>
+							填写联系信息<br />
+							<em>请如实填写开发者信息，否则无法审核通过！</em>
+						</h3>
+						<!--                <p><label>E-mail：</label><input type="text" class="input" name="email" /></p> -->
+						<!--                <p><label>QQ：(使用QQ作为帐号)</label><input type="text" class="input" name="qq" /></p> -->
+						<p>
+							<label>真实姓名：</label><input type="text" class="input" name="name" placeholder="请填写真实姓名" />
+						</p>
+						<p>
+							<label>工作单位：</label><input type="text" class="input" name="mobile" placeholder="请填写当前工作单位"/>
+						</p>
+						<p>
+							<label>职位：</label> <select name="job" class="select">
+								<option value="" selected="selected">请选择</option>
+								<option value="java">Java工程师</option>
+								<option value="net">.Net工程师</option>
+								<option value="ui">前端工程师</option>
+								<option value="pm">需求工程师</option>
+								<option value="dba">DBA</option>
+								<option value="andriod">Andriod工程师</option>
+								<option value="ios">IOS工程师</option>
+								<option value="other">其它</option>
+							</select>
+						</p>
+						<p>
+							<label>工作经验：</label> <select name="year" class="select">
+								<option value="" selected="selected">请选择</option>
+								<option value="1-3">1-3年 初级</option>
+								<option value="4-6">4-6年 高级</option>
+								<option value="7-10">7-10年 资深</option>
+								<option value="10+">10年+ 大神</option>
+							</select>
+						</p>
+						<div class="btn_nav">
+							<input type="button" class="prev" style="float: left" value="&laquo;上一步" /> <input type="button" class="next right" value="注册" />
+						</div>
+					</div>
+					<div class="page">
+						<h3>
+							完成注册<br />
+							<em>点击确定完成注册。</em>
+						</h3>
+						<h4>恭喜您，成功注册成为Eova开发者！</h4>
+						<p>请点击“确定”按钮完成注册。</p>
+						<br /> <br /> <br />
+						<div class="btn_nav">
+							<input type="button" class="prev" style="float: left" value="&laquo;上一步" /> <input type="button" class="next right" id="sub" value="确定" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<br />
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#wizard").scrollable(
+					{
+						onSeek : function(event, i) {
+							$("#status li").removeClass("active").eq(i)
+									.addClass("active");
+						},
+						onBeforeSeek : function(event, i) {
+							if (i == 1) {
+								// 				var user = $("#user").val();
+								// 				if(user==""){
+								// 					alert("请输入用户名！");
+								// 					return false;
+								// 				}
+								// 				var pass = $("#pass").val();
+								// 				var pass1 = $("#pass1").val();
+								// 				if(pass==""){
+								// 				    alert("请输入密码！");
+								// 					return false;
+								// 				}
+								// 				if(pass1 != pass){
+								// 				    alert("两次密码不一致！");
+								// 					return false;
+								// 				}
+							}
+						}
+					});
+			$("#sub").click(function() {
+				var data = $("form").serialize();
+				alert(data);
+			});
+		});
+	</script>
+
+	</div>
+</body>
+</html>

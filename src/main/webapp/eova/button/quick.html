@@ -6,13 +6,13 @@
             <tr>
                 <th>所属菜单编码</th>
                 <td>
-                    <#text id="menu_code" name="menu_code" value="${menuCode}" disable="true" />
+                    <#text id="menu_code" name="menu_code" value="${menuCode}" isReadonly="true" />
                 </td>
             </tr>
             <tr>
                 <th style="width:110px;">图标</th>
                 <td>
-                    <#icon id="icon" name="icon" value="icon-cog" /> (人靠衣装马靠鞍，选个图标高大上)
+                    <#icon id="icon" name="icon" value="eova-icon0" /> (人靠衣装马靠鞍，选个图标高大上)
                 </td>
             </tr>
             <tr>
@@ -23,14 +23,14 @@
             </tr>
             <tr>
                 <th>按钮UI路径</th>
-                <td onclick="$('#ui').focus().val('.html');">
-                    <#texts id="ui" name="ui" value="" placeholder="HTML文件路径 例：/order/btn/print.html" style="width:500px;height:20px;" />(必填)
+                <td>
+                    <#texts id="ui" name="ui" value="/eova/template/common/btn/confirm.html" placeholder="按钮的前端代码文件路径 例：/order/btn/print.html" style="width:500px;height:20px;" />(必填)
                 </td>
             </tr>
             <tr>
                 <th>按钮BS路径</th>
                 <td>
-                    <#texts id="bs" name="bs" value="${menu.name!}" placeholder="服务端URI 例：\n/order/print;\n/order/print_data;" style="width:500px;height:60px;" /> (必填)
+                    <#texts id="bs" name="bs" value="${menu.name!}" placeholder="服务端URI,权限拦截所必需. 例：\n/order/print;\n/order/print_data;" style="width:500px;height:60px;" /> (必填)
                 </td>
             </tr>
             <tr>
@@ -42,7 +42,7 @@
             <tr>
                 <th>分配给角色</th>
                 <td>
-                    <#combo id="role" name="role" code="eova_user_code" field="rid" multiple="true" value="1" /> (可多选)
+                    <#combo id="role" name="role" exp="selectEovaRole" multiple="true" value="1" /> (可多选)
                 </td>
             </tr>
         </table>

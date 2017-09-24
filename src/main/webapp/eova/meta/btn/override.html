@@ -1,6 +1,6 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true"
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!'eova-icon391'}',plain:true"
 onclick="eova_override()">
-	${button.name!}
+	${button.name!'覆盖同步'}
 </a>
 <script type="text/javascript">
 var eova_override = function() {
@@ -15,7 +15,7 @@ var eova_override = function() {
     for (var i = 0; i < num; i++) { //组成一个字符串，ID主键用逗号隔开
     	vals.push(rows[i]['id']);
     }
-    $.messager.confirm('确定将选中对象的元数据进行覆盖同步？', '覆盖同步：删除当前元数据后重新导入元数据', function(o) {
+    $.messager.confirm('确定将选中对象的元数据进行覆盖同步？', '覆盖同步：删除当前元字段并重新导入元字段,不包括元对象数据!', function(o) {
 		if (o) {
 			$.ajax({
     			url : '/meta/override/' + vals.join(','),

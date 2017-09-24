@@ -12,9 +12,8 @@
 		var isFirstEnd = false;
 
 		for(f in fields){
-		
 			// 如果当前分组名和上一个分组名不一样，输出分组标签
-			if(f.fieldset != lastFieldset){
+			if(!isEmpty(f.fieldset) && f.fieldset != lastFieldset){
 				
 				// 第一个分组结束闭合标签
 				if(isFirstEnd){
@@ -57,8 +56,8 @@
 						%><input type="hidden" name="${f.en}" value="${value!}" /><%
 					}else{
 						%>
-						<div class="eova-form-field" title="${f.cn}[${f.en}]" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框'  || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: 75px;' : ''}" >
-						<div class="eova-form-lbl${isTrue(f.is_required!) ? ' red' : ''}">${f.cn}:</div>
+						<div class="eova-form-field" title="${f.cn}" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框'  || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: 75px;' : ''}" >
+						<div class="eova-form-lbl${isTrue(f.is_required!) ? ' red' : ''}">${f.cn}</div>
 						<#field item="${f}" value="${value!f.defaulter}" readnoly="${isReadOnly}" />
 						</div>
 						<%
@@ -88,7 +87,7 @@
 						%><input type="hidden" name="${f.en}" value="${value!}" /><%
 					}else{
 						%>
-						<div class="eova-form-field" title="${f.cn}[${f.en}]" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框' || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: 75px;' : ''}" >
+						<div class="eova-form-field" title="${f.cn}" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框' || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: 75px;' : ''}" >
 						<div class="eova-form-lbl${isTrue(f.is_required!) ? ' red' : ''}">${f.cn}</div>
 						<#field item="${f}" value="${value!f.defaulter}" readnoly="${isReadOnly}" />
 						</div>

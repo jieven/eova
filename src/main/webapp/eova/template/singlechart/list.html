@@ -34,8 +34,8 @@
 			</div>
 			<#grid id="grid" objectCode="${object.code}" toolbar="gridToolbar" menuCode="${menu.code}" isPaging="false" isFirstLoad="true" />
         </div>
-        <div data-options="region:'south',fit:false,border:false,split:true" style="height:400px">
-		    <div id="mainChart" style="height:380px;"></div>
+        <div data-options="region:'south',fit:false,border:false,split:true" style="height:245px">
+		    <div id="mainChart" style="height:230px;"></div>
         </div>
     </div>
 </div>
@@ -75,7 +75,7 @@ function syncChart(data){
     	        data: [<%for(cn in chart.ycn){%>'${cn}',<%}%>]
     	    },
     	    toolbox: {
-    	        show : true,
+    	        show : false,
     	        feature : {
     	            mark : {show: true},
     	            dataView : {show: true, readOnly: false},
@@ -88,7 +88,7 @@ function syncChart(data){
     	    xAxis : [
     	        {
     	            type : 'category',
-    	            boundaryGap : false,
+//     	            boundaryGap : false,
     	            data : xdata
     	        }
     	    ],
@@ -104,19 +104,20 @@ function syncChart(data){
 						<%for(var i = 0; i < chart.y.~size; i++){%>
     	    	        {
     	    	        	name:'${chart.ycn[i]}',
-    	    	            type:'line',
+    	    	            type:'${chart.type == 1 ? "line" : "bar"}',
     	    	            data: function (){
     	    	            	var list = [];
     	    	            	for (var i = 0; i < data.total; i++) {
     	    	            		list.push(data.rows[i].${chart.y[i]});
     	    	                }
     	    	            	return list;
-    	    	            }(),
-    	    	            markLine : {
-    	    	                data : [
-    	    	                    {type : 'average', name : '平均值'}
-    	    	                ]
-    	    	            }
+    	    	            }()
+//     	    	            ,
+//     	    	            markLine : {
+//     	    	                data : [
+//     	    	                    {type : 'average', name : '平均值'}
+//     	    	                ]
+//     	    	            }
     	    	        },
     	    	        <%}%>
     	    	    ]

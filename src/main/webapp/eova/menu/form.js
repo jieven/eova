@@ -1,6 +1,12 @@
 var $form = $('#myForm');
 
-function typeChange(newValue, oldValue) {
+function typeChange(oldValue, newValue) {
+	if (newValue == 'dir') {
+		$('#dirps').show();
+	} else {
+		$('#dirps').hide();
+	}
+	
 	// diy 需要显示 自定义URL字段,并启用校验
 	if (newValue == 'diy') {
 		$('#trUrl').show();
@@ -9,6 +15,16 @@ function typeChange(newValue, oldValue) {
 		if (oldValue == 'diy') {
 			$form.validator("setField", "url", null);
 			$('#trUrl').hide();
+		}
+	}
+	// office
+	if (newValue == 'office') {
+		$('#office').show();
+		$form.validator("setField", "path", "Office模版路径:required;");
+	} else {
+		if (oldValue == 'office') {
+			$form.validator("setField", "path", null);
+			$('#office').hide();
 		}
 	}
 
@@ -129,6 +145,30 @@ function typeChange(newValue, oldValue) {
 
 $(function() {
 
+	var $type = $('#type').eovacombo({
+		json : [
+		        {id:'dir', cn : '父目录菜单'},
+		        {id:'diy', cn : '自定义业务'},
+		        {id:'single_grid', cn : '单表'},
+		        {id:'single_tree', cn : '单表树'},
+		        {id:'single_chart', cn : '单表图'},
+		        {id:'master_slave_grid', cn : '主子表'},
+		        {id:'tree_grid', cn : '树&表'},
+		        {id:'office', cn : 'Office'}
+		],
+		onChange: function (oldValue, newValue) {
+			typeChange(oldValue, newValue);
+	    }
+	}).reload();
+	
+	var $office_type = $('#office_type').eovacombo({
+		json : [
+		        {id:'xls', cn : 'Excel'},
+		        {id:'doc', cn : 'Word'},
+		        {id:'pdf', cn : 'PDF暂不支持'}
+		        ]
+	}).reload();
+	
 	// --------------------------------------------------单表树 级联
 	var $single_tree_object = $('#single_tree_object');
 	var $single_tree_icon = $('#single_tree_icon');

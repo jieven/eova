@@ -21,7 +21,6 @@ import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.mysql.jdbc.Connection;
-import com.oss.model.UserInfo;
 import com.oss.product.ProductController;
 import com.oss.test.XlsController;
 
@@ -46,9 +45,10 @@ public class OSSConfig extends EovaConfig {
         me.add("/vip", VipController.class);
         LoginInterceptor.excludes.add("/vip/**");
         
-        // 不需要登录拦截的URL
+		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
         LoginInterceptor.excludes.add("/init");
         LoginInterceptor.excludes.add("/code");
+		// LoginInterceptor.excludes.add("/xxxx/**");
     }
 
     /**
@@ -60,7 +60,8 @@ public class OSSConfig extends EovaConfig {
     protected void mapping(ActiveRecordPlugin arp) {
         super.mapping(arp);
         // 自定义业务Model映射往这里加
-        arp.addMapping("user_info", UserInfo.class);
+		// arp.addMapping("user_info", UserInfo.class);
+
 //        arp.addMapping("users", Users.class);
 //        arp.addMapping("address", Address.class);
 //        arp.addMapping("orders", Orders.class);

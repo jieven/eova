@@ -39,7 +39,7 @@ $(function() {
 		$input.val("Loading...");
 		
 		$('#${id!}_file').upload({
-			action: '/upload/file?name=${name!}_file&filedir=${filedir}',
+			action: '/upload/file?name=${name!}_file&filedir=${filedir}&filename=${filename!}',
 			name: "${name!}_file",
 			onsuccess: function(json) {
 				$input.val(json.fileName);

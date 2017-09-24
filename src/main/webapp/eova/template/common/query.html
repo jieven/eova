@@ -1,6 +1,15 @@
-<a id="btnQuery" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query()">快速查询 </a>
+<a id="btnQuery_${queryId}" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query_${queryId}()">快速查询 </a>
 <script type="text/javascript">
-    function eova_query() {
+    function eova_query_${queryId}() {
+    	try {
+    		// query before diy function
+    	    if (eovaQueryBefore && typeof(eovaQueryBefore) == "function") {
+    	        if(!eovaQueryBefore()){
+    	        	return;
+    	        }
+    	    }
+    	} catch(e) {}
+
     	var $widget = $('#${parentId}');
     	// post query form and reload widget data
     	$.widgetReLoad($widget, $.getFormParasObj($('#${queryId}')));
@@ -9,7 +18,7 @@
 
     $('#${queryId}').keydown(function (event) {
         if (event.keyCode == 13) {
-        	eova_query();
+        	eova_query_${queryId}();
         }
     });
 </script>

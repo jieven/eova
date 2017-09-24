@@ -9,7 +9,6 @@ package com.oss;
 import com.eova.core.IndexController;
 import com.eova.model.User;
 import com.jfinal.core.Controller;
-import com.oss.model.UserInfo;
 
 /**
  * 自定义 新增或重写 登录 注册 等各种默认系统业务！！！
@@ -25,16 +24,16 @@ public class OSSController extends IndexController {
         render("/eova/index.html");
     }
 
-    @Override
+	@Override
     protected void loginInit(Controller ctrl, User user) throws Exception {
         super.loginInit(ctrl, user);
 
         // 添加自定义业务信息到当前用户中
-        UserInfo info = UserInfo.dao.findById(user.get("id"));
-        if (info != null) {
-            user.put("info", info);
-            // 页面或表达式 调用用户信息 ${user.info.nickname}
-        }
+		// UserInfo info = UserInfo.dao.findById(user.get("id"));
+		// if (info != null) {
+		// user.put("info", info);
+		// // 页面或表达式 调用用户信息 ${user.info.nickname}
+		// }
 
         // 还可以将相关信息放入session中
         // ctrl.setSessionAttr("UserInfo", info);

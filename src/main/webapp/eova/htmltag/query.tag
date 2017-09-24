@@ -46,8 +46,4 @@ var $query = $('#eova-query');
 var height = $.eovaAutoHeight($query, count);
 $query.parent().parent().css("height", height + diyHeight + "px");
 
-$('div[class="eova-text"]').eovatext();
-$('div[class="eova-time"]').eovatime();
-$('div[class="eova-combo"]').eovacombo();
-$('div[class="eova-find"]').eovafind();
 </script>

@@ -43,7 +43,10 @@
             btnIcon: '',
             isReadonly: false,
             disable: false,
-            required: false
+            required: false,
+            
+            // 事件
+            onChange : function(value) {}
         };
         // 参数优先级：默认参数 > HTML参数 > JS参数
         this.options = $.extend({}, this.defaults, $.getHtmlOptions(this), options);
@@ -92,16 +95,29 @@
      */
     TextBox.prototype.bindEvents = function () {
         var $textbox = this.$textbox;
-        if (!this.options.isReadonly) {
+        var $dom = this.$dom;
+        var options = this.options;
+        
+        if (!options.isReadonly) {
         	this.$btn.bind('click', function () {
                 $textbox.val('');
             });
         }
+        
+        var flag = false;
+		$textbox.bind("propertychange input", function() {
+			if(flag){return;}flag = true;
+			setTimeout(function () { 
+				options.onChange.call($dom, $textbox.val());
+				flag = false;
+		    }, 500);
+		});
     };
     /**
-     * 获取值
-     * @returns {*}
-     */
+	 * 获取值
+	 * 
+	 * @returns {*}
+	 */
     TextBox.prototype.getValue = function () {
         return this.$textbox.val();
     };

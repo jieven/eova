@@ -27,9 +27,9 @@
                     </tr>
                 </table>
             </div>
-            <#grid id="master_grid" toolbar="master_grid_toolbar" objectCode="${config.objectCode}" menuCode="${menu.code}" cellEdit="add,update,delete" />
+            <#grid id="master_grid" toolbar="master_grid_toolbar" objectCode="${config.objectCode}" menuCode="${menu.code}" />
         </div>
-        <div data-options="region:'south',fit:false,border:false,split:true" style="height:200px">
+        <div data-options="region:'south',fit:false,border:false,split:true" style="height:${config.params.slave_height!200}px">
 
             <div id="sonTab" class="easyui-tabs" data-options="fit:true,border:false">
 
@@ -47,7 +47,7 @@
 		                    </tr>
 		                </table>
 		            </div>
-                    <#grid id="${x.code}_grid" masterId="master_grid" toolbar="${x.code}_toolbar" configJson="${configJson!}" objectCode="${x.code}" isFirstLoad="false" isPaging="false" cellEdit="add,update,delete" />
+                    <#grid id="${x.code}_grid" masterId="master_grid" toolbar="${x.code}_toolbar" configJson="${configJson!}" objectCode="${x.code}" isFirstLoad="false" isPaging="false" />
                 </div>
 	        	<%}%>
 

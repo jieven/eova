@@ -92,12 +92,14 @@ var loadDialog = function($widget, name, url, width, height) {
  		title : name,
  		url : url,
  		buttons : [ {
+ 			id : 'eovaSave',
  			text : '&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;',
  			handler : function() {
  				dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog, $widget, parent.$);
  			}
  		},
   		{
+ 			id : 'eovaCancel',
  			text : '&nbsp;&nbsp;取&nbsp;消&nbsp;&nbsp;',
  			handler : function() {
  				dialog.dialog('close');

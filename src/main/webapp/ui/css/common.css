@@ -171,11 +171,12 @@ legend {
 }
 
 .footer a{
+	color: darkgray;
 	text-decoration:none;
 }
 
 .pd5 {
-    padding: 5px;
+    padding: 8px;
 }
 
 .icon-exclamation{

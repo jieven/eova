@@ -9,7 +9,7 @@
 			view = zt._z.view;
 		// 重写ICON处理
 		view.makeNodeIcoClass = function(setting, node) {
-			console.info('diy eova style icon');
+// 			console.info('diy eova style icon');
 			
 			var iconKey = "iconskip";
 			<%if(!isEmpty(iconKey)){%>iconKey = "${iconKey}";<%}%>
@@ -30,7 +30,7 @@
 		};
 		// 重写节点ICOClass切换 不需要
 		view.replaceIcoClass = function(node, obj, newName) {
-			console.info('eova no replace ico class');
+// 			console.info('eova no replace ico class');
 		}
 	})(jQuery);
 	$(function() {
@@ -75,6 +75,9 @@
 			zTree_Menu = null;
 		var setting = {
 			data: {
+				key : {
+					name : nameKey
+				},
 				simpleData: {
 					enable: true,
 					idKey: idKey,

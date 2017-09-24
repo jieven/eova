@@ -85,19 +85,22 @@
          * @param $widget Eova组件
          */
         widgetReLoad: function($widget, data){
+        	if (!$widget || $widget == null) {
+				return;
+			}
             var type = $.getWidgetType($widget);
 
             if(type == 'datagrid'){
                 if(data){
-                    $widget.datagrid('load', data);
+                    $widget.datagrid('reload', data);
                 } else {
-                    $widget.datagrid('load');
+                    $widget.datagrid('reload');
                 }
             } else if(type == 'treegrid') {
                 if(data){
-                    $widget.treegrid('load', data);
+                    $widget.treegrid('reload', data);
                 } else {
-                    $widget.treegrid('load');
+                    $widget.treegrid('reload');
                 }
             }
         },
@@ -125,6 +128,18 @@
             } else if(type == 'treegrid') {
                 return $widget.treegrid('getSelected');
             }
+        },
+        /**
+         * 获取组件所有选中行
+         * @param $widget Eova组件
+         */
+        getWidgetSelections: function($widget){
+        	var type = $.getWidgetType($widget);
+        	if(type == 'datagrid'){
+        		return $widget.datagrid('getSelections');
+        	} else if(type == 'treegrid') {
+        		return $widget.treegrid('getSelections');
+        	}
         },
         /**
          * 清空组件选中状态
@@ -203,6 +218,58 @@
                 $pjq.messager.alert('错误', msg, 'error');
             }
         },
+        // 弹出Dialog
+        dialog: function($widget, name, url, width, height) {
+        	if(!width){
+        		width = 945;
+        	}
+        	if(!height){
+        		height = $(window).height() * 0.9;
+        	}
+        	// 自动根据URL进行ID命名
+        	var id = url.replace(/\//g, '_');
+        	var i = id.indexOf('?');
+        	if(i != -1){
+        		id = id.substring(0, i - 1);
+        	}
+        	// 弹出窗口
+         	var dialog = parent.sy.modalDialog({
+         		id : id,
+         		title : name,
+         		url : url,
+         		buttons : [ {
+         			id : 'eovaSave',
+         			text : '&nbsp;&nbsp;保存&nbsp;&nbsp;',
+         			handler : function() {
+         				dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog, $widget, parent.$);
+         			}
+         		},
+          		{
+         			id : 'eovaCancel',
+         			text : '&nbsp;&nbsp;取消&nbsp;&nbsp;',
+         			handler : function() {
+         				dialog.dialog('close');
+         			}
+         		}  ]
+         	}, width, height);
+
+         	// 注册键盘事件
+         	var win = dialog.find('iframe').get(0).contentWindow;
+        	$(win).keyup(function(event) {
+        		switch (event.keyCode) {
+        			case 27: {
+        				// ESC
+        				dialog.dialog('close');
+        			}
+        			break;
+        		}
+        	}).keypress(function(event){
+        		if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)){
+        			// Ctrl + 回车
+        			win.btnSaveCallback(dialog, $widget, parent.$);
+        		}
+        	});
+        },
         // Grid 导出为
         gridToExcel: (function () {
             var uri = 'data:application/vnd.ms-excel;base64,';
@@ -261,16 +328,9 @@
                 window.location.href = uri + base64(format(template, ctx));
             }
         })(),
-        // 截取字符串，多余的部分用...代替
-        clipStr : function(str, len) {
-            var s = "";
-            for ( var i = 0; i < str.length; i++) {
-                s += str.charAt(i);
-                if (i + 1 == len) {
-                    return s + "...";
-                }
-            }
-            return s;
+        // 新增EovaTab页
+        eovatab: function(parent, url, title, icon){
+        	parent.addTab(title, url, icon);
         }
     });
 
@@ -463,7 +523,7 @@
         if($(this).data("mask") == 1){
             return;
         }
-        var divHtml = '<div class="divMask" style="position: absolute; width: 100%; height: '+ height +'px; left: 0px; top: -1px; background: rgba(218, 218, 218, 0.4);z-index: 8999"> </div>';
+        var divHtml = '<div class="divMask" style="position: absolute; width: 100%; height: '+ height +'px; left: 0px; top: 1px; background: rgba(218, 218, 218, 0.4);z-index: 8999"> </div>';
         $(this).wrap('<span style="position: relative;font-size:16px;"></span>');
         $(this).parent().append(divHtml);
         $(this).data("mask", 1);

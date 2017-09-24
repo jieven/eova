@@ -3,7 +3,12 @@
 <script type="text/javascript" src="/ui/easy/datagrid-dnd.js"></script>
 
 <body class="easyui-layout">
-	<div data-options="region:'center',fit:false,border:false"><#grid id="fieldGrid" objectCode="eova_field_code" isFirstLoad="false" isPaging="false" /></div>
+	<div data-options="region:'center',fit:false,border:false">
+	<div id="gridToolbar">
+		<%include('/eova/meta/edit/syncnew.html',{'gridId': 'fieldGrid'}){}%>
+		<%include('/eova/meta/edit/virtual.html',{'gridId': 'fieldGrid'}){}%>
+	</div>
+	<#grid id="fieldGrid" objectCode="eova_field_code" isFirstLoad="false" isPaging="false" cellEdit="update,delete" toolbar="gridToolbar" /></div>
 	<script>
 		$(function() {
 			var $grid = $('#fieldGrid');

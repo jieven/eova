@@ -6,9 +6,11 @@
 <body class="easyui-layout">
     <div id="layoutNorth" region="north" title="Eova Diy 快速拼凑功能" split="true" style="height: 250px;">
 		<#form id="myForm" objectCode="chenzi_orders" />
+		用户<#text id="myForm" name=""/>
+		密码<#text id="myForm" name=""/>
+		新密码<#text id="myForm" name=""/>
 	</div>
     <div data-options="region:'center'" data-options="fit:true,border:false">
-		<#grid id="grid" objectCode="chenzi_orders" />
 	</div>
 </body>
 

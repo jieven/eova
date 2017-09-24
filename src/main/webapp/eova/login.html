@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>简单对象视图管理-登录</title>
+    <title>${APP.name!'简单开发平台'}-登录</title>
     <link href="/ui/login/styles.css" rel="stylesheet" />
     <link href="/ui/login/jquery-ui-1.8.16.custom.css" rel="stylesheet">
     <script src="/ui/js/jquery.min.js"></script>
@@ -49,7 +49,7 @@
 	<div id="wrappertop"></div>
     <div id="wrapper">
         <div id="content">
-            <div id="header">
+            <div id="header" style="height: 51px;">
 				<img src="${APP.logo!'/ui/images/logo.png'}" alt="EOVA">
             </div>
             <div id="darkbanner" class="banner320">
@@ -78,7 +78,7 @@
 					</p>
 					<%}%>
 					<div style="text-align: left; margin-left: 80px; margin-bottom: 5px; color: #BE1302;">
-						<b>${msg!'角色：超管,帐号:eova,密码:000000'}</b>
+<!-- 						<b>${msg!'角色：超管,帐号:eova,密码:000000'}</b> -->
 					</div>
 					<div>
 						<button id="loginbtn" type="button" class="positive" name="Submit">

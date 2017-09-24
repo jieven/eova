@@ -144,14 +144,14 @@ $(function () {
 //  console.log(cols);
 
 	// 默认排序
-	var sortName = null,sortOrder = 'asc';
-	if(object.default_order){
-		var defaultOrder = object.default_order.split(' ');
-		sortName = defaultOrder[0];
-		if(defaultOrder.length > 1){
-			sortOrder = defaultOrder[1];
-		}
-	}
+	//var sortName = null,sortOrder = 'asc';
+	//if(object.default_order){
+	//	var defaultOrder = object.default_order.split(' ');
+	//	sortName = defaultOrder[0];
+	//	if(defaultOrder.length > 1){
+	//		sortOrder = defaultOrder[1];
+	//	}
+	//}
 
     var selectIndex;
     var $myGrid = $grid.datagrid({
@@ -175,8 +175,8 @@ $(function () {
         pageList: [15, 30, 50, 100, 200, 500, 1000, 2000],
 
         idField: object.pk_name,
-        sortName: sortName,
-        sortOrder: sortOrder,
+        // sortName: sortName,
+        // sortOrder: sortOrder,
 
         url: url,
         method: 'post',
@@ -280,7 +280,7 @@ $(function () {
         			rowData[config.fields[0]+'_val'] = val;
         		}
         	}
-
+        	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"update")){%>
             rowMenu.menu('appendItem', {
                 text: '保存数据',
                 name: 'save',
@@ -331,12 +331,13 @@ $(function () {
                         $.slideMsg("保存成功！");
                         // 确认改动
                         $myGrid.datagrid('acceptChanges');
-                        console.log('标记更改');
                     } else {
                         $.alert($, errorMsg);
                     }
                 }
             });
+            <%}%>
+            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
             rowMenu.menu('appendItem', {
                 text: '删除行',
                 name: 'delete',
@@ -346,6 +347,8 @@ $(function () {
 					$myGrid.datagrid('deleteRow', selectIndex);
                 }
             });
+            <%}%>
+            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
             rowMenu.menu('appendItem', {
                 text: '新增行',
                 name: 'add',
@@ -357,6 +360,7 @@ $(function () {
                     });
                 }
             });
+            <%}%>
 //            rowMenu.menu('appendItem', {
 //                text: '回滚数据',
 //                name: 'reject',
@@ -396,16 +400,24 @@ $(function () {
             name: 'editmeta',
             iconCls: 'eova-icon1051',
             onclick: function () {
-                loadDialog($myGrid, '修改元对象', '/form/update/eova_object_code-' + object.id);
+            	$.dialog(undefined, '修改元对象', '/form/update/eova_object_code-' + object.id);
+            }
+        });
+        cmenu.menu('appendItem', {
+			text: '保存当前列宽',
+			name: 'savewidth',
+			iconCls: 'eova-icon49',
+			onclick: function () {
+				var widths = [];
+				$('.datagrid-header-row .datagrid-cell').each(function() {
+					widths.push(this.offsetWidth + 6);
+				});
+				$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function(){
+					$.slideMsg("当前表格宽度已保存");
+				});
             }
         });
         <%}%>
-        // 动态加载列作为菜单项目
-        cmenu.menu('appendItem', {
-			text: 'other',
-			name: 'other',
-			iconCls: ''
-        });
     }
 
     if (object.is_celledit) {

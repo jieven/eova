@@ -1,0 +1,30 @@
+<%// 自带输入按钮 %>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true" onclick="eova_btn_${button.id}()">${button.name!}</a>
+<script type="text/javascript">
+	var eova_btn_${button.id} = function(){
+		var $widget = $('#${gridId}');
+        var rows = $.getWidgetSelections($widget);
+        if (rows.length == "0") {
+        	$.slideMsg("请选择一条记录！");
+            return;
+        }
+	    
+	    $.messager.prompt("${button.title!'系统提示'}", "${button.title!'请输入' + button.name + '信息'}", function(val){
+	    	if(val){
+	    		var json = JSON.stringify(rows);
+	    		$.syncPost('${button.bs}', {
+					rows : json,
+					input : val
+				}, function(result, status) {
+					if (result.success) {
+						$.slideMsg("操作完成！");
+						$.widgetReLoad($widget);
+					} else {
+						$.alert($, result.msg);
+					}
+				});
+				$.widgetClearSelections($widget);
+	    	}
+		});
+	};
+</script>

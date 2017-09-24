@@ -69,7 +69,7 @@
             // 事件
             onChange : function(oldValue, newValue) {}
         };
-        // 参数优先级：父参数 > 子默认参数 > HTML参数 > JS参数
+        // 参数优先级：父参数 > 子默认参数 > DMO参数 > JSON参数 > JS参数
         this.options = $.extend({}, this.options, this.defaults, getDomOptions(this), $.getHtmlOptions(this), options);
         // 编码
         this.code = this.$dom.attr('code');
@@ -228,6 +228,14 @@
             title : '请选择数据',
             url : findBox.getUrl(),
             buttons : [ {
+                id : 'find_clear',
+                text : '清空选择',
+                handler : function() {
+                    dialog.find('iframe').get(0).contentWindow.clearData(dialog, findBox);
+                    // 初始化焦点
+                    window.focus();
+                }
+            },{
                 id : 'find_ok',
                 text : '确定',
                 handler : function() {

@@ -67,8 +67,9 @@ function beforeClick(treeId, node) {
 }
 // Eova Tabs
 var mainTabs;
-var getOpts = function(title, url, icon) {
+var getOpts = function(id, title, url, icon) {
 	var opts = {
+		id: id,
 		title : title,
 		closable : true,
 		iconCls : icon,
@@ -79,7 +80,7 @@ var getOpts = function(title, url, icon) {
 	return opts;
 };
 var addTab = function(title, url, icon){
-	mainTabs.tabs('add', getOpts(title, url, icon));
+	mainTabs.tabs('add', getOpts('', title, url, icon));
 };
 
 $(document).ready(function() {
@@ -91,7 +92,12 @@ $(document).ready(function() {
 	var tabsMenu = $('#tabsMenu').menu({
 		onClick: function(item) {
 			var curTabTitle = $(this).data('tabTitle');
+			var menuId = $(this).data('menuId');
 			var type = $(item.target).attr('type');
+			if (type === 'menu_edit') {
+				$.dialog(undefined, '快速配置菜单', '/form/update/eova_menu_code-' + menuId);
+				return;
+			}
 			if (type === 'close') {
 				var t = mainTabs.tabs('getTab', curTabTitle);
 				if (t.panel('options').closable) {
@@ -163,12 +169,14 @@ $(document).ready(function() {
 	                } catch (e) {}
 	            }
 	        }],
-	        onContextMenu: function(e, title) {
+	        onContextMenu: function(e, title, index) {
+	        	var x = mainTabs.tabs('getTab', index);
+	        	var menuId = x.panel('options').id;
 	            e.preventDefault();
 	            tabsMenu.menu('show', {
 	                left: e.pageX,
 	                top: e.pageY
-	            }).data('tabTitle', title);
+	            }).data('tabTitle', title).data('menuId', menuId);
 	        }
 	    });
 	};
@@ -192,7 +200,7 @@ $(document).ready(function() {
 				alert('目录下必须有子菜单！');
 				return;
 			}
-			var opts = getOpts(node.name, node.link, node.iconskip);
+			var opts = getOpts(node.id, node.name, node.link, node.iconskip);
 			if (mainTabs.tabs('exists', opts.title)) {
 				mainTabs.tabs('select', opts.title);
 			} else {

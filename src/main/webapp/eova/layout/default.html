@@ -16,7 +16,7 @@ ${layoutContent!}
 	<script type="text/javascript" src="/plugins/wangEditor/dist/js/wangEditor.min.js"></script>
 	<script type="text/javascript" src="/plugins/jsoneditor/jsoneditor.min.js"></script>
 	<script>
-	//配置表情包
+	// 配置表情包
 	wangEditor.config.emotions = {'default' : {title : '默认',data : '/plugins/wangEditor/static/emotions/default.data'}};
 	// 配置上传图片
 	wangEditor.config.uploadImgUrl = '/upload/editor/';
@@ -25,13 +25,13 @@ ${layoutContent!}
 
 <script>
 $(function(){
-	$('div[class="eova-text"]').eovatext();
-    $('div[class="eova-time"]').eovatime();
-    $('div[class="eova-auto"]').eovaauto();
-    $('div[class="eova-bool"]').eovabool();
-    $('div[class="eova-find"]').eovafind();
-    $('div[class="eova-combo"]').eovacombo();
-    $('div[class="eova-icon"]').eovaicon();
+	$('div.eova-text').eovatext();
+    $('div.eova-time').eovatime();
+    $('div.eova-auto').eovaauto();
+    $('div.eova-bool').eovabool();
+    $('div.eova-find').eovafind();
+    $('div.eova-combo').eovacombo();
+    $('div.eova-icon').eovaicon();
 });
 </script>
 </body>
