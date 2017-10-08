@@ -280,6 +280,30 @@ $(function () {
         			rowData[config.fields[0]+'_val'] = val;
         		}
         	}
+        	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
+            rowMenu.menu('appendItem', {
+                text: '删除行',
+                name: 'delete',
+                iconCls: 'eova-icon1050',
+                onclick: function () {
+                	console.log('删除行，索引=' +  selectIndex);
+					$myGrid.datagrid('deleteRow', selectIndex);
+                }
+            });
+            <%}%>
+            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
+            rowMenu.menu('appendItem', {
+                text: '新增行',
+                name: 'add',
+                iconCls: 'eova-icon1044',
+                onclick: function () {
+                    $myGrid.datagrid('insertRow', {
+                        index: 0,
+                        row: rowData
+                    });
+                }
+            });
+            <%}%>
         	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"update")){%>
             rowMenu.menu('appendItem', {
                 text: '保存数据',
@@ -334,30 +358,6 @@ $(function () {
                     } else {
                         $.alert($, errorMsg);
                     }
-                }
-            });
-            <%}%>
-            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
-            rowMenu.menu('appendItem', {
-                text: '删除行',
-                name: 'delete',
-                iconCls: 'eova-icon1050',
-                onclick: function () {
-                	console.log('删除行，索引=' +  selectIndex);
-					$myGrid.datagrid('deleteRow', selectIndex);
-                }
-            });
-            <%}%>
-            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
-            rowMenu.menu('appendItem', {
-                text: '新增行',
-                name: 'add',
-                iconCls: 'eova-icon1044',
-                onclick: function () {
-                    $myGrid.datagrid('insertRow', {
-                        index: 0,
-                        row: rowData
-                    });
                 }
             });
             <%}%>

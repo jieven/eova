@@ -112,28 +112,6 @@ $(function () {
                 }
             }
         }
-        // Grid Cell Editor,对象和字段允许行内编辑自增，自增长禁止编辑
-        if (object.is_celledit && f.is_edit) {
-            if(object.is_auto && object.is_auto == true){
-                return;
-            }
-            var editor = new Object;
-            editor.type = f.editor;
-            if (f.type == '下拉框') {
-                editor.options = {
-                    url: '/widget/comboJson/' + objectCode + '-' + f.en, valueField: 'id', textField: 'cn', multiple: f.is_multiple
-                }
-            } else if (f.type == '查找框') {
-                editor.options = {
-                    url: '/widget/find?code=' + objectCode + '&field=' + f.en + '&multiple=' + f.is_multiple
-                }
-            } else if (f.type == '日期框') {
-                editor.options = {
-                    format: 'yyyy-MM-dd'
-                }
-            }
-            attr.editor = editor;
-        }
 
         cols.push(attr);
     });
@@ -157,7 +135,7 @@ $(function () {
         striped: true,
         align: 'right',
         autoRowHeight: true,
-        collapsible: false,
+        collapsible: true,
         remoteSort: true,
         multiSort: false,
         rownumbers: object.is_show_num,
@@ -266,13 +244,21 @@ function createColumnMenu() {
             loadDialog($myGrid, '修改元对象', '/form/update/eova_object_code-' + object.id);
         }
     });
+    cmenu.menu('appendItem', {
+		text: '保存当前列宽',
+		name: 'savewidth',
+		iconCls: 'eova-icon49',
+		onclick: function () {
+			var widths = [];
+			$('.datagrid-header-row .datagrid-cell').each(function() {
+				widths.push(this.offsetWidth + 6);
+			});
+			$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function(){
+				$.slideMsg("当前表格宽度已保存");
+			});
+		}
+	});
     <%}%>
-	// 动态加载列作为菜单项目
-	cmenu.menu('appendItem', {
-		text : 'other',
-		name : 'other',
-		iconCls : ''
-	 });
   }
 });
 </script>

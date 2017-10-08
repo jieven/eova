@@ -190,6 +190,27 @@
 			$input.val("");
 			$input.val(s);
 		},
-		
+		/**
+		 * 异步文件上传
+		 * @param $input
+		 * @returns
+		 */
+		ajaxUpload : function(url, fileId, fileName, success) {
+			var file = document.getElementById(fileId).files[0];
+			
+			var data = new FormData();
+			data = new FormData();
+			data.append(fileName, file);
+			
+			$.ajax({
+			    url: url,
+			    type: 'POST',
+			    cache: false,
+			    data: data,
+			    processData: false,
+			    contentType: false,
+			}).done(success);
+		}
+
     });
 })(jQuery);

@@ -26,7 +26,7 @@ if(!isEmpty(code) || !isEmpty(exp)){
 		// 自定义URL
 		queryUrl = url;
 	} else {
-		queryUrl = "/widget/comboJson";
+		queryUrl = "/widget/comboTreeJson";
 		if(!isEmpty(code) && !isEmpty(field)){
 			// 存在编码和字段
 			queryUrl = queryUrl +"/"+  code +"-"+ field;
@@ -38,4 +38,4 @@ if(!isEmpty(code) || !isEmpty(exp)){
 }
 
 %>
-<div class="eova-combo" id="${id!}" name="${name!}" value="${value!}" url="${queryUrl!}" data-options="${data}"></div>
+<div class="eova-combotree" id="${id!}" name="${name!}" value="${value!}" url="${queryUrl!}" data-options="${data}"></div>

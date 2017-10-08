@@ -23,31 +23,28 @@ $(function() {
 		});
 	});
 	
-	// 异步传图(动态绑定事件)
-	var myfun = function(){
+	var upload = function(){
+		
+		var url = '/upload/file?name=${name!}_file&filedir=${filedir}&filename=${filename!}';
 		
 		var $this_file = $("#${id!}_file");
-		console.log($this_file.val());
-		$input.val($this_file.val());
 		var reader = new FileReader();
 		var files = $this_file.prop('files');
 		reader.readAsDataURL(files[0]);
-		reader.onload = function(e) {
-			$this_file.parent().find('img').attr('src', e.target.result);
-		}
-	
-		$input.val("Loading...");
 		
-		$('#${id!}_file').upload({
-			action: '/upload/file?name=${name!}_file&filedir=${filedir}&filename=${filename!}',
-			name: "${name!}_file",
-			onsuccess: function(json) {
-				$input.val(json.fileName);
-			}
-		});
+		reader.onload = function(e) {
+			$.ajaxUpload(url, "${id!}_file", "${name!}_file", function(o){
+            	if (o.state == 'ok') {
+        			$input.val(o.fileName);
+        		} else {
+        			$input.val("");
+        			$.alert($, o.msg);
+        		}
+            })
+		}
 	};
 	
-	$(document).on("change","#${id!}_file", myfun);
+	$(document).on("change","#${id!}_file", upload);
 	
 });
 </script>
