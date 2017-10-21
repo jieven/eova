@@ -11,6 +11,11 @@ import com.eova.aop.MetaObjectIntercept;
 import com.eova.common.utils.EncryptUtil;
 import com.oss.model.UserInfo;
 
+/**
+ * 自定义用户管理拦截器
+ * @author Jieven
+ *
+ */
 public class UserIntercept extends MetaObjectIntercept {
 
 	@Override

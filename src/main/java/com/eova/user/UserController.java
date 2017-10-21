@@ -13,7 +13,7 @@ import com.eova.model.User;
 import com.jfinal.core.Controller;
 
 /**
- * 用户管理
+ * 自定义用户管理
  * 
  * @author Jieven
  * @date 2014-9-11

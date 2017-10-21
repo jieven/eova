@@ -30,7 +30,7 @@
 				</tr>
 			</table>
 		</div>
-		<#grid id="grid" objectCode="${object.code}" toolbar="gridToolbar" menuCode="${menu.code}" />
+		<#grid id="grid" objectCode="${object.code}" toolbar="gridToolbar" menuCode="${menu.code}" cellEdit="update,delete,save" />
 	</div>
 <script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
 <%if(!isEmpty(menu.diy_js!)){%>

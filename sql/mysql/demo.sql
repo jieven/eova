@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-03-21 01:36:48
+Date: 2017-10-08 22:19:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3527,6 +3527,66 @@ INSERT INTO `area_city` VALUES ('35', '台湾', '1');
 INSERT INTO `area_city` VALUES ('42', '北京', '2');
 
 -- ----------------------------
+-- Table structure for `ast_device_instruman`
+-- ----------------------------
+DROP TABLE IF EXISTS `ast_device_instruman`;
+CREATE TABLE `ast_device_instruman` (
+  `id` int(32) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `devicetype_id` char(32) NOT NULL COMMENT '设备类别id',
+  `school_id` char(32) NOT NULL COMMENT '学校id',
+  `instrument_type_num` varchar(30) NOT NULL COMMENT '仪器类别编号',
+  `instrument_type_name` text COMMENT '类别名称',
+  `instrument_num` varchar(16) NOT NULL COMMENT '仪器编号',
+  `instrument_name` varchar(30) DEFAULT NULL COMMENT '仪器名称',
+  `model_number` varchar(40) DEFAULT NULL COMMENT '型号',
+  `manufacture_date` datetime DEFAULT NULL COMMENT '出厂日期',
+  `manufacture_nation_code` char(3) DEFAULT NULL COMMENT '生产国别码',
+  `expenditure_subject_code` char(1) DEFAULT NULL COMMENT '经费科目码',
+  `purchase_date` datetime DEFAULT NULL COMMENT '购置日期',
+  `manufactory` varchar(180) DEFAULT NULL COMMENT '厂家',
+  `release_number` varchar(30) DEFAULT NULL COMMENT '出厂号',
+  `invoices_number` varchar(16) DEFAULT NULL COMMENT '单据号',
+  `specification` varchar(30) DEFAULT NULL COMMENT '规格',
+  `accuracy_specification` varchar(50) DEFAULT NULL COMMENT '精密规格',
+  `unit_price` decimal(13,2) DEFAULT NULL COMMENT '单价',
+  `import_unit_price` decimal(13,2) DEFAULT NULL COMMENT '进口单价',
+  `accessory_price` decimal(13,2) DEFAULT NULL COMMENT '附件总价',
+  `accessory_import_price` decimal(13,2) DEFAULT NULL COMMENT '附件进口价',
+  `picture_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `buy_time` datetime DEFAULT NULL COMMENT '购买时间',
+  `instrument_count` decimal(65,30) DEFAULT NULL COMMENT '设备数量',
+  `units` varchar(20) DEFAULT NULL COMMENT '数量单位',
+  `waste_number` decimal(65,30) DEFAULT NULL COMMENT '报损数量',
+  `total` decimal(20,2) DEFAULT NULL COMMENT '合计',
+  `classification_id` varchar(12) DEFAULT NULL COMMENT '分类代码',
+  `situation` decimal(1,0) DEFAULT NULL COMMENT '现状',
+  `normal_number` decimal(65,30) DEFAULT NULL COMMENT '正常数量',
+  `borrow_number` decimal(65,30) DEFAULT NULL COMMENT '借出数量',
+  `return_number` decimal(65,30) DEFAULT NULL COMMENT '归还数量',
+  `repair_number` decimal(65,30) DEFAULT NULL COMMENT '维修数量',
+  `repair_completed_number` decimal(65,30) DEFAULT NULL COMMENT '已维修数量',
+  `borrow_time` datetime DEFAULT NULL COMMENT '借用时间',
+  `device_place_id` char(32) DEFAULT NULL COMMENT '装备存放地id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='设备表';
+
+-- ----------------------------
+-- Records of ast_device_instruman
+-- ----------------------------
+INSERT INTO `ast_device_instruman` VALUES ('1', '11', '11', '11', '11', '11', '111', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('2', '222', '222', '22', '222', '222', '222', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('3', '11', '11', '11', '11', '11', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('4', '222', '222', '22', '222', '222', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('5', '333', '333', '333', '333', '333', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('6', '334', '334', '334', '334', '334', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('7', '335', '335', '335', '335', '335', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('8', '336', '336', '336', '336', '336', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('9', '337', '337', '337', '337', '337', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('10', '338', '338', '338', '338', '338', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('11', '339', '339', '339', '339', '339', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `ast_device_instruman` VALUES ('12', '11', '002', '11', '11', '11', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+-- ----------------------------
 -- Table structure for `data_login`
 -- ----------------------------
 DROP TABLE IF EXISTS `data_login`;
@@ -3601,7 +3661,7 @@ CREATE TABLE `dicts` (
   `field` varchar(50) NOT NULL COMMENT '字段名',
   `ext` varchar(255) DEFAULT '' COMMENT '扩展Json',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8 COMMENT='数据字典';
 
 -- ----------------------------
 -- Records of dicts
@@ -3646,8 +3706,6 @@ INSERT INTO `dicts` VALUES ('148', '10', '待支付', 'v_orders', 'state', '');
 INSERT INTO `dicts` VALUES ('149', '20', '已支付', 'v_orders', 'state', '');
 INSERT INTO `dicts` VALUES ('150', '30', '已发货', 'v_orders', 'state', '');
 INSERT INTO `dicts` VALUES ('151', '40', '已收货', 'v_orders', 'state', '');
-INSERT INTO `dicts` VALUES ('152', '1', '正常', 'links', 'status', '');
-INSERT INTO `dicts` VALUES ('153', '2', '禁用', 'links', 'status', '');
 INSERT INTO `dicts` VALUES ('158', '0', '国', 'area', 'lv', '');
 INSERT INTO `dicts` VALUES ('159', '1', '省', 'area', 'lv', '');
 INSERT INTO `dicts` VALUES ('160', '2', '市', 'area', 'lv', '');
@@ -3656,6 +3714,12 @@ INSERT INTO `dicts` VALUES ('198', '1', '普通商户', 'hotel', 'state', '');
 INSERT INTO `dicts` VALUES ('199', '2', '签约商户', 'hotel', 'state', '');
 INSERT INTO `dicts` VALUES ('200', '1', '租赁商品', 'product', 'type', '');
 INSERT INTO `dicts` VALUES ('201', '2', '积分商品', 'product', 'type', '');
+INSERT INTO `dicts` VALUES ('204', '1', '正常', 'links', 'status', '');
+INSERT INTO `dicts` VALUES ('205', '2', '禁用', 'links', 'status', '');
+INSERT INTO `dicts` VALUES ('206', '1', '普通商户', 'hotel_copy', 'state', '');
+INSERT INTO `dicts` VALUES ('207', '2', '签约商户', 'hotel_copy', 'state', '');
+INSERT INTO `dicts` VALUES ('208', '1', '教育局', 'sys_unit', 'unit_type', '');
+INSERT INTO `dicts` VALUES ('209', '2', '学校', 'sys_unit', 'unit_type', '');
 
 -- ----------------------------
 -- Table structure for `hotel`
@@ -3700,6 +3764,29 @@ CREATE TABLE `hotel_bed` (
 INSERT INTO `hotel_bed` VALUES ('2', '1', '2', '2');
 INSERT INTO `hotel_bed` VALUES ('3', '1', '3', '2');
 INSERT INTO `hotel_bed` VALUES ('4', '2', '3', '100');
+
+-- ----------------------------
+-- Table structure for `hotel_copy`
+-- ----------------------------
+DROP TABLE IF EXISTS `hotel_copy`;
+CREATE TABLE `hotel_copy` (
+  `name` varchar(255) NOT NULL COMMENT '酒店名',
+  `tel` varchar(255) NOT NULL COMMENT '电话',
+  `address` varchar(255) NOT NULL COMMENT '详细地址',
+  `state` int(11) DEFAULT '1' COMMENT '用户状态：1=普通商户，2=签约商户',
+  `score` int(11) DEFAULT '0' COMMENT '积分',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `province` int(11) DEFAULT NULL COMMENT '省',
+  `city` int(11) DEFAULT NULL COMMENT '市',
+  `region` int(11) DEFAULT NULL COMMENT '区'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='酒店';
+
+-- ----------------------------
+-- Records of hotel_copy
+-- ----------------------------
+INSERT INTO `hotel_copy` VALUES ('松江锦江之星1', '(021)37621128', '上海市松江区西林北路950号', '2', '12', '2015-12-04 17:01:30', '25', '321', '2705');
+INSERT INTO `hotel_copy` VALUES ('松江锦江之星2', '(021)37621129', '上海市松江区西林北路951号', '1', '0', '2015-09-04 17:17:00', '2', '52', '505');
+INSERT INTO `hotel_copy` VALUES ('松江锦江之星3', '(021)37621130', '上海市松江区西林北路952号', '2', '0', '2015-09-05 17:17:00', '3', '36', '398');
 
 -- ----------------------------
 -- Table structure for `hotel_stock`
@@ -3768,11 +3855,14 @@ INSERT INTO `links` VALUES ('2', '1', 'EOVA简单开发', 'http://www.eova.cn', 
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
   `id` int(11) NOT NULL,
+  `uid` int(11) DEFAULT NULL COMMENT 'EOVA系统用户ID',
   `rid` int(11) DEFAULT '0' COMMENT '冗余角色ID',
   `status` int(2) DEFAULT '0' COMMENT '状态',
   `nickname` varchar(30) DEFAULT '' COMMENT '昵称',
   `company_name` varchar(255) DEFAULT NULL COMMENT '单位名称',
   `mobile` varchar(11) DEFAULT NULL COMMENT '联系手机',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `password` varchar(50) DEFAULT NULL COMMENT '密码',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
   `phone2` varchar(255) DEFAULT NULL COMMENT '应急电话',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '注册时间',
@@ -3789,15 +3879,15 @@ CREATE TABLE `member` (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('1', '1', '0', '超级管理员', '', '', '', '', '2016-04-03 14:16:52', null, null, null, null, null, null);
-INSERT INTO `member` VALUES ('2', '2', '0', '系统管理员', '', '', '', '', '2016-04-03 14:16:52', null, null, null, null, null, null);
-INSERT INTO `member` VALUES ('3', '3', '0', '新省主管', '我是省长', '13524523406', '', '', '2016-04-03 14:16:52', '29', '0', '0', null, null, null);
-INSERT INTO `member` VALUES ('4', '3', '0', '乌市主管', '我是市长', '13524523415', '', '', '2016-04-03 14:17:21', '29', '351', '0', null, null, null);
-INSERT INTO `member` VALUES ('5', '3', '0', '天山主管', '我是区长', '13524523410', '', '', '2016-04-03 14:17:21', '29', '351', '3004', null, null, null);
-INSERT INTO `member` VALUES ('10', '4', '0', '天山用户1', '上海静安小鲜肉', '13524523411', '', '', '2016-04-03 14:17:21', '29', '351', '3004', null, null, null);
-INSERT INTO `member` VALUES ('11', '4', '0', '天山用户2', '上海静安小鲜肉', '13524523427', '', '', '2016-04-03 14:17:21', '29', '351', '3004', null, null, null);
-INSERT INTO `member` VALUES ('12', '4', '0', '天山用户3', '上海小鲜肉', '13524523414', '', '', '2016-04-03 14:17:21', '29', '351', '3005', null, null, null);
-INSERT INTO `member` VALUES ('13', '4', '0', '天山用户4', '上海小鲜肉', '13524523414', null, null, '2016-04-03 16:10:17', '29', '351', '3005', null, null, null);
+INSERT INTO `member` VALUES ('1', '1', '1', '0', '超级管理员', '', '135000000', 'eova@qq.com', '89BDF69372C2EF53EA409CDF020B5694', '', '', '2017-06-02 18:07:01', null, null, null, null, null, null);
+INSERT INTO `member` VALUES ('2', '2', '2', '0', '系统管理员', '', '', null, null, '', '', '2017-06-02 18:07:01', null, null, null, null, null, null);
+INSERT INTO `member` VALUES ('3', '3', '3', '0', '新省主管', '我是省长', '13524523406', null, null, '', '', '2017-06-02 18:07:02', '29', '0', '0', null, null, null);
+INSERT INTO `member` VALUES ('4', '4', '3', '0', '乌市主管', '我是市长', '13524523415', null, null, '', '', '2017-06-02 18:07:02', '29', '351', '0', null, null, null);
+INSERT INTO `member` VALUES ('5', '5', '3', '0', '天山主管', '我是区长', '13524523410', null, null, '', '', '2017-06-02 18:07:03', '29', '351', '3004', null, null, null);
+INSERT INTO `member` VALUES ('10', null, '4', '0', '天山用户1', '上海静安小鲜肉', '13524523411', null, null, '', '', '2016-04-03 14:17:21', '29', '351', '3004', null, null, null);
+INSERT INTO `member` VALUES ('11', null, '4', '0', '天山用户2', '上海静安小鲜肉', '13524523427', null, null, '', '', '2016-04-03 14:17:21', '29', '351', '3004', null, null, null);
+INSERT INTO `member` VALUES ('12', null, '4', '0', '天山用户3', '上海小鲜肉', '13524523414', null, null, '', '', '2016-04-03 14:17:21', '29', '351', '3005', null, null, null);
+INSERT INTO `member` VALUES ('13', null, '4', '0', '天山用户4', '上海小鲜肉', '13524523414', null, null, null, null, '2016-04-03 16:10:17', '29', '351', '3005', null, null, null);
 
 -- ----------------------------
 -- Table structure for `orders`
@@ -3945,6 +4035,70 @@ INSERT INTO `sale_data` VALUES ('42', '27', '狗不理', '10000');
 INSERT INTO `sale_data` VALUES ('43', '25', '土豆', '20');
 
 -- ----------------------------
+-- Table structure for `sys_dep`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dep`;
+CREATE TABLE `sys_dep` (
+  `int` int(11) NOT NULL AUTO_INCREMENT,
+  `dep_id` varchar(64) DEFAULT NULL COMMENT '部门ID',
+  `dep_name` varchar(255) DEFAULT NULL COMMENT '部门名称',
+  `dep_unitid` varchar(64) DEFAULT NULL COMMENT '所属单位ID',
+  `dep_parentid` varchar(64) DEFAULT NULL COMMENT '部门父ID',
+  PRIMARY KEY (`int`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='单位部门表';
+
+-- ----------------------------
+-- Records of sys_dep
+-- ----------------------------
+INSERT INTO `sys_dep` VALUES ('1', '001', '教育局部门1', '001', '0');
+INSERT INTO `sys_dep` VALUES ('2', '002', '中学学校部门1', '002', '001');
+INSERT INTO `sys_dep` VALUES ('3', '003', '小学学校部门1', '002', '001');
+INSERT INTO `sys_dep` VALUES ('4', '004', '中学学校部门2', '004', '002');
+
+-- ----------------------------
+-- Table structure for `sys_teacher`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_teacher`;
+CREATE TABLE `sys_teacher` (
+  `int` int(11) NOT NULL AUTO_INCREMENT,
+  `teacher_id` varchar(64) DEFAULT NULL COMMENT '教职工ID',
+  `teacher_name` varchar(255) DEFAULT NULL COMMENT '教职工姓名',
+  `teacher_unitid` varchar(64) DEFAULT NULL COMMENT '教职工单位ID',
+  `teacher_depid` varchar(64) DEFAULT NULL COMMENT '教职工部门ID',
+  PRIMARY KEY (`int`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='教职工表';
+
+-- ----------------------------
+-- Records of sys_teacher
+-- ----------------------------
+INSERT INTO `sys_teacher` VALUES ('1', '001', 'jyj_jzg', '001', '001');
+INSERT INTO `sys_teacher` VALUES ('2', '002', 'zx_jzg', '002', '002');
+INSERT INTO `sys_teacher` VALUES ('3', '003', 'xx_jzg', '002', '002');
+INSERT INTO `sys_teacher` VALUES ('4', '004', 'xx_jzg1', '002', '004');
+
+-- ----------------------------
+-- Table structure for `sys_unit`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_unit`;
+CREATE TABLE `sys_unit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` varchar(50) NOT NULL COMMENT '单位ID',
+  `unit_name` varchar(255) NOT NULL COMMENT '单位姓名',
+  `unit_type` varchar(255) DEFAULT '2' COMMENT '单位类型:1=教育局,2=学校',
+  `unit_parentid` varchar(50) NOT NULL COMMENT '单位上级id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='单位信息表';
+
+-- ----------------------------
+-- Records of sys_unit
+-- ----------------------------
+INSERT INTO `sys_unit` VALUES ('1', '001', '教育局', '1', '0');
+INSERT INTO `sys_unit` VALUES ('2', '002', '中学学校1', '2', '001');
+INSERT INTO `sys_unit` VALUES ('3', '003', '中学学校2', '2', '001');
+INSERT INTO `sys_unit` VALUES ('4', '004', '小学学校1', '2', '002');
+INSERT INTO `sys_unit` VALUES ('5', '005', '小学学校2', '2', '002');
+
+-- ----------------------------
 -- Table structure for `test_info`
 -- ----------------------------
 DROP TABLE IF EXISTS `test_info`;
@@ -3978,7 +4132,7 @@ CREATE TABLE `test_info` (
 -- ----------------------------
 -- Records of test_info
 -- ----------------------------
-INSERT INTO `test_info` VALUES ('1', '1', '0', '123465', '17', '<p>上海虹口区足球场上海虹口666</p>', '1475647037704.jpg', '0', 'eova20175201314', '1464002566632.jpg', '2016-05-26', '2017-02-22 23:54:28', '00000', '#000000', '3,2,4', '{\"domain\":\"http://www.eova.cn\"}', '0', null, '0', '1', '0', null, '2016-10-08 02:39:34');
+INSERT INTO `test_info` VALUES ('1', '1', '0', '123465', '17', '<p>上海虹口区足球场上海虹口666</p>', '1475647037704.jpg', '0', 'eova20175201314', '1464002566632.jpg', '2016-05-26', '2017-02-22 23:54:28', '00000', '#000000', '3,2,4', '{\"domain\":\"http://www.eova.cn\"}', '21', null, '0', '1', '0', null, '2016-10-08 02:39:34');
 INSERT INTO `test_info` VALUES ('4', '2', '0', '4324342', '43423423', '<p>哎哟不错哟！ 发个表情试试&nbsp;<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif\"><br><img src=\"http://127.0.0.1/editor/1464193877187.png\" style=\"max-width: 100%; width: 100.8px; height: 100.8px;\" class=\"\">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src=\"http://127.0.0.1/editor/1464194237135.png\" style=\"max-width: 100%;\"><br></p><p><br></p>', '1475655648414.png', '0', '423432423', '1464193847117.png', '2016-05-26', '2016-05-26 00:30:40', '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
 INSERT INTO `test_info` VALUES ('7', '1', '1', '新增导入1', '17', '<p>222上海虹口区足球场上海虹口222</p><p><br></p>', '1477243093297.png', '0', '更新导入。。。。', '1464002566632.jpg', '2016-05-26', '2016-09-18 00:32:48', '00000', '#000000', '2,4', null, '0', null, '0', null, '0', null, null);
 INSERT INTO `test_info` VALUES ('8', '2', '1', '新增导入2', '43423423', '<p>哎哟不错哟！ 发个表情试试 <img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif\"><br><img src=\"http://127.0.0.1:10086/editor/1464193877187.png\" style=\"max-width: 100%; width: 100.8px; height: 100.8px;\" class=\"\">        <img src=\"http://127.0.0.1:10086/editor/1464194237135.png\" style=\"max-width: 100%;\"><br></p><p><br></p>', '1475647089038.jpg', '0', '423432423', '1464193847117.png', '2016-05-26', '2016-05-26 00:30:40', '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
@@ -4017,7 +4171,7 @@ INSERT INTO `users` VALUES ('19', '0', 'test19', '000000', '牛头酋长', '2014
 INSERT INTO `users` VALUES ('20', '0', 'test20', '000000', '邪恶小法师', '2014-12-30 00:55:49', '', '3');
 INSERT INTO `users` VALUES ('21', '0', 'test21', '000000', '风暴之怒', '2014-12-30 00:00:00', '', '3');
 INSERT INTO `users` VALUES ('22', '0', 'test22', '000000', '麦林炮手', '2014-12-30 00:55:49', '', '1');
-INSERT INTO `users` VALUES ('23', '2', 'test23', '000000', '黑暗之女', '2014-12-30 00:00:00', '11111', '3');
+INSERT INTO `users` VALUES ('23', '2', 'test23', '000000', '黑暗之女', '2014-12-30 00:00:00', '6666', '3,1');
 
 -- ----------------------------
 -- Table structure for `users_exp`
@@ -4106,6 +4260,12 @@ INSERT INTO `user_info` VALUES ('3', '3', '0', '专业测试', '13524523406', '2
 INSERT INTO `user_info` VALUES ('4', '4', '0', '测试小白', '13524523488', '25', '321', '2710', '2016-11-21 00:19:08');
 INSERT INTO `user_info` VALUES ('5', '2', '0', '', null, null, null, null, '2016-11-25 14:49:45');
 INSERT INTO `user_info` VALUES ('7', '2', '0', '', null, null, null, null, '2016-11-25 14:51:23');
+
+-- ----------------------------
+-- View structure for `users_total`
+-- ----------------------------
+DROP VIEW IF EXISTS `users_total`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `users_total` AS select `users`.`status` AS `status`,count(`users`.`status`) AS `num` from `users` group by `users`.`status` ;
 
 -- ----------------------------
 -- View structure for `v_orders`

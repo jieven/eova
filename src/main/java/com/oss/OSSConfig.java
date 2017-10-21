@@ -7,17 +7,14 @@
 package com.oss;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import com.eova.config.EovaConfig;
-import com.eova.core.vip.VipController;
 import com.eova.interceptor.LoginInterceptor;
 import com.eova.user.UserController;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.oss.product.ProductController;
-import com.oss.test.XlsController;
 
 public class OSSConfig extends EovaConfig {
 
@@ -33,12 +30,6 @@ public class OSSConfig extends EovaConfig {
 
 		me.add("/", OSSController.class);
 		me.add("/product", ProductController.class);
-
-		me.add("/xls", XlsController.class);
-		LoginInterceptor.excludes.add("/xls/**");
-
-		me.add("/vip", VipController.class);
-		LoginInterceptor.excludes.add("/vip/**");
 
 		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
 		LoginInterceptor.excludes.add("/init");
@@ -71,14 +62,7 @@ public class OSSConfig extends EovaConfig {
 	 */
 	@Override
 	protected void plugin(Plugins plugins) {
-		/** 新增自定义数据源start **/
-		// ActiveRecordPlugin arp = addDataSource(plugins, "oss", JdbcUtils.MYSQL);
-		// arp.addMapping("xxx", Xxx.class);
-		/** 新增自定义数据源end **/
-
-		// 添加自动扫描插件
-
-		// ...
+		// 添加需要的插件
 	}
 
 	/**
@@ -94,15 +78,24 @@ public class OSSConfig extends EovaConfig {
 		// 用法，级联动态在页面改变SQL和参数
 		// $xxx.eovacombo({exp : 'selectAreaByLv2AndPid,aaa,10'}).reload();
 		// $xxx.eovafind({exp : 'selectAreaByLv2AndPid,aaa,10'});
-		// $xxx.eovatree({exp : 'selectAreaByLv2AndPid,10'});
+		// $xxx.eovatree({exp : 'selectAreaByLv2AndPid,10'}).reload();
 	}
 
 	@Override
 	protected void authUri() {
 		super.authUri();
-		HashSet<String> uris = new HashSet<String>();
-		uris.add("/xxx/**");
-		// auths.put(角色ID, uris);
+
+		// 放行所有角色,所有URI(我是小白,我搞不明白URI配置,请使用这招,得了懒癌也可以这样搞后果自负.)
+		// HashSet<String> uris = new HashSet<String>();
+		// uris.add("/**/**");
+		// authUris.put(0, uris);
+
+		// 单独放行某角色xxx业务
+		// uris.add("/xxx/**");
+		// authUris.put(角色ID, uris);
+
+		// URI配置语法咋么写?
+		// @see AntPathMatcher
 	}
 
 }
