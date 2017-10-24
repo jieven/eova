@@ -409,9 +409,6 @@ $(function () {
 			iconCls: 'eova-icon49',
 			onclick: function () {
 				var widths = [];
-//				$('.datagrid-header-row .datagrid-cell').each(function() {
-//					widths.push(this.offsetWidth + 6);
-//				});
                 $.each($grid.datagrid('getColumnFields'), function(i, o) {
                     widths.push($grid.datagrid('getColumnOption', o).width);
                 });
