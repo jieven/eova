@@ -409,9 +409,12 @@ $(function () {
 			iconCls: 'eova-icon49',
 			onclick: function () {
 				var widths = [];
-				$('.datagrid-header-row .datagrid-cell').each(function() {
-					widths.push(this.offsetWidth + 6);
-				});
+//				$('.datagrid-header-row .datagrid-cell').each(function() {
+//					widths.push(this.offsetWidth + 6);
+//				});
+                $.each($grid.datagrid('getColumnFields'), function(i, o) {
+                    widths.push($grid.datagrid('getColumnOption', o).width);
+                });
 				$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function(){
 					$.slideMsg("当前表格宽度已保存");
 				});
