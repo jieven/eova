@@ -9,7 +9,6 @@ package com.eova.user;
 import com.eova.aop.AopContext;
 import com.eova.aop.MetaObjectIntercept;
 import com.eova.common.utils.EncryptUtil;
-import com.oss.model.UserInfo;
 
 /**
  * 自定义用户管理拦截器
@@ -26,26 +25,25 @@ public class UserIntercept extends MetaObjectIntercept {
 		return null;
 	}
 
+	//	@Override
+	//	public String addAfter(AopContext ac) throws Exception {
+	//		// 初始化用户详细信息，将角色ID冗余，方便高级业务查询
+	//		UserInfo me = new UserInfo();
+	//		me.set("id", ac.record.get("id"));
+	//		me.set("rid", ac.record.getInt("rid"));
+	//		me.save();
+	//		return null;
+	//	}
 
-	@Override
-	public String addAfter(AopContext ac) throws Exception {
-		// 初始化用户详细信息，将角色ID冗余，方便高级业务查询
-		UserInfo me = new UserInfo();
-		me.set("id", ac.record.get("id"));
-		me.set("rid", ac.record.getInt("rid"));
-		me.save();
-		return null;
-	}
-
-	@Override
-	public String updateBefore(AopContext ac) throws Exception {
-		UserInfo me = new UserInfo();
-		me.set("id", ac.record.get("id"));
-		me.set("rid", ac.record.getInt("rid"));
-		me.update();
-		
-		return null;
-	}
+	//	@Override
+	//	public String updateBefore(AopContext ac) throws Exception {
+	//		UserInfo me = new UserInfo();
+	//		me.set("id", ac.record.get("id"));
+	//		me.set("rid", ac.record.getInt("rid"));
+	//		me.update();
+	//		
+	//		return null;
+	//	}
 
 	
 }
