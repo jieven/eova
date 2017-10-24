@@ -4,4 +4,4 @@ if(isTrue(isReadonly!)){
 }
 %>
 <textarea class="eova-texts" id="${id!}" name="${name}" placeholder="${placeholder!}" ${htmlattrs!}
-style="${style!}" ${isTrue(isReadonly!) ? 'disabled' : ''} >${value!}</textarea>
+style="${style!}" ${isTrue(isReadonly!) ? 'readonly' : ''} >${value!}</textarea>
