@@ -2,10 +2,10 @@
 sql\mysql\demo.sql+eova.sql 分别创建demo和eova两个库,DB编码UTF-8
 
 2.配置
-src\main\resources\dev\jdbc.config 修改JDBC配置
+src\main\resources\default\jdbc.config 修改JDBC配置
 
 3.运行
-Windows操作系统 双击Windows-Run-Eova-OSS.bat
+Windows操作系统 双击Maven-Windows-Run-Eova.bat
 
 4.浏览
 打开谷歌浏览器输入 http://127.0.0.1
@@ -51,3 +51,4 @@ OS name: "windows 7", version: "6.1", arch: "amd64", family: "windows"
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
       <mirrorOf>central</mirrorOf>
     </mirror>
+新版本推送后,可能要等待几天才会被同步到阿里云镜像!
