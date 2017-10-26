@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<eova.version>1.6-beta2</eova.version>
+		<eova.version>1.6-beta3</eova.version>
 		<jetty.version>8.1.8</jetty.version>
 
 	</properties>
@@ -91,6 +91,7 @@
 		<repository>
 			<id>ali-maven</id>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<!-- <url>https://oss.sonatype.org/content/repositories/releases</url> -->
 			<releases>
 				<enabled>true</enabled>
 			</releases>
