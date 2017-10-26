@@ -53,7 +53,7 @@
 					//debug(f.defaulter);
 						
 					if(f.update_status == 20){		// 隐藏字段
-						%><input type="hidden" name="${f.en}" value="${value!}" /><%
+						%><input type="hidden" name="${f.en}" value="${value!f.defaulter}" /><%
 					}else{
 						%>
 						<div class="eova-form-field" title="${f.cn}" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框'  || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: '+ (f.height!100 + 35) +'px;' : ''}" >
@@ -84,7 +84,7 @@
 						}
 					}
 					if(f.add_status == 20){		// 隐藏字段
-						%><input type="hidden" name="${f.en}" value="${value!}" /><%
+						%><input type="hidden" name="${f.en}" value="${value!f.defaulter}" /><%
 					}else{
 						%>
 						<div class="eova-form-field" title="${f.cn}" style="${f.type == '文本域' || f.type == '编辑框' || f.type == '图片框' || f.type == 'JSON框' ? 'width:95.5%;' : ''}${f.type == '图片框' ? 'height: '+ (f.height!100 + 35) +'px;' : ''}" >
