@@ -12,25 +12,25 @@
 		var isFirstEnd = false;
 
 		for(f in fields){
-			// 如果当前分组名和上一个分组名不一样，输出分组标签
-			if(!isEmpty(f.fieldset) && f.fieldset != lastFieldset){
-				
-				// 第一个分组结束闭合标签
-				if(isFirstEnd){
-					print('</fieldset>');
-				}
-				
-				isFirstEnd = true;				// 分组标签待闭合标记
-				lastFieldset = f.fieldset;		// 记录当前分组名
-				
-				print('<fieldset style="margin: 10px;">');
-				print('<legend>' + f.fieldset + '</legend>');
-			}
-
 			if(!isEmpty(data!)){
 				// 有数据为更新模式
 				if(f.update_status < 50){		 	// 未禁用
-
+					
+					// 如果当前分组名和上一个分组名不一样，输出分组标签
+					if(!isEmpty(f.fieldset) && f.fieldset != lastFieldset){
+						
+						// 第一个分组结束闭合标签
+						if(isFirstEnd){
+							print('</fieldset>');
+						}
+						
+						isFirstEnd = true;				// 分组标签待闭合标记
+						lastFieldset = f.fieldset;		// 记录当前分组名
+						
+						print('<fieldset style="margin: 10px;">');
+						print('<legend>' + f.fieldset + '</legend>');
+					}
+					
 					var value = @data.get(f.en);	// 获取当前字段的值
 					var isReadOnly = false;		// 当前字段是否只读
 					if(f.update_status == 10){
@@ -66,6 +66,22 @@
 			} else {
 				// 无数据为新增模式
 				if(f.add_status < 50){			// 未禁用
+					
+					// 如果当前分组名和上一个分组名不一样，输出分组标签
+					if(!isEmpty(f.fieldset) && f.fieldset != lastFieldset){
+						
+						// 第一个分组结束闭合标签
+						if(isFirstEnd){
+							print('</fieldset>');
+						}
+						
+						isFirstEnd = true;				// 分组标签待闭合标记
+						lastFieldset = f.fieldset;		// 记录当前分组名
+						
+						print('<fieldset style="margin: 10px;">');
+						print('<legend>' + f.fieldset + '</legend>');
+					}
+				
 					var value = null;
 					var isReadOnly = false;		// 当前字段是否只读
 					if(f.add_status == 10){

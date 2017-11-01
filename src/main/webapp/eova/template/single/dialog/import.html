@@ -17,6 +17,8 @@
 </iframe>
 <script type="text/javascript">
 	var extArray = new Array(".xls");
+	var $ppjq;
+	var $pwidget;
 	function limit(file){
 	    var allowSubmit = false;
 	    if (!file){
@@ -40,6 +42,8 @@
 	}
 
 	var btnSaveCallback = function($dialog, $widget, $pjq) {
+		$ppjq = $pjq;
+		$pwidget = $widget;
 		var $fm = $('#importForm');
 		var $file = $('#upfile');
 		if (limit($file.val())) {
@@ -50,12 +54,12 @@
 	// 上传回调:IFrame Ajax上传
 	var callback = function (msg, success){
 		if (success) {
-			$.slideMsg(msg, parent.$);
+			$.slideMsg(msg, $ppjq);
 		} else {
-			$.alert(parent.$, msg);
+			$.alert($ppjq, msg);
 		}
-		parent.$.widgetReLoad($('#grid'));
-		parent.$('#import_dialog').dialog('destroy');
+		$.widgetReLoad($pwidget);
+		$ppjq('#import_dialog').dialog('destroy');
 	}
 </script>
 </body>
