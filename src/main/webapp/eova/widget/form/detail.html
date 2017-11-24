@@ -11,7 +11,9 @@
 $(function(){
 	// 禁用表单，注销事件，仅供查看
 	$(document).ready(function(){
-		$(this).find('input,textarea,select').attr('disabled',true);
+		$(this).find('input,select').attr('disabled',true);
+		$(this).find('textarea').attr('readonly',true);
+		$(this).find('textarea').css('background-color','rgb(235, 235, 228)');
 		$(this).find('input,i,div').unbind();
 	});
 });
