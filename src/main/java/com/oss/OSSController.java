@@ -32,11 +32,8 @@ public class OSSController extends IndexController {
 		// UserInfo info = UserInfo.dao.findById(user.get("id"));
 		// if (info != null) {
 		// user.put("info", info);
-		// // 页面或表达式 调用用户信息 ${user.info.nickname}
+		// 	页面或表达式 调用用户信息 ${user.info.nickname}
 		// }
-
-		// 还可以将相关信息放入session中
-		// ctrl.setSessionAttr("UserInfo", info);
 	}
 
 	@Override
@@ -52,7 +49,20 @@ public class OSSController extends IndexController {
 			render("/eova/520.html");
 			return;
 		}
+
+		// 初始化帐号密码和提示
+		setAttr("login_id", "eova");
+		setAttr("login_pwd", "000000");
+		setAttr("msg", "角色：超管,帐号:eova,密码:000000");
+		// 方便第一次使用的新手和开发快速测试,不需要注释即可!
+
 		super.toLogin();
+	}
+
+	public void testing() {
+		setAttr("id", "testGrid");
+		setAttr("objectCode", getPara(0));
+		render("/eova/test.html");
 	}
 
 }

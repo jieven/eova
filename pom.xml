@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<eova.version>1.6-beta3</eova.version>
+		<eova.version>1.6-beta4</eova.version>
 		<jetty.version>8.1.8</jetty.version>
 
 	</properties>

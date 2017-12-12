@@ -62,12 +62,12 @@
 						<label class="loginlabel" for="user_name"> 帐号:</label> <input
 							class="logininput ui-keyboard-input ui-widget-content ui-corner-all"
 							name="loginId" id="user_name" type="text"
-							value="${login_id!'eova'}" />
+							value="${login_id!}" />
 					</p>
 					<p>
 						<label class="loginlabel" for="user_password"> 密码:</label> <span>
 							<input class="logininput ui-keyboard-input ui-widget-content ui-corner-all" name="loginPwd"
-							value="${login_pwd!'000000'}" id="user_password" type="password" />
+							value="${login_pwd!}" id="user_password" type="password" />
 						</span>
 					</p>
 					<%if(isTrue(isCaptcha!)){%>
@@ -78,7 +78,7 @@
 					</p>
 					<%}%>
 					<div style="text-align: left; margin-left: 80px; margin-bottom: 5px; color: #BE1302;">
-						<b>${msg!'角色：超管,帐号:eova,密码:000000'}</b>
+						<b>${msg!}</b>
 					</div>
 					<div>
 						<button id="loginbtn" type="button" class="positive" name="Submit">

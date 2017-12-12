@@ -10,10 +10,10 @@
 			$.slideMsg("请选择一个树节点");
 			return;
 		}
-		if (node.isParent) {
-			$.slideMsg("不允许为目录添加按钮");
-			return;
-		}
+// 		if (node.isParent) {
+// 			$.slideMsg("不允许为目录添加按钮");
+// 			return;
+// 		}
 		var treeNodeValue = node.${menu.config.tree.objectField};
 
     	data['query_${menu.config.objectField}'] = treeNodeValue;

@@ -50,7 +50,6 @@
 					}
 					
 					//debug(value);
-					//debug(f.defaulter);
 						
 					if(f.update_status == 20){		// 隐藏字段
 						%><input type="hidden" name="${f.en}" value="${value!f.defaulter}" /><%
@@ -99,6 +98,7 @@
 							isReadOnly = true;
 						}
 					}
+					
 					if(f.add_status == 20){		// 隐藏字段
 						%><input type="hidden" name="${f.en}" value="${value!f.defaulter}" /><%
 					}else{
@@ -133,7 +133,7 @@ $(function(){
         msgMaker: false,
         fields: {
 	        <%for(f in fields){%>
-	        	<%if(f.add_status == 0 && (isTrue(f.is_required) || !isEmpty(f.validator))){%>
+	        	<%if((f.add_status == 0 || f.update_status == 0) && (isTrue(f.is_required) || !isEmpty(f.validator))){%>
 	                ${f.en} : { rule: "${isTrue(f.is_required)?f.cn + ':required;' : ''}${f.validator!}" },
 	            <%}%>
 	        <%}%>

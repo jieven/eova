@@ -9,6 +9,7 @@
 var $form = $('#${formId}');
 
 var submitNow = function($dialog, $widget, $pjq) {
+	$pjq("#eovaSave").linkbutton({disabled : true});
 	$.post('${url}', $.getFormParasObj($form), function(result) {
 		if (result.success) {
 			$.slideMsg("新增${object.name}成功！", $pjq);
@@ -16,6 +17,7 @@ var submitNow = function($dialog, $widget, $pjq) {
 			$dialog.dialog('destroy');
 		} else {
 			$.alert($pjq, result.msg);
+			$pjq("#eovaSave").linkbutton({disabled : false});
 		}
 	}, 'json');
 };
@@ -26,6 +28,8 @@ var btnSaveCallback = function($dialog, $widget, $pjq) {
 			submitNow($dialog, $widget, $pjq);
 		}
 	});
+	
+	
 };
 </script>
 <%if(!isEmpty(object.diy_js!)){%>

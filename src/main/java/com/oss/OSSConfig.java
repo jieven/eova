@@ -15,6 +15,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.oss.product.ProductController;
+import com.oss.test.TestController;
 
 public class OSSConfig extends EovaConfig {
 
@@ -29,12 +30,14 @@ public class OSSConfig extends EovaConfig {
 		me.add("/user", UserController.class);
 
 		me.add("/", OSSController.class);
+		me.add("/test", TestController.class);
 		me.add("/product", ProductController.class);
 
 		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
+		LoginInterceptor.excludes.add("/test/**");
+		
 		LoginInterceptor.excludes.add("/init");
 		LoginInterceptor.excludes.add("/code");
-		LoginInterceptor.excludes.add("/test");
 		// LoginInterceptor.excludes.add("/xxxx/**");
 	}
 

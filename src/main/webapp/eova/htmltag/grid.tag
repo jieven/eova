@@ -410,7 +410,10 @@ $(function () {
 			onclick: function () {
 				var widths = [];
                 $.each($grid.datagrid('getColumnFields'), function(i, o) {
-                    widths.push($grid.datagrid('getColumnOption', o).width);
+                	var col = $grid.datagrid('getColumnOption', o);
+                	if(col.title != null){
+	                    widths.push(col.width);
+                	}
                 });
 				$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function(){
 					$.slideMsg("当前表格宽度已保存");

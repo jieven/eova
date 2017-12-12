@@ -2,10 +2,14 @@
 <body class="easyui-layout">
 	<div data-options="region:'center'" data-options="fit:true,border:false">
 		<combo id="aaa" name="aaa" exp="selectAreaByLv2AndPid,22" isReadonly="false" />
-		<#combo id="aaa" name="aaa" exp="selectAreaByLv2AndPid,22" isReadonly="false" multiple="true"/>
-		<#combotree id="cc" name="cc" exp="selectEovaMenu" />
-		<button id="ok">ok</button>
-		<button id="set">set</button>
+		<#combo id="aaa" name="aaa" exp="selectAreaByLv2AndPid,22" isReadonly="false" multiple="true"/><br>
+		<#combo id="aaa1" name="aaa1" exp="selectAreaByLv2AndPid,22" isReadonly="false" multiple="true"/><br>
+		<#combotree id="cc" name="cc" exp="selectEovaMenu" /><br>
+		<#combotree id="c2" name="c2" exp="selectEovaMenu" /><br>
+		<#time id="t1" name="t1" /><br>
+		<button id="ok">ok</button><br>
+		<button id="set">set</button><br>
+		
 	</div>
 	<script>
 		$('div.eova-combotree').eovacombotree();
@@ -18,6 +22,7 @@
 				$('#cc').eovacombotree().setValues([20,21]);
 				//$('#cc').eovacombotree().setTexts(['菜单管理', '按钮管理']);
 			})
+			$('#t1').mask();
 		})
 	</script>
 </body>

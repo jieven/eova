@@ -6,7 +6,7 @@
  */
 package com.oss.product;
 
-import com.jfinal.core.Controller;
+import com.eova.common.base.BaseController;
 import com.oss.model.Product;
 
 /**
@@ -15,7 +15,7 @@ import com.oss.model.Product;
  * @author Jieven
  * 
  */
-public class ProductController extends Controller {
+public class ProductController extends BaseController {
 
 	public void update() throws Exception {
 		int id = getParaToInt(0);

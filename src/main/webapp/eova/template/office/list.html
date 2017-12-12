@@ -7,12 +7,12 @@
 		</div>
 	</div>
 	<div data-options="region:'center', fit:true,border:false">
-		<iframe id="show" src="/office/show/${menuCode}" allowtransparency="true" style="border: 0; width: 100%; height: 96%;" frameborder="0"></iframe>
+		<iframe id="show" src="/office/show/${para}" allowtransparency="true" style="border: 0; width: 100%; height: 96%;" frameborder="0"></iframe>
 		<iframe id="print" style="height: 0;width: 0"></iframe>
 	</div>
 	<script type="text/javascript">
 		function eova_download() {
-			window.open('/office/file/${menuCode}');
+			window.open('/office/file/${para}');
 		}
 		function eova_print() {
 			var show = document.getElementById('show');

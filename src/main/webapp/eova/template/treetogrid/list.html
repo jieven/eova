@@ -45,13 +45,11 @@
 <script>
 // Tree Node OnClick
 var nodeClick = function(e, treeId, node) {
-	if (!node.isParent) {
-		var code = node.${tree.objectField};
-		// 按Tree选中节点来初始化显示Grid内容
-        $('#grid').datagrid('load',{
-            'query_${menu.config.objectField}': code
-        });
-	}
+	var code = node.${tree.objectField};
+	// 按Tree选中节点来初始化显示Grid内容
+    $('#grid').datagrid('load',{
+        'query_${menu.config.objectField}': code
+    });
 };
 
 $(function(){
