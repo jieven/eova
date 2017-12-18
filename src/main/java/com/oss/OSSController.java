@@ -149,7 +149,8 @@ public class OSSController extends IndexController {
 		String userId = xx.getConfig("login.user.id", "id");
 		String userPassword = xx.getConfig("login.user.password", "login_pwd");
 
-		Record r = Db.use(userDs).findFirst(String.format("select %s,%s from %s where %s = ?", userId, userPassword, userTable, userId), UID());
+		User user = getSessionAttr(EovaConst.USER);
+		Record r = Db.use(userDs).findFirst(String.format("select %s,%s from %s where %s = ?", userId, userPassword, userTable, userId), user.getInt("id"));
 		String pwd = r.getStr(userPassword);
 
 		// 旧密码是否正确
