@@ -58,13 +58,25 @@ public class ZippedRender extends Render{
             }  
             ops.flush();
             
-            if (fis != null) fis.close();
-            if (ops != null) ops.close();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            if (fis != null){
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } // 应在finally里关流，确保close方法被执行到
+            if (ops != null){
+                try {
+                    ops.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if(!new File(dest).delete()){
                 System.err.println("warning: failed to remove temp file [" + dest + "]");
             }
