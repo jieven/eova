@@ -1,0 +1,8 @@
+<%// 新窗口打开通用按钮 %>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true" onclick="eova_btn_${button.id}()">${button.name!}</a>
+<script type="text/javascript">
+var eova_btn_${button.id} = function() {
+	var url = "${button.uri!}";
+    window.open(url);
+};
+</script>

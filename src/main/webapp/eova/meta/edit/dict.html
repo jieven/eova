@@ -1,0 +1,13 @@
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon145',plain:true" onclick="eova_dict()">
+编辑字典
+</a>
+<script type="text/javascript">
+var eova_dict = function() {
+	var $grid = $('#${gridId}');
+    if (isSelected($grid)) {
+        var row = $.getWidgetSelected($grid);
+	    window.open('/single_grid/list/eova_dict?query_v_object_code='+ row.object_code_val +'&query_field=' + row.en);
+        return;
+    }
+};
+</script>

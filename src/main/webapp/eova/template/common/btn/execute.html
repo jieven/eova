@@ -1,0 +1,21 @@
+<%// 后台执行逻辑并刷新通用按钮 %>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'${button.icon!}',plain:true" onclick="eova_btn_${button.id}()">${button.name!}</a>
+<script type="text/javascript">
+	var eova_btn_${button.id} = function(){
+		var $widget = $('#${gridId}');
+	    
+	    $.messager.confirm($.I18N('操作提示'), $.I18N('您确认执行当前操作'), function(ok) {
+			if (ok) {
+				$.syncPost('${button.uri!}', {}, function(result, status) {
+					if (result.success) {
+						$.slideMsg($.I18N('操作成功'));
+						$.widgetReLoad($widget);
+					} else {
+						$.alert($, result.msg);
+					}
+				});
+				$.widgetClearSelections($widget);
+			}
+		});
+	};
+</script>
