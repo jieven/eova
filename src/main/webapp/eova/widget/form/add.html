@@ -12,8 +12,8 @@ var submitNow = function($dialog, $widget, $pjq) {
 	$pjq("#eovaSave").linkbutton({disabled : true});
 	$.post('${url}', $.getFormParasObj($form), function(result) {
 		if (result.success) {
-			$.slideMsg("新增${object.name}成功！", $pjq);
-			$.widgetReLoad($widget);
+			$.slideMsg($.str.format($.I18N('新增成功'), '${object.name}'), $pjq);
+			$.widgetLoad($widget);
 			$dialog.dialog('destroy');
 		} else {
 			$.alert($pjq, result.msg);
@@ -31,9 +31,10 @@ var btnSaveCallback = function($dialog, $widget, $pjq) {
 	
 	
 };
+var EOVA_FORM = "add";
 </script>
 <%if(!isEmpty(object.diy_js!)){%>
 <script type="text/javascript" src="${object.diy_js}"></script>
 <%}%>
 
-<%};include("/eova/layout/default.html",{'title' : '新增' + object.name, 'layoutContent' : body, 'isEditor' : true}){}%>
+<%};include("/eova/layout/default.html",{'title' : 'add ' + object.name, 'layoutContent' : body, 'isEditor' : true}){}%>

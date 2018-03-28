@@ -9,7 +9,7 @@ var eova_task_trigger = function() {
     	return;
     }
 	var row = $.getWidgetSelected(grid);
-    $.messager.confirm('请确认', '您确定手工触发一次任务？', function(o) {
+    $.messager.confirm('confirm', '您确定手工触发一次任务？', function(o) {
 		if (o) {
             $.ajax({
     			url : '/task/trigger/' + row.id,

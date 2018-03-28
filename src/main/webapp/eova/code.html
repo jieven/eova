@@ -5,8 +5,8 @@
 <title>EOVA简单开发 - 常用代码块</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit">
-<link type="text/css" rel="stylesheet" href="/ui/css/code.css"/>
-<script src="/ui/js/jquery.min.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/eova/ui/css/code.css"/>
+<script src="/eova/ui/js/jquery.min.js" type="text/javascript"></script>
 <style type="text/css">
 
 </style>
@@ -143,6 +143,20 @@ function(value, row, index, field) {
 <pre>
 function(value, row, index, field) {
     return '&lt;a target="_blank" href="http://eova.cn" style="color:blue">' + value + '</a>'
+}
+</pre>
+
+<hr/>
+格式化-进度条
+<hr/>
+<pre>
+function(value, row, index, field) {
+    if (value) {
+        var s = '<div style="width:100%;border:1px solid #ccc">' + '<div style="width:' + value + '%;background:#cc0000;color:#fff">' + value + '%' + '</div></div>';
+        return s;
+    } else {
+        return '';
+    }
 }
 </pre>
 

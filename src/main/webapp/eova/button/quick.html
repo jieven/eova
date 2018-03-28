@@ -1,7 +1,6 @@
 <%layout("/eova/layout/default.html",{'title' : 'Dialog' }){%>
 
 <form id="myForm" method="post" class="form" style="padding: 5px;">
-    <fieldset>
         <table class="table" style="width: 100%;">
             <tr>
                 <th>所属菜单编码</th>
@@ -22,21 +21,33 @@
                 </td>
             </tr>
             <tr>
-                <th>按钮UI路径</th>
+                <th>前端代码文件</th>
                 <td>
-                    <#texts id="ui" name="ui" value="/eova/template/common/btn/confirm.html" placeholder="按钮的前端代码文件路径 例：/order/btn/print.html" style="width:500px;height:20px;" />(必填)
+                    <#texts id="ui" name="ui" value="" placeholder="按钮的前端代码文件路径 例：/order/btn/print.html" style="width:500px;height:20px;" />(必填)
+                    <br>
+                                        通按钮模版选择:
+                    [<a class="template" href="#" title="前端随便写,服务端也是你自己写" data-ui="">自定义</a>]
+                    [<a class="template" href="#" title="后台执行逻辑,并刷新前台组件" data-ui="/eova/template/common/btn/execute.html">后台执行</a>]
+                    [<a class="template" href="#" title="选中数据,二次确认后,异步提交" data-ui="/eova/template/common/btn/confirm.html">二次确认</a>]
+                    [<a class="template" href="#" title="选中数据,输入内容后,异步提交" data-ui="/eova/template/common/btn/input.html">输入内容</a>]
+                    [<a class="template" href="#" title="以新窗口方式打开指定URI" data-ui="/eova/template/common/btn/open.html">跳转新窗</a>]
+                    [<a class="template" href="#" title="选中数据,同步提交到新窗口" data-ui="/eova/template/common/btn/submit.html">提交新窗</a>]
+                    &nbsp;|&nbsp;<a href="http://doc.eova.cn/217082" target="_blank">查看帮助</a>
+                    <div id="ui_uri" style="display: none;">
+                    	服务端URL<#text id="uri" name="uri" />(谁来处理本按钮的请求)
+                    </div>
                 </td>
             </tr>
             <tr>
-                <th>按钮BS路径</th>
+                <th>服务权限配置</th>
                 <td>
-                    <#texts id="bs" name="bs" value="${menu.name!}" placeholder="服务端URI,权限拦截所必需. 例：\n/order/print;\n/order/print_data;" style="width:500px;height:60px;" /> (必填)
+                    <#texts id="bs" name="bs" placeholder="服务端URI权限配置. 例：\n/order/print;\n/order/print_data;" style="width:500px;height:60px;" /> (必填)
                 </td>
             </tr>
             <tr>
                 <th>所属按钮组号</th>
                 <td>
-                    <#text id="group_num" name="group_num" value="0" /> (默认即可)
+                    <#text id="group_num" name="group_num" value="0" /> (默认即可,主子模版子表按钮组从1开始)
                 </td>
             </tr>
             <tr>
@@ -46,7 +57,6 @@
                 </td>
             </tr>
         </table>
-    </fieldset>
 </form>
 
 <script type="text/javascript">
@@ -84,6 +94,19 @@
                 });
             }
         });
+        
+        $('.template').click(function(){
+        	$('#ui').val($(this).data('ui'));
+        	var txt = $(this).text();
+        	var $uiuri = $('#ui_uri');
+        	if(txt == '自定义'){
+        		$uiuri.hide();
+        		$form.validator("setField", "uri", null);
+        	} else {
+        		$uiuri.show();
+        		$form.validator("setField", "uri", "服务端URL:required;");
+        	}
+        })
     });
 
     var btnSaveCallback = function ($dialog, $widget, $pjq) {
@@ -107,8 +130,6 @@
             }
         }, 'json');
     };
-
-
 </script>
 
 <%}%>

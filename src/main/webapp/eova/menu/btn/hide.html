@@ -5,10 +5,10 @@
 		var rows = $treegrid.treegrid('getSelections');
 		var num = rows.length;
 		if (num == "0") {
-			$.slideMsg("请选择一条记录！");
+			$.slideMsg($.I18N('请选择一行数据'));
 			return;
 		}
-		$.messager.confirm('请确认', '您要隐藏当前所选功能？', function(o) {
+		$.messager.confirm('confirm', '您要隐藏当前所选功能？', function(o) {
 			if (o) {
 				var json2 = JSON.stringify(deleted);
 				var $jq = $(this);

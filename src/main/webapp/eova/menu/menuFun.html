@@ -34,8 +34,7 @@ border-radius:5px;
 					<%for(x in group.value){%>
 					<td>
 					<label>
-						<span>${x.name}</span>
-						<input type="checkbox" id="${x.id}" name="${group.key}_${x.id}" value="false" ${isTrue(x.is_hide!) ? '' : 'checked'}  />
+						<input type="checkbox" id="${x.id}" name="btn${x.id}" ${isTrue(x.is_hide!) ? '' : 'checked'}  />${x.name}
 					</label>
 					</td>
 					<%}%>
@@ -49,7 +48,7 @@ border-radius:5px;
 <div id="template" style="text-align: center;font-weight: bold;margin-top: 20px;">
 	<div>功能组位置分布：</div>
 	<div id="templateimg">
-		<img src="/ui/images/template/master_slave_grid.png" style="border: 5px solid #D1D7DC;">
+		<img src="/eova/ui/images/template/master_slave_grid.png" style="border: 5px solid #D1D7DC;">
 	</div>
 </div>
 

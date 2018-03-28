@@ -1,4 +1,4 @@
-<a id="btnQuery_${queryId}" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query_${queryId}()">快速查询 </a>
+<a id="btnQuery_${queryId}" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="eova_query_${queryId}()">${I18N('快速查询')}</a>
 <script type="text/javascript">
     function eova_query_${queryId}() {
     	try {
@@ -12,7 +12,7 @@
 
     	var $widget = $('#${parentId}');
     	// post query form and reload widget data
-    	$.widgetReLoad($widget, $.getFormParasObj($('#${queryId}')));
+    	$.widgetLoad($widget, $.getFormParasObj($('#${queryId}')));
 		$.widgetClearSelections($widget);
     };
 

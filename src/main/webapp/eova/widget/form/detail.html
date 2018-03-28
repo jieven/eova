@@ -21,10 +21,11 @@ $(function(){
 var btnSaveCallback = function($dialog, $widget, $pjq) {
     $dialog.dialog('destroy');
 };
+var EOVA_FORM = "detail";
 </script>
 
 <%if(!isEmpty(object.diy_js!)){%>
 <script type="text/javascript" src="${object.diy_js}"></script>
 <%}%>
 
-<%};include("/eova/layout/default.html",{'title' : object.name + '详情', 'layoutContent' : body, 'isEditor' : true}){}%>
+<%};include("/eova/layout/default.html",{'title' : object.name + ' detail', 'layoutContent' : body, 'isEditor' : true}){}%>

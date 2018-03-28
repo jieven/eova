@@ -1,12 +1,14 @@
-<%layout("/eova/layout/default.html",{'title' : '元字段编辑(拖拽行号排序)'}){%>
-<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
-<script type="text/javascript" src="/ui/easy/datagrid-dnd.js"></script>
+<%layout("/eova/layout/default.html",{'title' : '元字段编辑'}){%>
+<script type="text/javascript" src="${STATIC!}/eova/ui/js/template.js"></script>
+<script type="text/javascript" src="${STATIC!}/eova/plugins/easy/datagrid-dnd.js"></script>
 
 <body class="easyui-layout">
 	<div data-options="region:'center',fit:false,border:false">
 	<div id="gridToolbar">
 		<%include('/eova/meta/edit/syncnew.html',{'gridId': 'fieldGrid'}){}%>
 		<%include('/eova/meta/edit/virtual.html',{'gridId': 'fieldGrid'}){}%>
+		<%include('/eova/meta/edit/dict.html',{'gridId': 'fieldGrid'}){}%>
+		&nbsp;&nbsp;&nbsp;&nbsp;小秘密:拖拽行号可进行快速排序!
 	</div>
 	<#grid id="fieldGrid" objectCode="eova_field_code" isFirstLoad="false" isPaging="false" cellEdit="update,delete" toolbar="gridToolbar" /></div>
 	<script>
@@ -15,7 +17,7 @@
 			$grid.datagrid({
 				isChangeData : false,// 操作不改变grid中的数据
 				onLoadSuccess : function() {
-					$(this).datagrid('enableDnd');
+					$grid.datagrid('enableDnd');
 				},
 				onBeforeDrag : function(row, e) {
 					// 只有拖动行头可以排序
@@ -31,7 +33,6 @@
 					console.log(targetRow.order_num, sourceRow.order_num, point);
 					$.syncGetJson("/meta/swap/" + sid + '-' + snum + '-' + tid + '-' + tnum, function(json) {
 						$grid.datagrid('reload');
-						console.log("换序成功！");
 					});
 				}
 			});

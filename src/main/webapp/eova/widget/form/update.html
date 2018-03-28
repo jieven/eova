@@ -12,7 +12,7 @@ var submitNow = function($dialog, $widget, $pjq) {
 	$pjq("#eovaSave").linkbutton({disabled : true});
     $.post('${url}', $.getFormParasObj($form), function(result) {
         if (result.success) {
-        	$.slideMsg("修改${object.name}成功！", $pjq);
+        	$.slideMsg($.str.format($.I18N('修改成功'), '${object.name}'), $pjq);
         	$.widgetReLoad($widget);
             $dialog.dialog('destroy');
         } else {
@@ -31,9 +31,10 @@ var btnSaveCallback = function($dialog, $widget, $pjq) {
     });
 };
 
+var EOVA_FORM = "update";
 </script>
 <%if(!isEmpty(object.diy_js!)){%>
 <script type="text/javascript" src="${object.diy_js}"></script>
 <%}%>
 
-<%};include("/eova/layout/default.html",{'title' : '修改' + object.name, 'layoutContent' : body, 'isEditor' : true}){}%>
+<%};include("/eova/layout/default.html",{'title' : 'update' + object.name, 'layoutContent' : body, 'isEditor' : true}){}%>

@@ -8,7 +8,7 @@
 					input : val
 				}, function(result, status) {
 					if (result.success) {
-						$.slideMsg("操作完成！");
+						$.slideMsg($.I18N('操作成功'));
 						$.widgetReLoad($widget);
 					} else {
 						$.alert($, result.msg);

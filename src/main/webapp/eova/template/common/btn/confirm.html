@@ -5,18 +5,18 @@
 		var $widget = $('#${gridId}');
         var rows = $.getWidgetSelections($widget);
         if (rows.length == "0") {
-        	$.slideMsg("请选择一条记录！");
+        	$.slideMsg($.I18N('请选择一行数据'));
             return;
         }
-	    
-	    $.messager.confirm("${button.title!'系统提示'}", "${button.title!'您确认执行当前操作？'}", function(ok) {
+        
+	    $.messager.confirm($.I18N('操作提示'), $.I18N('您确认执行当前操作'), function(ok) {
 			if (ok) {
 				var json = JSON.stringify(rows);
-				$.syncPost('${button.bs}', {
+				$.syncPost('${button.uri!}', {
 					rows : json
 				}, function(result, status) {
 					if (result.success) {
-						$.slideMsg("操作完成！");
+						$.slideMsg($.I18N('操作成功'));
 						$.widgetReLoad($widget);
 					} else {
 						$.alert($, result.msg);

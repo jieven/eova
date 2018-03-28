@@ -2,7 +2,7 @@
 <script type="text/javascript">
 var eova_syncnew = function() {
 	var $widget = $('#${gridId}');
-    $.messager.confirm('确定对选中对象的元数据进行增量同步？', '增量同步：同步新增字段的元数据', function(o) {
+    $.messager.confirm('确定进行增量同步？', '增量同步：同步DB中新增字段的元数据', function(o) {
 		if (o) {
             $.ajax({
     			url : '/meta/syncnew?objectCode=${objectCode}',

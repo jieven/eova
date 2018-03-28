@@ -28,28 +28,24 @@
 						lastFieldset = f.fieldset;		// 记录当前分组名
 						
 						print('<fieldset style="margin: 10px;">');
-						print('<legend>' + f.fieldset + '</legend>');
+						print('<legend>' + I18N(f.fieldset) + '</legend>');
 					}
 					
-					var value = @data.get(f.en);	// 获取当前字段的值
+					// 获取当前字段的值
+					var value = @data.get(f.en);
+					// 固定值覆盖当前值
+					if(!isEmpty(fixed)){
+						var t = @fixed.get(f.en);
+						if(!isEmpty(t)) {
+							value = t;
+						}
+					}
 					var isReadOnly = false;		// 当前字段是否只读
 					if(f.update_status == 10){
 						isReadOnly = true;
 					}
 					
-					// 获取固定值(必须是JSON)
-					if(!isEmpty(fixed)){
-						// JSON对象化
-						var fix = parseJson(fixed);
-						var fixedValue = fix[f.en];
-						// 固定值覆盖动态值并且只读
-						if(!isEmpty(fixedValue)){
-							value = fixedValue;
-							isReadOnly = true;
-						}
-					}
-					
-					//debug(value);
+					// debug(value);
 						
 					if(f.update_status == 20){		// 隐藏字段
 						%><input type="hidden" name="${f.en}" value="${value!f.defaulter}" /><%
@@ -78,7 +74,7 @@
 						lastFieldset = f.fieldset;		// 记录当前分组名
 						
 						print('<fieldset style="margin: 10px;">');
-						print('<legend>' + f.fieldset + '</legend>');
+						print('<legend>' + I18N(f.fieldset) + '</legend>');
 					}
 				
 					var value = null;
@@ -87,15 +83,11 @@
 						isReadOnly = true;
 					}
 					
-					// 获取固定值(必须是JSON)
+					// 固定值覆盖当前值
 					if(!isEmpty(fixed)){
-						// JSON对象化
-						var fix = parseJson(fixed);
-						var fixedValue = fix[f.en];
-						// 固定值覆盖动态值并且只读
-						if(!isEmpty(fixedValue)){
-							value = fixedValue;
-							isReadOnly = true;
+						var t = @fixed.get(f.en);
+						if(!isEmpty(t)) {
+							value = t;
 						}
 					}
 					

@@ -1,8 +1,8 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1063',plain:true" onclick="singleImport()"> 导入 </a>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1063',plain:true" onclick="singleImport()">${button.name!'导入'} </a>
 <script type="text/javascript">
 	var singleImport = function() {
 		var $grid = $('#grid');
-		importDialog($grid, '导入${object.name}数据', '/single_grid/importXls/${menu.code}');
+		importDialog($grid, '${I18N('导入')}${object.name} ${I18N('数据')}', '/single_grid/importXls/${menu.code}');
 	};
 
 	var importDialog = function($grid, name, url) {
@@ -12,7 +12,7 @@
 			title : name,
 			url : url,
 			buttons : [ {
-				text : '确定',
+				text : $.I18N('确定'),
 				handler : function() {
 					dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog, $grid, parent.$);
 				}

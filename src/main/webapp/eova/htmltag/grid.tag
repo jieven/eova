@@ -236,7 +236,7 @@ $(function () {
             }
         });
         rowMenu.menu('appendItem', {
-            text: '刷新',
+            text: $.I18N('刷新'),
             name: 'reload',
             iconCls: 'pagination-load',
             onclick: function () {
@@ -244,7 +244,7 @@ $(function () {
             }
         });
         rowMenu.menu('appendItem', {
-            text: '导出当前查询数据',
+            text: $.I18N('导出当前查询数据'),
             name: 'exportAll',
             iconCls: 'eova-icon779',
             onclick: function () {
@@ -260,11 +260,10 @@ $(function () {
             }
         });
 //         rowMenu.menu('appendItem', {
-//             text: '导出本页数据',
+//             text: $.I18N('导出本页数据'),
 //             name: 'exportAll',
 //             iconCls: 'eova-icon779',
 //             onclick: function () {
-//             	// 导出Xls
 //                 $.gridToExcel($myGrid, objectCode);
 //             }
 //         });
@@ -282,18 +281,17 @@ $(function () {
         	}
         	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
             rowMenu.menu('appendItem', {
-                text: '删除行',
+                text: $.I18N('删除行'),
                 name: 'delete',
                 iconCls: 'eova-icon1050',
                 onclick: function () {
-                	console.log('删除行，索引=' +  selectIndex);
 					$myGrid.datagrid('deleteRow', selectIndex);
                 }
             });
             <%}%>
             <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
             rowMenu.menu('appendItem', {
-                text: '新增行',
+                text: $.I18N('新增行'),
                 name: 'add',
                 iconCls: 'eova-icon1044',
                 onclick: function () {
@@ -306,7 +304,7 @@ $(function () {
             <%}%>
         	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"update")){%>
             rowMenu.menu('appendItem', {
-                text: '保存数据',
+                text: $.I18N('保存数据'),
                 name: 'save',
                 iconCls: 'eova-icon1089',
                 onclick: function () {
@@ -352,7 +350,7 @@ $(function () {
                     }
 
                     if (isOk) {
-                        $.slideMsg("保存成功！");
+                        $.slideMsg($.I18N('操作成功'));
                         // 确认改动
                         $myGrid.datagrid('acceptChanges');
                     } else {

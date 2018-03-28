@@ -1,4 +1,4 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="slave_${object.code}_add()">新增</a>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="slave_${object.code}_add()">${button.name!'新增'}</a>
 <script type="text/javascript">
     var slave_${object.code}_add = function () {
     	
@@ -17,6 +17,6 @@
     	// ------------------------------级联
     	
     	var $grid = $('#${gridId}');
-        loadDialog($grid, '新增${object.name}', '/form/add/${object.code}' + ref);
+        loadDialog($grid, '${I18N('新增')} ${object.name}', '/form/add/${object.code}' + ref, ${menu.config.params.width!'945'}, ${menu.config.params.height!'600'});
     };
 </script>

@@ -1,4 +1,4 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon733',plain:true" onclick="slave_${object.code}_update()">修改</a>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon733',plain:true" onclick="slave_${object.code}_update()">${button.name!'修改'}</a>
 <script type="text/javascript">
 	var slave_${object.code}_update = function() {
 		var $grid = $('#${gridId}');
@@ -19,7 +19,7 @@
         	// ------------------------------级联
 
         	var row = $.getWidgetSelected($grid);
-            loadDialog($grid, '修改${object.name}', '/form/update/${object.code}-' + row.pk_val + ref);
+            loadDialog($grid, '${I18N('修改')} ${object.name}', '/form/update/${object.code}-' + row.pk_val + ref, ${menu.config.params.width!'945'}, ${menu.config.params.height!'600'});
         }
 
 	};

@@ -1,4 +1,4 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="singleTreeAdd()">新增</a>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon724',plain:true" onclick="singleTreeAdd()">${button.name!'新增'}</a>
 <script type="text/javascript">
     var singleTreeAdd = function () {
     	var $treegrid = $('#treegrid');
@@ -17,6 +17,6 @@
 
     	var ref = "?ref=" + treeParentField + ":" + parentId;
 
-        loadDialog($treegrid, '新增${object.name}', '/form/add/${object.code}' + ref);
+        loadDialog($treegrid, '${I18N('新增')} ${object.name}', '/form/add/${object.code}' + ref);
     };
 </script>

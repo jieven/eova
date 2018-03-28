@@ -35,7 +35,7 @@ function typeChange(oldValue, newValue) {
 			objectCode : '元对象:required;'
 		});
 		$('#templatename').text('[单表]');
-		$('#templateimg').html('<img src="/ui/images/template/single_grid.png" >');
+		$('#templateimg').html('<img src="/eova/ui/images/template/single_grid.png" >');
 		$('#template').show();
 	} else {
 		if (oldValue == 'single_grid') {
@@ -53,7 +53,7 @@ function typeChange(oldValue, newValue) {
 			parentField : '关联字段:required;'
 		});
 		$('#templatename').text('[单表树]');
-		$('#templateimg').html('<img src="/ui/images/template/single_tree.png" >');
+		$('#templateimg').html('<img src="/eova/ui/images/template/single_tree.png" >');
 		$('#template').show();
 	} else {
 		if (oldValue == 'single_tree') {
@@ -74,7 +74,7 @@ function typeChange(oldValue, newValue) {
 			singleChartY : 'Y轴字段:required;'
 		});
 		$('#templatename').text('[单表图]');
-		$('#templateimg').html('<img src="/ui/images/template/single_chart.png" >');
+		$('#templateimg').html('<img src="/eova/ui/images/template/single_chart.png" >');
 		$('#template').show();
 	} else {
 		if (oldValue == 'single_chart') {
@@ -95,7 +95,7 @@ function typeChange(oldValue, newValue) {
 			slaveFieldCode : '子关联字段:required;'
 		});
 		$('#templatename').text('[主子表]');
-		$('#templateimg').html('<img src="/ui/images/template/master_slave_grid.png" >');
+		$('#templateimg').html('<img src="/eova/ui/images/template/master_slave_grid.png" >');
 		$('#template').show();
 	} else {
 		if (oldValue == 'master_slave_grid') {
@@ -121,7 +121,7 @@ function typeChange(oldValue, newValue) {
 			treeGridFieldCode : 'Grid外键字段:required;'
 		});
 		$('#templatename').text('[树&表]');
-		$('#templateimg').html('<img src="/ui/images/template/tree_grid.png" >');
+		$('#templateimg').html('<img src="/eova/ui/images/template/tree_grid.png" >');
 		$('#template').show();
 	} else {
 		if (oldValue == 'tree_grid') {

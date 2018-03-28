@@ -9,13 +9,12 @@
 			view = zt._z.view;
 		// 重写ICON处理
 		view.makeNodeIcoClass = function(setting, node) {
-// 			console.info('diy eova style icon');
-			
+
 			var iconKey = "iconskip";
 			<%if(!isEmpty(iconKey)){%>iconKey = "${iconKey}";<%}%>
 			var icon = node[iconKey];
 			if (!icon) {
-				icon = 'eova-icon234';
+				// icon = 'eova-icon234';
 			}
 			var icoCss = [icon];
 			if (!node.isAjaxing) {
@@ -30,7 +29,7 @@
 		};
 		// 重写节点ICOClass切换 不需要
 		view.replaceIcoClass = function(node, obj, newName) {
-// 			console.info('eova no replace ico class');
+			// console.info('eova no replace ico class');
 		}
 	})(jQuery);
 	$(function() {
@@ -70,6 +69,7 @@
 		var data;
 		$.syncGetJson(url, function(json) {
 			data = json;
+			// TODO 改造成POST 将关键字段提交,提升性能
 		});
 		var curMenu = null,
 			zTree_Menu = null;
@@ -89,8 +89,19 @@
 		$.fn.zTree.init($tree, setting, data);
 
 		<%if(!isEmpty(expandAll!)){%>$.fn.zTree.getZTreeObj("${id}").expandAll(${expandAll});<%}%>
+		
+		<%if(session.user.isAdmin){%>
+			var $btnMetaObject = $('#eova_edit_meta_object');
+			$btnMetaObject.attr('href', $btnMetaObject.attr("href") + object.id);
+		<%}%>
 	});
 </script>
+<%// 仅超级管理员可见%>
+<%if(session.user.isAdmin){%>
+<span style="color: #CCCCCC">EOVA:</span>
+<a href="/meta/edit/${objectCode!}" target="_blank" style="color: #CCCCCC">编辑元字段</a>
+<a id="eova_edit_meta_object" href="/form/update/eova_object_code-" target="_blank" style="color: #CCCCCC">编辑元对象</a>
+<%}%>
 <div class="zTreeDemoBackground left">
 	<ul id="${id!}" class="ztree"></ul>
 </div>

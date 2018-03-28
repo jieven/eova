@@ -1,8 +1,8 @@
 <div id="toolbar" style="display: none;">
 	<table>
 		<tr>
-			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="queryFun()">快速查询</a></td>
-			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon79',plain:true" onclick="resetFun()">清空查询</a></td>
+			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon1166',plain:true" onclick="queryFun()">${I18N('快速查询')}</a></td>
+			<td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon79',plain:true" onclick="resetFun()">${I18N('清空查询')}</a></td>
 		</tr>
 	</table>
 </div>
@@ -16,7 +16,7 @@
 	
 	// 重载Grid
 	var queryFun = function(){
-		$('#findGrid').datagrid('load',$.getFormParasObj($('#queryFindForm')));
+		$('#findGrid').datagrid('reload',$.getFormParasObj($('#queryFindForm')));
 	};
 	// 刷新Grid
 	var resetFun = function() {

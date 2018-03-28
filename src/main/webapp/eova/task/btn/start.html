@@ -10,7 +10,7 @@ var eova_task_start = function() {
     }
     
 	var row = $.getWidgetSelected(grid);
-    $.messager.confirm('请确认', '您确定操作？', function(o) {
+    $.messager.confirm('confirm', '您确定操作？', function(o) {
 		if (o) {
             $.ajax({
     			url : '/task/start/' + row.id,

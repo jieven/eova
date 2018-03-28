@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-<script src="/plugins/echarts/echarts.min.js"></script>
+<script src="/eova/plugins/echarts/echarts.min.js"></script>
 <script>
 $(function () {
 	var $grid = $('#grid');
@@ -75,7 +75,7 @@ function syncChart(data){
     	        data: [<%for(cn in chart.ycn){%>'${cn}',<%}%>]
     	    },
     	    toolbox: {
-    	        show : false,
+    	        show : true,
     	        feature : {
     	            mark : {show: true},
     	            dataView : {show: true, readOnly: false},
@@ -127,7 +127,7 @@ function syncChart(data){
 }
 
 </script>
-<script type="text/javascript" src="${STATIC!}/ui/js/template.js"></script>
+<script type="text/javascript" src="${STATIC!}/eova/ui/js/template.js"></script>
 <%if(!isEmpty(menu.diy_js!)){%>
 <script type="text/javascript" src="${menu.diy_js}"></script>
 <%}%>

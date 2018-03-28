@@ -11,7 +11,7 @@ var eova_roleChoose = function() {
 	 		title : '['+ row.name +']可用功能选择',
 	 		url : '/auth/toRoleChoose/' + row.id,
 	 		buttons : [ {
-	 			text : '确定',
+	 			text : $.I18N('确定'),
 	 			handler : function() {
 	 				dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog, grid, parent.$);
 	 			}

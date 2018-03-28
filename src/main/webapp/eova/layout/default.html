@@ -4,8 +4,8 @@
 <title>${title!}</title>
 <%include("/eova/meta.html"){}%>
 <%if(isTrue(isEditor!)){%>
-	<link rel="stylesheet" type="text/css" href="/plugins/wangEditor/dist/css/wangEditor.min.css">
-	<link rel="stylesheet" type="text/css" href="/plugins/jsoneditor/jsoneditor.min.css">
+	<link rel="stylesheet" type="text/css" href="/eova/plugins/wangEditor/dist/css/wangEditor.min.css">
+	<link rel="stylesheet" type="text/css" href="/eova/plugins/jsoneditor/jsoneditor.min.css">
 <%}%>
 <%include("/eova/include.html"){}%>
 ${headContent!}
@@ -13,11 +13,11 @@ ${headContent!}
 <body>
 ${layoutContent!}
 <%if(isTrue(isEditor!)){%>
-	<script type="text/javascript" src="/plugins/wangEditor/dist/js/wangEditor.min.js"></script>
-	<script type="text/javascript" src="/plugins/jsoneditor/jsoneditor.min.js"></script>
+	<script type="text/javascript" src="/eova/plugins/wangEditor/dist/js/wangEditor.min.js"></script>
+	<script type="text/javascript" src="/eova/plugins/jsoneditor/jsoneditor.min.js"></script>
 	<script>
 	// 配置表情包
-	wangEditor.config.emotions = {'default' : {title : '默认',data : '/plugins/wangEditor/static/emotions/default.data'}};
+	wangEditor.config.emotions = {'default' : {title : '默认',data : '/eova/plugins/wangEditor/static/emotions/default.data'}};
 	// 配置上传图片
 	wangEditor.config.uploadImgUrl = '/upload/editor/';
 	</script>

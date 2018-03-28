@@ -1,4 +1,4 @@
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon732',plain:true" onclick="slave_${object.code}_deletes()">删除</a>
+<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'eova-icon732',plain:true" onclick="slave_${object.code}_deletes()">${button.name!'删除'}</a>
 <script type="text/javascript">
 	var slave_${object.code}_deletes = function() {
 		var $grid = $('#${gridId}');
@@ -6,7 +6,7 @@
         var num = rows.length;
         if (num == "0") {
         	// 删除可多选
-        	$.slideMsg("请选择一条记录！");
+        	$.slideMsg($.I18N('请选择一行数据'));
             return;
         }
         confirmDel($grid, '${object.code}', rows);
