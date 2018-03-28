@@ -4,7 +4,7 @@
 	<groupId>cn.eova.oss</groupId>
 	<artifactId>eova-oss</artifactId>
 	<packaging>war</packaging>
-	<version>1.0</version>
+	<version>1.6</version>
 
 	<name>eova</name>
 	<url>http://git.oschina.net/eova/eova</url>
@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<eova.version>1.6-beta4</eova.version>
+		<eova.version>1.6-beta5</eova.version>
 		<jetty.version>8.1.8</jetty.version>
 
 	</properties>

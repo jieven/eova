@@ -15,10 +15,6 @@ import com.jfinal.kit.LogKit;
  */
 public abstract class AbsJob implements Job {
 
-
-	/*
-	 * SimpleDateFormat dimple = new SimpleDateFormat("yyyy-MM-dd "); String time = dimple.format(new Date()) ;
-	 */
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		String name = this.getClass().getName();

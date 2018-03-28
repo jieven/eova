@@ -8,12 +8,19 @@ package com.oss;
 
 import java.util.HashMap;
 
+import com.eova.common.utils.xx;
 import com.eova.config.EovaConfig;
 import com.eova.interceptor.LoginInterceptor;
 import com.eova.user.UserController;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.oss.global.BaseMetaObjectIntercept;
+import com.oss.global.GlobalEovaIntercept;
+import com.oss.model.Address;
+import com.oss.model.Orders;
+import com.oss.model.UserInfo;
+import com.oss.model.Users;
 import com.oss.product.ProductController;
 import com.oss.test.TestController;
 
@@ -35,7 +42,7 @@ public class OSSConfig extends EovaConfig {
 
 		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
 		LoginInterceptor.excludes.add("/test/**");
-		
+
 		LoginInterceptor.excludes.add("/init");
 		LoginInterceptor.excludes.add("/code");
 		// LoginInterceptor.excludes.add("/xxxx/**");
@@ -49,12 +56,12 @@ public class OSSConfig extends EovaConfig {
 	@Override
 	protected void mapping(HashMap<String, ActiveRecordPlugin> arps) {
 		// 获取主数据源的ARP
-		// ActiveRecordPlugin main = arps.get(xx.DS_MAIN);
+		ActiveRecordPlugin main = arps.get(xx.DS_MAIN);
 		// 自定义业务Model映射往这里加
-		// main.addMapping("user_info", UserInfo.class);
-		// main.addMapping("users", Users.class);
-		// main.addMapping("address", Address.class);
-		// main.addMapping("orders", Orders.class);
+		main.addMapping("user_info", UserInfo.class);
+		main.addMapping("users", Users.class);
+		main.addMapping("address", Address.class);
+		main.addMapping("orders", Orders.class);
 
 		// 获取其它数据源的ARP
 		// ActiveRecordPlugin xxx = arps.get("xxx");
@@ -89,16 +96,35 @@ public class OSSConfig extends EovaConfig {
 		super.authUri();
 
 		// 放行所有角色,所有URI(我是小白,我搞不明白URI配置,请使用这招,得了懒癌也可以这样搞后果自负.)
-		// HashSet<String> uris = new HashSet<String>();
-		// uris.add("/**/**");
-		// authUris.put(0, uris);
+		//		authUris.put(0, new HashSet<String>(){
+		//			{
+		//				add("/**/**");
+		//			}
+		//		});
 
-		// 单独放行某角色xxx业务
-		// uris.add("/xxx/**");
-		// authUris.put(角色ID, uris);
+		// 放行指定角色
+		//		authUris.put(角色ID, new HashSet<String>(){
+		//			{
+		//				add("/xxx/**");
+		// 				URI配置语法咋么写?
+		// 				@see AntPathMatcher
+		//			}
+		//		});
 
-		// URI配置语法咋么写?
-		// @see AntPathMatcher
+	}
+
+	@Override
+	public void configEova() {
+		/*
+		 * 自定义Eova全局拦截器
+		 * 全局的查询拦截,可快速集中解决系统的查询数据权限,严谨,高效!
+		 */
+		setEovaIntercept(new GlobalEovaIntercept());
+		/*
+		 * 默认元对象业务拦截器:未配置元对象业务拦截器会默认命中此拦截器
+		 * 自定义元对象拦截器时自行考虑是否需要继承默认拦截器
+		 */
+		setDefaultMetaObjectIntercept(new BaseMetaObjectIntercept());
 	}
 
 }

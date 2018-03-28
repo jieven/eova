@@ -1,0 +1,16 @@
+更新介绍：http://www.eova.cn/eovamain
+
+DB增量脚本:(V1.6-beta1~4升级到beta5)
+
+-- DEMO库中执行
+insert into `demo`.`area` (`id`, `name`, `pid`, `lv`) values ('52', '北京', '2', '2');
+delete from area where id  = 3410;
+
+-- Eova库中执行
+ALTER TABLE `eova_button`
+add column `uri`  varchar(100) null default null comment '服务端uri' after `is_hide`;
+
+update eova_button set uri = bs where ui like '/eova/template/common/btn/%' and bs <> '' and bs is not null;
+
+update eova_object set filter = REPLACE (filter,'where','') where filter like 'where%';
+update eova_menu set filter = REPLACE (filter,'where','') where filter like 'where%';
