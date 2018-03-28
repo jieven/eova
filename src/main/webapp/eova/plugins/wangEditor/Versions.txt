@@ -1,0 +1,12 @@
+v3.0.4
+
+last version v2.1.23
+
+http://wangeditor.github.io/
+
+经过不完全测试,wangeditor3对Windows7支持并不友好(emji表情),所以不推荐升级,具体细节可进一步咨询wangeditor!
+wangeditor3优点:
+1.轻量
+2.对文档格式复制支持更好
+3.轻量级
+4.新版本有很多优化
