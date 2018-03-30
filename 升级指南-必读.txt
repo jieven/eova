@@ -12,5 +12,5 @@ add column `uri`  varchar(100) null default null comment '服务端uri' after `i
 
 update eova_button set uri = bs where ui like '/eova/template/common/btn/%' and bs <> '' and bs is not null;
 
-update eova_object set filter = REPLACE (filter,'where','') where filter like 'where%';
-update eova_menu set filter = REPLACE (filter,'where','') where filter like 'where%';
+update eova_menu set filter = SUBSTRING(filter,6,LENGTH(filter)) where filter like 'where%';
+update eova_object set filter = SUBSTRING(filter,6,LENGTH(filter)) where filter like 'where%';
