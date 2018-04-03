@@ -28,7 +28,7 @@
 						lastFieldset = f.fieldset;		// 记录当前分组名
 						
 						print('<fieldset style="margin: 10px;">');
-						print('<legend>' + I18N(f.fieldset) + '</legend>');
+						print('<legend>' + f.fieldset + '</legend>');
 					}
 					
 					// 获取当前字段的值
@@ -74,7 +74,7 @@
 						lastFieldset = f.fieldset;		// 记录当前分组名
 						
 						print('<fieldset style="margin: 10px;">');
-						print('<legend>' + I18N(f.fieldset) + '</legend>');
+						print('<legend>' + f.fieldset + '</legend>');
 					}
 				
 					var value = null;

@@ -5,8 +5,8 @@
 var $dp,WdatePicker;(function(){var $={
 $langList:[
  {name:"en",charset:"UTF-8"},
- {name:"zh-cn",charset:"UTF-8"},
- {name:"zh-tw",charset:"UTF-8"}],
+ {name:"zh_CN",charset:"UTF-8"},
+ {name:"zh_TW",charset:"UTF-8"}],
 $skinList:[
  {name:"default",charset:"gb2312"},
  {name:"whyGreen",charset:"gb2312"},
@@ -23,7 +23,7 @@ enableInputMask:true,
 autoUpdateOnChanged:null,
 weekMethod:"ISO8601",
 position:{},
-lang:"auto",
+lang: EOVA_LOCAL,//"auto",
 skin:"default",
 dateFmt:"yyyy-MM-dd",
 realDateFmt:"yyyy-MM-dd",
