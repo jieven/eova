@@ -22,6 +22,16 @@ public class GlobalEovaIntercept extends EovaIntercept {
 	@Override
 	public String filterExp(EovaContext ec) throws Exception {
 		System.out.println("Exp过滤");
+		//		if (ec.exp.table.startsWith("eova_")) {
+		//			// 根据表前缀
+		//		}
+		//		for (MetaField f : ec.exp.getFields()) {
+		//			// 根据表达式元字段
+		//		}
+		//		if (ec.exp.simpleSelect.indexOf("xxx_name") != -1) {
+		//			// 根据查询项 关键字
+		//		}
+
 		//		return " and id < 9999";
 		return "";
 	}

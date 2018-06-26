@@ -88,7 +88,7 @@ $(function () {
             attr.sortable = true;
         }
 
-        if (f.formatter != null) {
+        if (f.formatter != null && f.formatter !='') {
             attr.formatter = new Function('return ' + f.formatter)();
         } else {
             // 默认格式化处理

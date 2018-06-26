@@ -7,38 +7,20 @@ Source Host           : localhost:3306
 Source Database       : demo
 
 Target Server Type    : ORACLE
-Target Server Version : 100100
+Target Server Version : 110200
 File Encoding         : 65001
 
-Date: 2016-12-18 00:28:46
+Date: 2018-04-06 00:04:25
 */
 
-set define off;
+;
 
-BEGIN
-	
 -- ----------------------------
 -- Records of address
 -- ----------------------------
-INSERT INTO address VALUES ('1', '111', '111', '11111111');
 INSERT INTO address VALUES ('2', '张三2', '上海陆家嘴', '13524523888');
 INSERT INTO address VALUES ('3', '张三3', '上海陆家嘴', '13524523888');
 INSERT INTO address VALUES ('4', '张三4', '上海陆家嘴', '13524523888');
-INSERT INTO address VALUES ('100', '1111111111111', '11111', '11111111111111');
-INSERT INTO address VALUES ('107', '11', '1', '111');
-INSERT INTO address VALUES ('108', '1111', '111', '11');
-INSERT INTO address VALUES ('109', '王麻子', '王麻子', '王麻子');
-INSERT INTO address VALUES ('110', '王麻子1', '王麻子1', '王麻子1');
-INSERT INTO address VALUES ('111', '1111', '2222', '111111111111111');
-INSERT INTO address VALUES ('112', '1', '1', '1');
-INSERT INTO address VALUES ('113', '11', '1111111', '11111111111111');
-INSERT INTO address VALUES ('114', '111', '111', '111');
-INSERT INTO address VALUES ('115', '111', '111', '111');
-INSERT INTO address VALUES ('116', '111', '111', '111');
-INSERT INTO address VALUES ('117', '1', '111111', '11111111111111');
-INSERT INTO address VALUES ('123', '111', '111111', '11111111111111');
-INSERT INTO address VALUES ('124', '55555555', '555555555', '5555555');
-INSERT INTO address VALUES ('125', '111', '111', '111');
 
 -- ----------------------------
 -- Records of area_city
@@ -138,11 +120,6 @@ INSERT INTO dicts VALUES ('14', '10', '待支付', 'orders', 'state', '');
 INSERT INTO dicts VALUES ('15', '20', '已支付', 'orders', 'state', '');
 INSERT INTO dicts VALUES ('16', '30', '已发货', 'orders', 'state', '');
 INSERT INTO dicts VALUES ('17', '40', '已收货', 'orders', 'state', '');
-INSERT INTO dicts VALUES ('20', '1', '租赁商品', 'product', 'type', '');
-INSERT INTO dicts VALUES ('21', '2', '积分商品', 'product', 'type', '');
-INSERT INTO dicts VALUES ('28', '1', '在线租赁', 'payment', 'pay_business', '');
-INSERT INTO dicts VALUES ('29', '1', '支付宝', 'payment', 'platform', '');
-INSERT INTO dicts VALUES ('30', '2', '微信', 'payment', 'platform', '');
 INSERT INTO dicts VALUES ('33', '0', '正常', 'users', 'status', '');
 INSERT INTO dicts VALUES ('34', '1', '封号', 'users', 'status', '');
 INSERT INTO dicts VALUES ('35', '2', '禁言', 'users', 'status', '');
@@ -163,19 +140,21 @@ INSERT INTO dicts VALUES ('148', '10', '待支付', 'v_orders', 'state', '');
 INSERT INTO dicts VALUES ('149', '20', '已支付', 'v_orders', 'state', '');
 INSERT INTO dicts VALUES ('150', '30', '已发货', 'v_orders', 'state', '');
 INSERT INTO dicts VALUES ('151', '40', '已收货', 'v_orders', 'state', '');
-INSERT INTO dicts VALUES ('152', '1', '正常', 'links', 'status', '');
-INSERT INTO dicts VALUES ('153', '2', '禁用', 'links', 'status', '');
 INSERT INTO dicts VALUES ('158', '0', '国', 'area', 'lv', '');
 INSERT INTO dicts VALUES ('159', '1', '省', 'area', 'lv', '');
 INSERT INTO dicts VALUES ('160', '2', '市', 'area', 'lv', '');
 INSERT INTO dicts VALUES ('161', '3', '区', 'area', 'lv', '');
-INSERT INTO dicts VALUES ('172', '1', '普通商户', 'hotel', 'state', '');
-INSERT INTO dicts VALUES ('173', '2', '签约商户', 'hotel', 'state', '');
+INSERT INTO dicts VALUES ('198', '1', '普通商户', 'hotel', 'state', '');
+INSERT INTO dicts VALUES ('199', '2', '签约商户', 'hotel', 'state', '');
+INSERT INTO dicts VALUES ('204', '1', '正常', 'links', 'status', '');
+INSERT INTO dicts VALUES ('205', '2', '禁用', 'links', 'status', '');
+INSERT INTO dicts VALUES ('210', '1', '租赁商品', 'product', 'type', '');
+INSERT INTO dicts VALUES ('211', '2', '积分商品', 'product', 'type', '');
 
 -- ----------------------------
 -- Records of hotel
 -- ----------------------------
-INSERT INTO hotel VALUES ('1', '松江锦江之星1', '(021)37621128', '上海市松江区西林北路950号', '2', '12', TO_TIMESTAMP('2015-12-04 17:01:30', 'YYYY-MM-DD HH24:MI:SS'), '25', '321', '2705');
+INSERT INTO hotel VALUES ('1', '松江锦江之星1', '(021)37621128', '上海市松江区西林北路950号1', '2', '12', TO_TIMESTAMP('2015-12-04 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), '25', '321', '2705');
 INSERT INTO hotel VALUES ('2', '松江锦江之星2', '(021)37621129', '上海市松江区西林北路951号', '1', '0', TO_TIMESTAMP('2015-09-04 17:17:00', 'YYYY-MM-DD HH24:MI:SS'), '2', '52', '505');
 INSERT INTO hotel VALUES ('3', '松江锦江之星3', '(021)37621130', '上海市松江区西林北路952号', '2', '0', TO_TIMESTAMP('2015-09-05 17:17:00', 'YYYY-MM-DD HH24:MI:SS'), '3', '36', '398');
 
@@ -183,7 +162,6 @@ INSERT INTO hotel VALUES ('3', '松江锦江之星3', '(021)37621130', '上海�
 -- Records of hotel_bed
 -- ----------------------------
 INSERT INTO hotel_bed VALUES ('2', '1', '2', '2');
-INSERT INTO hotel_bed VALUES ('3', '1', '3', '2');
 INSERT INTO hotel_bed VALUES ('4', '2', '3', '100');
 
 -- ----------------------------
@@ -209,19 +187,7 @@ INSERT INTO item VALUES ('7', '多兰之刃', '<p>+80点生命值、+10点攻击
 -- ----------------------------
 INSERT INTO links VALUES ('1', '1', '百度', 'http://www.baidu.com', '百度一下,你就知道');
 INSERT INTO links VALUES ('2', '1', 'EOVA简单开发', 'http://www.eova.cn', '最简单的快速开发平台');
-
--- ----------------------------
--- Records of member
--- ----------------------------
-INSERT INTO member VALUES ('1', '1', '0', '超级管理员', '', '', '', '', TO_TIMESTAMP('2016-04-03 14:16:52', 'YYYY-MM-DD HH24:MI:SS'), null, null, null, null, null, null);
-INSERT INTO member VALUES ('2', '2', '0', '系统管理员', '', '', '', '', TO_TIMESTAMP('2016-04-03 14:16:52', 'YYYY-MM-DD HH24:MI:SS'), null, null, null, null, null, null);
-INSERT INTO member VALUES ('3', '3', '0', '新省主管', '我是省长', '13524523406', '', '', TO_TIMESTAMP('2016-04-03 14:16:52', 'YYYY-MM-DD HH24:MI:SS'), '29', '0', '0', null, null, null);
-INSERT INTO member VALUES ('4', '3', '0', '乌市主管', '我是市长', '13524523415', '', '', TO_TIMESTAMP('2016-04-03 14:17:21', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '0', null, null, null);
-INSERT INTO member VALUES ('5', '3', '0', '天山主管', '我是区长', '13524523410', '', '', TO_TIMESTAMP('2016-04-03 14:17:21', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '3004', null, null, null);
-INSERT INTO member VALUES ('10', '4', '0', '天山用户1', '上海静安小鲜肉', '13524523411', '', '', TO_TIMESTAMP('2016-04-03 14:17:21', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '3004', null, null, null);
-INSERT INTO member VALUES ('11', '4', '0', '天山用户2', '上海静安小鲜肉', '13524523427', '', '', TO_TIMESTAMP('2016-04-03 14:17:21', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '3004', null, null, null);
-INSERT INTO member VALUES ('12', '4', '0', '天山用户3', '上海小鲜肉', '13524523414', '', '', TO_TIMESTAMP('2016-04-03 14:17:21', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '3005', null, null, null);
-INSERT INTO member VALUES ('13', '4', '0', '天山用户4', '上海小鲜肉', '13524523414', null, null, TO_TIMESTAMP('2016-04-03 16:10:17', 'YYYY-MM-DD HH24:MI:SS'), '29', '351', '3005', null, null, null);
+INSERT INTO links VALUES ('3', '1', 'EOVA简单开发1', 'http://www.eova.cn', '最简单的快速开发平台');
 
 -- ----------------------------
 -- Records of order_item
@@ -252,9 +218,9 @@ INSERT INTO orders VALUES ('12', '0', '0', '10', '0.00', '0.00', '5', '123', '12
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO product VALUES ('28', '1', '4', '1', '3', '150床型纯棉被套', '1475741380036.png', '3', '2.4', '0', '0', '5000', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2015-12-09 01:54:19', 'YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO product VALUES ('29', '1', '4', '1', '3', '150床型纯棉被套11', '1451664266663.jpg', '3', '2.4', '0', '0', '5000', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2015-12-09 01:54:19', 'YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO product VALUES ('30', '1', '7', '1', '0', '纯棉枕套', '1449597463551.jpg', '3', '2.4', '0', '0', '5000', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2015-12-09 01:57:36', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO product VALUES ('28', '1', '4', '1', '3', '150床型纯棉被套1', '1475741380036.png', '3', '2.4', '0', '7', '0', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-03-22 15:47:32', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO product VALUES ('29', '1', '4', '1', '3', '150床型纯棉被套1', '1451664266663.jpg', '3', '2.4', '0', '0', '5000', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-03-22 15:46:25', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO product VALUES ('30', '1', '7', '1', '0', '纯棉枕套1', '1449597463551.jpg', '3', '2.4', '0', '0', '5000', TO_TIMESTAMP('2015-11-06 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-03-22 15:46:34', 'YYYY-MM-DD HH24:MI:SS'));
 
 -- ----------------------------
 -- Records of sale_data
@@ -298,11 +264,25 @@ INSERT INTO sale_data VALUES ('43', '25', '土豆', '20');
 -- ----------------------------
 -- Records of test_info
 -- ----------------------------
-INSERT INTO test_info VALUES ('1', '1', '1', '123465', '17', '<p>上海虹口区足球场上海虹口</p><p><br></p>', '1475647037704.jpg', '0', '', '1464002566632.jpg', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2016-09-18 00:32:48', 'YYYY-MM-DD HH24:MI:SS'), '00000', '#000000', '2,3,4,5', '{"domain":"http://www.eova.cn"}', '0', null, '0', '1', '0', null, TO_TIMESTAMP('2016-10-08 02:39:34', 'YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO test_info VALUES ('4', '2', '0', '4324342', '43423423', '<p>哎哟不错哟！ 发个表情试试&nbsp;<img src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif"><br><img src="http://127.0.0.1/editor/1464193877187.png" style="max-width: 100%; width: 100.8px; height: 100.8px;" class="">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="http://127.0.0.1/editor/1464194237135.png" style="max-width: 100%;"><br></p><p><br></p>', '1475655648414.png', '0', '423432423', '1464193847117.png', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2016-05-26 00:30:40', 'YYYY-MM-DD HH24:MI:SS'), '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
-INSERT INTO test_info VALUES ('7', '1', '1', '新增导入1', '17', '<p>222上海虹口区足球场上海虹口222</p><p><br></p>', '1477243093297.png', '0', '更新导入。。。。', '1464002566632.jpg', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2016-09-18 00:32:48', 'YYYY-MM-DD HH24:MI:SS'), '00000', '#000000', '2,4', null, '0', null, '0', null, '0', null, null);
-INSERT INTO test_info VALUES ('8', '2', '1', '新增导入2', '43423423', '<p>哎哟不错哟！ 发个表情试试 <img src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif"><br><img src="http://127.0.0.1:10086/editor/1464193877187.png" style="max-width: 100%; width: 100.8px; height: 100.8px;" class="">        <img src="http://127.0.0.1:10086/editor/1464194237135.png" style="max-width: 100%;"><br></p><p><br></p>', '1475647089038.jpg', '0', '423432423', '1464193847117.png', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2016-05-26 00:30:40', 'YYYY-MM-DD HH24:MI:SS'), '000000', '#000000', '3', null, '0', null, '0', null, '0', null, null);
-INSERT INTO test_info VALUES ('9', '2', '0', '4324', '432', '<p>423</p>', '1475944038375.png', '1', '4322344', '1475862732716.png', TO_TIMESTAMP('2016-10-08', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2016-10-08 01:52:39', 'YYYY-MM-DD HH24:MI:SS'), '423', '#000000', '2', null, '1', '1', '1', '1', '1', '1', null);
+INSERT INTO test_info VALUES ('1', '1', '0', '123465', '17', '<p><img src="http://127.0.0.1:81/editor/1464194237135.png" alt="" style="max-width: 100%;"><br></p><p>上海虹口区足球场上海虹口666</p><p><br></p>', '1475647037704.jpg', '0', 'eova20175201314', '1464002566632.jpg', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-04-05 22:01:15', 'YYYY-MM-DD HH24:MI:SS'), '00000', '#000000', '3,2,4', '{"domain":"http://www.eova.cn"}', '21', '10.1', '35.11', '1', '0', null, TO_TIMESTAMP('2016-10-08 02:39:34', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test_info VALUES ('4', '2', '0', '4324342', '20', '<p>哎哟不错哟！ 发个表情试试&nbsp;<img src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif"><br></p><p><br></p>', '1475655648414.png', '0', '423432423', '1464193847117.png', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-04-05 21:59:09', 'YYYY-MM-DD HH24:MI:SS'), '000000', '#000000', '3', '', '0', '20.2', '40.22', null, '0', null, null);
+INSERT INTO test_info VALUES ('7', '1', '1', '新增导入1', '17', '<p>222上海虹口区足球场上海虹口222</p><p><br></p>', '1477243093297.png', '0', '更新导入。。。。', '1464002566632.jpg', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-01-28 00:02:06', 'YYYY-MM-DD HH24:MI:SS'), '00000', '#000000', '2,4', null, '0', '30.3', '50.33', null, '0', null, null);
+INSERT INTO test_info VALUES ('8', '2', '1', '新增导入2', '30', '<p>哎哟不错哟！ 发个表情试试&nbsp;<img src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/6d/lovea_thumb.gif"><br></p><p><br></p>', '1475647089038.jpg', '0', '423432423', '1464193847117.png', TO_TIMESTAMP('2016-05-26', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-04-05 21:59:26', 'YYYY-MM-DD HH24:MI:SS'), '000000', '#000000', '3', '', '0', '40.4', '60.44', null, '0', null, null);
+INSERT INTO test_info VALUES ('9', '2', '0', '4324', '50', '<p>423</p>', '1475944038375.png', '1', '4322344', '1475862732716.png', TO_TIMESTAMP('2016-10-08', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-01-28 00:02:10', 'YYYY-MM-DD HH24:MI:SS'), '423', '#000000', '2', '', '1', '50', '70', '1', '1', '1', null);
+
+-- ----------------------------
+-- Records of test01
+-- ----------------------------
+INSERT INTO test01 VALUES ('190BB199C7E04C40909E401D45CC2E99', '21312312222', TO_TIMESTAMP('2018-03-16 18:04:10', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('26c40fb4c0b6457cabbf14bafe90d6c0', '233431', TO_TIMESTAMP('2017-10-26 13:59:45', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('56CB455A7EEA40A9BDD8B06056DD98F8', '344322343423432', TO_TIMESTAMP('2018-03-16 18:04:41', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('56FAD143325D4C0E803863E236DED8A5', '111', TO_TIMESTAMP('2018-03-16 17:59:55', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('5B1C42DCA7214300A4F168188C453260', '11111', TO_TIMESTAMP('2018-03-16 17:54:09', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('985ad9044d0a4cfca8a8f4f4c9c15b13', '2222222221111', TO_TIMESTAMP('2017-10-26 13:53:47', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('AFFE9831297E4C60AA4F9BD6FCD3AD3C', '1111', TO_TIMESTAMP('2018-03-16 18:03:45', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('da2bb6dabec5436cb9545efd27d3318d', '333333333333', TO_TIMESTAMP('2017-10-26 13:54:35', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('E2087AF386ED4C1097C4E823D6EA3CA8', '1111', TO_TIMESTAMP('2018-03-16 17:59:27', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO test01 VALUES ('ef0eb8ec679d408fa3497e3017461253', 'S666', TO_TIMESTAMP('2017-10-26 13:58:50', 'YYYY-MM-DD HH24:MI:SS'));
 
 -- ----------------------------
 -- Records of user_info
@@ -317,10 +297,10 @@ INSERT INTO user_info VALUES ('7', '2', '0', '', null, null, null, null, TO_TIME
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO users VALUES ('7', '1', 'test11', '000011', '德玛西亚之力', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '这个用户是专业差评11', '11111');
-INSERT INTO users VALUES ('9', '1', 'test22', '000000', '卡牌大师', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '#000000', '0');
+INSERT INTO users VALUES ('7', '1', 'test11', '000011', '德玛西亚之力', TO_TIMESTAMP('2017-10-14 13:08:04', 'YYYY-MM-DD HH24:MI:SS'), '这个用户是专业差评11', '11111');
+INSERT INTO users VALUES ('9', '1', 'test22', '000000', '卡牌大师', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '12', '0');
 INSERT INTO users VALUES ('10', '0', 'test10', '000000', '堕落天使', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '');
-INSERT INTO users VALUES ('12', '0', 'test12', '000000', '熔岩巨兽', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '');
+INSERT INTO users VALUES ('12', '0', 'test12', '000000', '熔岩巨兽', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '11', '1');
 INSERT INTO users VALUES ('13', '0', 'test13', '000000', '祖安狂人', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '');
 INSERT INTO users VALUES ('14', '0', 'test14', '000000', '钢铁大使', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '');
 INSERT INTO users VALUES ('15', '0', 'test15', '000000', '寡妇制造者', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '3,2');
@@ -331,7 +311,7 @@ INSERT INTO users VALUES ('19', '0', 'test19', '000000', '牛头酋长', TO_TIME
 INSERT INTO users VALUES ('20', '0', 'test20', '000000', '邪恶小法师', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '3');
 INSERT INTO users VALUES ('21', '0', 'test21', '000000', '风暴之怒', TO_TIMESTAMP('2014-12-30 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), '', '3');
 INSERT INTO users VALUES ('22', '0', 'test22', '000000', '麦林炮手', TO_TIMESTAMP('2014-12-30 00:55:49', 'YYYY-MM-DD HH24:MI:SS'), '', '1');
-INSERT INTO users VALUES ('23', '2', 'test23', '000000', '黑暗之女', TO_TIMESTAMP('2014-12-30 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), '', '3');
+INSERT INTO users VALUES ('23', '1', 'test23', '000000', '黑暗之女', TO_TIMESTAMP('2014-12-30 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), '333', '1');
 
 -- ----------------------------
 -- Records of users_exp
@@ -370,6 +350,3 @@ INSERT INTO users_item VALUES ('3', '9', '5');
 INSERT INTO users_item VALUES ('4', '10', '2');
 INSERT INTO users_item VALUES ('5', '11', '3');
 INSERT INTO users_item VALUES ('6', '23', '4');
-
-END;
-/

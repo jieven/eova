@@ -61,8 +61,7 @@ var selectData = function($dialog, findBox) {
     	}
         // 值变更回调
         if (oldValue != newValue) {
-            console.log(oldValue +'|'+newValue);
-            findBox.options.onChange.call(findBox.$dom, oldValue, newValue);
+            findBox.options.onChange.call(findBox.$dom, oldValue, newValue, rows); // 回调带回所选行,可取其它列值.
         }
     }catch(err){
     	console.log("查找框validate异常:" + err);

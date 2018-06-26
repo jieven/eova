@@ -75,7 +75,7 @@ $(function () {
             attr.sortable = true;
         }
 
-        if (f.formatter != null) {
+        if (f.formatter != null && f.formatter !='') {
             attr.formatter = new Function('return ' + f.formatter + ';')();
         } else {
             // 默认格式化处理
@@ -235,6 +235,7 @@ $(function () {
                 console.log('click menu' + item.text);
             }
         });
+        
         rowMenu.menu('appendItem', {
             text: $.I18N('刷新'),
             name: 'reload',
@@ -243,6 +244,7 @@ $(function () {
                 $myGrid.datagrid('reload');
             }
         });
+        
         rowMenu.menu('appendItem', {
             text: $.I18N('导出当前查询数据'),
             name: 'exportAll',
@@ -252,216 +254,227 @@ $(function () {
     	        if(menuCode != ''){
     	        	exportUrl = exportUrl + '-' + menuCode;
     	        }
-    	        var queryParas = $.getFormParasStr($('#queryForm'));
-    	        if (queryParas) {
-	    	        exportUrl = exportUrl + '?' + queryParas;
+    	        // GET方式提交新窗，有乱码风险
+				// var queryParas = $.getFormParasStr($('#queryForm'));
+				// if (queryParas) {
+				//     exportUrl = exportUrl + '?' + queryParas;
+				// }
+				// window.location.href = exportUrl;
+
+				// POST方式提交新窗
+				var $form = $('#queryForm');
+				$form.attr('target', '_blank');
+				$form.attr('action', exportUrl);
+				$form.submit();
+            }
+		});
+        
+        	// 纯JS实现，有乱码风险
+			//         rowMenu.menu('appendItem', {
+			//             text: $.I18N('导出本页数据'),
+			//             name: 'exportAll',
+			//             iconCls: 'eova-icon779',
+			//             onclick: function () {
+			//                 $.gridToExcel($myGrid, objectCode);
+			//             }
+			//         });
+			if (object.is_celledit) {
+				var rowData = {};
+				if ($masterGrid) {
+					// 获取主表选中行
+					var gridSelectRow = $masterGrid.datagrid('getSelected');
+					if (gridSelectRow) {
+						// 初始添加关键字段
+						var val = gridSelectRow[config.objectField];
+						rowData[config.fields[0]] = val;
+						rowData[config.fields[0] + '_val'] = val;
+					}
 				}
-                window.location.href = exportUrl;
-            }
-        });
-//         rowMenu.menu('appendItem', {
-//             text: $.I18N('导出本页数据'),
-//             name: 'exportAll',
-//             iconCls: 'eova-icon779',
-//             onclick: function () {
-//                 $.gridToExcel($myGrid, objectCode);
-//             }
-//         });
-        if (object.is_celledit) {
-        	var rowData = {};
-        	if($masterGrid){
-	        	// 获取主表选中行
-	        	var gridSelectRow = $masterGrid.datagrid('getSelected');
-        		if(gridSelectRow){
-        			// 初始添加关键字段
-                    var val = gridSelectRow[config.objectField];
-        			rowData[config.fields[0]] = val;
-        			rowData[config.fields[0]+'_val'] = val;
-        		}
-        	}
-        	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
-            rowMenu.menu('appendItem', {
-                text: $.I18N('删除行'),
-                name: 'delete',
-                iconCls: 'eova-icon1050',
-                onclick: function () {
-					$myGrid.datagrid('deleteRow', selectIndex);
-                }
-            });
-            <%}%>
-            <%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
-            rowMenu.menu('appendItem', {
-                text: $.I18N('新增行'),
-                name: 'add',
-                iconCls: 'eova-icon1044',
-                onclick: function () {
-                    $myGrid.datagrid('insertRow', {
-                        index: 0,
-                        row: rowData
-                    });
-                }
-            });
-            <%}%>
-        	<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"update")){%>
-            rowMenu.menu('appendItem', {
-                text: $.I18N('保存数据'),
-                name: 'save',
-                iconCls: 'eova-icon1089',
-                onclick: function () {
-
-                    var inserted = $myGrid.datagrid('getChanges', 'inserted');
-                    var deleted = $myGrid.datagrid('getChanges', 'deleted');
-                    var updated = $myGrid.datagrid('getChanges', 'updated');
-
-                    var isOk = true;
-                    var errorMsg = '';
-                    if (inserted.length > 0) {
-                        var json1 = JSON.stringify(inserted);
-                        // console.log('保存add数据' + json1);
-                        $.syncPost('/grid/add/' + objectCode, {rows: json1},
-                                function (result, status) {
-                                    if (!result.success) {
-                                        isOk = false;
-                                        errorMsg += result.msg + '<br>';
-                                    }
-                                });
-                    }
-                    if (updated.length > 0) {
-                        var json3 = JSON.stringify(updated);
-                        // console.log('保存update数据' + json3);
-                        $.syncPost('/grid/update/' + objectCode, {rows: json3},
-                                function (result, status) {
-                                    if (!result.success) {
-                                        isOk = false;
-                                        errorMsg += result.msg + '<br>';
-                                    }
-                                });
-                    }
-                    if (deleted.length > 0) {
-                        var json2 = JSON.stringify(deleted);
-                        // console.log('保存delete数据' + json2);
-                        $.syncPost('/grid/delete/' + objectCode, {rows: json2},
-                                function (result, status) {
-                                    if (!result.success) {
-                                        isOk = false;
-                                        errorMsg += result.msg + '<br>';
-                                    }
-                                });
-                    }
-
-                    if (isOk) {
-                        $.slideMsg($.I18N('操作成功'));
-                        // 确认改动
-                        $myGrid.datagrid('acceptChanges');
-                    } else {
-                        $.alert($, errorMsg);
-                    }
-                }
-            });
-            <%}%>
-//            rowMenu.menu('appendItem', {
-//                text: '回滚数据',
-//                name: 'reject',
-//                iconCls: 'eova-icon4',
-//                onclick: function () {
-//                    //$myGrid.datagrid('rejectChanges');
-//                    console.log('回滚数据');
-//                }
-//            });
-//             rowMenu.menu('appendItem', {
-//                 text: '其它功能',
-//                 name: 'other',
-//                 onclick: function () {
-//                     alert('Eova is So Easy');
-//                 }
-//             });
-        }
-    }
-
-    var cmenu;
-    function createColumnMenu() {
-        cmenu = $('<div/>').appendTo('body');
-        // 初始化菜单
-        cmenu.menu();
-        <%// 仅超级管理员可见%>
-        <%if(session.user.isAdmin){%>
-        cmenu.menu('appendItem', {
-            text: '编辑元字段',
-            name: 'editmeta',
-            iconCls: 'eova-icon1051',
-            onclick: function () {
-                window.open('/meta/edit/' + objectCode);
-            }
-        });
-        cmenu.menu('appendItem', {
-            text: '编辑元对象',
-            name: 'editmeta',
-            iconCls: 'eova-icon1051',
-            onclick: function () {
-            	$.dialog(undefined, '修改元对象', '/form/update/eova_object_code-' + object.id);
-            }
-        });
-        cmenu.menu('appendItem', {
-			text: '保存当前列宽',
-			name: 'savewidth',
-			iconCls: 'eova-icon49',
-			onclick: function () {
-				var widths = [];
-                $.each($grid.datagrid('getColumnFields'), function(i, o) {
-                	var col = $grid.datagrid('getColumnOption', o);
-                	if(col.title != null){
-	                    widths.push(col.width);
-                	}
-                });
-				$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function(){
-					$.slideMsg("当前表格宽度已保存");
+				<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"delete")){%>
+				rowMenu.menu('appendItem', {
+					text : $.I18N('删除行'),
+					name : 'delete',
+					iconCls : 'eova-icon1050',
+					onclick : function() {
+						$myGrid.datagrid('deleteRow', selectIndex);
+					}
 				});
-            }
-        });
-        <%}%>
-    }
+				<%}%>
+				<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"add")){%>
+				rowMenu.menu('appendItem', {
+					text : $.I18N('新增行'),
+					name : 'add',
+					iconCls : 'eova-icon1044',
+					onclick : function() {
+						$myGrid.datagrid('insertRow', {
+							index : 0,
+							row : rowData
+						});
+					}
+				});
+				<%}%>
+				<%if(!isEmpty(cellEdit!) && strutil.contain(cellEdit,"update")){%>
+				rowMenu.menu('appendItem', {
+					text : $.I18N('保存数据'),
+					name : 'save',
+					iconCls : 'eova-icon1089',
+					onclick : function() {
 
-    if (object.is_celledit) {
-    	// validator init
-        var $form = $('#${id}').parent();// get datagrid-view dom is validata zone
-        $form.validator({
-            debug: false,
-            stopOnError: true,
-            focusInvalid : false,
-            showOk: false,
-            timely: 0,
-            msgMaker: false,
-            fields: validators
-        });
-        $form.on("validation", $.validation);
-    }
-//    var pager = $myGrid.datagrid('getPager');
-//    pager.pagination({
-//        buttons: [
-//            {
-//                iconCls: 'eova-icon4',
-//                handler: function () {
-//                    $myGrid.datagrid('insertRow', {
-//                        index: 0,
-//                        row: {}
-//                    });
-//                }
-//            },
-//            {
-//                iconCls: 'eova-icon4',
-//                handler: function () {
-//                    alert('tabledelete');
-//                }
-//            },
-//            {
-//                iconCls: 'eova-icon4',
-//                handler: function () {
-//                    alert('save');
-//                }
-//            }
-//        ]
-//    });
+						var inserted = $myGrid.datagrid('getChanges', 'inserted');
+						var deleted = $myGrid.datagrid('getChanges', 'deleted');
+						var updated = $myGrid.datagrid('getChanges', 'updated');
 
-});
+						var isOk = true;
+						var errorMsg = '';
+						if (inserted.length > 0) {
+							var json1 = JSON.stringify(inserted);
+							// console.log('保存add数据' + json1);
+							$.syncPost('/grid/add/' + objectCode, {
+								rows : json1
+							}, function(result, status) {
+								if (!result.success) {
+									isOk = false;
+									errorMsg += result.msg + '<br>';
+								}
+							});
+						}
+						if (updated.length > 0) {
+							var json3 = JSON.stringify(updated);
+							// console.log('保存update数据' + json3);
+							$.syncPost('/grid/update/' + objectCode, {
+								rows : json3
+							}, function(result, status) {
+								if (!result.success) {
+									isOk = false;
+									errorMsg += result.msg + '<br>';
+								}
+							});
+						}
+						if (deleted.length > 0) {
+							var json2 = JSON.stringify(deleted);
+							// console.log('保存delete数据' + json2);
+							$.syncPost('/grid/delete/' + objectCode, {
+								rows : json2
+							}, function(result, status) {
+								if (!result.success) {
+									isOk = false;
+									errorMsg += result.msg + '<br>';
+								}
+							});
+						}
 
+						if (isOk) {
+							$.slideMsg($.I18N('操作成功'));
+							// 确认改动
+							$myGrid.datagrid('acceptChanges');
+						} else {
+							$.alert($, errorMsg);
+						}
+					}
+				});
+				<%}%>
+				//            rowMenu.menu('appendItem', {
+				//                text: '回滚数据',
+				//                name: 'reject',
+				//                iconCls: 'eova-icon4',
+				//                onclick: function () {
+				//                    //$myGrid.datagrid('rejectChanges');
+				//                    console.log('回滚数据');
+				//                }
+				//            });
+				//             rowMenu.menu('appendItem', {
+				//                 text: '其它功能',
+				//                 name: 'other',
+				//                 onclick: function () {
+				//                     alert('Eova is So Easy');
+				//                 }
+				//             });
+			}
+		}
+
+		var cmenu;
+		function createColumnMenu() {
+			cmenu = $('<div/>').appendTo('body');
+			// 初始化菜单
+			cmenu.menu();
+			<%// 仅超级管理员可见%>
+			<%if(session.user.isAdmin){%>
+			cmenu.menu('appendItem', {
+				text : '编辑元字段',
+				name : 'editmeta',
+				iconCls : 'eova-icon1051',
+				onclick : function() {
+					window.open('/meta/edit/' + objectCode);
+				}
+			});
+			cmenu.menu('appendItem', {
+				text : '编辑元对象',
+				name : 'editmeta',
+				iconCls : 'eova-icon1051',
+				onclick : function() {
+					$.dialog(undefined, '修改元对象', '/form/update/eova_object_code-' + object.id);
+				}
+			});
+			cmenu.menu('appendItem', {
+				text : '保存当前列宽',
+				name : 'savewidth',
+				iconCls : 'eova-icon49',
+				onclick : function() {
+					var widths = [];
+					$.each($grid.datagrid('getColumnFields'), function(i, o) {
+						var col = $grid.datagrid('getColumnOption', o);
+						if (col.title != null) {
+							widths.push(col.width);
+						}
+					});
+					$.getJSON('/grid/updateWidths/' + objectCode + '-' + widths.join(','), function() {
+						$.slideMsg("当前表格宽度已保存");
+					});
+				}
+			});
+			<%}%>
+		}
+
+		if (object.is_celledit) {
+			// validator init
+			var $form = $('#${id}').parent();// get datagrid-view dom is validata zone
+			$form.validator({
+				debug : false,
+				stopOnError : true,
+				focusInvalid : false,
+				showOk : false,
+				timely : 0,
+				msgMaker : false,
+				fields : validators
+			});
+			$form.on("validation", $.validation);
+		}
+		//    var pager = $myGrid.datagrid('getPager');
+		//    pager.pagination({
+		//        buttons: [
+		//            {
+		//                iconCls: 'eova-icon4',
+		//                handler: function () {
+		//                    $myGrid.datagrid('insertRow', {
+		//                        index: 0,
+		//                        row: {}
+		//                    });
+		//                }
+		//            },
+		//            {
+		//                iconCls: 'eova-icon4',
+		//                handler: function () {
+		//                    alert('tabledelete');
+		//                }
+		//            },
+		//            {
+		//                iconCls: 'eova-icon4',
+		//                handler: function () {
+		//                    alert('save');
+		//                }
+		//            }
+		//        ]
+		//    });
+
+	});
 </script>

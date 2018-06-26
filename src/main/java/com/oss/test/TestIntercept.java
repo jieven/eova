@@ -29,6 +29,7 @@ public class TestIntercept extends MetaObjectIntercept {
 
 	@Override
 	public String updateBefore(AopContext ac) throws Exception {
+
 		Record r = ac.record;
 		System.out.println(r.toJson());
 		System.out.println("id=" + r.getInt("id"));
@@ -55,6 +56,18 @@ public class TestIntercept extends MetaObjectIntercept {
 		// new Date(); 当前日期
 		// TimestampUtil.getNow(); 当前时间
 		// DateTime.now().minusDays(1).toDate(); 减1天
+	}
+
+	@Override
+	public String updateSucceed(AopContext ac) throws Exception {
+		//		try {
+		//			String[] a = { "1" };
+		//			System.out.println(a[3]);
+		//		} catch (Exception e) {
+		//			throw new Exception("抛出一个异常给开发人员看");
+		//			// return Easy.error("修改错误，请联系技术支持解决！");
+		//		}
+		return super.updateSucceed(ac);
 	}
 
 }

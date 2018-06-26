@@ -3,7 +3,6 @@ drop table eova_dict;
 drop table eova_field;
 drop table eova_log;
 drop table eova_menu;
-drop table eova_menu_object;
 drop table eova_object;
 drop table eova_role;
 drop table eova_role_btn;
@@ -16,7 +15,6 @@ drop sequence seq_eova_dict;
 drop sequence seq_eova_field;
 drop sequence seq_eova_log;
 drop sequence seq_eova_menu;
-drop sequence seq_eova_menu_object;
 drop sequence seq_eova_object;
 drop sequence seq_eova_role;
 drop sequence seq_eova_role_btn;
@@ -24,17 +22,16 @@ drop sequence seq_eova_task;
 drop sequence seq_eova_user;
 drop sequence seq_eova_widget;
 
-create sequence seq_eova_button increment by 1 start with 11281 maxvalue 9999999999;
-create sequence seq_eova_dict increment by 1 start with 1011 maxvalue 9999999999;
-create sequence seq_eova_field increment by 1 start with 31311 maxvalue 9999999999;
-create sequence seq_eova_log increment by 1 start with 51 maxvalue 9999999999;
-create sequence seq_eova_menu increment by 1 start with 10541 maxvalue 9999999999;
-create sequence seq_eova_menu_object increment by 1 start with 01 maxvalue 9999999999;
-create sequence seq_eova_object increment by 1 start with 11241 maxvalue 9999999999;
+create sequence seq_eova_button increment by 1 start with 11901 maxvalue 9999999999;
+create sequence seq_eova_dict increment by 1 start with 1161 maxvalue 9999999999;
+create sequence seq_eova_field increment by 1 start with 31611 maxvalue 9999999999;
+create sequence seq_eova_log increment by 1 start with 91 maxvalue 9999999999;
+create sequence seq_eova_menu increment by 1 start with 10601 maxvalue 9999999999;
+create sequence seq_eova_object increment by 1 start with 11281 maxvalue 9999999999;
 create sequence seq_eova_role increment by 1 start with 41 maxvalue 9999999999;
-create sequence seq_eova_role_btn increment by 1 start with 2731 maxvalue 9999999999;
+create sequence seq_eova_role_btn increment by 1 start with 13811 maxvalue 9999999999;
 create sequence seq_eova_task increment by 1 start with 121 maxvalue 9999999999;
-create sequence seq_eova_user increment by 1 start with 71 maxvalue 9999999999;
+create sequence seq_eova_user increment by 1 start with 41 maxvalue 9999999999;
 create sequence seq_eova_widget increment by 1 start with 331 maxvalue 9999999999;
 
 create table eova_button(
@@ -44,6 +41,7 @@ create table eova_button(
     icon VARCHAR2(255),
     ui VARCHAR2(255),
     bs VARCHAR2(500),
+    uri VARCHAR2(100),
     order_num NUMBER(10),
     group_num NUMBER(10),
     is_base CHAR(1),
@@ -56,6 +54,7 @@ comment on column eova_button.name is '按钮名称';
 comment on column eova_button.icon is '图标';
 comment on column eova_button.ui is '按钮UI路径';
 comment on column eova_button.bs is '按钮BS路径';
+comment on column eova_button.uri is '服务端URI';
 comment on column eova_button.order_num is '排序号';
 comment on column eova_button.group_num is '分组号';
 comment on column eova_button.is_base is '是否基础功能';
@@ -126,8 +125,8 @@ comment on column eova_field.is_query is '是否可查询';
 comment on column eova_field.is_show is '是否可显示';
 comment on column eova_field.is_disable is '是否禁用';
 comment on column eova_field.is_order is '是否可排序';
-comment on column eova_field.is_add is '是否可新增字段';
-comment on column eova_field.is_update is '是否可修改字段';
+comment on column eova_field.is_add is '是否可新增字段(V1.6废弃)';
+comment on column eova_field.is_update is '是否可修改字段(V1.6废弃)';
 comment on column eova_field.is_edit is '是否可编辑字段';
 comment on column eova_field.is_required is '是否必填';
 comment on column eova_field.is_multiple is '是否多选项';
@@ -168,7 +167,7 @@ alter table eova_field modify data_decimal default '0';
 
 create table eova_log(
     id NUMBER(10) NOT NULL,
-    user_id NUMBER(10) NOT NULL,
+    user_id VARCHAR2(100) NOT NULL,
     type NUMBER(10) NOT NULL,
     ip VARCHAR2(255) NOT NULL,
     info VARCHAR2(500),
@@ -218,19 +217,6 @@ alter table eova_menu modify order_num default '0';
 alter table eova_menu modify parent_id default '0';
 alter table eova_menu modify open default '1';
 alter table eova_menu modify is_hide default '0';
-
-create table eova_menu_object(
-    id NUMBER(10) NOT NULL,
-    menu_code VARCHAR2(50) NOT NULL,
-    object_code VARCHAR2(50) NOT NULL,
-    indexs NUMBER(10)
-);
-
-alter table eova_menu_object add constraint pk_eova_menu_object primary key(id);
-comment on column eova_menu_object.menu_code is '菜单编码';
-comment on column eova_menu_object.object_code is '对象编码';
-comment on column eova_menu_object.indexs is '对象索引';
-alter table eova_menu_object modify indexs default '0';
 
 create table eova_object(
     id NUMBER(10) NOT NULL,
@@ -319,15 +305,19 @@ alter table eova_task modify state default '0';
 
 create table eova_user(
     id NUMBER(10) NOT NULL,
-    login_id VARCHAR2(30) NOT NULL,
-    login_pwd VARCHAR2(50) NOT NULL,
-    rid NUMBER(10)
+    login_id VARCHAR2(30),
+    login_pwd VARCHAR2(50),
+    rid NUMBER(10) NOT NULL,
+    name VARCHAR2(50),
+    memo VARCHAR2(100)
 );
 
 alter table eova_user add constraint pk_eova_user primary key(id);
 comment on column eova_user.login_id is '帐号';
 comment on column eova_user.login_pwd is '密码';
 comment on column eova_user.rid is '角色ID';
+comment on column eova_user.name is '姓名';
+comment on column eova_user.memo is '备注';
 alter table eova_user modify rid default '0';
 
 create table eova_widget(
@@ -335,7 +325,7 @@ create table eova_widget(
     type NUMBER(10) NOT NULL,
     value VARCHAR2(50) NOT NULL,
     name VARCHAR2(50) NOT NULL,
-    version VARCHAR2(5),
+    version NUMBER(5,1),
     path VARCHAR2(50),
     description VARCHAR2(4000),
     config VARCHAR2(4000)

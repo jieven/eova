@@ -1,5 +1,3 @@
-BEGIN
-
 INSERT INTO area VALUES ('1', '中国', '0', '0');
 INSERT INTO area VALUES ('2', '北京', '1', '1');
 INSERT INTO area VALUES ('3', '安徽', '1', '1');
@@ -3408,5 +3406,3 @@ INSERT INTO area VALUES ('3405', '包河区', '3401', '3');
 INSERT INTO area VALUES ('3406', '长丰县', '3401', '3');
 INSERT INTO area VALUES ('3407', '肥东县', '3401', '3');
 INSERT INTO area VALUES ('3408', '肥西县', '3401', '3');
-
-END;

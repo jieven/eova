@@ -1,5 +1,22 @@
-drop table address;
 drop table area;
+drop sequence seq_area;
+create sequence seq_area increment by 1 start with 34081 maxvalue 9999999999;
+create table area(
+    id NUMBER(10) NOT NULL,
+    name VARCHAR2(50) NOT NULL,
+    pid NUMBER(10) NOT NULL,
+    lv NUMBER(10) NOT NULL
+);
+
+alter table area add constraint pk_area primary key(id);
+comment on column area.id is 'ID';
+comment on column area.name is '名称';
+comment on column area.pid is '父级';
+comment on column area.lv is '级别：0=中国,1=省,2=市,3=区';
+
+-- 上面的根据需要单独执行,因为表贼大!!!!
+
+drop table address;
 drop table area_city;
 drop table data_login;
 drop table data_money;
@@ -9,7 +26,6 @@ drop table hotel_bed;
 drop table hotel_stock;
 drop table item;
 drop table links;
-drop table member;
 drop table order_item;
 drop table orders;
 drop table product;
@@ -19,9 +35,9 @@ drop table user_info;
 drop table users;
 drop table users_exp;
 drop table users_item;
+drop table test01;
 
 drop sequence seq_address;
-drop sequence seq_area;
 drop sequence seq_area_city;
 drop sequence seq_data_login;
 drop sequence seq_data_money;
@@ -31,7 +47,6 @@ drop sequence seq_hotel_bed;
 drop sequence seq_hotel_stock;
 drop sequence seq_item;
 drop sequence seq_links;
-drop sequence seq_member;
 drop sequence seq_order_item;
 drop sequence seq_orders;
 drop sequence seq_product;
@@ -42,18 +57,16 @@ drop sequence seq_users;
 drop sequence seq_users_exp;
 drop sequence seq_users_item;
 
-create sequence seq_address increment by 1 start with 1251 maxvalue 9999999999;
-create sequence seq_area increment by 1 start with 34101 maxvalue 9999999999;
+create sequence seq_address increment by 1 start with 41 maxvalue 9999999999;
 create sequence seq_area_city increment by 1 start with 421 maxvalue 9999999999;
 create sequence seq_data_login increment by 1 start with 201 maxvalue 9999999999;
 create sequence seq_data_money increment by 1 start with 101 maxvalue 9999999999;
-create sequence seq_dicts increment by 1 start with 1731 maxvalue 9999999999;
+create sequence seq_dicts increment by 1 start with 2111 maxvalue 9999999999;
 create sequence seq_hotel increment by 1 start with 31 maxvalue 9999999999;
 create sequence seq_hotel_bed increment by 1 start with 41 maxvalue 9999999999;
 create sequence seq_hotel_stock increment by 1 start with 61 maxvalue 9999999999;
 create sequence seq_item increment by 1 start with 71 maxvalue 9999999999;
-create sequence seq_links increment by 1 start with 21 maxvalue 9999999999;
-create sequence seq_member increment by 1 start with 131 maxvalue 9999999999;
+create sequence seq_links increment by 1 start with 31 maxvalue 9999999999;
 create sequence seq_order_item increment by 1 start with 61 maxvalue 9999999999;
 create sequence seq_orders increment by 1 start with 121 maxvalue 9999999999;
 create sequence seq_product increment by 1 start with 301 maxvalue 9999999999;
@@ -76,19 +89,6 @@ comment on column address.id is 'ID';
 comment on column address.name is '姓名';
 comment on column address.full is '详细地址';
 comment on column address.mobilephone is '手机';
-
-create table area(
-    id NUMBER(10) NOT NULL,
-    name VARCHAR2(50) NOT NULL,
-    pid NUMBER(10) NOT NULL,
-    lv NUMBER(10) NOT NULL
-);
-
-alter table area add constraint pk_area primary key(id);
-comment on column area.id is 'ID';
-comment on column area.name is '名称';
-comment on column area.pid is '父级';
-comment on column area.lv is '级别：0=中国,1=省,2=市,3=区';
 
 create table area_city(
     id NUMBER(10) NOT NULL,
@@ -125,7 +125,7 @@ alter table data_money add constraint pk_data_money primary key(id);
 comment on column data_money.moon is '月份';
 comment on column data_money.num is '手机销售额';
 comment on column data_money.num1 is '电脑销售额';
-comment on column data_money.num2 is '避孕套销售额';
+comment on column data_money.num2 is '套子销售额';
 
 create table dicts(
     id NUMBER(10) NOT NULL,
@@ -227,49 +227,12 @@ comment on column links.title is '小标题';
 alter table links modify status default '1';
 alter table links modify url default 'http://www..com';
 
-create table member(
-    id NUMBER(10) NOT NULL,
-    rid NUMBER(10),
-    status NUMBER(10),
-    nickname VARCHAR2(30),
-    company_name VARCHAR2(255),
-    mobile VARCHAR2(11),
-    phone VARCHAR2(20),
-    phone2 VARCHAR2(255),
-    create_time DATE NOT NULL,
-    province NUMBER(10),
-    city NUMBER(10),
-    region NUMBER(10),
-    admin_province NUMBER(10),
-    admin_city NUMBER(10),
-    admin_region NUMBER(10)
-);
-
-alter table member add constraint pk_member primary key(id);
-comment on column member.rid is '冗余角色ID';
-comment on column member.status is '状态';
-comment on column member.nickname is '昵称';
-comment on column member.company_name is '单位名称';
-comment on column member.mobile is '联系手机';
-comment on column member.phone is '联系电话';
-comment on column member.phone2 is '应急电话';
-comment on column member.create_time is '注册时间';
-comment on column member.province is '省';
-comment on column member.city is '市';
-comment on column member.region is '区';
-comment on column member.admin_province is '管理省';
-comment on column member.admin_city is '管理市';
-comment on column member.admin_region is '管理区';
-alter table member modify rid default '0';
-alter table member modify status default '0';
-alter table member modify create_time default sysdate;
-
 create table order_item(
     id NUMBER(10) NOT NULL,
     order_id NUMBER(10) NOT NULL,
     product_id NUMBER(10) NOT NULL,
     product VARCHAR2(128) NOT NULL,
-    price VARCHAR2(10) NOT NULL,
+    price NUMBER(10,8) NOT NULL,
     num NUMBER(10) NOT NULL
 );
 
@@ -336,8 +299,8 @@ create table product(
     sizes NUMBER(10) NOT NULL,
     name VARCHAR2(255) NOT NULL,
     img VARCHAR2(255),
-    test_price VARCHAR2(22),
-    price VARCHAR2(22),
+    test_price NUMBER(22,8),
+    price NUMBER(22,8),
     cost_score NUMBER(10),
     score NUMBER(10),
     stock NUMBER(10),
@@ -372,7 +335,7 @@ create table sale_data(
     id NUMBER(10) NOT NULL,
     city_id NUMBER(10) NOT NULL,
     name VARCHAR2(255) NOT NULL,
-    money VARCHAR2(22)
+    money NUMBER(22,8)
 );
 
 alter table sale_data add constraint pk_sale_data primary key(id);
@@ -381,6 +344,16 @@ comment on column sale_data.city_id is '城市ID';
 comment on column sale_data.name is '商品';
 comment on column sale_data.money is '销售额';
 alter table sale_data modify money default '0';
+
+create table test01(
+    uuid VARCHAR2(36) NOT NULL,
+    name VARCHAR2(255),
+    time DATE
+);
+
+alter table test01 add constraint pk_test01 primary key(uuid);
+alter table test01 modify name default 'SB666';
+alter table test01 modify time default sysdate;
 
 create table test_info(
     id NUMBER(10) NOT NULL,
@@ -400,8 +373,8 @@ create table test_info(
     tag VARCHAR2(255),
     json VARCHAR2(500),
     test1 NUMBER(10),
-    test2 VARCHAR2(12),
-    test3 VARCHAR2(22),
+    test2 NUMBER(12,2),
+    test3 NUMBER(22,8),
     test4 CHAR(1),
     test5 NUMBER(20),
     test6 NUMBER(3),
