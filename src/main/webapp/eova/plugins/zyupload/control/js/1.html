@@ -1,0 +1,110 @@
+<div>
+	<div id="avatar_file" style="margin-left: 90px; width: auto; height: auto;" class="eova-imgs">
+		<form id="uploadForm" action="/upload/img?filedir=/avatar" method="post" enctype="multipart/form-data">
+			<div class="upload_box">
+				<div class="upload_main">
+					<div class="upload_choose">
+						<div class="convent_choice">
+							<div class="andArea">
+								<div class="filePicker">点击选择图片</div>
+								<input id="fileImage" type="file" size="30" name="fileselect[]" multiple="">
+							</div>
+						</div>
+						<span id="fileDragArea" class="upload_drag_area">或者将图片拖到此处</span>
+					</div>
+					<div class="status_bar">
+						<div id="status_info" class="info">选中1张图片，共0KB。</div>
+						<div class="btns">
+							<div class="webuploader_pick">继续选择</div>
+							<div class="upload_btn">开始上传</div>
+						</div>
+					</div>
+					<div id="preview" class="upload_preview">
+						<div id="uploadList_0" class="upload_append_list">
+							<div class="file_bar">
+								<div style="padding: 5px;">
+									<p class="file_name">1475647037704.jpg</p>
+									<span class="file_del" data-index="0" title="删除"></span>
+								</div>
+							</div>
+							<a style="height: 200px; width: 150px;" href="#" class="imgBox">
+								<div class="uploadImg" style="width: 135px">
+									<img id="uploadImage_0" class="upload_image" src="http://127.0.0.1/avatar/1475647037704.jpg" style="width: expression(this.width &amp; gt; 135 ? 135 px: this.width)">
+								</div>
+							</a>
+							<p id="uploadProgress_0" class="file_progress"></p>
+							<p id="uploadFailure_0" class="file_failure">上传失败，请重试</p>
+							<p id="uploadSuccess_0" class="file_success" style="display: block;"></p>
+						</div>
+					</div>
+				</div>
+				<div class="upload_submit">
+					<button type="button" id="fileSubmit" class="upload_submit_btn">确认上传图片</button>
+				</div>
+				<div id="uploadInf" class="upload_inf"></div>
+			</div>
+		</form>
+	</div>
+	<input type="hidden" id="avatar" name="avatar" value="1475647037704.jpg" style="width: 90%;">
+
+	<script>
+		$(function() {
+
+			var $input = $('#avatar');
+			var val = $input.val();
+			var vals = [];
+
+			// 初始化数据
+			$.each(val.split(','), function(index, o) {
+				if (!$.isNull(o)) {
+					vals.push(o)
+				}
+			});
+
+			// 初始化插件
+			var $zyUpload = $("#avatar_file").zyUpload({
+
+				urlPrefix : 'http://127.0.0.1/avatar/', // 图片服务域名+图片目录
+				successImgs : '1475647037704.jpg'.split(','), // 已经上传好的图片(用于回显)
+
+				itemWidth : "150px", // 图片项的宽度
+				itemHeight : "200px", // 图片项的高度
+				url : "/upload/img?filedir=/avatar", // 上传图片的路径
+
+				width : "auto", // 控件宽度
+				height : "auto", // 控件高度
+				multiple : true, // 是否可以多个图片上传
+				dragDrop : true, // 是否可以拖动上传图片
+				del : true, // 是否可以删除图片
+				finishDel : false, // 是否在上传图片完成后删除预览
+
+				onSelect : function(files, allFiles) {
+				},
+				onDelete : function(file, surplusFiles) {
+					if (!file.newName) {
+						return;
+					}
+					// 删除图片
+					for (var i = 0; i < vals.length; i++) {
+						if (vals[i] == file.newName) {
+							vals.splice(i, 1);
+							break;
+						}
+					}
+					// 更新值
+					$input.val(vals.join(','));
+				},
+				onSuccess : function(file, json) {
+					vals.push(json.fileName);
+				},
+				onFailure : function(file) {
+					console.info("图片上传失败：");
+					console.info(file);
+				},
+				onComplete : function(responseInfo) {
+					$input.val(vals.join(','));
+				}
+			});
+		});
+	</script>
+</div>
