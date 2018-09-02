@@ -224,7 +224,7 @@ create table eova_object(
     name VARCHAR2(100) NOT NULL,
     view_name VARCHAR2(255),
     table_name VARCHAR2(255),
-    pk_name VARCHAR2(50) NOT NULL,
+    pk_name VARCHAR2(50),
     data_source VARCHAR2(50),
     is_single CHAR(1),
     is_celledit CHAR(1),
