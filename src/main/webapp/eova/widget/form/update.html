@@ -9,26 +9,33 @@
 var $form = $('#${formId}');
 
 var submitNow = function($dialog, $widget, $pjq) {
-	$pjq("#eovaSave").linkbutton({disabled : true});
+	var $btnSave = $pjq("#eovaSave");
+	$btnSave.linkbutton({disabled : true});
+	var i = 3;
+	function count() {i--;
+		if(i == 0){$btnSave.linkbutton({disabled : false});return;}
+		setTimeout(function() {count()}, 1000)
+	}
+	count();
+	
     $.post('${url}', $.getFormParasObj($form), function(result) {
-        if (result.success) {
+		if (result.success) {
         	$.slideMsg($.str.format($.I18N('修改成功'), '${object.name}'), $pjq);
         	$.widgetReLoad($widget);
             $dialog.dialog('destroy');
         } else {
         	$.alert($pjq, result.msg);
-        	$pjq("#eovaSave").linkbutton({disabled : false});
-        }
-    }, 'json');
+		}
+	}, 'json');
 };
 
 var btnSaveCallback = function($dialog, $widget, $pjq) {
 	// nice validator
-    $form.isValid(function(isValied){
-        if(isValied){
-            submitNow($dialog, $widget, $pjq);
-        }
-    });
+	$form.isValid(function(isValied) {
+		if (isValied) {
+			submitNow($dialog, $widget, $pjq);
+		}
+	});
 };
 
 var EOVA_FORM = "update";
