@@ -17,7 +17,7 @@
     </defaultCache>
 
     <!--system cache name sysCache-->
-    <cache name="sysCache"
+    <cache name="sys"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="20000"
            eternal="false"
@@ -32,7 +32,7 @@
     </cache>
 
     <!--service cache name serviceCache, 1s time out, 交付时可以改成600s-->
-    <cache name="serviceCache"
+    <cache name="service"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="20000"
            eternal="false"
@@ -48,7 +48,7 @@
     </cache>
 
     <!--player cache name playerCache, session time out 30min-->
-    <cache name="playerCache"
+    <cache name="player"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="20000"
            eternal="false"
