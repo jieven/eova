@@ -1,11 +1,12 @@
 /**
-o * Copyright (c) 2013-2016, Jieven. All rights reserved.
+ * Copyright (c) 2013-2016, Jieven. All rights reserved.
  *
  * Licensed under the GPL license: http://www.gnu.org/licenses/gpl.txt
  * To use it on other terms please contact us at 1623736450@qq.com
  */
 package com.oss;
 
+import com.eova.common.utils.xx;
 import com.eova.core.IndexController;
 import com.eova.model.User;
 import com.jfinal.core.Controller;
@@ -39,10 +40,12 @@ public class OSSController extends IndexController {
 		}
 
 		// 初始化帐号密码和提示
-		setAttr("login_id", "eova");
-		setAttr("login_pwd", "000000");
-		setAttr("msg", "角色：超管,帐号:eova,密码:000000");
-		// 方便第一次使用的新手和开发快速测试,不需要注释即可!
+		if (xx.isEmpty(getAttr("msg"))) {
+			setAttr("login_id", "eova");
+			setAttr("login_pwd", "000000");
+			setAttr("msg", "角色：超管,帐号:eova,密码:000000");
+			// 方便第一次使用的新手和开发快速测试,不需要注释即可!
+		}
 
 		super.toLogin();
 	}
