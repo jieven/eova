@@ -25,6 +25,8 @@ if(isTrue(isQuery!)){
 	<div><#bool id="${item.en}" name="${name}" value="${value!}" isReadonly="${readnoly!false}" /></div>
 <%} else if(item.type == "图片框"){%>
 	<div><#img id="${item.en}" name="${name}" value="${value!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" filename="${item.config.filename!}" memo="${item.config.memo!}" height="${item.height!100}" /></div>
+<%} else if(item.type == "多图框"){%>
+	<div><#imgs id="${item.en}" name="${name}" value="${value!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" meta="${item}" /></div>
 <%} else if(item.type == "文件框"){%>
 	<div><#file id="${item.en}" name="${name}" value="${value!}" options="isReadonly : ${readnoly!false}" filedir="${item.config.filedir!}" filename="${item.config.filename!}" /></div>
 <%} else if(item.type == "图标框"){%>

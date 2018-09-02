@@ -1,3 +1,5 @@
+// JS基础在VIP教程-第三部 开发原生技能(Web开发基础补习)中讲解
+// JS基础不好的同学可以乘机成为VIP用户补一下课:http://www.eova.cn/help
 $(document).ready(function(){
 	var $province = $('#province');
     var $city= $('#city');
