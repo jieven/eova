@@ -23,7 +23,8 @@
 	function limit(file){
 	    var allowSubmit = false;
 	    if (!file){
-	        return;
+	    	$.slideMsg('请选择一个Excel文件!', $ppjq);
+	        return false;
 	    }
 	    while (file.indexOf("\\") != -1){
 	        file = file.slice(file.indexOf("\\") + 1);
@@ -43,20 +44,21 @@
 	}
 	
 	var btnSaveCallback = function($dialog, $widget, $pjq) {
-		var $btn = $pjq("#eovaImport");
-		$btn.linkbutton({disabled : true});
-		var i = 3;
-		function count() {i--;
-			if(i == 0){$btn.linkbutton({disabled : false});return;}
-			setTimeout(function() {count()}, 1000)
-		}
-		count();
-		
 		$ppjq = $pjq;
 		$pwidget = $widget;
 		var $fm = $('#importForm');
 		var $file = $('#upfile');
 		if (limit($file.val())) {
+			
+			var $btn = $pjq("#eovaImport");
+			$btn.linkbutton({disabled : true});
+			var i = 3;
+			function count() {i--;
+				if(i == 0){$btn.linkbutton({disabled : false});return;}
+				setTimeout(function() {count()}, 1000)
+			}
+			count();
+			
 			$fm.submit();
 		}
 	};
