@@ -16,6 +16,7 @@
 <iframe name="ajaxUpload" style="display:none">
 </iframe>
 <script type="text/javascript">
+
 	var extArray = new Array(".xls");
 	var $ppjq;
 	var $pwidget;
@@ -40,8 +41,17 @@
 	    }
 	    return true;
 	}
-
+	
 	var btnSaveCallback = function($dialog, $widget, $pjq) {
+		var $btn = $pjq("#eovaImport");
+		$btn.linkbutton({disabled : true});
+		var i = 3;
+		function count() {i--;
+			if(i == 0){$btn.linkbutton({disabled : false});return;}
+			setTimeout(function() {count()}, 1000)
+		}
+		count();
+		
 		$ppjq = $pjq;
 		$pwidget = $widget;
 		var $fm = $('#importForm');

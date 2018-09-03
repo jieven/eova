@@ -12,6 +12,7 @@
 			title : name,
 			url : url,
 			buttons : [ {
+				id : 'eovaImport',
 				text : $.I18N('确定'),
 				handler : function() {
 					dialog.find('iframe').get(0).contentWindow.btnSaveCallback(dialog, $grid, parent.$);
