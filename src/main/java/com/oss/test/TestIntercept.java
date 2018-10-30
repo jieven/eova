@@ -40,7 +40,13 @@ public class TestIntercept extends MetaObjectIntercept {
 		System.out.println("delete_flag=" + r.getBoolean("delete_flag"));
 		System.out.println("update_time=" + r.getDate("update_time"));
 		System.out.println("create_time=" + r.getTimestamp("create_time"));
-		System.out.println("date time=" + r.getDate("test7"));
+		System.out.println("type1 bl=" + r.getBoolean("type1"));
+		System.out.println("type2 int" + r.getInt("type2"));
+		System.out.println("type3 long=" + r.getLong("type3"));
+		System.out.println("type4 BIG=" + r.getBigDecimal("type4"));
+		System.out.println("type5 float=" + r.getFloat("type5"));
+		System.out.println("type6 double=" + r.getDouble("type6"));
+		System.out.println("type7 BIG=" + r.getBigDecimal("type7"));
 		return null;
 	}
 

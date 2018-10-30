@@ -367,7 +367,7 @@ create table test_info(
     address VARCHAR2(255),
     id_card VARCHAR2(255),
     update_time DATE,
-    create_time DATE,
+    create_time TIMESTAMP(6),
     password VARCHAR2(255),
     color VARCHAR2(10),
     tag VARCHAR2(255),

@@ -694,7 +694,7 @@ CREATE TABLE `eova_object` (
   `name` varchar(100) NOT NULL COMMENT '对象名称',
   `view_name` varchar(255) DEFAULT NULL COMMENT '查询数据视图',
   `table_name` varchar(255) DEFAULT NULL COMMENT '保存数据主表',
-  `pk_name` varchar(50) NOT NULL COMMENT '主键',
+  `pk_name` varchar(50) DEFAULT NULL COMMENT '主键',
   `data_source` varchar(50) DEFAULT 'main' COMMENT '数据源',
   `is_single` tinyint(1) DEFAULT '1' COMMENT '是否单选',
   `is_celledit` tinyint(1) DEFAULT '0' COMMENT '是否可行内编辑',

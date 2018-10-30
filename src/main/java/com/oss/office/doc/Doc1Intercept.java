@@ -17,6 +17,8 @@ public class Doc1Intercept extends OfficeIntercept {
 	@Override
 	public void init(Controller ctrl, HashMap<String, Object> data) throws Exception {
 
+		// ctrl.getPara(1);// 只支持索引取参数
+
 		Record r = new Record();
 		r.set("name", "陆家嘴软件园");
 		r.set("zm", "100000");

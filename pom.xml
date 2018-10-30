@@ -13,8 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<eova.version>1.6-beta6</eova.version>
-		<jetty.version>8.1.8</jetty.version>
+		<eova.version>1.6.0</eova.version>
 
 	</properties>
 
@@ -25,20 +24,20 @@
 			<artifactId>eova</artifactId>
 			<version>${eova.version}</version>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>com.jfinal</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
+		    <groupId>com.jfinal</groupId>
+		    <artifactId>jetty-server</artifactId>
+		    <version>8.1.8</version>
+		    <scope>provided</scope>
 		</dependency>
-
+		
 		<!-- 无法自动下载，请手工获取Jar(10G专用)：https://gitee.com/eova/eova/attach_files，其它版本驱动自行下载测试！-->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.oracle</groupId> -->
-<!-- 		    <artifactId>ojdbc14</artifactId> -->
-<!-- 		    <version>10.2.0.4.0</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.oracle</groupId> -->
+		<!-- <artifactId>ojdbc14</artifactId> -->
+		<!-- <version>10.2.0.4.0</version> -->
+		<!-- </dependency> -->
 
 	</dependencies>
 

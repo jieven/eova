@@ -4,6 +4,15 @@
 		<div id="gridToolbar" style="height: 33px;">
 			<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'eova-icon739',plain:true" onclick="eova_download()">下载文件</a>
 			<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'eova-icon887',plain:true" onclick="eova_print()">在线打印</a>
+			<%// 自定义功能按钮%>
+			<%for(btn in btnList){%>
+				<%include(btn.ui,{'menu': menu, 'button': btn}){}%>
+			<%}%>
+
+			<%// 仅超级管理员可见%>
+				<%if(session.user.isAdmin){%>
+ 				<%include("/eova/button/btn/quick.html",{'menu': menu, 'parentId': 'gridToolbar'}){}%>
+			<%}%>
 		</div>
 	</div>
 	<div data-options="region:'center', fit:true,border:false">
@@ -26,5 +35,5 @@
 		}
 	</script>
 </body>
-
+<script type="text/javascript" src="${STATIC!}/eova/ui/js/template.js"></script>
 <%}%>

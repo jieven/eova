@@ -10,6 +10,7 @@ import com.eova.common.utils.xx;
 import com.eova.core.IndexController;
 import com.eova.model.User;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
 
 /**
  * 自定义 新增或重写 登录 注册 等各种默认系统业务！！！
@@ -51,8 +52,8 @@ public class OSSController extends IndexController {
 	}
 
 	@Override
-	protected void loginInit(Controller ctrl, User user) throws Exception {
-		super.loginInit(ctrl, user);
+	protected void loginInit(Controller ctrl, User user, Record r) throws Exception {
+		super.loginInit(ctrl, user, r);
 
 		// 添加自定义业务信息到当前用户中
 		// UserInfo info = UserInfo.dao.findById(user.get("id"));

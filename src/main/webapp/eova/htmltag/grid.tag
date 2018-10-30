@@ -254,18 +254,19 @@ $(function () {
     	        if(menuCode != ''){
     	        	exportUrl = exportUrl + '-' + menuCode;
     	        }
+    	        
     	        // GET方式提交新窗，有乱码风险
-				// var queryParas = $.getFormParasStr($('#queryForm'));
-				// if (queryParas) {
-				//     exportUrl = exportUrl + '?' + queryParas;
-				// }
-				// window.location.href = exportUrl;
+				var queryParas = $.getFormParasStr($('#queryForm'));
+				if (queryParas) {
+				    exportUrl = exportUrl + '?' + queryParas;
+				}
+				window.location.href = exportUrl;
 
 				// POST方式提交新窗
-				var $form = $('#queryForm');
-				$form.attr('target', '_blank');
-				$form.attr('action', exportUrl);
-				$form.submit();
+// 				var $form = $('#queryForm');
+// 				$form.attr('target', '_blank');
+// 				$form.attr('action', exportUrl);
+// 				$form.submit();
             }
 		});
         

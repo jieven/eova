@@ -62,11 +62,11 @@ var isSelected = function($widget) {
 
 	if (num == 0) {
 		$.slideMsg($.I18N('请选择一行数据'));
-		return;
+		return false;
 	}
 	if (num > 1) {
 		$.slideMsg($.I18N('请勿选择多行数据'));
-		return;
+		return false;
 	}
 
 	return true;

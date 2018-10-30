@@ -5,7 +5,7 @@
     	
         if (isSelected($grid)) {
 	        var row = $.getWidgetSelected($grid);
-            loadDialog($grid, '${I18N('修改')}${object.name}', '/form/update/${object.code}-' + row.pk_val, ${menu.config.params.width!'945'}, ${menu.config.params.height!'600'});
+            loadDialog($grid, '${I18N(button.name)}${object.name}', '/form/update/${object.code}-' + row.pk_val, ${menu.config.params.width!'945'}, ${menu.config.params.height!'600'});
         }
     };
 </script>
