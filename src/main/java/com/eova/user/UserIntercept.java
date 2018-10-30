@@ -8,7 +8,6 @@ package com.eova.user;
 
 import com.eova.aop.AopContext;
 import com.eova.aop.MetaObjectIntercept;
-import com.eova.common.Easy;
 import com.eova.common.utils.EncryptUtil;
 import com.eova.common.utils.xx;
 import com.jfinal.plugin.activerecord.Db;
@@ -26,7 +25,7 @@ public class UserIntercept extends MetaObjectIntercept {
 		String loginId = ac.record.getStr("login_id");
 		Long num = Db.use(xx.DS_EOVA).queryLong("select count(*) from eova_user where login_id = ?", loginId);
 		if (num > 0) {
-			return Easy.warn("帐号重复,请重新填写!");
+			return warn("帐号重复,请重新填写!");
 		}
 
 		// 新增时密码加密储存

@@ -17,7 +17,6 @@ import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.oss.global.BaseMetaObjectIntercept;
 import com.oss.global.GlobalEovaIntercept;
-import com.oss.link.LinkController;
 import com.oss.model.Address;
 import com.oss.model.Orders;
 import com.oss.model.UserInfo;
@@ -36,13 +35,10 @@ public class OSSConfig extends EovaConfig {
 	protected void route(Routes me) {
 		// 自定义的路由配置往这里加。。。
 		me.add("/user", UserController.class);
-		me.add("/testuser", com.oss.user.UserController.class);
 
 		me.add("/", OSSController.class);
 		me.add("/test", TestController.class);
 		me.add("/product", ProductController.class);
-
-		me.add("/link", LinkController.class);
 
 		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
 		LoginInterceptor.excludes.add("/test/**");

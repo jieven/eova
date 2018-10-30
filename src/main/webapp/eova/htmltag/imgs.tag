@@ -5,7 +5,6 @@ if(isEmpty(uploadDir!)){
 	uploadDir = "temp";
 }
 imgUrl = IMG! + uploadDir + '/';
-debug(value);
 %>
 <div id="${name!}_file" style="margin-left: 90px;" class="eova-imgs"></div>
 <input type="hidden" id="${name!}" name="${name!}" value="${value!}" style="width:90%;">
