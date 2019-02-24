@@ -250,23 +250,25 @@ $(function () {
             name: 'exportAll',
             iconCls: 'eova-icon779',
             onclick: function () {
-            	var exportUrl = '/grid/export/' + objectCode;
-    	        if(menuCode != ''){
-    	        	exportUrl = exportUrl + '-' + menuCode;
-    	        }
-    	        
-    	        // GET方式提交新窗，有乱码风险
-				var queryParas = $.getFormParasStr($('#queryForm'));
-				if (queryParas) {
-				    exportUrl = exportUrl + '?' + queryParas;
+            	var url = '/grid/export/' + object.code;
+				if (menuCode != '') {
+					url = url + '-' + menuCode;
 				}
-				window.location.href = exportUrl;
 
-				// POST方式提交新窗
-// 				var $form = $('#queryForm');
-// 				$form.attr('target', '_blank');
-// 				$form.attr('action', exportUrl);
-// 				$form.submit();
+				// URL参数
+				var urlParas = $.getUrlParas();
+				if (urlParas) {
+					url = url + '?' + urlParas;
+				}
+
+				// 构建Form表单模拟Post提交
+				var $form = $($.str.format("<form method='post' action='{0}' target='_blank'></form>", url));
+				$.each($('#queryForm').serializeArray(), function (i, o) {
+					$form.append($.str.format("<input type='hidden' name='{0}' value='{1}'/>", o.name, o.value));
+				});
+				
+				$(document.body).append($form);
+				$form.submit();
             }
 		});
         
