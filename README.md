@@ -11,7 +11,6 @@ Eova适合所有对UI没有严苛要求的管理系统!
 
 ## Eova官方社群
 - 有问题不用怕，社区问答来帮你：[快速提问](http://www.eova.cn/qa)
-- EOVA简单开发2群：[`578977478`](http://shang.qq.com/wpa/qunwpa?idkey=609f3d241e86ad3ae5995547036b1e4a07e424d3e7030bc3231b85da0e2a0e03) 小伙伴们都在等你哟！
 
 ## 为少走弯路而看文档
 - [Eova技能书](http://doc.eova.cn)
