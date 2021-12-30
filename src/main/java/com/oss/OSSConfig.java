@@ -52,7 +52,7 @@ public class OSSConfig extends EovaConfig {
 	/**
 	 * 自定义Main数据源Model映射
 	 *
-	 * @param arp
+	 * @param arps
 	 */
 	@Override
 	protected void mapping(HashMap<String, ActiveRecordPlugin> arps) {
