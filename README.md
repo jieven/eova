@@ -44,4 +44,4 @@ Eova效果展示：
 ![EOVA控件](http://static.eova.cn/img/eovaform.png)
 
 * [做网站后台管理，就用EOVA快速开发](http://www.eova.cn) 简单才是高科技，因为简单所以更快，降低70%开发成本
-* 其它疑问请上社区提问！http://www.eova.cn
+* 其它疑问请上社区提问！https://eova.cn
