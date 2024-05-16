@@ -1,11 +1,11 @@
 ## EOVA
 🔥一个基于jfinal的国产低代码开发平台，我们坚持NO Spring原则，追求极简。 近期将会更新全新的开源版本EovaMeta，有兴趣的可以关注本项目。
 
-## Easy Object View Admin(简单对象视图管理系统)
-- Easy   简单开发
-- Object 元数据驱动业务
-- View   常用功能界面
-- Admin  信息管理和维护
+## 全新UI秘密研发中
+![输入图片说明](src/main/webapp/ui/image.png)
+
+## 欢迎加群围观EovaMeta研发进展
+![输入图片说明](https://cdn.eova.cn/wx1.jpg)
 
 ## Eova官方社群
 - 有问题不用怕，社区问答来帮你：[快速提问](http://www.eova.cn/qa)
