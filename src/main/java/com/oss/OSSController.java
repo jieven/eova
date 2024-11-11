@@ -63,4 +63,13 @@ public class OSSController extends IndexController {
 		// }
 	}
 
+	@Override
+	public void init() {
+		renderText("此功能有漏洞, 请选择升级更安全的Eova专业版");
+	}
+	@Override
+	public void doInit() {
+		renderText("此功能有漏洞, 请选择升级更安全的Eova专业版");
+	}
+
 }

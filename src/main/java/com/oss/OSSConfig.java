@@ -43,7 +43,6 @@ public class OSSConfig extends EovaConfig {
 		// 排除不需要登录拦截的URI 语法同SpringMVC拦截器配置 @see com.eova.common.utils.util.AntPathMatcher
 		LoginInterceptor.excludes.add("/test/**");
 
-		LoginInterceptor.excludes.add("/init");
 		LoginInterceptor.excludes.add("/code");
 		// LoginInterceptor.excludes.add("/xxxx/**");
 
