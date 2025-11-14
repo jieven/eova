@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>功能授权给角色</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/menu/auth/app.js?v=1.0.1"></script>
+  <style>
+      .eova-table input {
+          height: 22px;
+          width: 22px;
+          vertical-align: middle;
+      }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <div style="padding: 10px;">
+    <h3>{{ menu?.name }}</h3>
+    <template v-for="(btns, index) in btnCats">
+      <table class="eova-table" ev-size="s30">
+        <colgroup>
+          <col width="140">
+          <col v-for="btn in btns">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>角色</th>
+          <th v-for="btn in btns" style="text-align: center">{{ btn.name }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="role in roles" :key="role.id">
+          <td>{{ role.name }}</td>
+          <td v-for="b in btns" :key="b.id" style="text-align: center">
+            <label>
+              <input type="checkbox" @change="onAuth($event, b.id, role.id)" :id="'CK_' + b.id + '_' + role.id">
+            </label>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <hr>
+    </template>
+    <div class="eova-notes"> 💡 授权后相关角色需要重新登录更新权限</div>
+  </div>
+
+
+</div>
+<script type="text/javascript">
+    uzoo.page.id = '#(id)'
+</script>
+
+</body>
+</html>

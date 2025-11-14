@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>#(template.name)</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/excel/import/app.js?v=1.0.0"></script>
+  <style>
+      .eova-form h4 {
+          margin-left: 10px;
+      }
+
+      .eova-form-field a {
+          color: blue;
+      }
+
+      .eova-icon-layim-download {
+          font-weight: bold;
+          font-size: 16px;
+      }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="eova-form">
+    <fieldset>
+      <legend>#(template.name)</legend>
+    </fieldset>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">导入模式</label>
+      <ev-select type="select" option="#(template.option)" v-model="data.type"></ev-select>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">导入模版</label>
+      <div class="eova-form-txt">
+        <i class="eova-icon-layim-download"></i>
+        <a href="#(template.url)" target="_blank">下载模版</a>
+      </div>
+    </div>
+
+    <div style="margin: 10px">
+      <ev-upload
+        file_upload="/upload/file/excel"
+        accept=".xlsx"
+        :size="1024*10"
+        :show_record="false"
+        @success="handleSuccess"
+        @error="handleError"
+      ></ev-upload>
+    </div>
+
+    <div class="eova-notes eova-notes__info" style="margin: 10px">
+      #if(template.info)
+      #(template.info)
+      #else
+      1、 请按照系统规定的数据格式编写上传表格，并保证上传表格的真实、准确、完整性。
+      <br>
+      2、 此功能为Excel导入数据案例，可以根据此案例来自定义业务能力。
+      <br>
+      #end
+    </div>
+
+    <!--    {{ data }}-->
+  </div>
+</div>
+
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+        // 初始化参数传递
+        uzoo.app.data.value.code = '#(template.code)'
+    }
+</script>
+</body>
+</html>

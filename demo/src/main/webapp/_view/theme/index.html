@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EovaUI主题风格</title>
+  <script type="text/javascript" src="/eova/lib/vue/vue.global.js"></script>
+  <link rel="stylesheet" href="/eova/lib/eova/eovaui.css">
+  <script type="text/javascript" src="/eova/lib/eova/eovaui.js?v=1.0.0.3"></script>
+  <script type="module" src="/_view/theme/index.js"></script>
+  <style>
+      body {
+          background-color: var(--eova-color_bg);
+      }
+
+      .main {
+          border: 1px solid #f1f1f1;
+          background-color: #ffffff;
+          padding: 5px;
+          margin: 10px;
+      }
+
+      fieldset {
+          margin: 10px;
+      }
+
+      .color-card {
+          padding: 10px;
+          color: var(--eova-color_w);
+          border-radius: 4px;
+          min-height: 40px;
+      }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="main">
+    <fieldset>
+      <legend>颜色</legend>
+    </fieldset>
+    <div class="eova-row eova-col_space10">
+      <div v-for="(color, index) in themeColors" :key="index" class="eova-col-1">
+        <div class="color-card" :style="{ backgroundColor: color.value }">
+          {{ color.label }}
+          <br/>
+          {{ color.hex }}
+        </div>
+      </div>
+    </div>
+
+    <div class="eova-row eova-col_space10">
+      <div v-for="(color, index) in backgroundColors" :key="index + 'bg'" class="eova-col-1">
+        <div class="color-card" :style="{ backgroundColor: color.value }">
+          {{ color.label }}
+          <br/>
+          {{ color.hex }}
+        </div>
+      </div>
+    </div>
+
+    <div class="eova-row eova-col_space10">
+      <div v-for="(color, index) in borderColor" :key="index + 'border'" class="eova-col-1">
+        <div class="color-card" :style="{ backgroundColor: color.value }">
+          {{ color.label }}
+          <br/>
+          {{ color.hex }}
+        </div>
+      </div>
+    </div>
+
+    <div class="eova-row eova-col_space10">
+      <div v-for="(color, index) in textColors" :key="index + 'txt'" class="eova-col-1">
+        <div class="color-card" :style="{ backgroundColor: color.value }">
+          {{ color.label }}
+          <br/>
+          {{ color.hex }}
+        </div>
+      </div>
+    </div>
+
+    <div class="eova-row eova-col_space10">
+      <div class="eova-col-1">
+        <div
+          class="color-card"
+          style="background-color: var(--eova-color_hover); color: var(--eova-color_txt)"
+        >
+          选中颜色
+        </div>
+      </div>
+      <div class="eova-col-1 eova-col_2">
+        <div class="color-card" style="background-color: var(--eova-color_b)">隔二个栅格</div>
+      </div>
+    </div>
+
+    <div class="eova-notes">
+      💡 既是颜色展示，也是12栅格布局案例，功能尽可能复用，代码直接查看网页源码即可。
+    </div>
+
+    <hr/>
+
+    <fieldset>
+      <legend>按钮主题</legend>
+    </fieldset>
+
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button>默认按钮</button>
+        <button class="eova-btn_success">成功按钮</button>
+        <button class="eova-btn_error">危险按钮</button>
+        <button class="eova-btn_warn">警告按钮</button>
+        <button class="eova-btn_info">信息按钮</button>
+        <button class="eova-btn_base">原始按钮</button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>按钮尺寸</legend>
+    </fieldset>
+
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button class="eova-btn_s45">大型按钮</button>
+        <button class="eova-btn_s40">中型按钮</button>
+        <button class="eova-btn_s30">小型按钮</button>
+        <button class="eova-btn_s20">迷你按钮</button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>圆角按钮</legend>
+    </fieldset>
+
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button class="eova-btn_radius">默认按钮</button>
+        <button class="eova-btn_success eova-btn_radius">成功按钮</button>
+        <button class="eova-btn_error eova-btn_radius">危险按钮</button>
+        <button class="eova-btn_warn eova-btn_radius">警告按钮</button>
+        <button class="eova-btn_info eova-btn_radius">信息按钮</button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>图标按钮</legend>
+    </fieldset>
+
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button>
+          <i class="eova-icon-add-1"></i>
+          新增数据
+        </button>
+        <button class="eova-btn_error">
+          <i class="eova-icon-delete"></i>
+          彻底删除
+        </button>
+        <button class="eova-btn_warn">
+          <i class="eova-icon-refresh"></i>
+          一键刷新
+        </button>
+        <button class="eova-btn_info">
+          <i class="eova-icon-release"></i>
+          一键发版
+        </button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>禁用按钮</legend>
+    </fieldset>
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button class="eova-btn eova-btn_disabled">禁用按钮</button>
+        <button class="eova-btn eova-btn_error eova-btn_disabled">禁用按钮</button>
+        <button class="eova-btn eova-btn_warn eova-btn_radius eova-btn_disabled">禁用按钮</button>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>不同标签</legend>
+    </fieldset>
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button class="eova-btn">原生按钮</button>
+        <a class="eova-btn">超链按钮</a>
+        <span class="eova-btn">SPAN按钮</span>
+        <div class="eova-btn">DIV按钮</div>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>圆点、徽章、卡片、标签</legend>
+    </fieldset>
+    <div class="eova-panel">
+      小圆点：
+      <span class="eova-badge-dot"></span>
+      <span class="eova-badge-dot eova-bg-orange"></span>
+      <span class="eova-badge-dot eova-bg-green"></span>
+      <span class="eova-badge-dot eova-bg-blue"></span>
+      <span class="eova-badge-dot eova-bg-black"></span>
+      <span class="eova-badge-dot eova-bg-gray"></span>
+      <br/>
+      <br/>
+      实心徽章：
+      <span class="eova-badge">3</span>
+      <span class="eova-badge">99</span>
+      <span class="eova-badge">1024</span>
+      <span class="eova-badge">红</span>
+      <span class="eova-badge eova-bg-orange">橙</span>
+      <span class="eova-badge eova-bg-blue">蓝</span>
+      <span class="eova-badge eova-bg-green">绿</span>
+      <span class="eova-badge eova-bg-black">黑</span>
+      <span class="eova-badge eova-bg-gray">灰</span>
+      <br/>
+      <br/>
+      空心徽章：
+      <span class="eova-badge eova-badge_hollow">6</span>
+      <span class="eova-badge eova-badge_hollow">Hot</span>
+      <br/>
+      <br/>
+      圆形徽章：
+      <span class="eova-badge eova-badge_round">3</span>
+      <span class="eova-badge eova-badge_round">99</span>
+      <span class="eova-badge eova-badge_round eova-bg-orange">橙</span>
+      <span class="eova-badge eova-badge_round eova-bg-blue">蓝</span>
+      <span class="eova-badge eova-badge_round eova-bg-green">绿</span>
+      <span class="eova-badge eova-badge_round eova-bg-black">黑</span>
+      <span class="eova-badge eova-badge_round eova-bg-gray">灰</span>
+      <br/>
+      <br/>
+      标签:
+      <span class="eova-badge eova-badge_tag"> 苹果 <i class="eova-icon-close"></i> </span>
+      <span class="eova-badge eova-badge_tag"> 香蕉 <i class="eova-icon-close"></i> </span>
+      <span class="eova-badge eova-badge_tag"> 橘子 <i class="eova-icon-close"></i> </span>
+
+      <br/>
+      <br/>
+      搭配按钮：
+      <button class="eova-btn">查看评论
+        <span class="eova-badge">99+</span>
+      </button>
+    </div>
+
+
+    <fieldset>
+      <legend>进度条</legend>
+    </fieldset>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="90" text="默认进度条"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="80" text="绿色进度条" color="#67C23A"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="70" text="红色进度条" color="#f56c6c"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="橙色进度条" color="#E6A23C"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="渐变进度条" color="#1ea0fc,#67c23a"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="细进度条" color="#67C23A" size="10"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="粗进度条" color="#67C23A" size="22"></ev-progress>
+    </div>
+
+
+    <fieldset>
+      <legend>选项卡-简洁风格</legend>
+    </fieldset>
+    <div class="eova-tab eova-tab_base" id="tabs-base">
+      <ul class="eova-tab_title">
+        <li class="eova-this">三国演义</li>
+        <li>水浒传
+          <span class="eova-badge eova-badge_round eova-bg-blue">3</span>
+        </li>
+        <li>西游记
+          <span class="eova-badge eova-bg-orange">99</span>
+        </li>
+        <li>红楼梦
+          <span class="eova-badge-dot"></span>
+        </li>
+      </ul>
+      <div class="eova-tab_content">
+        <div class="eova-tab_item eova-show">
+          早岁哪知世事艰，中原北望气如山。
+          <br/>
+          楼船夜雪瓜洲渡，铁马秋风大散关。
+          <br/>
+          塞上长城空自许，镜中衰鬓已先斑。
+          <br/>
+          出师一表真名世，千载谁堪伯仲间。
+          <br/>
+        </div>
+        <div class="eova-tab_item">
+          自幼曾攻经史，长成亦有权谋。
+          <br/>
+          恰如猛虎卧荒丘，潜伏爪牙忍受。
+          <br/>
+          不幸刺文双颊，那堪配在江州。
+          <br/>
+          他年若得报冤仇，血染浔阳江口。
+          <br/>
+          心在山东身在吴，飘蓬江海谩嗟吁。
+          <br/>
+          他时若遂凌云志，敢笑黄巢不丈夫。
+          <br/>
+        </div>
+        <div class="eova-tab_item">
+          尘埃落定后，佛法广弘扬，
+          <br/>
+          真假无需辨，心净即西方。
+          <br/>
+          西游奇缘里，寓言意味长，
+          <br/>
+          六耳与灵猴，共证菩提香。
+          <br/>
+        </div>
+        <div class="eova-tab_item">
+          情天情海幻情身，
+          <br/>
+          情既相逢必主吟；
+          <br/>
+          漫言不肖皆荣出，
+          <br/>
+          造衅开端实在宁。
+          <br/>
+        </div>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>选项卡-卡片风格</legend>
+    </fieldset>
+
+    <div class="eova-tab eova-tab_card" id="tabs-card">
+      <ul class="eova-tab_title">
+        <li class="eova-this">静态表格</li>
+        <li>三国演义</li>
+        <li>水浒传</li>
+        <li>西游记</li>
+        <li>红楼梦</li>
+      </ul>
+      <div class="eova-tab_content">
+        <div class="eova-tab_item eova-show">
+          <table class="eova-table" ev-size="s30">
+            <colgroup>
+              <col width="40"/>
+              <col width="200"/>
+              <col width="200"/>
+              <col width="200"/>
+              <col width="200"/>
+              <col/>
+            </colgroup>
+            <thead>
+            <tr>
+              <th></th>
+              <th>用户名</th>
+              <th>邮箱</th>
+              <th>手机号</th>
+              <th>注册时间</th>
+              <th>签名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td style="text-align: center">1</td>
+              <td>张三</td>
+              <td>test01@eova.cn</td>
+              <td>13566668888</td>
+              <td>2024-04-24</td>
+              <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">2</td>
+              <td>张三</td>
+              <td>test01@eova.cn</td>
+              <td>13566668888</td>
+              <td>2024-04-24</td>
+              <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">3</td>
+              <td>张三</td>
+              <td>test01@eova.cn</td>
+              <td>13566668888</td>
+              <td>2024-04-24</td>
+              <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">4</td>
+              <td>张三</td>
+              <td>test01@eova.cn</td>
+              <td>13566668888</td>
+              <td>2024-04-24</td>
+              <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">5</td>
+              <td>张三</td>
+              <td>test01@eova.cn</td>
+              <td>13566668888</td>
+              <td>2024-04-24</td>
+              <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="eova-tab_item">出师未捷身先死</div>
+        <div class="eova-tab_item">他时若遂凌云志，敢笑黄巢不丈夫。</div>
+        <div class="eova-tab_item">六耳猕猴取真经</div>
+        <div class="eova-tab_item">金风玉露一相逢，便胜却人间无数。</div>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>原生表单美化</legend>
+    </fieldset>
+
+    <form method="post" class="eova-form-native" onsubmit="return false;">
+      <div class="eova-form-native_row">
+        打印机：
+        <select id="printer" class="select-custom">
+          <option value="Foxit Phantom Printer" selected>Foxit Printer</option>
+          <option value="Gprinter  GP-3120TU">Gprinter</option>
+          <option value="导出为WPS PDF">WPS PDF</option>
+        </select>
+        <div class="eova-sp"></div>
+        打印份数：
+        <input type="text" id="copies" value="1" style="width: 40px"/>
+        <button onclick="alert('吱吱吱。。。')">
+          <i class="eova-icon-print"></i>
+          打印
+        </button>
+      </div>
+
+      <div class="eova-form-native_row">
+        纸张大小：
+        <input
+          type="text"
+          class="eova-input"
+          id="width"
+          value="40"
+          maxlength="4"
+          style="width: 40px"
+        />
+        x
+        <input type="text" id="height" value="30" maxlength="4" style="width: 40px"/>
+        mm
+        <button onclick="alert('修改成功')">确认</button>
+      </div>
+      <div class="eova-form-native_row">
+        <input type="checkbox" id="subscribe" name="subscribe" checked/>
+        <label for="subscribe">不打印背景</label>
+        <div class="eova-sp"></div>
+
+        <label>分辨率:</label>
+        <input type="radio" id="male" name="gender" value="male" checked/>
+        <label for="male">203</label>
+        <input type="radio" id="female" name="gender" value="female"/>
+        <label for="female">300</label>
+      </div>
+      <div class="eova-form-native_row">
+        <textarea style="height: 50px; width: 1250px; margin-top: 5px">打印内容</textarea>
+      </div>
+
+      <div class="eova-notes">
+        💡
+        很多时候我们可能只需要放几个简单的基础控件，直接使用原生控件，不用浪费时间去查询UI框架文档。
+      </div>
+    </form>
+
+    <fieldset>
+      <legend>表格s30</legend>
+    </fieldset>
+
+    <table class="eova-table" ev-size="s30">
+      <colgroup>
+        <col width="40"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col/>
+      </colgroup>
+      <thead>
+      <tr>
+        <th></th>
+        <th>用户名</th>
+        <th>邮箱</th>
+        <th>手机号</th>
+        <th>注册时间</th>
+        <th>签名</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td style="text-align: center">1</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">3</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <fieldset>
+      <legend>表格s40</legend>
+    </fieldset>
+
+    <table class="eova-table" ev-size="s40">
+      <colgroup>
+        <col width="40"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col width="200"/>
+        <col/>
+      </colgroup>
+      <thead>
+      <tr>
+        <th></th>
+        <th>用户名</th>
+        <th>邮箱</th>
+        <th>手机号</th>
+        <th>注册时间</th>
+        <th>签名</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td style="text-align: center">1</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">3</td>
+        <td>张三</td>
+        <td>test01@eova.cn</td>
+        <td>13566668888</td>
+        <td>2024-04-24</td>
+        <td>在黑夜中点亮一盏属于自己的灯，照亮前行的路，温暖身边的人。</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <fieldset>
+      <legend>高亮提示文案</legend>
+    </fieldset>
+
+    <div class="eova-notes">💡 关注我们公众号[EOVA简单开发]，获取更多独家技术干货！</div>
+    <div class="eova-notes eova-notes__error">💔 提交失败！ 您的邮箱已经被其他人注册使用了。</div>
+    <div class="eova-notes eova-notes__success">
+      🎯 恭喜！ 您的订单已成功提交，我们将尽快为您处理。
+    </div>
+    <div class="eova-notes eova-notes__info">😀 win + . 海量免费图标等你来用</div>
+
+    <div class="eova-notes">🧡 向行业先驱 EasyUI LayUI ElementUI AntV 致敬 🙏</div>
+  </div>
+</div>
+</body>
+</html>

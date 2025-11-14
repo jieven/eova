@@ -1,0 +1,11 @@
+### EovaMeta 默认公共基础依赖
+<link rel="stylesheet" href="/eova/lib/eova/eovaui.css">
+<link rel="stylesheet" href="/eova/ui/css/common.css?v=4.0">
+<script type="text/javascript" src="/eova/lib/vue/vue.global.js"></script>
+<script type="text/javascript" src="/eova/lib/vue/axios.min.js"></script>
+<script type="text/javascript" src="/eova/lib/eova/lib/layui.umd.js?v=1.0"></script>
+<script type="text/javascript" src="/eova/lib/eova/lib/eova-tools.umd.js?v=1.0.0.10101"></script>
+<script type="text/javascript" src="/eova/lib/eova/eovaui.js?v=1.0.0"></script>
+<script type="text/javascript" src="/eova/_view/template/eova.template.js?v=1.2.0"></script>
+<script>me.conf.putAll('#(getUIConf())');</script>
+#if(conf('ui.include'))#render(conf('ui.include'))#end

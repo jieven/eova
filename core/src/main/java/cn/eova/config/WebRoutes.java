@@ -1,0 +1,21 @@
+/**
+ * Copyright (c) 2015-2026 EOVA.CN. All rights reserved.
+ * Licensed under the LGPL-3.0 license
+ * For authorization, please contact: admin@eova.cn
+ */
+package cn.eova.config;
+
+import cn.eova.auth.AuthInterceptor;
+import cn.eova.interceptor.LoginInterceptor;
+import com.jfinal.config.Routes;
+
+public class WebRoutes extends Routes {
+
+    public void config() {
+        // 登录验证
+        addInterceptor(new LoginInterceptor());
+        // 权限验证拦截
+        addInterceptor(new AuthInterceptor());
+    }
+
+}

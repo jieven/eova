@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EovaMeta 组件</title>
+  #include("/eova/_view/_block/meta.html")
+  #include("/eova/_view/_block/base.html")
+  <script type="module" src="/_view/widget/index.js"></script>
+  ### Vue默认实现
+  <style>
+      body {
+          background-color: var(--eova-color_bg);
+      }
+
+      .main {
+          border: 1px solid #f1f1f1;
+          background-color: #ffffff;
+          padding: 5px;
+          margin: 10px;
+      }
+
+      fieldset {
+          margin: 10px;
+      }
+
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="main">
+
+
+    <fieldset>
+      <legend>进度条</legend>
+    </fieldset>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="90" text="默认进度条"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="80" text="绿色进度条" color="#67C23A"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="70" text="红色进度条" color="#f56c6c"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="橙色进度条" color="#E6A23C"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="渐变进度条" color="#1ea0fc,#67c23a"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="细进度条" color="#67C23A" size="10"></ev-progress>
+    </div>
+    <div style="width: 50%; margin: 10px">
+      <ev-progress :value="60" text="粗进度条" color="#67C23A" size="22"></ev-progress>
+    </div>
+
+    <div class="eova-notes">💡 逐步补充其他组件Demo, 急用可在会员群里问！</div>
+
+  </div>
+</div>
+</body>
+</html>

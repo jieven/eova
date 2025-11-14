@@ -1,0 +1,7 @@
+SSE消息格式
+
+event: {eventName}
+id: {messageId}
+data: {yourMessage}
+retry: {reconnectDelay}
+\n\n   // 两个换行结束

@@ -1,0 +1,27 @@
+### 超管功能
+#if(loginUser.isAdmin)
+<div class="eova-admins">
+  <div class="eova-tools_box">
+    <ev-popup trigger="hover" placement="bottom">
+      <button class="eova-btn_icon" title="开发设置">
+        <i class="eova-icon-set"></i>
+      </button>
+      <template #content>
+        <div class="eova-select-content">
+          <ul class="eova-select_items">
+            <li onclick="onMetaField()">📝元字段配置</li>
+            <li onclick="onMetaFieldDiy('#(mode)')" title="#(mode)">✨表单字段配置</li>
+            <li onclick="onReorderForm('#(mode)')">🔃表单字段排序</li>
+          </ul>
+        </div>
+      </template>
+    </ev-popup>
+    <button class="eova-btn_icon" title="刷新" onclick="location.reload()">
+      <i class="eova-icon-refresh"></i>
+    </button>
+    <button class="eova-btn_icon" title="关闭" onclick="document.querySelectorAll('.eova-admins')[0].remove()">
+      <i class="eova-icon-close"></i>
+    </button>
+  </div>
+</div>
+#end

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>修改#(object.name)</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/template/form/update/index.js?v=1.3"></script>
+  <style lang="css">
+      body {
+          background-color: white;
+      }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <div>
+    <ev-form
+      ref="refForm"
+      mode="update"
+      name="update_from"
+      biz="#(object.code)"
+      object="#(object.code)"
+      pk="#(id)"
+      v-model="data"
+      @ready="onReady"
+    ></ev-form>
+  </div>
+  <!--  {{ data }}-->
+  #include("/eova/_view/_block/admin_form.html", mode="update")
+</div>
+<script>
+    uzoo.page.code = '#(object.code)'
+    uzoo.page.form = 'update'
+    console.log(uzoo.page.app)
+    // let fixed = '#(fixed)'
+    // if (fixed) uzoo.page.fixed = JSON.parse(fixed)
+</script>
+</body>
+</html>

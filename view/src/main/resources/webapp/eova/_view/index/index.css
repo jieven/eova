@@ -1,0 +1,468 @@
+body {
+  background-color: var(--eova-color_bg);
+}
+
+.eova-home_menu {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  /*border: 1px solid var(--eova-color_border);*/
+  z-index: 999;
+  box-shadow: 0px 0 5px 2px rgba(0, 0, 0, 0.1);
+
+  width: 200px;
+  overflow-y: auto;
+}
+
+.eova-home_head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+  /*background: #2062e6;*/
+  background: var(--eova-color_w);
+  /*margin-bottom: 10px;*/
+  color: white !important;
+  text-align: center;
+
+  z-index: 999;
+  display: inline-flex;
+}
+
+.eova-home_logo {
+  line-height: 50px;
+  height: 50px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  text-align: center;
+  box-sizing: border-box;
+  border-right: 1px solid #f3f3f3;
+  /*background: var(--eova-color_b);*/
+}
+
+.eova-home_logo img {
+  max-width: 198px;
+  max-height: 48px;
+}
+
+.eova-home_logo_txt {
+  font-family:
+    PingFang SC,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    SimHei,
+    WenQuanYi Micro Hei,
+    sans-serif;
+  cursor: pointer;
+  color: #fff;
+  box-sizing: border-box;
+  /* float: left; */
+  margin-left: 10px;
+  font-weight: 400;
+  line-height: 50px;
+  font-size: 18px;
+  /*font-weight: bold;*/
+}
+
+.eova-home_head__left {
+  /*position: absolute;*/
+  /*margin-left: 200px;*/
+  /*float: left;*/
+
+  line-height: 50px;
+  width: 25%;
+
+  display: block;
+  /*background-color: green;*/
+}
+
+.eova-home_head__rigth {
+  position: absolute;
+  right: 0;
+
+  line-height: 50px;
+  width: 40%;
+
+  /*float: right;*/
+  /*background-color: rgba(233, 150, 122, 0.51);*/
+
+  /*display: flex;*/
+  /*-webkit-box-align: center;*/
+  /*align-items: center;*/
+}
+
+.eova-home_head__user {
+  /*position: absolute;*/
+  /*right: 0;*/
+  line-height: 50px;
+  /*width: 200px;*/
+  text-align: right;
+  padding-right: 5px;
+  box-sizing: border-box;
+  border-left: 1px solid var(--eova-color_border);
+  /*background-color: rgba(255, 193, 88, 0.29);*/
+  /*font-size: inherit;*/
+  user-select: none;
+  /* right: 10px; */
+}
+.eova-home_head__user span {
+  margin-right: 5px;
+}
+
+.eova-home-head__su {
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  font-size: 13px;
+  right: 26px;
+  /* text-align: center; */
+  top: -3px;
+  color: var(--eova-color_bg2);
+}
+.eova-home-head__su i {
+  font-size: 13px;
+}
+
+.eova-home_tabs {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  left: 200px;
+  z-index: 997;
+
+  line-height: 40px;
+  height: 40px;
+  width: 100%;
+  /*background-color: var(--eova-color_w);*/
+  /*box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);*/
+  border: none;
+}
+.eova-home_tabs .eova-tab_sys {
+  border-width: 0px !important;
+  margin: 0px;
+}
+
+.eova-home_tabs__ops {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  box-sizing: border-box;
+  border: 1px solid var(--eova-color_border);
+  background-color: var(--eova-color_w);
+}
+
+.eova-home_tabs__ops i {
+  font-size: 20px;
+  position: absolute;
+  top: 0 !important;
+  right: 10px;
+  cursor: pointer;
+  line-height: 40px;
+}
+
+/*关闭非主要元素调小*/
+.eova-home_tabs .eova-tab_title .eova-icon-close {
+  font-size: 13px !important;
+  /*position: absolute;*/
+  /*right: 2px;*/
+}
+
+/*.eova-home_tabs .eova-tab_title li{*/
+/*    max-width: 108px;*/
+/*    white-space:nowrap;*/
+/*    overflow:hidden;*/
+/*    text-overflow:ellipsis;*/
+/*}*/
+/*.eova-home_tabs .eova-tab_title span {*/
+/*    padding: 0 5px 0 5px;*/
+/*}*/
+
+.eova-home_body {
+  position: absolute;
+  /*head+tabs*/
+  top: 90px;
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  z-index: 996;
+  width: auto;
+  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  background-color: var(--eova-color_bg);
+
+  /*border: 1px solid var(--eova-color_border_3);*/
+}
+
+.eova-home_iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.box-center {
+  /*width: 1430px;*/
+  width: 100%;
+  /*background: #2062e6;*/
+
+  position: fixed;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+
+  /*border: 1px solid #82848a;*/
+}
+
+.box-main {
+  /*width: 1260px;*/
+  width: calc(100% - 200px);
+  /*height: 100%;*/
+
+  float: right;
+  margin-left: 10px;
+  /*border: 1px solid #a5a3a3;*/
+  /*background-color: #FFFFFF;*/
+
+  min-height: 700px;
+  height: calc(100vh - 60px);
+}
+
+.box-iframe {
+  /*border: 1px solid #e5e5e5;*/
+  box-sizing: border-box;
+  /*height: 100%;*/
+}
+
+#IFM {
+  position: absolute;
+  /*width: 1260px;*/
+  width: calc(100% - 200px);
+  height: 100%;
+  left: 200px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /*兼容HS头部*/
+  /*margin-top: -30px;*/
+
+  padding: 0;
+  margin-left: 0;
+}
+
+.eova-home_menu .eova-menu_item:hover {
+  /* background-color: rgba(0, 95, 229, 0.1) !important; */
+  /*border-right: 3px solid #005fe5 !important;*/
+  /*margin-left: -1px;*/
+  /*box-sizing: border-box;*/
+}
+
+#menu_all .eova-menu_item {
+  padding-left: 85px;
+  font-weight: bold;
+}
+
+#menu_all .eova-menu_item:hover {
+  border-right: 3px solid #005fe5 !important;
+}
+
+.eova-menu_box {
+  background: #f7f8fa;
+  /*border-radius: 8px;*/
+  /*margin: 16px;*/
+  /*padding-top: 4px;*/
+  overflow: auto;
+  /*max-width: calc(100vw - 332px);*/
+  position: fixed;
+  left: 200px;
+  top: 50px;
+  z-index: 1001;
+  width: 750px;
+  height: calc(100% - 50px);
+
+  /* 动画名称，持续时间，缓动函数，动画结束后保持最后一帧状态 */
+  /*animation: slideIn 0.3s ease-out forwards;*/
+  /* 初始时div是隐藏的，可以通过将transform设置为translateX(-100%)来实现 */
+  /*transform: translateX(-100%);*/
+  /*!* 确保动画在元素加载后立即开始 *!*/
+  /*animation-fill-mode: forwards;*/
+  animation: slideIn 300ms ease-in-out forwards;
+  transform: translateX(0px);
+}
+
+.sys-menu_biz__name legend {
+  padding: 0;
+  margin: 0;
+  height: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline-start: 0.5em;
+  padding-inline-end: 0.5em;
+}
+
+.sys-menu_panel {
+  position: relative;
+  /*height: 100%;*/
+  background: #fff;
+  margin: 10px;
+  border-radius: 5px;
+  z-index: 999;
+  /*overflow: auto;*/
+
+  /*瀑布流 需固定宽高*/
+  /*display: flex;*/
+  /*flex-flow: column wrap;*/
+  /*align-content: flex-start;*/
+  /*width: 700px;*/
+  /*height: 800px;*/
+}
+
+.sys-menu_panel__title {
+  padding: 10px;
+}
+
+.sys-menu_biz {
+  columns: 214px 3;
+  column-gap: 10px;
+  column-count: 3;
+  /*column-rule: 1px solid #e2e1e1;*/
+}
+
+.sys-menu_cat {
+  display: inline-block;
+  vertical-align: top;
+  /*!*float: inline-end;*!*/
+  width: 214px;
+  margin: 0 5px 10px 5px;
+}
+
+.sys-menu_cat__title {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  color: #1d2129;
+  padding: 6px 8px 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sys-menu_item:hover {
+  background: #f2f3f5;
+  border-radius: 4px;
+}
+
+.sys-menu_item__wrap {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0 10px 0 10px;
+}
+
+.sys-menu_item {
+  border-radius: 4px;
+  color: #1d2129;
+  cursor: pointer;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 4px;
+  position: relative;
+}
+
+.sys-menu_item__star {
+  position: relative;
+  right: 5px;
+}
+
+.sys-menu_item__star i {
+  color: rgba(61, 127, 255, 0.9);
+}
+
+.sys-menu_item__url {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left: 5px;
+  max-width: 150px;
+}
+
+.sys-menu_close {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.sys-menu_filter {
+  height: 30px;
+  /*width: 99%;*/
+  border-bottom: 1px solid var(--eova-color_border);
+  margin: 0 10px 0 10px;
+}
+.sys-menu_filter i {
+  margin-left: 10px;
+  height: 30px;
+  vertical-align: middle;
+}
+.sys-menu_filter input {
+  border: none;
+  padding: 5px;
+  /*height: 27px;*/
+}
+
+/* 定义动画 */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%); /* 起始位置在左边屏幕外 */
+  }
+  100% {
+    transform: translateX(0); /* 结束位置在原本位置 */
+  }
+}
+
+.eova-drag {
+  cursor: move !important;
+}
+
+.eova-drag_chosen {
+  opacity: 1;
+  background-color: rgba(0, 95, 229, 0.1);
+  border: solid 1px #e8e8e8;
+  box-sizing: border-box;
+  cursor: move !important;
+}
+
+.eova-dropdown_content {
+  height: auto;
+  position: fixed;
+  width: 180px;
+  top: 50px;
+  left: 1740px;
+  min-width: 100.234px;
+  z-index: 998999;
+  /*height: 200px;*/
+  display: block;
+  background-color: white;
+  border: 1px solid #dfdfdf;
+  color: black;
+}

@@ -1,0 +1,64 @@
+### Send request with dynamic variables in request's body
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.ok1&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+### Send request with dynamic variables in request's body
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.ok2&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+### Send request with dynamic variables in request's body
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.no1&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+### Send request with dynamic variables in request's body
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.no2&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+### 服务异常
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.err&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+
+### 正常提交
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.post&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}
+
+
+### 鉴权失败, 未知的appKey
+POST http://meta.dev.eova.cn/router?app_key=10000&method=eova.demo.err&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "id": 10001,
+  "name": "财务主管"
+}

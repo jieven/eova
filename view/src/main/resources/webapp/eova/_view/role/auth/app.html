@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>功能权限分配</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/role/auth/app.js?v=1.0.1"></script>
+  <style>
+
+      body input {
+          height: 22px;
+          width: 22px;
+          vertical-align: middle;
+      }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <div style="padding: 10px;">
+    <!--    <div style="margin-bottom: 10px;">-->
+    <!--      <b>继承角色：</b>-->
+    <!--      #for(r : roles)-->
+    <!--      <label>-->
+    <!--        <input type="checkbox" value="#(r.id)" v-model="extendRids">-->
+    <!--        #(r.name)-->
+    <!--      </label>-->
+    <!--      #end-->
+    <!--    </div>-->
+
+    <div class="eova-tools">
+      <div class="eova-tools_box">
+        <button @click="onSelectAll(true)">全选</button>
+        <button @click="onSelectAll(false)">反选</button>
+        <button @click="onSelectType('查询')">所有查询</button>
+        <button @click="onSelectType('新增')">所有新增</button>
+        <button @click="onSelectType('修改')">所有修改</button>
+        <button @click="onSelectType('查看')">所有查看</button>
+        <button @click="onSelectType('删除')">所有删除</button>
+      </div>
+    </div>
+    <table class="eova-table" ev-size="s30">
+      <colgroup>
+        <col width="200">
+        <col>
+      </colgroup>
+      <thead>
+      <tr>
+        <th>
+          菜单名称
+        </th>
+        <th>
+          菜单功能
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="m in menus">
+        <td>
+          <i class="eova-icon-folder-open" style="color: #f59e0b; font-weight: bold;" v-if="m.type === 'dir'"></i>
+          <i class="eova-icon-triangle-r" style="color: #acacab;" v-else></i>
+          {{ m.name }}
+          <input type="checkbox" style="float: right" v-if="m.type !== 'dir'" title="选择本菜单所有功能" v-model="m.checked" @click="onSelectMenu(m.code, m.checked)">
+        </td>
+        <td style="text-align: left">
+          <template v-for="b in btns">
+            <label v-if="b.menu_code === m.code" style="margin-left: 10px">
+              <input type="checkbox" v-model="b.checked">
+              {{ b.name }}
+            </label>
+          </template>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--    <hr>-->
+    <!--    <div class="eova-notes"> 💡 授权后相关角色需要重新登录更新权限</div>-->
+  </div>
+
+
+</div>
+<script type="text/javascript">
+    uzoo.page.rid = '#(rid)'
+</script>
+
+</body>
+</html>

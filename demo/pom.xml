@@ -1,0 +1,154 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.eova.meta</groupId>
+    <artifactId>eova-meta-demo</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOTS</version>
+
+    <name>eova-meta-demo</name>
+    <url>https://eova.cn</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.8</jdk.version>
+
+        <!-- Demo 发布时忽略 -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <eova.core.version>1.1.5</eova.core.version>
+        <eova.meta.core.version>4.0.0-111301</eova.meta.core.version>
+        <eova.meta.view.version>4.0.0-111301</eova.meta.view.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>cn.eova.meta</groupId>
+            <artifactId>eova-meta-core</artifactId>
+            <version>${eova.meta.core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.eova.meta</groupId>
+            <artifactId>eova-meta-view</artifactId>
+            <version>${eova.meta.view.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- java8 保留参数名编译参数 -->
+                    <compilerArgument>-parameters</compilerArgument>
+                </configuration>
+            </plugin>
+
+            <!--
+                jar 包中的配置文件优先级高于 config 目录下的 "同名文件"
+                因此，打包时需要排除掉 jar 包中来自 src/main/resources 目录的
+                配置文件，否则部署时 config 目录中的同名配置文件不会生效
+                请勿升级2.6+, Eclipse会出现红叉提示.
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.config</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.txt</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!--
+                使用 mvn clean package 打包
+                更多配置可参考官司方文档：http://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html
+                请勿升级3.x , 要求强制从国外仓库拉取快照.
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+
+                        <configuration>
+                            <!-- 打包生成的文件名 -->
+                            <finalName>${project.artifactId}</finalName>
+                            <!-- jar 等压缩文件在被打包进入 zip、tar.gz 时是否压缩，设置为 false 可加快打包速度 -->
+                            <recompressZippedFiles>false</recompressZippedFiles>
+                            <!-- 打包生成的文件是否要追加 release.xml 中定义的 id 值 -->
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <!-- 指向打包描述文件 package.xml -->
+                            <descriptors>
+                                <descriptor>package.xml</descriptor>
+                            </descriptors>
+                            <!-- 打包结果输出的基础目录 -->
+                            <outputDirectory>${project.build.directory}/</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--默认为生产环境-->
+        <profile>
+            <id>prd</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>prd</env>
+            </properties>
+        </profile>
+        <!--mvn package -Ppre 打包预生产配置-->
+        <profile>
+            <id>pre</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>pre</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,54 @@
+#初始化启动配置
+#----------------------------------
+#开发模式：输出JFinal日志
+devMode=true
+
+#环境标识：开发环境=DEV,测试环境=TEST,预发布环境=PRE,正式环境=PRD
+env=PRD
+
+#上传根目录
+file.dir.base = /data/eova
+#导入Excel上传目录(格式:/xxx)
+file.dir.excel = /excel
+
+#事务级别(MYSQL=4,Oralce=2)
+db.transaction_level=4
+
+#JDBC配置
+db.datasource=eova,main
+
+eova.url=jdbc:mysql://127.0.0.1:13306/eova_meta?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+eova.user=root
+eova.pwd=root
+eova.driver=com.mysql.cj.jdbc.Driver
+
+main.url=jdbc:mysql://127.0.0.1:13306/demo?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+main.user=root
+main.pwd=root
+main.driver=com.mysql.cj.jdbc.Driver
+
+db.pwd.encrypt=false
+
+#定时调度
+job.enable=false
+
+###################开发环境配置
+#应用状态查看令牌
+app.status.token = eova
+
+
+# 应用名
+#app.name=运营支撑管理系统
+# 应用版权信息
+#app.copyright=© 2015-2025 EOVA.CN
+# 应用LOGO
+#app.logo=/eova/_view/index/meta.png
+
+#默认登录密码
+dev.login_id = eova
+dev.login_pwd = 000000
+
+dev.domain=http://meta.dev.eova.cn
+
+# 登录会话有效期(分钟)
+login.user.session=12000

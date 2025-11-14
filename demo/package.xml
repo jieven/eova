@@ -1,0 +1,103 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <!--
+        assembly 打包配置更多配置可参考官方文档：
+            http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html
+     -->
+
+    <id>release</id>
+
+    <!--
+        设置打包格式，可同时设置多种格式，常用格式有：dir、zip、tar、tar.gz
+            dir 格式便于在本地测试打包结果
+            zip 格式便于 windows 系统下解压运行
+            tar、tar.gz 格式便于 linux 系统下解压运行
+     -->
+    <formats>
+        <!--<format>dir</format>-->
+        <format>zip</format>
+        <!--<format>tar.gz</format> -->
+    </formats>
+
+    <!-- 打 zip 设置为 true 时，会在 zip 包中生成一个根目录，打 dir 时设置为 false 少层目录 -->
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <!-- 打包时 复制资源文件 排除EOVA配置 -->
+        <fileSet>
+            <directory>${basedir}/src/main/resources</directory>
+            <outputDirectory>config</outputDirectory>
+            <excludes>
+                <exclude>eova/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- 打包时 仅复制当前环境配置文件 -->
+        <fileSet>
+            <directory>${basedir}/src/main/resources/eova</directory>
+            <outputDirectory>config/eova</outputDirectory>
+            <includes>
+                <include>${env}.txt</include>
+            </includes>
+        </fileSet>
+
+        <!-- src/main/webapp 全部 copy 到 webapp 目录下 -->
+        <fileSet>
+            <directory>${basedir}/src/main/webapp</directory>
+            <outputDirectory>webapp</outputDirectory>
+            <excludes>
+                <exclude>WEB-INF</exclude>
+                <exclude>WEB-INF/web.xml</exclude>
+                <exclude>*.zip</exclude>
+                <exclude>*.bak</exclude>
+                <exclude>*.log</exclude>
+                <exclude>_flow</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- 打包Linux .sh -->
+        <fileSet>
+            <directory>${basedir}</directory>
+            <outputDirectory></outputDirectory>
+            <lineEnding>unix</lineEnding>
+            <fileMode>755</fileMode>
+            <includes>
+                <include>eova.sh</include>
+            </includes>
+        </fileSet>
+
+        <!-- 打包Window .bat -->
+        <fileSet>
+            <directory>${basedir}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>eova.bat</include>
+            </includes>
+        </fileSet>
+
+        <!-- 打包插件jar -->
+        <!--		<fileSet>-->
+        <!--			<directory>${basedir}/app</directory>-->
+        <!--			<outputDirectory>app</outputDirectory>-->
+        <!--		</fileSet>-->
+
+    </fileSets>
+
+    <!-- 依赖的 jar 包 copy 到 lib 目录下 -->
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <!-- 精简发布, 只打包当前项目jar
+            <includes>
+                <include>${project.groupId}:*</include>
+                <include>cn.eova:eova</include>
+            </includes> -->
+        </dependencySet>
+    </dependencySets>
+
+</assembly>
+
+
+

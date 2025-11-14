@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>✨#(object.name)元字段个性化 - EovaMeta</title>
+  #include("/eova/_view/_page/list.html")
+  ### Vue默认实现
+  <script type="module" src="/eova/_view/meta/field/index.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="eova-layout"
+       style="
+            width: 100%;
+            height: 100%;
+            background-color: white
+         "
+  >
+    <div class="zone eova-anim-fadein" style="width: 100%; height: 100%;">
+      <ev-tab type="base" v-model="currTab">
+        <ev-tab-item id="query" title="查询">
+          <ev-table
+            ref="tableRef"
+            size="s30"
+            object="eova_field_diy"
+            biz="eova_field_diy"
+            :where="{ object_code: '#(object.code)', mode: 'query' }"
+            :height="tableHeight"
+            :is-edit="true"
+            :page="page"
+          >
+          </ev-table>
+        </ev-tab-item>
+        <ev-tab-item id="create" title="新增">
+          <ev-table
+            ref="tableRef"
+            size="s30"
+            object="eova_field_diy"
+            biz="eova_field_diy"
+            :where="{ object_code: '#(object.code)', mode: 'create' }"
+            :height="tableHeight"
+            :is-edit="true"
+            :page="page"
+          >
+          </ev-table>
+        </ev-tab-item>
+        <ev-tab-item id="update" title="修改">
+          <ev-table
+            ref="tableRef"
+            size="s30"
+            object="eova_field_diy"
+            biz="eova_field_diy"
+            :where="{ object_code: '#(object.code)', mode: 'update' }"
+            :height="tableHeight"
+            :is-edit="true"
+            :page="page"
+          >
+          </ev-table>
+        </ev-tab-item>
+        <ev-tab-item id="read" title="详情">
+          <ev-table
+            ref="tableRef"
+            size="s30"
+            object="eova_field_diy"
+            biz="eova_field_diy"
+            :where="{ object_code: '#(object.code)', mode: 'read' }"
+            :height="tableHeight"
+            :is-edit="true"
+            :page="page"
+          >
+          </ev-table>
+        </ev-tab-item>
+      </ev-tab>
+
+    </div>
+  </div>
+
+</div>
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+
+        uzoo.app.currTab.value = '#(mode)'
+    }
+</script>
+</body>
+</html>

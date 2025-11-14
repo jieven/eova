@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>修改#(object.name)</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/template/form/detail/index.js?v=1.0"></script>
+  <style lang="css">
+      body {
+          background-color: white;
+      }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <div>
+    <ev-form
+      ref="refForm"
+      mode="read"
+      name="detail_from"
+      biz="#(object.code)"
+      object="#(object.code)"
+      pk="#(id)"
+      v-model="data"
+      @ready="onReady"
+    ></ev-form>
+  </div>
+  #include("/eova/_view/_block/admin_form.html", mode="read")
+</div>
+<script>
+    uzoo.page.code = '#(object.code)'
+    uzoo.page.form = 'read'
+</script>
+</body>
+</html>

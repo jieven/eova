@@ -1,0 +1,9 @@
+<button class="layui-btn layui-btn-sm" onclick="eova_importMetaData()">
+	<i class="layui-icon layui-icon-senior"></i> ${button.name!}
+</button>
+<script type="text/javascript">
+var eova_importMetaData = function() {
+	var ID = '${gridId}';
+	dialog(ID, '导入元数据', '/meta/imports', 550, 360);
+};
+</script>

@@ -1,0 +1,18 @@
+### 列表页
+#include("/eova/_view/_block/meta.html")
+<script>
+    uzoo.page = {
+        // #if(menu)
+        menu_id: '#(menu.id)',
+        menu_name: '#(menu.name)',
+        menu_code: '#(menu.code)',
+        menu_conf: #(menu.conf),
+        // #end
+
+        object_id: '#(object.id)',
+        object_code: '#(object.code)',
+        object_name: '#(object.name)',
+        object_pk: '#(object.pk)',
+    }
+</script>
+#include("/eova/_view/_block/base.html")

@@ -1,0 +1,26 @@
+<div v-show="showSubTable" style="position: fixed; top: 100px; bottom: 50px; right: 0; width: 600px; z-index: 999;background-color: white; border: 1px solid #878484">
+  <div style="position: absolute;right: 5px;top: 5px;" @click="showSubTable = false" title="隐藏窗口">
+    <i class="eova-icon-close"></i>
+  </div>
+
+  <h3>&nbsp;酒店布草库存</h3>
+  <ev-table
+    ref="refTable1"
+    object="hotel_stock"
+    biz="hotel_stock"
+    :page="table1Page"
+    :height="table1Height"
+  >
+  </ev-table>
+  <h3>&nbsp;酒店床位</h3>
+
+  <ev-table
+    ref="refTable2"
+    object="hotel_bed"
+    biz="hotel_bed"
+    :page="table1Page"
+    height="200"
+  >
+  </ev-table>
+
+</div>

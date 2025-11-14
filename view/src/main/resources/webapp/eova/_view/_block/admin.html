@@ -1,0 +1,52 @@
+### 超管功能
+#if(loginUser.isAdmin)
+<div class="eova-admins">
+  <div class="eova-tools_box">
+    <ev-popup trigger="hover" placement="bottom">
+      <button class="eova-btn_icon" title="元数据">
+        <i class="eova-icon-senior"></i>
+      </button>
+      <template #content>
+        <div class="eova-select-content">
+          <ul class="eova-select_items">
+            <li onclick="onMetaField()">📝元字段编辑</li>
+            <li onclick="onMetaObject()">🏐元对象编辑</li>
+            <li onclick="onReorderList()">🔢表格字段排序</li>
+            <li onclick="onMetaFieldDiy('query')">✨查询表单配置</li>
+            <li onclick="onReorderForm('query')">🔃查询字段排序</li>
+          </ul>
+        </div>
+      </template>
+    </ev-popup>
+    <ev-popup trigger="hover" placement="bottom">
+      <button class="eova-btn_icon">
+        <i class="eova-icon-template" title="模版"></i>
+      </button>
+      <template #content>
+        <div class="eova-select-content">
+          <ul class="eova-select_items">
+            <li onclick="onMenu()">菜单配置</li>
+            <li onclick="onMenu()">模版配置</li>
+          </ul>
+        </div>
+      </template>
+    </ev-popup>
+    <ev-popup trigger="hover" placement="bottom">
+      <button class="eova-btn_icon">
+        <i class="eova-icon-app" title="按钮"></i>
+      </button>
+      <template #content>
+        <div class="eova-select-content">
+          <ul class="eova-select_items">
+            <li onclick="onButtonAdd()">✅自定义按钮</li>
+            <!--                        <li onclick="onMenu()">查看按钮</li>-->
+          </ul>
+        </div>
+      </template>
+    </ev-popup>
+    <button class="eova-btn_icon" title="暂时关闭" onclick="document.querySelectorAll('.eova-admins')[0].remove()">
+      <i class="eova-icon-close"></i>
+    </button>
+  </div>
+</div>
+#end

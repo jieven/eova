@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eova Meta 2025</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/eova/lib/eova/eovaui.css?v=1.0.0">
+  <link rel="stylesheet" href="/eova/_view/index/index.css?v=241231">
+  <script type="text/javascript" src="/eova/lib/vue/vue.global.js"></script>
+  <!--  <script type="text/javascript" src="/eova/lib/vue/Sortable.min.js"></script>-->
+  <!--  <script type="text/javascript" src="/eova/lib/vue/vuedraggable.umd.min.js"></script>-->
+  <script type="text/javascript" src="/eova/lib/vue/axios.min.js?v=3.7.5"></script>
+  <script type="text/javascript" src="/eova/lib/eova/lib/eova-tools.umd.js?v=3.7.5"></script>
+  <script type="text/javascript" src="/eova/lib/eova/eovaui.js?v=3.7.5"></script>
+
+  <script type="module" src="/eova/_view/index/index.js?v=1.0"></script>
+  <script type="module" src="/eova/ui/js/eova.msg.js?v=1.0"></script>
+  #renderOrElse(conf('ui.include.index'))#end
+</head>
+<body>
+
+<div class="eova-home" id="app" v-cloak>
+
+  <div class="eova-home_menu" v-show="showMenu">
+    <div class="eova-menu">
+      <template v-for="(c, i) in cats">
+        <div class="eova-menu_cat" v-if="!c.is_hide">
+          <div class="eova-menu_cat__title" @click="c.open = !c.open">
+            <i :class="c.icon"></i>
+            {{ c.name }}
+            <div class="eova-menu_cat__fold">
+              <i :class="c.open ? 'eova-icon-up' : 'eova-icon-down'"></i>
+            </div>
+          </div>
+          <div class="eova-menu_items" style="overflow-y: hidden" v-show="c.open">
+            <template v-for="m in menus">
+              <div class="eova-menu_item" v-if="m.parent_id == c.id && m.type != 'dir'">
+                <a @click="openTab(m)" :title="m.id + '|' + m.link" :id="m.id">
+                  <i :class="m.icon"></i>
+                  {{ m.name }}
+                </a>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+    </div>
+  </div>
+  <div class="eova-home_head">
+    <div class="eova-home_logo" v-show="showMenu">
+      <a href="/" title="Eova Meta">
+        <img src="#(app_logo??'/eova/_view/index/meta.png')"/>
+      </a>
+    </div>
+    <div class="eova-home_head__left">
+      <nav class="eova-nav eova-nav__left">
+        <ul class="eova-nav_items">
+          <li class="eova-nav_item">
+            <a href="javascript:;" title="侧边伸缩" @click="foldMenu()">
+              <i :class="'eova-icon-' + (showMenu ? 'shrink-right' : 'spread-left')"
+              ></i>
+            </a>
+          </li>
+          <li class="eova-nav_item">
+            <a href="javascript:;" title="刷新" @click="refresh()">
+              <i class="eova-icon-refresh-3"></i>
+            </a>
+          </li>
+          <li class="eova-nav_item">
+            <a href="javascript:;" title="全屏" @click="toggleFullScreen()">
+              <i class="eova-icon-screen-full"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="eova-home_head__rigth">
+      <nav class="eova-nav eova-nav__right">
+        <ul class="eova-nav_items">
+          #renderOrElse(conf('ui.include.nav'))#end
+
+          <li class="eova-nav_item">
+            <a target="_blank"
+               @click="openEovaMsg()"
+               title="查看消息"
+               id="notice">
+              <i class="eova-icon-notice"></i>
+              <span class="eova-badge-dot" style="margin-left: -2px"></span>
+            </a>
+          </li>
+
+          <li class="eova-nav_item eova-home_head__user">
+            <div class="eova-home-head__su" v-show="currentUser">
+              <i class="eova-icon-user"></i>
+              {{ currentUser }}
+            </div>
+            <ev-popup ref="popUserRef">
+              <span><i class="eova-icon-username"></i> #(LOGIN_INFO)</span>
+              <i class="eova-icon-triangle-d"></i>
+              <template #content>
+                <div class="eova-select-content" @click="hideUserMenu">
+                  <ul class="eova-select_items">
+                    #if(loginUser.isAdmin)
+                    <li @click="switchUser">
+                      <i class="eova-icon-user"></i>
+                      虚拟用户切换
+                    </li>
+
+                    <li @click="resetUser">
+                      <i class="eova-icon-refresh"></i>
+                      虚拟用户还原
+                    </li>
+                    <li onclick="window.open('/eova/admin/showUserData')">☆ 查看用户数据</li>
+                    <li onclick="window.open('/eova/admin/showRuntimeConfig')" style="border-bottom: var(--eova-border_solid)">⚙ 查看运行时配置</li>
+                    #end
+                    <li @click="updatePwd()">
+                      <i class="eova-icon-password"></i>
+                      修改密码
+                    </li>
+                    <li @click="logout()">
+                      <i class="eova-icon-logout"></i>
+                      立即退出
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </ev-popup>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="eova-home_tabs" :style="showMenu ? 'left:200px' : 'left:0'">
+    <div class="eova-tab eova-tab_sys">
+      <ul class="eova-tab_title">
+        <li
+          v-for="m in tabMenus"
+          :key="m.name"
+          @click="toTab(m)"
+          :class="m.active ? 'eova-this' : ''"
+        >
+          <span>{{ m.name }}</span>
+          <i class="eova-icon-close" @click="closeTab(m)"></i>
+        </li>
+      </ul>
+    </div>
+    <div class="eova-home_tabs__ops" title="关闭所有" @click="closeAllTab()">
+      <i class="eova-icon-close"></i>
+    </div>
+  </div>
+  <div class="eova-home_body" :style="showMenu ? 'left:200px' : 'left:0'">
+    <template v-for="(m, i) in tabMenus">
+      <div class="eova-home_tabbody" v-show="m.active">
+        <iframe
+          :id="'IF' + m.id"
+          :src="m.link"
+          class="eova-home_iframe"
+          allowtransparency="true"
+          frameborder="0"
+        ></iframe>
+      </div>
+    </template>
+  </div>
+</div>
+</body>
+</html>

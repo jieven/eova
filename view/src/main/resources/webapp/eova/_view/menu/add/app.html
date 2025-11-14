@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>创建新菜单</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/menu/add/app.js?v=1.0.1"></script>
+  <style>
+      .app-template_info {
+          margin-left: 10px !important;
+          line-height: 32px;
+          color: #bfbdbf
+      }
+
+      .app-template_img {
+          position: absolute;
+          right: 5px;
+          max-width: 250px;
+      }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!--		<input v-model="test">-->
+  <!--		{{test}}-->
+  <form ref="refForm"
+        method="post"
+        class="eova-form eova-anim-fadein"
+        @submit.prevent="onSubmit"
+        novalidate
+  >
+    <fieldset>
+      <legend>菜单信息</legend>
+    </fieldset>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">菜单类型</label>
+      <ev-select type="select" name="type" :items="types" v-model="data.type"></ev-select>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">编码</label>
+      <ev-input name="code" v-model="data.code"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">名称</label>
+      <ev-input name="name" v-model="data.name"></ev-input>
+    </div>
+    <br>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">图标</label>
+      <ev-icon type="eova-icon" v-model="data.icon" placeholder="请选择图标"></ev-icon>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">序号</label>
+      <ev-input name="num" type="number" v-model="data.num"></ev-input>
+    </div>
+    <br>
+    <!--    <div class="eova-form-field">-->
+    <!--      <label class="eova-form-label">关联元对象</label>-->
+    <!--      <ev-find option="eova_object" v-model="data.objects" :multiple="true" placeholder="本功能所需使用的元对象授权" style="width: 540px"></ev-find>-->
+    <!--    </div>-->
+
+    <fieldset v-show="data.type === 'app'">
+      <legend>应用配置</legend>
+      <div class="app-template_img">
+        <img :src="`/eova/_view/menu/add/img/${selectTemplate?.img || 'default.png'}`" alt="模版示例">
+      </div>
+
+      <div class="eova-form-field">
+        <label class="eova-form-label">应用模版</label>
+        <ev-select type="select" :items="templates" v-model="data.template"></ev-select>
+      </div>
+      <div class="eova-form-field">
+        <label class="eova-form-label"></label>
+        <div class="app-template_info">{{ selectTemplate?.info }}</div>
+      </div>
+
+      <br>
+
+      <template v-for="o in templateProps">
+        <div class="eova-form-field">
+          <label :class="['eova-form-label', required(o)]">{{ o.name }}</label>
+          <template v-if="o.type === 'find'">
+            <ev-find :option="o.props.option" v-model="config[o.key]" :multiple="o.multiple" :placeholder="o.title" :style="'width: 540px'"></ev-find>
+          </template>
+          <template v-else>
+            <ev-input v-model="config[o.key]" :placeholder="o.title" :style="'width: 540px'"></ev-input>
+          </template>
+
+          <div class="eova-form-msg" v-if="o.info">
+            <span v-if="o.multiple">(可多选) </span>
+            {{ o.info }}
+          </div>
+
+        </div>
+        <br>
+      </template>
+    </fieldset>
+    <!--        <br><br><br>-->
+    <!--        <div class="eova-form-field">-->
+    <!--            <label class="eova-form-label">模版配置</label>-->
+    <!--            <ev-input type="texts"-->
+    <!--                      name="config" v-model="data.config"-->
+    <!--                      placeholder="模版配置"-->
+    <!--                      style="height:90px;width: 540px"-->
+    <!--            ></ev-input>-->
+    <!--        </div>-->
+  </form>
+  <!--    <br><br><br><br>-->
+  <!--    {{config}}-->
+  <!--    {{templateProps}}-->
+
+</div>
+
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+
+        uzoo.app.data.value.parent_id = +'#(parent_id)'
+
+        let tps = [
+            // #for(t : templates)
+            {
+                val: '#(t.code)',
+                txt: '#(t.name)',
+                info: '#(t.info)',
+                img: '#(t.img)'
+            },
+            // #end
+        ]
+
+        uzoo.app.templates.value.push(...tps)
+        uzoo.app.data.value.template = 'table'
+
+    }
+</script>
+</body>
+</html>

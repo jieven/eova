@@ -1,0 +1,58 @@
+/*
+    EOVA-UI 全局变量
+    优先级：!important > style="" > #id > .class > tagName > :root;
+
+    l=light 浅色
+    d=Dark 深色
+    b=black 黑色
+    w=white
+*/
+
+/* 默认主题(明亮) */
+:root {
+  /*主色*/
+  --eova-color_main: #1e9fff;
+  /*成功*/
+  --eova-color_success: #67c23a;
+  /*错误*/
+  --eova-color_error: #f56c6c;
+  /*警告*/
+  --eova-color_warn: #e6a23c;
+  /*普通*/
+  --eova-color_info: #909399;
+
+  /*选中*/
+  --eova-color_hover: #e5effc;
+
+  /*黑白*/
+  --eova-color_w: #ffffff;
+  --eova-color_b: #000000;
+
+  /*背景*/
+  --eova-color_bg: #f5f5f5;
+  --eova-color_bg1: #ececec;
+  --eova-color_bg2: #d2d2d2;
+  --eova-color_bg3: #606266;
+
+  /*边框*/
+  /*--eova-color_border: red;*/
+  --eova-color_border: #e7e7e7;
+  --eova-color_border1: #ebeef5;
+  --eova-color_border2: #c5c8ce;
+  --eova-color_border3: #b2b2b2;
+
+  /*文本*/
+  --eova-color_txt: #666;
+  --eova-color_txt1: #909399;
+  --eova-color_txt2: #606266;
+  --eova-color_txt3: #303133;
+
+  --eova-color_txt_btn: #ffffff;
+  --eova-color_txt_btn_d: #606266;
+
+  /* 边框 */
+  --eova-border_radius: 3px;
+  --eova-border_solid: 1px solid var(--eova-color_border);
+  --eova-border_shadow: 0 2px 4px #0000001a;
+  --eova-border_box: border-box;
+}

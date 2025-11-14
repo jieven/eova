@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>导入元数据</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/meta/import/app.js?v=1.0"></script>
+</head>
+<body>
+<div id="app">
+  <form method="post"
+        class="eova-form eova-anim-fadein"
+        @submit.prevent="onSubmit"
+        novalidate
+  >
+    <div class="eova-form-field">
+      <label class="eova-form-label required">元类型</label>
+      <ev-select type="select" name="type" :items="types" v-model="data.type"></ev-select>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">数据源</label>
+      <ev-select type="select" name="ds" :items="dss" v-model="data.ds"></ev-select>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">元数据表</label>
+      <ev-select type="select" name="table" :items="tables" v-model="data.table"></ev-select>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">元对象编码</label>
+      <ev-input name="code" v-model="data.code"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">元对象名称</label>
+      <ev-input name="name" v-model="data.name"></ev-input>
+    </div>
+  </form>
+  <!--	{{data}}-->
+</div>
+
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+
+        let tps = [
+            // #for(t : dataSources)
+            {
+                val: '#(t.key)',
+                txt: '#(t.key)',
+                type: '#(t.value)',
+            },
+            // #end
+        ]
+
+        uzoo.app.dss.value.push(...tps)
+        // uzoo.app.data.value.template = 'table'
+
+    }
+</script>
+</body>
+</html>

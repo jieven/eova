@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>#(menu.name)</title>
+  #include("/eova/_view/_page/list.html")
+  <script type="module" src="/eova/_view/template/tree_table/index.js?v=1.2.6"></script>
+
+</head>
+<body>
+<div id="app">
+  <div class="eova-layout" style="width: calc(100% - 20px); height: calc(100% - 20px); margin: 10px;">
+    <div class="zone" style="width: 100%; height: 100%;">
+      <div class="box" style="width: 200px;overflow: auto;">
+        <div>
+          <ev-tree ref="refTree" :multiple="false" :object="conf.tree_object_code" :conf="treeConf" @node-click="onTeeClick" v-model:checked="treeChecked"></ev-tree>
+        </div>
+
+      </div>
+      <div class="zone" style="width: calc(100% - 10px - 200px); left: calc(10px + 200px);">
+        <div class="box"
+             :style="[{height: `${queryHeight}px`}]"
+        >
+          <!--                    {{form}}-->
+          <!-- Query -->
+          <ev-form
+            ref="refForm"
+            mode="query"
+            :object="conf.object_code"
+            :biz="conf.object_code"
+            v-model="data"
+            @submit="onQuery()"
+            @resize="doResize"
+          ></ev-form>
+
+        </div>
+
+        <div class="box"
+             :style="[{
+                     height: `calc(100% - 10px - ${queryHeight}px)`,
+                     top: `calc(10px + ${queryHeight}px)`
+                 }]"
+        >
+          <ev-table
+            ref="refTable"
+            :page="page"
+            :object="conf.object_code"
+            :biz="conf.object_code"
+            :height="tableHeight"
+          >
+            <template v-slot:toolbar>
+              <div class="eova-tools_box">
+                #include("/eova/_view/_block/toolbar.html")
+              </div>
+              <div class="eova-tools_box" style="position: absolute; right: 0">
+                <ev-popup ref="popUserRef" trigger="hover" placement="bottom">
+                  <button class="eova-btn_icon">
+                    <i class="eova-icon-export"></i>
+                  </button>
+                  <template #content>
+                    <div class="eova-select-content">
+                      <ul class="eova-select_items">
+                        <li @click="onExport('xls')">导出XLS文件</li>
+                        <li @click="onExport('csv')">导出CSV文件</li>
+                      </ul>
+                    </div>
+                  </template>
+                </ev-popup>
+              </div>
+            </template>
+          </ev-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  #include("/eova/_view/_block/admin.html")
+</div>
+
+### 自定义按钮逻辑(Vue模版内无法引入script)
+#for(btn : btnList)
+#if(btn.ui && btn.ui.contains(".js"))
+<script src="#(btn.ui)"></script>
+#end
+#end
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+#imageContainer {
+    /*display: flex;*/
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    position: fixed;
+    top: 400px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999999;
+    background-color: rgba(108, 108, 108, 0.5); /* 可选：为容器添加背景色或透明度 */
+}
+
+/* 定义淡入淡出动画 */
+/*.fade-enter-active, .fade-leave-active {*/
+/*    transition: opacity 2s ease;*/
+/*}*/
+
+/*.fade-enter-from, .fade-leave-to {*/
+/*    opacity: 0;*/
+/*}*/
+
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.sword-go {
+    background-color: white;
+    transform-origin: center center; /* 或者直接写成 50% 50% */
+    animation: rotate360 1s linear infinite;
+}
+
+.quake-effect {
+    font-size: 2em;
+    padding: 20px;
+    background-color: #ff6f61;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    transition: transform 0.1s;
+}
+
+/* 地震动画 */
+@keyframes quakeAnimation {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-5px, 5px);
+    }
+    50% {
+        transform: translate(5px, -5px);
+    }
+    75% {
+        transform: translate(5px, 5px);
+    }
+}
+
+.quake {
+    animation: quakeAnimation 0.4s infinite;
+}

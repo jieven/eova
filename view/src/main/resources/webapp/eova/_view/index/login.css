@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--eova-color_bg);
+}
+
+.eova-footer {
+    text-align: center;
+    line-height: 40px;
+    color: #dad9d9;
+}
+
+.eova-login {
+    width: 300px;
+    text-align: center;
+    padding: 80px;
+    border-radius: 10px;
+
+    z-index: 0;
+
+    /* 轻微阴影增加层次感 */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+    /*深紫蓝*/
+    /*color: white;*/
+    /*background: linear-gradient(135deg, #933eef 0%, #1167fa 100%);*/
+
+    /*浅白*/
+    /*background: linear-gradient(135deg, #e0effc 0%, #ffffff 100%);*/
+    /*color: #333333; !* 使用深一点的颜色确保文本清晰可见 *!*/
+
+    /*浅蓝白*/
+    background: linear-gradient(135deg, #b7d7f4 0%, #e6eff4 100%);
+    color: #2c3e50; /* 深灰色，增强对比度 */
+
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.eova-login_input {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.eova-login_input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.eova-login_input input:hover {
+    border-color: var(--eova-color_border3);
+}
+
+.eova-login_input input {
+    border: 1px solid var(--eova-color_border);
+}
+
+.eova-login button {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+}
+
+.eova-login_cap {
+    display: flex;
+}
+
+.eova-login_cap input {
+    width: 180px;
+}
+
+.eova-login_cap img {
+    vertical-align: middle;
+    height: 40px;
+}

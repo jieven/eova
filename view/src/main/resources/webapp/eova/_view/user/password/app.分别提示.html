@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>修改密码</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/user/password/app.js?v=1.0.0"></script>
+</head>
+<body>
+<div id="app">
+  <form ref="refForm"
+        method="post"
+        class="eova-form"
+        @submit.prevent="onSubmit"
+  >
+    <div class="eova-form-field">
+      <label class="eova-form-label required">旧密码</label>
+      <ev-input v-model="data.oldPwd"></ev-input>
+      <div class="eova-form-msg" v-if="rules.oldPwd.msg">{{ rules.oldPwd.msg }}</div>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">新密码</label>
+      <ev-input v-model="data.newPwd"></ev-input>
+      <div class="eova-form-msg" v-if="rules.newPwd.msg">{{ rules.newPwd.msg }}</div>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">确认密码</label>
+      <ev-input v-model="data.confirm"></ev-input>
+      <div class="eova-form-msg" v-if="rules.confirm.msg">{{ rules.confirm.msg }}</div>
+    </div>
+    <!--  服务端提示 怎么分别提示? 简易使用简易方法, 直接合并弹窗.  -->
+  </form>
+  <!--  {{data}}-->
+</div>
+</body>
+</html>

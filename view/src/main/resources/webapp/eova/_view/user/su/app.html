@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>用户切换</title>
+  #include("/eova/_view/_page/list1.html")
+  <script type="module" src="/eova/_view/user/su/app.js?v=1.0.0"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="eova-layout" style="width: calc(100% - 20px); height: calc(100% - 20px); margin: 10px">
+    <div class="zone" style="width: 100%; height: 100%">
+
+      <div class="box"
+           :style="[{height: `${queryHeight}px`}]"
+      >
+        <!-- Query -->
+        <ev-form
+          ref="refForm"
+          mode="query"
+          object="#(objectCode)"
+          v-model="data"
+          @submit="onQuery()"
+          @resize="doResize"
+        ></ev-form>
+      </div>
+      <div class="box"
+           :style="[{
+                     height: `calc(100% - 10px - ${queryHeight}px)`,
+                     top: `calc(10px + ${queryHeight}px)`
+                 }]"
+      >
+
+        <!-- Table -->
+        <ev-table
+          ref="refTable"
+          object="#(objectCode)"
+          :page="page"
+          :height="tableHeight"
+        >
+          <template v-slot:toolbar>
+            <div class="eova-tools_box">
+              <button @click="onQuery()">
+                <i class="eova-icon-search"></i>
+                查询
+              </button>
+            </div>
+          </template>
+        </ev-table>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

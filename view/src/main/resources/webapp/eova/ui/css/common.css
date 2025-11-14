@@ -1,0 +1,10 @@
+/*EovaMeta公共样式*/
+
+/*管理员功能*/
+.eova-admins {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 998;
+    background-color: rgba(244, 244, 244, 0.9);
+}

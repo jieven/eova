@@ -1,0 +1,25 @@
+/*
+  EovaUI 主题 紫色
+  配色风格来源: 通义千问官网
+  定制委托人:马云
+  背景:通义千问团队快速扩张，后台开发资源不够，想使用EovaMeta来做一些后台系统，提升效率。
+ */
+.eova-theme_purple {
+    /* 主色 */
+    --eova-color_main: #6756ff; /* 根据期望值，确定主色调。 */
+
+    /* 选中 */
+    --eova-color_hover: #d8d1ff; /* 颜色深浅度:主色50% */
+
+    /* 背景 */
+    --eova-color_bg: #f5f4ff; /* 颜色深浅度:主色20% */
+    --eova-color_bg1: #eae6ff; /* 颜色深浅度:主色40% */
+    --eova-color_bg2: #d8d1ff; /* 颜色深浅度:主色60% */
+    --eova-color_bg3: #c5bcff; /* 颜色深浅度:主色80% */
+
+    /* 边框 */
+    --eova-color_border: #eae6ff; /* 颜色深浅度:主色30%*/
+    --eova-color_border1: #d8d1ff; /* 颜色深浅度:主色50% */
+    --eova-color_border2: #c5bcff; /* 颜色深浅度:主色60% */
+    --eova-color_border3: #a89fff; /* 颜色深浅度:主色80% */
+}

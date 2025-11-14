@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SSE Demo</title>
+</head>
+<body>
+<h2>服务端推送演示 (SSE)</h2>
+<!--<button onclick="startSSE()">开始接收</button>-->
+
+<button onclick="stopSSE()">停止接收</button>
+<button onclick="pushMsg()">模拟服务端推送5条消息</button>
+<div id="messages" style="margin-top:20px; border:1px solid #ccc; padding:10px;"></div>
+
+<script>
+    let eventSource;
+
+    window.onload = function () {
+        startSSE()
+    }
+
+    function startSSE() {
+
+        // 初始化EventSource
+        eventSource = new EventSource('/sse');
+
+        eventSource.addEventListener('msg', function (event) {
+            console.log('收到消息:', event);
+            // var kv = JSON.parse(event.data);
+            // addText(kv.name, kv.msg, kv.sendALL);
+            addMessage(event.data)
+        });
+        eventSource.addEventListener('addUser', function (event) {
+            console.log('收到addUser消息:', event);
+            // var kv = JSON.parse(event.data);
+            addMessage(event.data)
+        });
+        eventSource.addEventListener('error', function (event) {
+            console.log('关闭:', event);
+            // 这里不关闭时，浏览器可能会重新连接SSE
+            eventSource.close();
+        });
+        console.log('sse init...');
+        addMessage("SSE连接成功")
+    }
+
+    function stopSSE() {
+        if (eventSource) {
+            eventSource.close();
+            addMessage("手动关闭连接");
+        }
+    }
+
+    function addMessage(text) {
+        const messages = document.getElementById('messages');
+        messages.innerHTML += `<p>${new Date().toLocaleTimeString()}: ${text}</p>`;
+        messages.scrollTop = messages.scrollHeight; // 自动滚动到底部
+    }
+
+    // 服务端模拟推送消息
+    function pushMsg() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/test/msg');
+        xhr.onload = function () {
+            console.log(xhr.responseText)
+        };
+        xhr.onerror = function () {
+            console.log(new Error('网络错误'))
+        };
+        xhr.send();
+        addMessage("服务端模拟推送5条消息，1秒1条。");
+    }
+</script>
+</body>
+</html>

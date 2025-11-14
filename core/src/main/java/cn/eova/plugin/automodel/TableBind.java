@@ -1,0 +1,21 @@
+/**
+ * Copyright (c) 2015-2026 EOVA.CN. All rights reserved.
+ * Licensed under the LGPL-3.0 license
+ * For authorization, please contact: admin@eova.cn
+ */
+package cn.eova.plugin.automodel;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+public @interface TableBind {
+    String tableName() default "";
+
+    String pkName() default "";
+}

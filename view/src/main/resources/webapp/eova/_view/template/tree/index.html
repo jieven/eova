@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>#(menu.name)</title>
+  #include("/eova/_view/_page/list.html")
+  <script type="module" src="/eova/_view/template/tree/index.js?v=1.2.6"></script>
+
+</head>
+<body>
+
+<div id="app">
+  <div class="eova-layout" style="width: calc(100% - 20px); height: calc(100% - 20px); margin: 10px;">
+    <div class="zone" style="width: 100%; height: 100%;">
+      <div class="box" style="width: 250px;overflow: auto;">
+
+        <div>
+          <ev-tree ref="refTree" object="#(object.code)" :multiple="true" :conf="treeConf" @node-click="onTeeClick" v-model:checked="treeChecked"></ev-tree>
+        </div>
+
+      </div>
+      <div class="zone" style="width: calc(100% - 10px - 250px); left: calc(10px + 250px);">
+        <div class="box" style="height: 43px;">
+          <div class="eova-tools_box">
+            #include("/eova/_view/_block/toolbar.html")
+          </div>
+        </div>
+        <div class="box" style="height: calc(100% - 10px - 43px); top: calc(43px + 10px)">
+          <template v-if="treeId > 0">
+            <ev-form
+              ref="refForm"
+              mode="update"
+              name="tree_from"
+              biz="#(menu.code)"
+              object="#(object.code)"
+              :pk="treeId"
+            ></ev-form>
+          </template>
+          <template v-else>
+            <h2 style="color: #b3afaf; margin: 5px;" v-html="conf.tips||''"></h2>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  #include("/eova/_view/_block/admin.html", type="list")
+</div>
+
+
+<script>
+
+</script>
+
+### 自定义按钮逻辑(Vue模版内无法引入script)
+#for(btn : btnList)
+#if(btn.ui && btn.ui.contains(".js"))
+<script src="#(btn.ui)"></script>
+#end
+#end
+
+</body>
+</html>

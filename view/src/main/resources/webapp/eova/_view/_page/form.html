@@ -1,0 +1,17 @@
+### 表单页
+#include("/eova/_view/_block/meta.html")
+#include("/eova/_view/_block/base.html")
+#if(object)
+<script>
+    uzoo.page = {
+        // #if(object)
+        object_id: '#(object.id)',
+        object_name: '#(object.name)',
+        object_code: '#(object.code)',
+        object_pk: '#(object.pk)',
+        // #end
+    }
+</script>
+#else
+<!-- no meta object-->
+#end

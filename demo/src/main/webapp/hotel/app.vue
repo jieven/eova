@@ -1,0 +1,1 @@
+<sword-coming ref="link" v-model="currentRow" v-model:show="showLinking"></sword-coming>

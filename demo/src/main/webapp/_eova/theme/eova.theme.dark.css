@@ -1,0 +1,33 @@
+/*
+  EovaUI 深色主题
+ */
+.eova-theme_dark {
+  /*主色*/
+  --eova-color_main: #3156a4;
+  /*选中*/
+  --eova-color_hover: #e5eaf4;
+}
+/* 菜单深色适配 */
+.eova-theme_dark .eova-menu_cat__title {
+  background-color: #263445;
+  color: white;
+  border: none;
+}
+.eova-theme_dark .eova-home_menu {
+  background-color: #263445;
+}
+.eova-theme_dark .eova-menu {
+  border: none;
+}
+.eova-theme_dark .eova-menu_items {
+  background-color: #1b2430;
+}
+.eova-theme_dark .eova-menu_items a {
+  color: #bec2c8;
+}
+.eova-theme_dark .eova-menu_item a:hover,
+.eova-theme_dark .eova-menu_item:hover {
+  background-color: #001528;
+  color: white;
+  border: white;
+}

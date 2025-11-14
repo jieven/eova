@@ -1,0 +1,99 @@
+/**
+ * EovaUI内置样式重写
+ */
+.eova-table-island_s2 {
+    background-color: white;
+    color: white;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: left;
+    border-radius: 15px;
+    padding: 0 10px 0 10px;
+    z-index: 891;
+
+    height: 450px;
+    width: 599px;
+
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+/**
+    AI:自定义计数器控件
+ */
+.input-num {
+    display: inline-flex;
+    align-items: stretch;
+    font-family: Arial, sans-serif;
+}
+
+.input-num input {
+    height: 30px;
+    width: 170px;
+    padding: 0 8px;
+    border: 1px solid #1e9fff;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+.input-num input:focus {
+    border-color: #007acc;
+    box-shadow: 0 0 0 2px rgba(30, 159, 255, 0.2);
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    max-height: 30px;
+    margin-left: -1px;
+}
+
+.btn-group button {
+    flex: 1;
+    height: 16px;
+    line-height: 16px;
+    border: 1px solid #1e9fff;
+    background: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    color: black;
+}
+
+.btn-group button:first-child {
+    border-radius: 0 4px 0 0;
+    border-bottom: none;
+}
+
+.btn-group button:last-child {
+    border-radius: 0 0 4px 0;
+}
+
+.btn-group button:hover:not(:disabled) {
+    background: #1e9fff;
+    color: white;
+}
+
+.btn-group button:disabled {
+    background: #f5f5f5;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/*评分组件样式 AI*/
+.rate-container {
+    /*display: flex;*/
+    /*gap: 5px;*/
+    /*align-items: center;*/
+}
+.star {
+    transition: all 0.2s ease;
+    margin-left: 5px;
+}
+.star:hover {
+    transform: scale(1.1);
+}

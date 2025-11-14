@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>📝#(object.name)元字段 - EovaMeta</title>
+    #include("/eova/_view/_page/list.html")
+    <script type="module" src="/eova/_view/meta/edit/app.js"></script>
+    <style>
+        body {
+            background-color: var(--eova-color_bg);
+        }
+        .eova-form{
+            margin-top: 0;
+            padding: 0;
+        }
+        .app-field-edit .eova-form-label {
+            width: auto!important;
+        }
+        .app-field-edit .eova-form-field{
+            margin-left: 20px!important;
+            margin-top: -10px!important;
+        }
+        .app-field-edit .eova-form-txt{
+            margin-left: 1px !important;
+            //width: 220px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div
+        class="eova-layout"
+        style="
+          width: calc(100% - 20px);
+          height: calc(100% - 20px);
+          margin: 10px;
+          background-color: white;
+        "
+    >
+        <form class="eova-form eova-anim-fadein app-field-edit" novalidate="" style="height: 30px">
+            <div class="eova-form-field" mode="detail">
+                <label class="eova-form-label">名称：</label>
+                <div class="eova-form-txt">#(object.name)</div>
+            </div>
+            <div class="eova-form-field" mode="detail">
+                <label class="eova-form-label">编码：</label>
+                <div class="eova-form-txt">#(object.code)</div>
+            </div>
+            <div class="eova-form-field" mode="detail">
+                <label class="eova-form-label">数据源：</label>
+                <div class="eova-form-txt">#(object.data_source)</div>
+            </div>
+            <div class="eova-form-field" mode="detail">
+                <label class="eova-form-label">数据表：</label>
+                <div class="eova-form-txt">#(object.table)</div>
+            </div>
+            <div class="eova-form-field" mode="detail">
+                <label class="eova-form-label">主键：</label>
+                <div class="eova-form-txt">#(object.pk_name)</div>
+            </div>
+        </form>
+
+        <div ref="tableParentRef" class="zone eova-anim-fadein" style="width: 100%; height: calc(100% - 30px)">
+            <ev-table
+                    ref="refTable"
+                    size="s30"
+                    object="eova_field_code"
+                    biz="meta_eidt"
+                    :where="#(where)"
+                    :height="tableHeight"
+                    :is-edit="true"
+                    :page="page"
+
+            >
+                <template v-slot:toolbar>
+                    <div class="eova-tools_box">
+                        <button @click="onQuery()">
+                            <i class="eova-icon-refresh"></i>
+                            刷新
+                        </button>
+                        <button @click="onReorder()">
+                          <i class="eova-icon-slider"></i>
+                          字段排序
+                        </button>
+                        <button class="eova-btn_error" @click="onDelete()">
+                            <i class="eova-icon-delete"></i>
+                            彻底字段
+                        </button>
+
+                        <button class="eova-btn_warn" @click="onSyncnew()">
+                            <i class="eova-icon-add-circle"></i>
+                            增量同步字段
+                        </button>
+                        <button class="eova-btn_error" @click="onOverride()">
+                            <i class="eova-icon-refresh-3"></i>
+                            覆盖同步字段
+                        </button>
+                        <button class="" @click="onVirtual()">
+                            <i class="eova-icon-add-1"></i>
+                            添加虚拟字段
+                        </button>
+                    </div>
+                </template>
+            </ev-table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

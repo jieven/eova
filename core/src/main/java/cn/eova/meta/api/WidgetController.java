@@ -1,0 +1,288 @@
+/**
+ * Copyright (c) 2015-2026 EOVA.CN. All rights reserved.
+ * Licensed under the LGPL-3.0 license
+ * For authorization, please contact: admin@eova.cn
+ */
+package cn.eova.meta.api;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.eova.tools.x;
+import cn.eova.aop.eova.EovaContext;
+import cn.eova.common.Easy;
+import cn.eova.common.base.BaseController;
+import cn.eova.common.utils.db.SqlUtil;
+import cn.eova.config.EovaConfig;
+import cn.eova.config.PageConst;
+import cn.eova.engine.EovaExp;
+import cn.eova.engine.EovaExpBuilder;
+import cn.eova.engine.ExpUtil;
+import cn.eova.i18n.I18NBuilder;
+import cn.eova.model.EovaOption;
+import cn.eova.widget.MetaConst;
+import cn.eova.widget.WidgetManager;
+import com.jfinal.kit.JsonKit;
+import com.jfinal.kit.LogKit;
+import com.jfinal.kit.Ret;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * EOVA 控件
+ *
+ * @author Jieven
+ *
+ */
+public class WidgetController extends BaseController {
+
+
+    /**
+     * 获取业务数据
+     * TODO 需要动态生成令牌
+     */
+    public void data() {
+        try {
+            // 数据类型
+//            String type = get("type", "combo");
+
+            String optionCode = get("option");// 控件选项编码
+            // 参数校验
+            if (x.isEmpty(optionCode)) {
+                NO("EovaOption编码不能为空");
+                return;
+            }
+
+            List<Object> paras = new ArrayList<>();
+
+            // 解析编码 格式: 表达式编码;参数1,参数2
+            String FG = ";";
+            if (optionCode.contains(FG)) {
+                // 表达式编码;参数1,参数2
+                String[] ss = optionCode.split(FG);
+                optionCode = ss[0];
+                String[] pms = ss[1].split(",");
+
+                // 获取参数
+                paras = ExpUtil.buildExpPara(pms);
+            }
+
+            // 自动纠错 去掉多余符号
+//            if (optionCode.endsWith(";")) {
+//                optionCode = optionCode.substring(0, optionCode.length() - 1);
+//            }
+
+            EovaOption option = EovaOption.dao.getByCode(optionCode);
+            if (option == null) {
+                NO("EovaOption不存在，编码=" + optionCode);
+                return;
+            }
+
+
+            // TODO 未来还需支持自定义解析规则.
+            // 接口规范    返回                             编码                SQL参数
+            // public EovaOption diyEovaOption(String optionCode, List<Object> paras)
+
+            // 允许缓存3秒（减少前端重复请求）
+            getResponse().setHeader("Cache-Control", "public, max-age=1");
+
+
+            List<Record> list = getData(option, paras);
+            renderJson(Ret.data(list).setOk());
+
+//            if (type.equals("combo")) {
+//                /**
+//                 * object => 元对象编码
+//                 * field => 元字段名称
+//                 * exp => EovaExp
+//                 * multiple => true/false
+//                 */
+//                String object = get("object");
+//                String field = get("field");
+//                String exp = get("exp");
+//
+//            } else if (type.equals("find")) {
+//                xx.info("暂不支持的数据模式");
+//            }
+
+        } catch (Exception e) {
+            String msg = "EovaOption数据获取异常:" + e.getMessage();
+            LogKit.error(msg, e);
+
+            NO(msg);
+        }
+    }
+
+    /**
+     * 字段值翻译
+     * /widget/text/?value={{value}}&option={{option}}
+     * eg. value=1,2,3
+     * eg. text=德马
+     */
+    public void text() {
+
+        String value = get("value");// 控件值
+        String code = get("option");// 控件选项编码
+
+
+        EovaOption option = EovaOption.dao.getByCode(code);
+        EovaExp se = new EovaExp(option);
+
+        List<Record> list = new ArrayList<>();
+        // 查询需要翻译的数据集(可能为空)
+        if (!x.isEmpty(value)) {
+            List<Object> paras = new ArrayList<>();//eeb.getExpParas(); TODO 表达式动态传参
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(se.pk);
+            sb.append(" in(");
+            // 根据当前页数据value列查询外表name列
+            for (String val : value.split(",")) {
+                // TODO There might be a sb injection risk warning
+                sb.append(x.str.format(val)).append(",");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append(")");
+
+            // 根据表达式查询获得翻译的值
+            String sql = WidgetManager.addWhere(se, sb.toString());
+
+            list = Db.use(se.ds).find(sql, paras.toArray());
+        }
+
+        // 重新组合
+//		Kv data = new Kv();
+//		for (Record r : list) {
+//			data.put(r.get(se.pk), r.get(se.cn));
+//		}
+        // 仅字符串
+//		String data = "";
+//		for (Record r : list) {
+//			data += r.getStr(se.cn) + ",";
+//		}
+
+        // {"data":"德玛西亚之力2,卡牌大师,冯提莫","state":"ok"}
+        // 返回完整查询列数据集, 方便前端丰富显示(例如 TODO Tag 显示)
+        Ret ret = Ret.ok().set("data", list).set("field_val", se.pk).set("field_txt", se.cn);
+
+        // 允许缓存3秒（减少前端重复请求）
+        getResponse().setHeader("Cache-Control", "public, max-age=1");
+
+        renderJson(ret);
+    }
+
+    /**
+     * Find 分页查询
+     */
+    public void query() {
+
+        //String exp = get("exp");
+        String code = get(0);
+        //String field = get(PageConst.EOVA_FIELD);
+
+        try {
+
+            // 构建表达式
+            //EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), exp, code, field);
+//			EovaExpBuilder eeb = MetaConst.getExp(this.getUser(), code);
+//			EovaExp se = eeb.build();
+            String optionCode = MetaConst.getCode(code);
+            EovaOption query = EovaOption.dao.getByCode(optionCode);
+            EovaExp se = new EovaExp(query);
+
+            List<Object> paras = new ArrayList<>();//eeb.getExpParas(); TODO 表达式动态传参
+
+            // 查找框有表单条件搜索
+            String sql = WidgetManager.buildExpSQL(this, se, paras, null);
+
+            // 获取分页参数
+            int pageNumber = getParaToInt(PageConst.PAGENUM, 1);
+            int pageSize = getParaToInt(PageConst.PAGESIZE, 15);
+            Page<Record> page = Db.use(se.ds).paginate(pageNumber, pageSize, se.getSelect(), sql, paras.toArray());
+
+            //I18NBuilder.records(page.getList(), se.cn);
+
+            // 构建JSON数据
+            String ui = x.conf.get("ui", "layui");
+            if (ui.equals("easyui")) {
+                ui = "{\"total\":%s,\"rows\": %s}";
+            } else if (ui.equals("layui")) {
+                ui = "{\"code\": 0, \"msg\": \"\", \"count\":\"%s\",\"data\": %s}";
+            }
+
+            renderJson(String.format(ui, page.getTotalRow(), JsonKit.toJson(page.getList())));
+        } catch (Exception e) {
+            String msg = "查找框查询数据异常:" + e.getMessage();
+            LogKit.error(msg, e);
+            renderJson(Easy.fail(msg));
+        }
+    }
+
+    /**
+     * 获取表达式数据
+     * @param option
+     * @param paras
+     * @return
+     * @throws Exception
+     */
+    private List<Record> getData(EovaOption option, List<Object> paras) throws Exception {
+
+//        EovaOption option = EovaOption.dao.getByCode(optionCode);
+        String exp = option.getSql();
+        EovaExp se = new EovaExp(option);
+
+        // 构建表达式
+        EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), option.getSql());
+//        EovaExp se = eeb.build();
+        // 获取表达式动态参数
+//        List<Object> paras = DynamicParse.buildExpPara(exp); //eeb.getExpParas();
+
+        // 全局拦截过滤
+        filterExp(se);
+
+        // 获取表达式变更后的最终SQL
+        String sql = se.toString();
+
+        // 缓存配置
+        String cache = option.getCache();//se.get(EovaExpParam.CACHE);
+        List<Record> list = null;
+        if (x.isEmpty(cache)) {
+            list = Db.use(se.ds).find(sql, paras.toArray());
+        } else {
+            list = Db.use(se.ds).findByCache(cache, sql, sql, paras.toArray());
+        }
+
+        // 兼容处理
+        String val = !x.isEmpty(option.getFieldVal()) ? option.getFieldVal() : "id";
+        String txt = !x.isEmpty(option.getFieldTxt()) ? option.getFieldTxt() : "cn";
+        list.forEach(r -> {
+            // 获取显示数据
+            r.set("val", r.get(val));
+            r.set("txt", r.get(txt));
+            r.remove(val, txt);
+        });
+
+        I18NBuilder.records(list, txt);
+        return list;
+    }
+
+    /**
+     * 全局表达式拦截过滤
+     * @param se
+     * @throws Exception
+     */
+    private void filterExp(EovaExp se) throws Exception {
+        // 全局数据拦截条件
+        if (EovaConfig.getEovaIntercept() != null) {
+            EovaContext ec = new EovaContext(this);
+            ec.exp = se;
+
+            // 获取全局拦截器表达式公共条件
+            String condition = EovaConfig.getEovaIntercept().filterExp(ec);
+            // 动态变更表达式条件
+            se.where = SqlUtil.appendWhereCondition(se.where, condition);
+        }
+    }
+
+}

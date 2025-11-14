@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EovaMeta CRUD </title>
+  #include("/eova/_view/_page/list.html")
+  ### Vue默认实现
+  <script type="module" src="/eova/_view/template/table/index.js?v=1.2.5"></script>
+</head>
+<body>
+
+<!--Vue App Start-->
+<div id="app" v-cloak>
+  <div class="eova-layout" style="width: calc(100% - 20px); height: calc(100% - 20px); margin: 10px">
+    <div class="zone" style="width: 100%; height: 100%">
+
+      <div class="box"
+           :style="[{height: `${queryHeight}px`}]"
+      >
+        <!-- Query -->
+        <ev-form
+          ref="refForm"
+          mode="query"
+          name="query_from"
+          object="#(object.code)"
+          biz="#(object.code)"
+          v-model="data"
+          @submit="onQuery()"
+          @resize="doResize"
+          @ready="onReady"
+        ></ev-form>
+      </div>
+      <div class="box"
+           :style="[{
+                     height: `calc(100% - 10px - ${queryHeight}px)`,
+                     top: `calc(10px + ${queryHeight}px)`
+                 }]"
+      >
+
+        <!-- Table -->
+        <ev-table
+          ref="refTable"
+          object="#(object.code)"
+          biz="#(object.code)"
+          :page="page"
+          :height="tableHeight"
+          :is-edit="#(object.is_celledit??false)"
+          @row-click="onRowClick"
+        >
+          <template v-slot:toolbar>
+            <div class="eova-tools_box">
+              #include("/eova/_view/_block/toolbar.html")
+            </div>
+            <div class="eova-tools_box" style="position: absolute; right: 0">
+              <ev-popup ref="popUserRef" trigger="hover" placement="bottom">
+                <button class="eova-btn_icon">
+                  <i class="eova-icon-export"></i>
+                </button>
+                <template #content>
+                  <div class="eova-select-content">
+                    <ul class="eova-select_items">
+                      <li @click="onExport('xlsx')">导出Excel</li>
+                      <li @click="onExport('csv')">导出CSV</li>
+                    </ul>
+                  </div>
+                </template>
+              </ev-popup>
+            </div>
+          </template>
+        </ev-table>
+      </div>
+    </div>
+
+  </div>
+  #include("/eova/_view/_block/admin.html", type="list")
+
+</div>
+<!--Vue App End-->
+
+### 自定义按钮逻辑(Vue模版内无法引入script)
+#for(btn : btnList)
+#if(btn.ui && btn.ui.contains(".js"))
+<script src="#(btn.ui)"></script>
+#end
+#end
+<script>
+    uzoo.page.code = '#(menu.code)'
+    uzoo.page.template = 'table'
+    uzoo.page.form = 'query'
+</script>
+</body>
+</html>

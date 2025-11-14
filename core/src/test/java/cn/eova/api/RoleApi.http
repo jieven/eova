@@ -1,0 +1,35 @@
+### 新增角色
+POST http://mod.dev.eova.cn/router?app_key=10000&method=eova.role.add&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "company_id": 1000,
+  "name": "财务主管"
+}
+
+### 修改角色
+POST http://mod.dev.eova.cn/router?app_key=10000&method=eova.role.add&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "company_id": 1000,
+  "oldname": "财务主管",
+  "name": "财务负责人1"
+}
+
+### 删除角色
+POST http://mod.dev.eova.cn/router?app_key=10000&method=eova.role.add&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "company_id": 1000,
+  "name": "财务负责人1"
+}
+
+### 获取角色授权菜单
+POST http://mod.dev.eova.cn/router?app_key=10000&method=eova.role.menus&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "role_id": 1,
+}

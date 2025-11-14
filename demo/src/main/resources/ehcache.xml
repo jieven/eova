@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="false" monitoring="autodetect"
+         dynamicConfig="true">
+
+    <diskStore path="java.io.tmpdir" />
+
+    <defaultCache
+           maxEntriesLocalHeap="50000"
+           eternal="false"
+           overflowToDisk="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           copyOnWrite="true"
+           copyOnRead="true">
+    </defaultCache>
+    
+        
+    <!-- 缓存登录用户信息，空闲 30 分钟则清除，否则一直保持登录状态，
+        登录过期时间是指eova_session表中的 expire，此缓存仅用于统计 login_log
+        以及提升性能(不必总读取数据库 session 表) -->
+    <cache name="login"
+           maxEntriesLocalHeap="90000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+            />
+
+	<!--Eova系统缓存-->
+    <cache name="eova"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="50"
+           timeToIdleSeconds="10"
+           timeToLiveSeconds="30"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off"
+           copyOnWrite="true"
+           copyOnRead="true">
+    </cache>
+    
+    <!--元数据缓存-->
+    <cache name="meta"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="50"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="1"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off"
+           copyOnWrite="true"
+           copyOnRead="true">
+    </cache>
+    <!-- timeToLiveSeconds="10" 线上配置建议 -->
+	<!-- timeToLiveSeconds="60" 线上配置建议 -->
+
+    <!--默认服务-->
+    <cache name="ser"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="50"
+           timeToIdleSeconds="10"
+           timeToLiveSeconds="30"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off"
+           copyOnWrite="true"
+           copyOnRead="true">
+    </cache>
+
+    <!--system cache name sysCache-->
+    <cache name="sys"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="50"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="3600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off"
+           copyOnWrite="true"
+           copyOnRead="true">
+    </cache>
+
+    <!--service cache name serviceCache -->
+    <!-- timeToLiveSeconds="600" 线上配置建议 -->
+    <cache name="service"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="1"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off"
+           copyOnWrite="true"
+           copyOnRead="true"
+           >
+    </cache>
+
+    <!--player cache name playerCache, session time out 30min-->
+    <cache name="player"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="10"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <!--Action cache name actionCache, session time out 30s-->
+    <cache name="action"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="20000"
+           eternal="false"
+           overflowToDisk="false"
+           diskSpoolBufferSizeMB="50"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="60"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+</ehcache>
+
+<!-- maxEntriesLocalHeap="90000" 内存最多9W条-->
+<!-- maxEntriesLocalDisk="90000" 磁盘最多9W条-->
+<!-- eternal="false" 是否自动过期-->
+<!-- overflowToDisk="true" 是否自动存磁盘-->
+<!-- diskSpoolBufferSizeMB="50" DiskStore使用的磁盘大小,默认值30MB。每个cache使用各自的DiskStore-->
+
+        <!-- 两者均为0, 永不过期 -->
+<!-- timeToLiveSeconds="3600" 最长使用时间-->
+<!-- timeToLiveSeconds="3600" 最长使用时间-->
+
+<!-- memoryStoreEvictionPolicy="LFU" 缓存策略-->
+<!-- transactionalMode="off" 使ehcache作为JTA事务的参与者-->
+<!-- FIFO  (先进先出). -->
+<!-- LFU 最少使用) -->
+<!-- LRU 最近最少使用(ehcache 默认值) -->
+<!-- copyOnRead：当指定该属性为true时，我们在从Cache中读数据时取到的是Cache中对应元素的一个copy副本，而不是对应的一个引用。默认为false。 -->
+<!-- copyOnWrite：当指定该属性为true时，我们在往Cache中写入数据时用的是原对象的一个copy副本，而不是对应的一个引用。默认为false。 -->

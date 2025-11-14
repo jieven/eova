@@ -1,0 +1,27 @@
+### 查询新用户
+POST http://127.0.0.1:9090/router?app_key=10000&method=demo.user.query&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{}
+
+### 新增用户
+POST http://127.0.0.1:9090/router?app_key=10000&method=demo.user.add&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{
+  "login_id": "test001",
+  "nickname": "测试用户"
+}
+
+### 鉴权失败, 签名错误
+POST http://127.0.0.1:9090/router?app_key=10000&method=demo.user.query&timestamp=0&sign=xxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+
+{}
+
+### 鉴权失败, 未知的app_key
+POST http://127.0.0.1:9090/router?app_key=xxxx&method=demo.user.err&timestamp=0&sign=devnocheck
+Content-Type: application/json
+
+{}
+

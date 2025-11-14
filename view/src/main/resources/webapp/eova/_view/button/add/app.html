@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>快速添加按钮</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/button/add/app.js?v=1.0.0"></script>
+</head>
+<body>
+<div id="app">
+  <form ref="refForm"
+        method="post"
+        class="eova-form eova-anim-fadein"
+        @submit.prevent="onSubmit"
+        novalidate
+  >
+    <fieldset>
+      <legend>按钮外观</legend>
+    </fieldset>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">序号</label>
+      <ev-input type="number" v-model="data.num"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">图标</label>
+      <ev-icon type="eova-icon" v-model="data.icon" placeholder="请选择图标"></ev-icon>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">名称</label>
+      <ev-input v-model="data.name"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label">样式</label>
+      <ev-input v-model="data.style" placeholder="按钮样式名"></ev-input>
+    </div>
+    &nbsp;<button type="button" class="eova-btn_s30" @click="onSelectBtn('')">默认</button>
+    &nbsp;<button type="button" class="eova-btn_s30 eova-btn_success" @click="onSelectBtn('eova-btn_success')">成功</button>
+    &nbsp;<button type="button" class="eova-btn_s30 eova-btn_error" @click="onSelectBtn('eova-btn_error')">危险</button>
+    &nbsp;<button type="button" class="eova-btn_s30 eova-btn_warn" @click="onSelectBtn('eova-btn_warn')">警告</button>
+    &nbsp;<button type="button" class="eova-btn_s30 eova-btn_info" @click="onSelectBtn('eova-btn_info')">信息</button>
+    &nbsp;<button type="button" class="eova-btn_s30 eova-btn_base" @click="onSelectBtn('eova-btn_base')">原始</button>
+    <fieldset>
+      <legend>按钮点击事件
+        <ev-popup ref="popup3Ref" placement="right">
+          <i class="eova-icon-question"></i>
+          <template #content>
+            <div class="eova-tooltip">
+              <div class="eova-tooltip_content">
+                目前此方案为过渡方案, 按钮模版将以更强大的形式出现，敬请期待！
+              </div>
+            </div>
+          </template>
+        </ev-popup>
+      </legend>
+    </fieldset>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">事件编码</label>
+      <ev-input v-model="data.event" placeholder="按钮点击事件编码"></ev-input>
+    </div>
+    <br>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">事件逻辑</label>
+      <ev-input v-model="data.ui" placeholder="点击事件实现JS" :style="'width: 542px'"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">权限配置</label>
+      <ev-input v-model="data.auth" placeholder="服务端URI配置" :style="'width: 542px'"></ev-input>
+    </div>
+    <fieldset>
+      <legend>授权</legend>
+    </fieldset>
+    <div class="eova-form-field">
+      <label class="eova-form-label">授权角色</label>
+      <ev-select option="eova_role" v-model="data.role" :multiple="true" placeholder="默认授权给超管"></ev-select>
+    </div>
+
+  </form>
+  <!--    {{data}}-->
+</div>
+
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+        // 初始化参数传递
+        uzoo.app.data.value.menu_code = '#(menuCode)'
+        uzoo.app.data.value.role = '#(role)'
+    }
+</script>
+</body>
+</html>

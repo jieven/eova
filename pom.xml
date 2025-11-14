@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cn.eova</groupId>
+        <artifactId>eova-core</artifactId>
+        <version>1.1.5</version>
+    </parent>
+
+    <groupId>cn.eova.meta</groupId>
+    <artifactId>eova-meta</artifactId>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+
+    <name>eova-meta</name>
+    <description>EovaMeta is a simple, light and fast Java low-code platform.</description>
+    <url>https://eova.cn</url>
+
+    <properties>
+        <revision>4.0.0-111301</revision>
+        <!-- <revision>4.0.0-SNAPSHOTS</revision>-->
+        <!-- 修改本POM文件需要发  正式版(1.x.x) 并通知下游更新parent依赖 -->
+        <!-- 修改本项目内容需要发  封测临时版(1.x.x-SNAPSHOT) 通知下游刷新依赖 -->
+        <!-- 临时版确认可用, 发布 公测正式版(1.x.x-082901) 通知下游更新依赖版本号 -->
+    </properties>
+
+    <!-- 统一公共依赖 -->
+    <dependencies>
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>core</module>
+        <module>view</module>
+        <module>demo</module>
+    </modules>
+
+
+</project>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>修改密码</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/user/password/app.js?v=1.0.0"></script>
+</head>
+<body>
+<div id="app">
+  <form ref="refForm"
+        method="post"
+        class="eova-form"
+        @submit.prevent="onSubmit"
+  >
+    <div class="eova-form-field">
+      <label class="eova-form-label required">旧密码</label>
+      <ev-input v-model="data.oldPwd"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">新密码</label>
+      <ev-input v-model="data.newPwd"></ev-input>
+    </div>
+    <div class="eova-form-field">
+      <label class="eova-form-label required">确认密码</label>
+      <ev-input v-model="data.confirm"></ev-input>
+    </div>
+
+  </form>
+</div>
+</body>
+</html>

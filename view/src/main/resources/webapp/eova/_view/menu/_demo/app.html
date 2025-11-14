@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>创建新菜单</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/menu/add/app.js"></script>
+</head>
+<body>
+<div id="app">
+  <div>
+    <input v-model="test">
+
+    <div style="width: 500px;height: 400px;background-color: red"></div>
+
+    {{ test }}
+  </div>
+</div>
+<script>
+    function onSubmit(id) {
+        // 操作成功后 关闭弹窗
+        me.cross.emit('eova-layer-ok_done', id)
+    }
+
+    // 监听提交通知
+    me.cross.on('eova-layer-ok', onSubmit)
+</script>
+</body>
+</html>

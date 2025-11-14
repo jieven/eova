@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+  <title>重新排序</title>
+  #include("/eova/_view/_page/form.html")
+  <script type="module" src="/eova/_view/meta/reorder/app.js"></script>
+</head>
+<body>
+<div id="app">
+  <div style="">
+    <ev-sortable v-model="data" text_field="name" order_field="num"></ev-sortable>
+    <!--    {{ data }}-->
+  </div>
+</div>
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("app.html beforeMount ......")
+
+        let data = JSON.parse('#json(data)')
+        uzoo.app.data.value.push(...data)
+        uzoo.page.biz = '#(biz)'
+        uzoo.page.mode = '#(mode)'
+    }
+</script>
+</body>
+</html>

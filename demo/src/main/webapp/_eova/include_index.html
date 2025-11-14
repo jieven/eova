@@ -1,0 +1,14 @@
+<script src="/_eova/theme/eova.theme.js?v=1.0.0"></script>
+<script>
+    // EovaMenuNextTick 是首页菜单DOM加载完成后的特殊事件
+    document.addEventListener('EovaMenuNextTick', function () {
+        const element = document.getElementById('1194');
+        if (element) {
+            element.innerHTML += '<span class="eova-badge">9</span>';
+        }
+    })
+</script>
+<style>
+    // 系统内置缩放（适用于大量目标客户分辨地过低的问题）
+    //body {zoom: 90%;}
+</style>
