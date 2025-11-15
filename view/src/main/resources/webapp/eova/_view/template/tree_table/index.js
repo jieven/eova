@@ -178,7 +178,7 @@ const app = createApp({
         return uzoo.app = {
             data,
             conf,
-            
+
             auths,
             refTable,
             queryHeight,
@@ -209,4 +209,5 @@ const app = createApp({
 
 // 挂载 Vue 应用
 app.use(EovaUI);
-app.mount('#app');
+// 业务编码=模版类型_菜单编码
+me.vue.mount(app, `${uzoo.page.template}_${uzoo.page.code}`);

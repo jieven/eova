@@ -105,3 +105,35 @@ const onReorderForm = (mode) => {
     })
 }
 
+/**
+ * 保存窗口宽高
+ */
+const onLayerSize = (mode) => {
+    let lay = window.parent.document.querySelector('.layui-layer-iframe');
+
+    if (!lay) {
+        me.layer.error('无法获取窗口信息');
+        return;
+    }
+
+
+    let url = `/menu/updateLayerSize/${uzoo.page.biz}`;
+    axios
+        .post(url, {
+            width: lay.clientWidth,
+            height: lay.clientHeight
+        })
+        .then((res) => {
+            let ret = res.data
+            if (ret.state === 'ok') {
+                me.layer.msg(`更新成功，窗口大小：${lay.clientWidth} * ${lay.clientHeight}`)
+            } else {
+                me.layer.msg(ret.msg)
+                console.log('加载错误')
+            }
+        })
+        .catch((error) => {
+            me.layer.msg('客户端请求异常: ' + error.message);
+        })
+}
+

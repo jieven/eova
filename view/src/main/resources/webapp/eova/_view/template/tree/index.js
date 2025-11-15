@@ -84,7 +84,7 @@ const app = createApp({
         })
 
         const onTeeClick = (node) => {
-            console.log('Click Node:' + JSON.stringify(node))
+            // console.log('Click Node:' + JSON.stringify(node))
             me.layer.msg(`编辑 ${node.name}`)
 
             treeId.value = node.id
@@ -289,6 +289,5 @@ const app = createApp({
 
 // 挂载 Vue 应用
 app.use(EovaUI);
-// app.use(LayuiVue);
-// app.component('DiyComponent', DiyComponent);
-app.mount('#app');
+// 业务编码=模版类型_菜单编码
+me.vue.mount(app, `${uzoo.page.template}_${uzoo.page.code}`);

@@ -7,12 +7,12 @@ package cn.eova.model;
 
 import java.util.List;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSON;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseModel;
 import cn.eova.core.menu.config.MenuConfig;
 import cn.eova.template.common.config.TemplateConfig;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSON;
 import com.jfinal.json.Json;
 import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
@@ -76,6 +76,7 @@ public class Menu extends BaseModel<Menu> {
         return this.getStr("config");
     }
 
+    @Deprecated
     public void setConfig(MenuConfig config) {
         this.set("config", JSON.toJSONString(config));
     }

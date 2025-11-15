@@ -1,5 +1,5 @@
 <!--自定义Vue组件-->
-<!--<my-demo v-model="data"></my-demo>-->
+<my-demo v-model="data"></my-demo>
 <!--自定义HTML内容-->
 <!--<b>我是自定义Vue模版代码{{ data.stock }}</b>-->
 <!--自定义Vue语法-->
@@ -17,7 +17,7 @@
 <!--{{ confs.web_cdn }}-->
 
 <!--<rate v-model="rate" color="#f7ba2a"></rate>{{rate}} 星好评-->
-<hr>
-金陵十三钗的住处:
-<eova-tags v-model="tags"></eova-tags>
-{{tags}}
+<!--<hr>-->
+<!--金陵十三钗的住处:-->
+<!--<eova-tags v-model="tags"></eova-tags>-->
+<!--{{tags}}-->

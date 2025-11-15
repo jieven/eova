@@ -7,13 +7,13 @@ package cn.eova.core;
 
 import java.util.List;
 
-import cn.eova.tools.x;
 import cn.eova.config.EovaConst;
 import cn.eova.model.Button;
 import cn.eova.model.Menu;
 import cn.eova.model.MetaObject;
 import cn.eova.model.User;
 import cn.eova.service.sm;
+import cn.eova.tools.x;
 import cn.eova.widget.WidgetManager;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Const;
@@ -64,7 +64,6 @@ public class AppController extends IndexController {
      * 模版渲染入口
      * 模版命名:
      * table 单表
-     * table1_n 主子表
      * table_tree 树表
      * tree 树+表单
      */
@@ -109,6 +108,7 @@ public class AppController extends IndexController {
      */
     public void add() {
         String objectCode = get(0);
+        String biz = get("biz", "");
         if (x.isEmpty(objectCode)) {
             renderError(404);
             return;
@@ -121,6 +121,7 @@ public class AppController extends IndexController {
         Record fixed = WidgetManager.getRef(this);
         System.out.println(fixed);
 
+        set("biz", biz);
         set("object", object);
         set("pk", "id");
         set("fixed", fixed.toJson());
@@ -133,6 +134,7 @@ public class AppController extends IndexController {
      */
     public void update() {
         String objectCode = get(0);
+        String biz = get("biz", "");
         if (x.isEmpty(objectCode)) {
             renderError(404);
             return;
@@ -149,6 +151,7 @@ public class AppController extends IndexController {
 //            }
 //        }
 
+        set("biz", biz);
         set("object", o);
         set("id", id);
         renderEnjoy("/eova/_view/template/form/update/index.html");
@@ -160,6 +163,7 @@ public class AppController extends IndexController {
      */
     public void detail() {
         String objectCode = get(0);
+        String biz = get("biz", "");
         if (x.isEmpty(objectCode)) {
             renderError(404);
             return;
@@ -168,6 +172,7 @@ public class AppController extends IndexController {
 
         MetaObject o = sm.meta.getMeta(objectCode);
 
+        set("biz", biz);
         set("object", o);
         set("id", id);
         renderEnjoy("/eova/_view/template/form/detail/index.html");

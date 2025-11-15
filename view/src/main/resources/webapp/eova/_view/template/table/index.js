@@ -60,8 +60,9 @@ const app = createApp({
                 uzoo.vue.onReady(fieldInstances);
             }
         }
+
         const onAdd = () => {
-            let url = x.str.template('/app/add/{{object_code}}', uzoo.page);
+            let url = x.str.template('/app/add/{{object_code}}?biz={{code}}', uzoo.page);
             me.layer.open('新增数据', url, LW, LH, () => {
                 me.layer.msg('操作成功！')
                 onQuery()
@@ -74,8 +75,10 @@ const app = createApp({
                 return
             }
 
-            let url = x.str.template('/app/update/{{object_code}}?id={{id}}', {
-                object_code: uzoo.page.object_code, id: rows[0].id
+            let url = x.str.template('/app/update/{{object_code}}?id={{id}}&biz={{menu_code}}', {
+                object_code: uzoo.page.object_code,
+                menu_code: uzoo.page.code,
+                id: rows[0].id
             });
             me.layer.open('修改数据', url, LW, LH, () => {
                 me.layer.msg('操作成功！')
@@ -89,8 +92,10 @@ const app = createApp({
                 return
             }
 
-            let url = x.str.template('/app/detail/{{object_code}}?id={{id}}', {
-                object_code: uzoo.page.object_code, id: rows[0].id
+            let url = x.str.template('/app/detail/{{object_code}}?id={{id}}&biz={{menu_code}}', {
+                object_code: uzoo.page.object_code,
+                menu_code: uzoo.page.code,
+                id: rows[0].id
             });
             me.layer.open('查看数据', url, LW, LH, () => {
             })

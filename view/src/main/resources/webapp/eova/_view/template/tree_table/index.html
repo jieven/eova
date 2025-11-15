@@ -47,7 +47,7 @@
             :biz="conf.object_code"
             :height="tableHeight"
           >
-            <template v-slot:toolbar>
+            <template #toolbar>
               <div class="eova-tools_box">
                 #include("/eova/_view/_block/toolbar.html")
               </div>
@@ -82,6 +82,10 @@
 <script src="#(btn.ui)"></script>
 #end
 #end
-
+<script>
+    uzoo.page.code = '#(menu.code)'
+    uzoo.page.template = 'tree_table'
+    uzoo.page.form = 'query'
+</script>
 </body>
 </html>

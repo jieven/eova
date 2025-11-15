@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.eova.tools.x;
 import cn.eova.common.Ds;
 import cn.eova.common.Easy;
 import cn.eova.common.base.BaseCache;
@@ -34,6 +33,7 @@ import cn.eova.model.Role;
 import cn.eova.model.RoleBtn;
 import cn.eova.service.sm;
 import cn.eova.template.common.config.TemplateConfig;
+import cn.eova.tools.x;
 import com.jfinal.aop.Before;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
@@ -83,6 +83,21 @@ public class MenuController extends BaseController {
             o.remove("id").remove("biz").remove("app").remove("code");
         });
         renderJson(Ret.data(props).setOk());
+    }
+
+    // 更新窗口大小
+    public void updateLayerSize() {
+        String menuCode = get(0);
+        Integer width = getInt("width");
+        Integer height = getInt("height");
+        Menu menu = Menu.dao.findByCode(menuCode);
+        Kv kv = menu.getMenuConfig();
+        kv.set("layer_width", width);
+        kv.set("layer_height", height);
+        menu.set("config", kv.toJson());
+        menu.update();
+
+        OK();
     }
 
     public void toUpdate() {
