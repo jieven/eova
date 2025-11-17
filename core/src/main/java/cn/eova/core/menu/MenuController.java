@@ -22,7 +22,6 @@ import cn.eova.core.button.ButtonFactory;
 import cn.eova.core.menu.config.ChartConfig;
 import cn.eova.core.menu.config.MenuConfig;
 import cn.eova.core.menu.config.TreeConfig;
-import cn.eova.core.meta.MetaUtil;
 import cn.eova.model.Button;
 import cn.eova.model.EovaProps;
 import cn.eova.model.EovaTemplate;
@@ -31,7 +30,7 @@ import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
 import cn.eova.model.Role;
 import cn.eova.model.RoleBtn;
-import cn.eova.service.sm;
+import cn.eova.service.biz;
 import cn.eova.template.common.config.TemplateConfig;
 import cn.eova.tools.x;
 import com.jfinal.aop.Before;
@@ -247,24 +246,27 @@ public class MenuController extends BaseController {
 
 //			menu._setAttrs();
 
-
 //			menu.set("parent_id", getParaToInt("parent_id"));
 //			menu.set("icon", get("icon", ""));
 //			menu.set("name", name);
 //			menu.set("code", menuCode);
 //			menu.set("num", getParaToInt("num"));
-            if (type.equals(TemplateConfig.QUERY)) {
-                // 自定义查询复用单表模版(除了自定义SQL, 其它都一样)
-                menu.set("type", TemplateConfig.SINGLE_GRID);
-                String sql = get("sql");
-                String ds = get("ds");
-                // 通过SQL生成虚拟元对象和元字段 入库
-                MetaUtil.addVirtualObject(sql, menuCode, name, ds);
-                String objectCode = "v_" + menuCode;
-                // 默认指定通用SQL查询
-                Db.use(Ds.EOVA).update("update eova_object set biz_intercept = 'com.eova.aop.impl.SqlQueryIntercept' where code = ?", objectCode);
-            } else {
-                menu.set("type", type);
+//            if (type.equals(TemplateConfig.QUERY)) {
+//                // 自定义查询复用单表模版(除了自定义SQL, 其它都一样)
+//                menu.set("type", TemplateConfig.SINGLE_GRID);
+//                String sql = get("sql");
+//                String ds = get("ds");
+//                // 通过SQL生成虚拟元对象和元字段 入库
+//                MetaUtil.addVirtualObject(sql, menuCode, name, ds);
+//                String objectCode = "v_" + menuCode;
+//                // 默认指定通用SQL查询
+//                Db.use(Ds.EOVA).update("update eova_object set biz_intercept = 'com.eova.aop.impl.SqlQueryIntercept' where code = ?", objectCode);
+//            } else {
+//            }
+            menu.set("type", type);
+            if (!type.equals(Menu.TYPE_APP)) {
+                menu.set("template", null);
+                menu.set("config", "{}");
             }
             // menu.set("biz_intercept", get("bizIntercept", ""));
 
@@ -279,8 +281,9 @@ public class MenuController extends BaseController {
             // 构建菜单配置项
 //			buildConfig(type, config);
 //			menu.setConfig(config);
-            Kv menuConfig = menu.getMenuConfig();
+            // Kv menuConfig = menu.getMenuConfig();
             menu.save();
+
 
             // 目录没有默认按钮
             if (type.equals(Menu.TYPE_DIR)) {
@@ -292,7 +295,7 @@ public class MenuController extends BaseController {
             // 创建模版默认按钮
 
             // 自动授权给超管
-            sm.auth.authMenuToAdmin(menuCode);
+            biz.auth.authMenuToAdmin(menuCode);
 
             // 新增菜单使缓存失效
             BaseCache.delSer(EovaConst.ALL_MENU);

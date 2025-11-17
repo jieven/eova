@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>创建新菜单</title>
+  <title>创建菜单</title>
   #include("/eova/_view/_page/form.html")
-  <script type="module" src="/eova/_view/menu/add/app.js?v=1.0.1"></script>
+  <script type="module" src="/eova/_view/menu/add/app.js?v=1.0.2"></script>
   <style>
       .app-template_info {
           margin-left: 10px !important;
@@ -20,8 +20,6 @@
 </head>
 <body>
 <div id="app">
-  <!--		<input v-model="test">-->
-  <!--		{{test}}-->
   <form ref="refForm"
         method="post"
         class="eova-form eova-anim-fadein"
@@ -94,19 +92,17 @@
         <br>
       </template>
     </fieldset>
-    <!--        <br><br><br>-->
-    <!--        <div class="eova-form-field">-->
-    <!--            <label class="eova-form-label">模版配置</label>-->
-    <!--            <ev-input type="texts"-->
-    <!--                      name="config" v-model="data.config"-->
-    <!--                      placeholder="模版配置"-->
-    <!--                      style="height:90px;width: 540px"-->
-    <!--            ></ev-input>-->
-    <!--        </div>-->
+    <fieldset v-show="data.type === 'diy' || data.type === 'open'">
+      <legend>自定义配置</legend>
+      <div class="eova-form-field">
+        <label class="eova-form-label">URL</label>
+        <ev-input type="texts" v-model="data.url" placeholder="自定义链接"
+                  :style="'height: 100px; width: 600px'"></ev-input>
+      </div>
+
+    </fieldset>
+
   </form>
-  <!--    <br><br><br><br>-->
-  <!--    {{config}}-->
-  <!--    {{templateProps}}-->
 
 </div>
 

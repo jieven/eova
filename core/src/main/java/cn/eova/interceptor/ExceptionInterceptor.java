@@ -2,10 +2,11 @@ package cn.eova.interceptor;
 
 import java.sql.Timestamp;
 
-import cn.eova.tools.x;
 import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.util.ExceptionUtil;
 import cn.eova.common.utils.web.WebUtil;
+import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.ActionException;
@@ -59,7 +60,10 @@ public class ExceptionInterceptor implements Interceptor {
 
             if (ctrl instanceof BaseController) {
                 BaseController base = (BaseController) ctrl;
-                uid = base.UID() + "";
+                User user = base.getUser();
+                if (user != null) {
+                    uid = base.UID() + "";
+                }
             }
 
             // 判断N分钟内是否已存在相同报错日志

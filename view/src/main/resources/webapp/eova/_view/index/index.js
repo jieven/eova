@@ -15,11 +15,10 @@ const app = createApp({
         // 已打开菜单选项
         let tabMenus = ref([
             {
+                id: 0,
                 name: '首页',
                 active: true,
-                url: '/theme',
-                link: '/theme',
-                id: 0
+                link: '/theme'
             }
         ])
 
@@ -101,8 +100,8 @@ const app = createApp({
         // 打开菜单
         const openTab = (m) => {
             // 新窗口打开
-            if (m.type == 2) {
-                window.open(m.url)
+            if (m.type === 'open') {
+                window.open(m.link)
                 return
             }
             let old = tabMenus.value.find((o) => o.id == m.id)

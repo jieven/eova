@@ -18,6 +18,7 @@ const setup = () => {
         code: 'meta_test_001',
         name: '测试功能1',
         template: 'table',
+        url: '',
         objects: [],
     })
 

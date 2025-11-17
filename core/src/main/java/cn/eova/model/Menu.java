@@ -21,10 +21,14 @@ public class Menu extends BaseModel<Menu> {
 
     private static final long serialVersionUID = 7072369370299999169L;
 
+    /** 菜单类型-应用 **/
+    public static final String TYPE_APP = "app";
     /** 菜单类型-目录 **/
     public static final String TYPE_DIR = "dir";
-    /** 菜单类型-自定义 **/
+    /** 菜单类型-URL **/
     public static final String TYPE_DIY = "diy";
+    /** 菜单类型-Open **/
+    public static final String TYPE_OPEN = "open";
 
     public static final Menu dao = new Menu();
 
@@ -86,17 +90,19 @@ public class Menu extends BaseModel<Menu> {
      */
     public String getUrl() {
 
+        String type = this.getStr("type");
+        if (type.equals(Menu.TYPE_DIR))
+            return "";
+
+        if (type.equals(TYPE_DIY) || type.equals(TYPE_OPEN))
+            return this.getStr("url");
+
         // EovaMeta 新模版规则
         String template = this.getStr("template");
         if (!x.isEmpty(template)) {
             return String.format("/app/%s", this.getStr("code"));
         }
 
-        String type = this.getStr("type");
-        if (type.equals(Menu.TYPE_DIR))
-            return "";
-        if (type.equals(TYPE_DIY))
-            return this.getStr("url");
         return '/' + type + "/list/" + this.getStr("code");
     }
 
