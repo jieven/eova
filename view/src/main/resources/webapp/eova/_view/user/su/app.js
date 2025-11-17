@@ -19,7 +19,6 @@ const app = createApp({
         const SU = ref()
 
         const onQuery = () => {
-            console.log('快速查询')
             refTable.value.query(data)
         }
 

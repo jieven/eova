@@ -91,6 +91,10 @@ public class MenuController extends BaseController {
         Integer width = getInt("width");
         Integer height = getInt("height");
         Menu menu = Menu.dao.findByCode(menuCode);
+        if (menu == null) {
+            NO("菜单编码不存在");
+            return;
+        }
         Kv kv = menu.getMenuConfig();
         kv.set("layer_width", width);
         kv.set("layer_height", height);

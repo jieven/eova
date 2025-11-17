@@ -241,7 +241,6 @@ const app = createApp({
         }
 
         const onQuery = () => {
-            console.log('快速查询')
             refTree.value.reload();
         }
 

@@ -25,7 +25,6 @@ const app = createApp({
         })
 
         const onQuery = () => {
-            console.log('快速查询')
             refTable.value.query(form)
         }
 

@@ -30,7 +30,6 @@ const app = createApp({
         const auths = ref()
 
         const onQuery = () => {
-            console.log('快速查询')
             refTable.value.query(data)
 
             // 查询后关闭级联显示

@@ -22,7 +22,6 @@ const app = createApp({
         })
 
         const query = () => {
-            console.log('快速查询')
             tableRef.value.query(form)
         }
 

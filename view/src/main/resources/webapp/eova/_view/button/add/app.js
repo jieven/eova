@@ -46,11 +46,6 @@ const setup = () => {
         // 监听提交通知
         me.cross.on('eova-layer-ok', onSubmit)
 
-        me.cross.on
-
-        me.cross
-
-        
     })
 
 
