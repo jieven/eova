@@ -1,5 +1,5 @@
 <!--自定义Vue组件-->
-<my-demo v-model="data"></my-demo>
+<!--<my-demo v-model="data"></my-demo>-->
 <!--自定义HTML内容-->
 <!--<b>我是自定义Vue模版代码{{ data.stock }}</b>-->
 <!--自定义Vue语法-->

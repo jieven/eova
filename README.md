@@ -1,5 +1,5 @@
 <h2 align="center" style="text-align:center;">
-    <img src="https://cdn.eova.cn/eova-logo.png" width="128" />
+    <img src="https://foruda.gitee.com/avatar/1763477966560547021/8195707_eova_1763477966.png!avatar200" width="128" />
     <br />
     EovaMeta v4.0.0
 </h2>

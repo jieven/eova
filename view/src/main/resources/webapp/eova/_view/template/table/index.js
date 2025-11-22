@@ -2,10 +2,6 @@ const {createApp, ref, reactive, watch, onMounted, nextTick, computed, defineAsy
 const {me} = EovaUI
 const {x} = EovaTools
 
-// import OBJ from 'util.js';
-//
-// console.log(OBJ.msg)
-
 const app = createApp({
     setup() {
 
