@@ -11,6 +11,7 @@
 
 <p align="center">
 	<a target="_blank" href="https://gitee.com/eova/eova/stargazers"><img src="https://gitee.com/eova/eova/badge/star.svg?theme=gvp" alt="Gitee GVP" ></a>
+    <a target="_blank" href='https://gitcode.com/eova/eova-meta/stargazers'><img src='https://gitcode.com/eova/eova-meta/star/badge.svg' alt='gitcode star'/></a>
 	<a target="_blank" href="https://central.sonatype.com/search?q=cn.eova"><img src="https://img.shields.io/maven-central/v/cn.eova/eova-core" alt="Maven Central Version" ></a>
 	<a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"><img src="https://img.shields.io/badge/JDK-8-green.svg" alt="jdk-8" /></a>
 </p>
