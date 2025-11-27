@@ -22,11 +22,11 @@ vue.app('table_meta_hotel', {
 });
 
 // tree_table 扩展测试
-vue.app('tree_table_sys_org_user', {
-    template: '/product/app.vue',
-    script: '/product/app.js',
-    components: ['MyDemo']
-});
+// vue.app('tree_table_sys_org_user', {
+//     template: '/product/app.vue',
+//     script: '/product/app.js',
+//     components: ['MyDemo']
+// });
 
 
 // 自定义表单(元对象编码) 干预新增,修改, 查看的表单

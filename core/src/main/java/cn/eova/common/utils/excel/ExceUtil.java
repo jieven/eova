@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.eova.tools.x;
 import cn.eova.model.MetaField;
+import cn.eova.tools.x;
 import com.jfinal.plugin.activerecord.Record;
 import org.ttzero.excel.entity.Column;
 import org.ttzero.excel.entity.SimpleSheet;
@@ -100,6 +100,7 @@ public class ExceUtil {
         for (MetaField f : fields) {
             // 设置表头名称, 字段 宽度 样式
             heads.add(new Column(f.getCn(), f.getEn()).setHeaderStyle(styleColor));
+            // .setHeaderHeight(200) 设置表头行高
             // .setNumFmt("###0") 数字格式化
             // .setWidth(20.0D) 自定义列宽
             // .setNumFmt("yyyy-mm-dd hh:mm:ss")
