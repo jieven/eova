@@ -14,12 +14,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import cn.eova.tools.x;
 import cn.eova.common.Ds;
 import cn.eova.config.EovaConfig;
 import cn.eova.config.EovaConst;
 import cn.eova.model.Menu;
 import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -134,13 +134,13 @@ public class AuthUri {
     public static String[] get(String code) {
         return URIS.get(code);
     }
-
+ 
     /**
      * 添加新权限
      * @param code 权限集编码
      * @param uris 权限URI集
      */
-    public static void add(String code, String[] uris) {
+    public static void add(String code, String... uris) {
         if (URIS.get(code) != null) {
             throw new RuntimeException("权限编码已存在, 请更换其他编码:" + code);
         }

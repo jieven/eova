@@ -224,12 +224,23 @@ const app = createApp({
             me.cross.emit('eova-table-row_click', currentRow.value.id)
         }
 
+        function getUrlSearch() {
+            return Object.fromEntries(new URLSearchParams(window.location.search));
+        }
+
         onMounted(() => {
             console.log("onMounted")
 
+            // URL查询条件覆盖
+            let query = getUrlSearch();
+            if (Object.keys(query).length > 0) {
+                Object.assign(data, query)
+                console.log("默认查询条件" + JSON.stringify(data));
+                // reload
+                // refTable.value.query(data)
+            }
 
             // console.log(uzoo.page.conf)
-
 
             // 获取设置
             // let url = `/api/meta/setting?biz=${uzoo.page.menu_code}`;

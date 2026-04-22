@@ -11,12 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cn.eova.tools.EovaTool;
-import cn.eova.tools.x;
-import com.alibaba.druid.DbType;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import cn.eova.aop.AopContext;
 import cn.eova.aop.MetaObjectIntercept;
 import cn.eova.common.Easy;
@@ -33,8 +27,14 @@ import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
 import cn.eova.service.sm;
 import cn.eova.template.common.util.TemplateUtil;
+import cn.eova.tools.EovaTool;
+import cn.eova.tools.x;
 import cn.eova.widget.WidgetManager;
 import cn.eova.widget.WidgetUtil;
+import com.alibaba.druid.DbType;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.LogKit;
@@ -205,6 +205,7 @@ public class GridController extends BaseController {
 //			intercept.queryAfter(ac);
 //		}
         if (hook != null) {
+            ac.records = page.getList();
             msg = hook.invoke(EovaMetaHook.Action.QUERY_AFTER, ac);
             if (!x.isEmpty(msg)) {
                 NO(msg);

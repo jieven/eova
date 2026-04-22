@@ -12,7 +12,7 @@ import com.jfinal.aop.Clear;
 public class AppController extends IndexController {
 
     // EovaUI主题风格演示
-    public void theme() {
+    public void main() {
         render("/_view/theme/index.html");
     }
 

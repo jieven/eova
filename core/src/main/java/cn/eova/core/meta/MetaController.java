@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cn.eova.tools.x;
-import com.alibaba.druid.DbType;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.aop.AopContext;
 import cn.eova.aop.MetaObjectIntercept;
 import cn.eova.common.Ds;
@@ -32,6 +28,10 @@ import cn.eova.model.MetaObject;
 import cn.eova.model.User;
 import cn.eova.service.sm;
 import cn.eova.template.common.util.TemplateUtil;
+import cn.eova.tools.x;
+import com.alibaba.druid.DbType;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.core.NotAction;
 import com.jfinal.kit.JsonKit;
@@ -398,7 +398,7 @@ public class MetaController extends BaseController {
 
         // 删除语句
         objects.forEach(x -> {
-            sb.append("--").append(x.getStr("name")).append("\n");
+            sb.append("-- ").append(x.getStr("name")).append("\n");
 
             String code = x.getStr("code");
             sb.append(String.format("delete from eova_object where code = '%s';\n", code));

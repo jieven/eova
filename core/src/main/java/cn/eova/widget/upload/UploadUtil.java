@@ -8,8 +8,6 @@ package cn.eova.widget.upload;
 import java.io.File;
 import java.util.List;
 
-import cn.eova.tools.x;
-import cn.hutool.core.util.RandomUtil;
 import cn.eova.aop.UploadIntercept;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseController;
@@ -19,6 +17,8 @@ import cn.eova.common.utils.util.RegexUtil;
 import cn.eova.config.EovaConfig;
 import cn.eova.model.MetaField;
 import cn.eova.model.MetaFieldConfig;
+import cn.eova.tools.x;
+import cn.hutool.core.util.RandomUtil;
 import com.jfinal.kit.LogKit;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
@@ -139,13 +139,19 @@ public class UploadUtil {
 //                pathCode = defaultDir + '/' + newFileName;
 //            }
 
+            String uid = "0", cid = "0";
+            if (ctrl.getUser() != null) {
+                uid = ctrl.UID() + "";
+                cid = ctrl.CID() + "";
+            }
+
             // 保存文件上传记录
             Record r = new Record();
             r.set("code", pathCode);
             r.set("kb", file.getFile().length());
             r.set("name", file.getFile().getName());
-            r.set("user_id", ctrl.UID());
-            r.set("company_id", ctrl.CID());
+            r.set("user_id", uid);
+            r.set("company_id", cid);
             Db.use(Ds.EOVA).save("eova_file", r);
 
             // 文件另存为

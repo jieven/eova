@@ -28,6 +28,7 @@
           @resize="doResize"
           @ready="onReady"
         ></ev-form>
+
       </div>
       <div class="box"
            :style="[{
@@ -44,6 +45,7 @@
           :page="page"
           :height="tableHeight"
           :is-edit="#(object.is_celledit??false)"
+          :where="data"
           @row-click="onRowClick"
         >
           <template v-slot:toolbar>

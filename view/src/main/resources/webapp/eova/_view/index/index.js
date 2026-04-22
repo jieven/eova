@@ -18,7 +18,7 @@ const app = createApp({
                 id: 0,
                 name: '首页',
                 active: true,
-                link: '/theme'
+                link: '/main'
             }
         ])
 
