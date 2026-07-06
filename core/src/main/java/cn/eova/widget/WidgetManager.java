@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.aop.AopContext;
 import cn.eova.aop.eova.EovaContext;
 import cn.eova.common.base.BaseController;
@@ -47,6 +43,10 @@ import cn.eova.model.User;
 import cn.eova.sql.dql.QueryParam;
 import cn.eova.template.common.config.TemplateConfig;
 import cn.eova.template.common.util.TemplateUtil;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.LogKit;
@@ -732,6 +732,7 @@ public class WidgetManager {
 
     /**
      * 获取关联参数
+     * ?ref=aaa:123,bbb:ccc
      *
      * @param c
      * @return

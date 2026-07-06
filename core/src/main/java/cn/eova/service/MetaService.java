@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import cn.eova.tools.x;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseService;
 import cn.eova.engine.ExpUtil;
@@ -17,6 +16,7 @@ import cn.eova.model.MetaField;
 import cn.eova.model.MetaFieldDiy;
 import cn.eova.model.MetaObject;
 import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -118,14 +118,16 @@ public class MetaService extends BaseService {
      * 新增元字段个性化数据
      * @param object 对象编码
      * @param fieldName 字段名
+     * @param fieldCn 字段名
      */
-    public void addMetaFieldDiy(String object, String fieldName) {
+    public void addMetaFieldDiy(String object, String fieldName, String fieldCn) {
         String[] modes = {"create", "read", "update", "query"};
         for (String mode : modes) {
             MetaFieldDiy diy = new MetaFieldDiy();
             diy.set("mode", mode);
             diy.set("object_code", object);
             diy.set("en", fieldName);
+            diy.set("cn", fieldCn);
             //diy.set("status", 1);
             //diy.set("num", 0);
             //diy.set("defaulter", f.getStr("defaulter"));

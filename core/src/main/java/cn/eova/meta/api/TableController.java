@@ -292,7 +292,7 @@ public class TableController extends BaseController {
      * @throws Exception
      */
     public void edit() throws Exception {
-        String code = get("code");
+        String code = get("object");
         String pk = get("pk");
         String field = get("field");
         String val = get("val");// 前端需判定不能为空

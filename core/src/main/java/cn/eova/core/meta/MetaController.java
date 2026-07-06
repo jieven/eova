@@ -500,7 +500,7 @@ public class MetaController extends BaseController {
 
                 autoBindDict(table, mo.getCode(), o.getString("REMARKS"), mi.getEn(), ds);
 
-                sm.meta.addMetaFieldDiy(mo.getCode(), mi.getEn());
+                sm.meta.addMetaFieldDiy(mo.getCode(), mi.getEn(), mi.getCn());
             }
         }
     }
@@ -790,7 +790,7 @@ public class MetaController extends BaseController {
         template.save();
 
         // 同步添加DIY字段
-        sm.meta.addMetaFieldDiy(code, fieldName);
+        sm.meta.addMetaFieldDiy(code, fieldName, fieldName);
 
         OK();
     }
