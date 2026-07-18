@@ -295,7 +295,7 @@ public class TableController extends BaseController {
         String code = get("object");
         String pk = get("pk");
         String field = get("field");
-        String val = get("val");// 前端需判定不能为空
+        String val = get("val", "");// 前端需判定不能为空
 
         final MetaObject object = sm.meta.getMeta(code);
 

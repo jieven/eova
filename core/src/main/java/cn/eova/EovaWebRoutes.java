@@ -15,6 +15,7 @@ import cn.eova.core.menu.MenuController;
 import cn.eova.core.meta.MetaController;
 import cn.eova.core.sse.SSEController;
 import cn.eova.core.task.TaskController;
+import cn.eova.meta.api.ExcelController;
 import cn.eova.meta.api.FormControler;
 import cn.eova.meta.api.MetaControler;
 import cn.eova.meta.api.TableController;
@@ -39,6 +40,7 @@ public class EovaWebRoutes extends WebRoutes {
         add("/api/form", FormControler.class);
         add("/api/table", TableController.class);
         add("/api/tree", TreeController.class);
+        add("/excel", ExcelController.class);
 
         // 通用业务
         add("/upload", UploadController.class);

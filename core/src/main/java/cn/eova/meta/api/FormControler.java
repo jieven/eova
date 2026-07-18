@@ -51,8 +51,8 @@ public class FormControler extends BaseController {
         String objectCode = this.get(0);
         // 获取查询数据(JSON) TODO EovaMeta Form
         Record record = getJsonToRecord();
-        
-        x.log.info("Form Data JSON:" + record);
+
+        x.log.debug("Form Data JSON:" + record);
 
         MetaObject object = sm.meta.getMeta(objectCode);
         EovaMetaHook hook = HookRegistry.getMeta(objectCode);
@@ -117,7 +117,7 @@ public class FormControler extends BaseController {
 
         // 获取查询数据(JSON) TODO EovaMeta Form
         Record record = getJsonToRecord();
-        x.log.info("Form Data JSON:" + record);
+        x.log.debug("Form Data JSON:" + record);
 
         MetaObject object = sm.meta.getMeta(objectCode);
         EovaMetaHook hook = HookRegistry.getMeta(objectCode);

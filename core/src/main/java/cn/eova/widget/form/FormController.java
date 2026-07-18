@@ -8,8 +8,6 @@ package cn.eova.widget.form;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.aop.AopContext;
 import cn.eova.aop.MetaObjectIntercept;
 import cn.eova.common.Ds;
@@ -19,7 +17,9 @@ import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
 import cn.eova.service.sm;
 import cn.eova.template.common.util.TemplateUtil;
+import cn.eova.tools.x;
 import cn.eova.widget.WidgetManager;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
@@ -78,7 +78,7 @@ public class FormController extends BaseController {
 
         // 获取查询数据(JSON) TODO EovaMeta
         JSONObject data = (JSONObject) ((BaseController) ctrl).getJson();
-        x.log.info("Form Data JSON:" + data);
+        x.log.debug("Form Data JSON:" + data);
 
         // 获取当前操作数据
         WidgetManager.buildData(this, object, record, object.getPk(), true);

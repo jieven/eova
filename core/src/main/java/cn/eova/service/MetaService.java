@@ -128,8 +128,8 @@ public class MetaService extends BaseService {
             diy.set("object_code", object);
             diy.set("en", fieldName);
             diy.set("cn", fieldCn);
+            diy.set("num", 99);
             //diy.set("status", 1);
-            //diy.set("num", 0);
             //diy.set("defaulter", f.getStr("defaulter"));
             //diy.set("height", f.getStr("height"));
             diy.save();

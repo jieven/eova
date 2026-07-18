@@ -3,12 +3,13 @@
  * Licensed under the LGPL-3.0 license
  * For authorization, please contact: admin@eova.cn
  */
-package cn.eova.meta.ctrl;
+package cn.eova.meta.api;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.eova.aop.AopContext;
@@ -19,6 +20,7 @@ import cn.eova.common.render.XlsxRender;
 import cn.eova.hook.EovaMetaHook;
 import cn.eova.hook.HookRegistry;
 import cn.eova.model.Menu;
+import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
 import cn.eova.service.biz;
 import cn.eova.service.sm;
@@ -34,7 +36,7 @@ import org.ttzero.excel.reader.ExcelReader;
  *
  * @author Jieven
  */
-public class ImportController extends BaseController {
+public class ExcelController extends BaseController {
 
     final Controller ctrl = this;
 
@@ -88,6 +90,7 @@ public class ImportController extends BaseController {
         OK();
     }
 
+    // 导出数据
     public void export() throws Exception {
 
         long t = x.time.now();
@@ -125,6 +128,17 @@ public class ImportController extends BaseController {
             return;
         }
         List<Record> data = Db.use(object.getDs()).find(String.format("%s %s limit 0, 1000000", select, sql), parmList.toArray());
+
+        List<MetaField> fields = object.getFields();
+        // 根据表达式将数据中的值翻译成汉字
+        WidgetManager.convertValueByExp(this, fields, data);
+        Iterator<MetaField> it = fields.iterator();
+        while (it.hasNext()) {
+            MetaField f = it.next();
+            if (!f.getBoolean("is_show")) {
+                it.remove();
+            }
+        }
 
         if (type.equals("xlsx")) {
             render(new XlsxRender(object.getFields(), data, object.getName()));

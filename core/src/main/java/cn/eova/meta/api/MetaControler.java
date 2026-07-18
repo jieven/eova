@@ -82,7 +82,7 @@ public class MetaControler extends BaseController {
             field.put("diy", diy);
             // 构造字段配置(必须手工构造 否则转json后无法获取)
             field.put("conf", field.getConf());
-            x.log.info("{} : {}", field.getEn(), diy.getStr("defaulter"));
+            // x.log.info("{} : {}", field.getEn(), diy.getStr("defaulter"));
         }
 
 
@@ -173,7 +173,7 @@ public class MetaControler extends BaseController {
 
         // 获取查询数据(JSON) TODO EovaMeta Form
         Record record = getJsonToRecord();
-        x.log.info("Form Data JSON:" + record);
+        x.log.debug("Form Data JSON:" + record);
 
 //        Record record = Json.getJson().parse(json.toJSONString(), Record.class);
 
