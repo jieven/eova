@@ -7,7 +7,6 @@ package cn.eova.meta;
 
 import cn.eova.auth.AuthUri;
 import cn.eova.config.WebRoutes;
-import cn.eova.meta.ctrl.KxkController;
 import cn.eova.meta.ctrl.TestController;
 
 public class AppRoutes extends WebRoutes {
@@ -15,7 +14,6 @@ public class AppRoutes extends WebRoutes {
     public void config() {
         super.config();
 
-        add("/kxk", KxkController.class);
         add("/test", TestController.class);
 
         // 登录后免鉴权
