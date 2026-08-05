@@ -9,9 +9,6 @@ package cn.eova.user;
 import java.time.LocalDate;
 import java.util.List;
 
-import cn.eova.tools.EovaTool;
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.common.Ds;
 import cn.eova.common.Easy;
 import cn.eova.common.base.BaseCache;
@@ -28,6 +25,9 @@ import cn.eova.i18n.I18NBuilder;
 import cn.eova.model.User;
 import cn.eova.service.LoginService;
 import cn.eova.service.sm;
+import cn.eova.tools.EovaTool;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.captcha.CaptchaRender;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
@@ -104,7 +104,7 @@ public class UserController extends BaseController {
         Ret ret = sm.login.login(loginId, loginPwd, keepLogin, ip);
         if (ret.isFail()) {
             // 登录错误次数限制
-            String key = "login_error_num";
+            String key = "login_error" + loginId;
             int max = x.conf.getInt("login_error_max", 10);
             Integer num = CacheKit.get(BaseCache.SYS, key);
             if (num == null) {

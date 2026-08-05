@@ -6,6 +6,7 @@
         <groupId>cn.eova</groupId>
         <artifactId>eova-core</artifactId>
         <version>1.1.5</version>
+        <relativePath/>
     </parent>
 
     <groupId>cn.eova.meta</groupId>
@@ -18,7 +19,7 @@
     <url>https://eova.cn</url>
 
     <properties>
-        <revision>4.0.0-111301</revision>
+        <revision>4.0.1-SNAPSHOTS</revision>
         <!-- <revision>4.0.0-SNAPSHOTS</revision>-->
         <!-- 修改本POM文件需要发  正式版(1.x.x) 并通知下游更新parent依赖 -->
         <!-- 修改本项目内容需要发  封测临时版(1.x.x-SNAPSHOT) 通知下游刷新依赖 -->
