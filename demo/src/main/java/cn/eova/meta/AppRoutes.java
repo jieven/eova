@@ -17,9 +17,10 @@ public class AppRoutes extends WebRoutes {
         add("/test", TestController.class);
 
         // 登录后免鉴权
+        AuthUri.loginAuth.add("/main");
         AuthUri.loginAuth.add("/theme");
         AuthUri.loginAuth.add("/test/**");
-        AuthUri.loginAuth.add("/api/table/query/*");
+        // AuthUri.loginAuth.add("/api/table/query/*");
 
         // 登录后免鉴权 @see com.eova.common.utils.util.AntPathMatcher
         // 如果是内网可信人员使用的系统,可以采用这种配置方式, 一劳永逸.

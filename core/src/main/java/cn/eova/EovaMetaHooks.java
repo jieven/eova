@@ -7,6 +7,7 @@ package cn.eova;
 
 import cn.eova.config.MetaConfigHook;
 import cn.eova.core.menu.MenuHook;
+import cn.eova.core.msg.MsgHook;
 import cn.eova.core.object.MetaFieldHook;
 import cn.eova.core.object.ObjectHook;
 import cn.eova.core.role.RoleHook;
@@ -30,5 +31,6 @@ public class EovaMetaHooks extends HookRegistry {
         addMeta("eova_user", new UserHook());
         addMeta("eova_role", new RoleHook());
         addMeta("eova_task", new TaskHook());
+        addMeta("eova_msg", new MsgHook());
     }
 }

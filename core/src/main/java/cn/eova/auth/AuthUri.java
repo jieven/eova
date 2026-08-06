@@ -42,8 +42,8 @@ public class AuthUri {
 
     static {
         // 系统通用功能登录免鉴权
-        loginAuth.add("/sse/**");// 消息推送
-        loginAuth.add("/user/**");// 用户相关:修改密码,用户登录,退出登录...
+        loginAuth.add("/sse/**");                           // 消息推送
+        loginAuth.add("/user/**");                          // 用户相关:修改密码,用户登录,退出登录...
 
         loginAuth.add(EovaConfig.EOVA_INDEX);               // 入口
         loginAuth.add("/api/home/*");                       // 首页
@@ -51,6 +51,9 @@ public class AuthUri {
         loginAuth.add("/api/widget/text");                  // 通用翻译
         loginAuth.add("/api/widget/query/eova_find@*");     // 查找数据
         loginAuth.add("/api/meta/table/eova_find@*");       // 查找表头
+
+
+        // 全局通用业务
 
 
         // TODO 可添加开关, 进入宽松模式.
@@ -73,6 +76,7 @@ public class AuthUri {
                         "/api/meta/form/#(conf.object_code)",       // 查询表单
                         "/api/meta/table/#(conf.object_code)",      // 表
                         "/api/table/query/#(conf.object_code)",     // 表数据
+                        "/excel/export/#(conf.object_code)",        // 导出数据
                 }
         );
         // 单树
@@ -90,6 +94,7 @@ public class AuthUri {
                         "/api/meta/form/#(conf.object_code)",       // 查询表单
                         "/api/meta/table/#(conf.object_code)",      // 表
                         "/api/table/query/#(conf.object_code)",     // 表数据
+                        "/excel/export/#(conf.object_code)",        // 导出数据
                 }
         );
         URIS.put("ev_add", new String[]{
@@ -134,7 +139,7 @@ public class AuthUri {
     public static String[] get(String code) {
         return URIS.get(code);
     }
- 
+
     /**
      * 添加新权限
      * @param code 权限集编码

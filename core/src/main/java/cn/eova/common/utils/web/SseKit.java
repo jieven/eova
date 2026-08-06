@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.jfinal.core.Const;
 import com.jfinal.core.Controller;
@@ -18,12 +21,25 @@ import com.jfinal.kit.Kv;
 import com.jfinal.kit.LogKit;
 
 /**
- * SSE消息发送工具类 v1.0.1
+ * SSE消息发送工具类 v1.1.0
  * @author 杜福忠
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class SseKit {
     private static final Map<String, AsyncContext> sseMap = new ConcurrentHashMap<>();
+
+    /** 心跳间隔（秒），防止 Nginx / 代理空闲断开 */
+    private static final int HEARTBEAT_SECONDS = 15;
+
+    private static final ScheduledExecutorService HEARTBEAT = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r, "sse-heartbeat");
+        t.setDaemon(true);
+        return t;
+    });
+
+    static {
+        HEARTBEAT.scheduleAtFixedRate(SseKit::heartbeat, HEARTBEAT_SECONDS, HEARTBEAT_SECONDS, TimeUnit.SECONDS);
+    }
 
     public static AsyncContext get(String user) {
         return sseMap.get(user);
@@ -43,45 +59,62 @@ public class SseKit {
         Objects.requireNonNull(user, "user can not be null");
         c.renderNull();
         HttpServletResponse response = c.getResponse();
-        response.setContentType("text/event-stream");
         response.setCharacterEncoding(Const.DEFAULT_ENCODING);
-        response.setHeader("Content-Type", "text/event-stream; charset:utf-8");
-        response.setHeader("Cache-Control", "no-cache");
+        response.setContentType("text/event-stream; charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
         response.setHeader("Connection", "keep-alive");
+        // 关闭 Nginx 代理缓冲，否则 SSE 会被攒包或空闲掐断
+        response.setHeader("X-Accel-Buffering", "no");
+
         AsyncContext ac = c.getRequest().startAsync();
         // 默认1小时超时
-        ac.setTimeout(60 * 60 * 1000);
-        remove(user);
-        sseMap.put(user, ac);
+        ac.setTimeout(60 * 60 * 1000L);
+
+        // 替换旧连接：先登记新连接，再关闭旧连接，避免 onComplete 误删新连接
+        AsyncContext old = sseMap.put(user, ac);
+        if (old != null) {
+            completeQuietly(old);
+        }
+
         ac.addListener(new AsyncListener() {
             @Override
             public void onComplete(AsyncEvent event) {
-                SseKit.remove(user);
+                // 只清理“当前仍是自己”的登记，避免新连接被旧连接的回调踢掉
+                sseMap.remove(user, ac);
             }
 
             @Override
             public void onTimeout(AsyncEvent event) {
+                sseMap.remove(user, ac);
+                completeQuietly(ac);
             }
 
             @Override
             public void onError(AsyncEvent event) {
-                SseKit.remove(user);
+                sseMap.remove(user, ac);
             }
 
             @Override
             public void onStartAsync(AsyncEvent event) {
             }
         });
+
+        // 立即写出并 flush，确认链路打通（注释行，前端不触发事件）
+        if (!writeRaw(ac, ": connected\n\n")) {
+            sseMap.remove(user, ac);
+            completeQuietly(ac);
+            return null;
+        }
         return ac;
     }
 
     public static void remove(String user) {
-        if (user != null) {
-            AsyncContext ac = sseMap.remove(user);
-            if (ac != null) {
-                ac.complete();
-            }
+        if (user == null) {
+            return;
         }
+        AsyncContext ac = sseMap.remove(user);
+        completeQuietly(ac);
     }
 
     /**
@@ -138,16 +171,51 @@ public class SseKit {
      */
     public static boolean sendMessage(String user, String dataStr) {
         AsyncContext ac = get(user);
-        if (ac != null) {
-            try {
-                PrintWriter writer = ac.getResponse().getWriter();
-                writer.write(dataStr);
-                writer.flush();
-                return true;
-            } catch (IOException e) {
-                LogKit.error(e.getMessage(), e);
+        if (ac == null) {
+            return false;
+        }
+        if (!writeRaw(ac, dataStr)) {
+            // 写出失败：连接已死，清理登记
+            if (sseMap.remove(user, ac)) {
+                completeQuietly(ac);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private static void heartbeat() {
+        for (Map.Entry<String, AsyncContext> e : sseMap.entrySet()) {
+            String user = e.getKey();
+            AsyncContext ac = e.getValue();
+            if (!writeRaw(ac, ": ping\n\n")) {
+                if (sseMap.remove(user, ac)) {
+                    completeQuietly(ac);
+                }
             }
         }
-        return false;
+    }
+
+    private static boolean writeRaw(AsyncContext ac, String dataStr) {
+        try {
+            PrintWriter writer = ac.getResponse().getWriter();
+            writer.write(dataStr);
+            writer.flush();
+            return !writer.checkError();
+        } catch (IOException | IllegalStateException e) {
+            LogKit.error(e.getMessage());
+            return false;
+        }
+    }
+
+    private static void completeQuietly(AsyncContext ac) {
+        if (ac == null) {
+            return;
+        }
+        try {
+            ac.complete();
+        } catch (IllegalStateException ignored) {
+            // 已完成 / 已超时
+        }
     }
 }

@@ -14,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.eova.tools.x;
+
 /**
  * Ant path 匹配原则 By Spring<br>
  * <ul>
@@ -89,6 +91,14 @@ public class AntPathMatcher {
      * @return {@code true} if the supplied {@code path} matched, {@code false} if it didn't
      */
     protected boolean doMatch(String pattern, String path, boolean fullMatch, Map<String, String> uriTemplateVariables) {
+        // 忽略Query参数的，一般Query参数太复杂，影响URI判定，逻辑过于复杂。
+        boolean isIgnoreQuery = x.conf.getBool("sec.auth.ignore_query", true);
+//        if (isIgnoreQuery && !x.isEmpty(path)) {
+//            int q = path.indexOf('?');
+//            if (q >= 0) {
+//                path = path.substring(0, q);
+//            }
+//        }
 
         if (path.startsWith(this.pathSeparator) != pattern.startsWith(this.pathSeparator)) {
             return false;

@@ -18,8 +18,8 @@
         <maven.deploy.skip>true</maven.deploy.skip>
 
         <eova.core.version>1.1.5</eova.core.version>
-        <eova.meta.core.version>4.0.0-111301</eova.meta.core.version>
-        <eova.meta.view.version>4.0.0-111301</eova.meta.view.version>
+        <eova.meta.core.version>4.0.1-SNAPSHOTS</eova.meta.core.version>
+        <eova.meta.view.version>4.0.1-SNAPSHOTS</eova.meta.view.version>
     </properties>
 
     <dependencies>
@@ -41,6 +41,18 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--   阿里云定位POI查询     -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-address-purification</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.9</version>
         </dependency>
 
     </dependencies>
