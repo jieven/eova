@@ -50,6 +50,7 @@ public class AuthUri {
         loginAuth.add("/api/widget/data");                  // 通用数据
         loginAuth.add("/api/widget/text");                  // 通用翻译
         loginAuth.add("/api/widget/query/eova_find@*");     // 查找数据
+        loginAuth.add("/api/meta/option/*");                // 查找表达式元数据
         loginAuth.add("/api/meta/table/eova_find@*");       // 查找表头
 
 
