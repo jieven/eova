@@ -24,8 +24,8 @@ import cn.eova.config.EovaConst;
 import cn.eova.i18n.I18NBuilder;
 import cn.eova.model.User;
 import cn.eova.service.LoginService;
+import cn.eova.service.biz;
 import cn.eova.service.sm;
-import cn.eova.tools.EovaTool;
 import cn.eova.tools.x;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.captcha.CaptchaRender;
@@ -101,12 +101,12 @@ public class UserController extends BaseController {
         }
 
         String ip = WebUtil.getRealIp(getRequest());
-        Ret ret = sm.login.login(loginId, loginPwd, keepLogin, ip);
+        Ret ret = biz.login.login(loginId, loginPwd, keepLogin, ip);
         if (ret.isFail()) {
             // 登录错误次数限制
             String key = "login_error" + loginId;
             int max = x.conf.getInt("login_error_max", 10);
-            Integer num = CacheKit.get(BaseCache.SYS, key);
+            Integer num = CacheKit.get(BaseCache.LOGIN_ERROR, key);
             if (num == null) {
                 num = 0;
             }
@@ -116,7 +116,7 @@ public class UserController extends BaseController {
                 return;
             }
 
-            CacheKit.put(BaseCache.SYS, key, num + 1);
+            CacheKit.put(BaseCache.LOGIN_ERROR, key, num + 1);
 
             NO(ret.getStr("msg"));
             return;
@@ -193,11 +193,10 @@ public class UserController extends BaseController {
 
     }
 
-    // 用户管理>修改密码
-    public void pwd() {
-        Integer id = EovaTool.toInt(getSelectValue("id"));
-        String val = getInputValue();
-
+    // 用户管理>重置密码
+    public void reset() {
+        Integer id = getInt("id");
+        String val = get("val");
         if (x.isEmpty(val)) {
             renderJson(new Easy("密码不能为空！"));
             return;
@@ -212,7 +211,7 @@ public class UserController extends BaseController {
         user.set("login_pwd", EncryptUtil.getSM32(val));
         user.update();
 
-        renderJson(new Easy());
+        OK();
     }
 
     // 首页>修改密码

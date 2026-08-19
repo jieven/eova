@@ -10,6 +10,7 @@ import java.util.HashMap;
 import cn.eova.common.Ds;
 import cn.eova.config.EovaConfig;
 import cn.eova.config.EovaSystem;
+import cn.eova.meta.global.MyUserSessionIntercept;
 import cn.eova.model.EovaLog;
 import cn.eova.tools.x;
 import com.jfinal.config.Constants;
@@ -152,7 +153,7 @@ public class AppConfig extends EovaConfig {
         /*
          * 用户会话拦截器
          */
-        // setUserSessionIntercept(new MyUserSessionIntercept());
+        setUserSessionIntercept(new MyUserSessionIntercept());
 
         /**
          * 上传拦截器(实现自定义上传, 例如上传到OSS, 七牛云)

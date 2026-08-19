@@ -3407,4 +3407,8 @@ INSERT INTO `eova_widget` VALUES (40, 1, '文件', '文件', '1.0', '', '即将�
 INSERT INTO `eova_widget` VALUES (45, 2, 'InputNum', '调数器', '1.0', '', '自定义数字调节器', NULL);
 INSERT INTO `eova_widget` VALUES (46, 2, 'InputNums', '调数器2', '1.0', '', 'AI定义的豪华版', NULL);
 
+-- 新增用户状态
+ALTER TABLE `eova_user`
+MODIFY COLUMN `status` int NULL DEFAULT 1 COMMENT '状态:0=删除,1=正常,2=禁用' AFTER `id`;
+
 SET FOREIGN_KEY_CHECKS = 1;

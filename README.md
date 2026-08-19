@@ -82,18 +82,22 @@ mvn clean install -Dmaven.test.skip=true
 ### 第四步：数据库创建与配置
 
 ```
-// 创建数据库(Mysql8)
+// 需要创建2个数据库喔(Mysql8)
+业务库：demo
 /demo/sql/demo.sql
+平台库：eova_meta
 /demo/sql/eova_meta.sql
 
 // 修改JDBC配置
 /demo/src/main/resources/eova/dev.txt
 
-// 修改eova数据源DB账号密码
+// 修改业务库DB账号密码
+eova.url=jdbc:mysql://127.0.0.1:3306/eova_meta?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
 eova.user=root
 eova.pwd=xxxx
 
-// 修改main数据源DB账号密码
+// 修改平台库DB账号密码
+main.url=jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
 main.user=root
 main.pwd=xxxx
 ```

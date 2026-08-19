@@ -17,6 +17,8 @@ public class BaseCache {
 
     /** 登录专用Cache, 空闲 30 分钟清除 **/
     public static final String LOGIN = "login";
+    /** 登录专用Cache, 空闲 30 分钟清除 **/
+    public static final String LOGIN_ERROR = "loginid";
     /** 本系统默认CacheName-空闲30Min超时,60Min有效,最少使用策略 **/
     public static final String SYS = "sys";
     /** 元数据 **/

@@ -5,9 +5,9 @@
  */
 package cn.eova.core;
 
-import cn.eova.tools.x;
 import cn.eova.common.base.BaseController;
 import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 
@@ -28,6 +28,7 @@ public class IndexController extends BaseController {
             indexInit(this, user);
 
             set("app_logo", x.conf.get("app.logo", null));
+            set("app_name", x.conf.get("app.name", null));
 
             render("/eova/index/index.html");
             return;

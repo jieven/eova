@@ -1,0 +1,636 @@
+/* City 省市多选：外框回显 + 弹层选择 */
+
+.city-widget {
+  --city-primary: #1677ff;
+  --city-primary-soft: #e6f4ff;
+  --city-border: #dcdcdc;
+  --city-bg: #f5f5f5;
+  --city-text: #1f2329;
+  --city-muted: #86909c;
+  --city-danger: #f53f3f;
+  --city-radius: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  box-sizing: border-box;
+  color: var(--city-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.city-widget *,
+.city-widget *::before,
+.city-widget *::after,
+.city-modal-mask *,
+.city-modal-mask *::before,
+.city-modal-mask *::after {
+  box-sizing: border-box;
+}
+
+/* —— 外框回显 —— */
+.city-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 85%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 36px;
+  padding: 4px 8px 4px 10px;
+  border: 1px solid var(--city-border);
+  border-radius: var(--city-radius);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.city-field:hover {
+border-color: var(--city-primary);
+}
+
+.city-field-inner {
+flex: 1;
+min-width: 0;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 6px;
+padding: 2px 0;
+}
+
+.city-field-placeholder {
+color: var(--city-muted);
+font-size: 13px;
+line-height: 28px;
+user-select: none;
+}
+
+.city-field-tag {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+max-width: 100%;
+padding: 2px 8px;
+border-radius: 4px;
+background: var(--city-bg);
+border: 1px solid var(--city-border);
+font-size: 12px;
+line-height: 1.6;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.city-field-tag button {
+border: 0;
+background: transparent;
+color: var(--city-muted);
+cursor: pointer;
+padding: 0;
+font-size: 14px;
+line-height: 1;
+}
+
+.city-field-tag button:hover {
+color: var(--city-danger);
+}
+
+.city-field-actions {
+display: flex;
+align-items: center;
+gap: 6px;
+flex-shrink: 0;
+padding-top: 2px;
+}
+
+.city-field-btn {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--city-border);
+  border-radius: 6px;
+  background: var(--city-primary);
+  border-color: var(--city-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.city-field-btn:hover {
+  filter: brightness(1.05);
+}
+
+/* —— 弹层 —— */
+.city-modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.city-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(1100px, 100%);
+  max-height: min(720px, calc(100vh - 48px));
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  color: var(--city-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.city-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--city-border);
+  flex-shrink: 0;
+}
+
+.city-modal-head h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.city-modal-close {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--city-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.city-modal-close:hover {
+  background: var(--city-bg);
+  color: var(--city-text);
+}
+
+.city-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.city-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--city-border);
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+.city-picker-loading {
+  padding: 80px 16px;
+  text-align: center;
+  color: var(--city-muted);
+}
+
+/* —— 选择面板（弹层内） —— */
+.city-picker {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0;
+  flex: 1;
+  min-height: 480px;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+
+.city-picker .picker-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-right: 1px solid var(--city-border);
+}
+
+.city-modal .btn,
+.city-modal-foot .btn {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--city-border);
+  border-radius: var(--city-radius);
+  background: #fff;
+  color: var(--city-text);
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.city-modal .btn:hover,
+.city-modal-foot .btn:hover {
+  border-color: var(--city-primary);
+  color: var(--city-primary);
+}
+
+.city-modal .btn-primary,
+.city-modal-foot .btn-primary {
+  background: var(--city-primary);
+  border-color: var(--city-primary);
+  color: #fff;
+}
+
+.city-modal .btn-primary:hover,
+.city-modal-foot .btn-primary:hover {
+  filter: brightness(1.05);
+  color: #fff;
+}
+
+.city-modal .btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.city-picker .btn-text {
+  border: 0;
+  background: transparent;
+  color: var(--city-muted);
+  height: auto;
+  padding: 0;
+}
+
+.city-picker .btn-text:hover {
+  color: var(--city-danger);
+}
+
+.city-picker .province-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--city-border);
+  background: #fff;
+  max-height: 180px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.city-picker .province-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--city-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--city-text);
+  cursor: pointer;
+  font-size: 13px;
+  user-select: none;
+}
+
+.city-picker .province-tab:hover {
+  border-color: #91caff;
+  color: var(--city-primary);
+}
+
+.city-picker .province-tab.is-active {
+  border-color: var(--city-primary);
+  background: var(--city-primary-soft);
+  color: var(--city-primary);
+  font-weight: 600;
+}
+
+.city-picker .province-tab.has-selected::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--city-primary);
+}
+
+.city-picker .city-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 12px 16px 16px;
+  background: var(--city-bg);
+}
+
+.city-picker .city-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.city-picker .city-panel-title {
+  font-size: 15px;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.city-picker .city-panel-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.city-picker .city-panel-actions .btn {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+.city-picker .city-count {
+  color: var(--city-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.city-picker .city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  align-content: start;
+  overflow: auto;
+  flex: 1;
+  padding-right: 4px;
+}
+
+.city-picker .city-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--city-border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.city-picker .city-item:hover {
+  border-color: #91caff;
+  background: #f7fbff;
+}
+
+.city-picker .city-item.is-checked {
+  border-color: var(--city-primary);
+  background: var(--city-primary-soft);
+}
+
+.city-picker .city-item input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--city-primary);
+  cursor: pointer;
+}
+
+.city-picker .city-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.city-picker .empty-tip {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--city-muted);
+}
+
+.city-picker .picker-side {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--city-bg);
+}
+
+.city-picker .side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--city-border);
+  background: #fff;
+}
+
+.city-picker .side-head h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.city-picker .side-body {
+  flex: 1;
+  overflow: auto;
+  padding: 12px;
+  min-height: 0;
+}
+
+.city-picker .side-section {
+  border-bottom: 1px solid var(--city-border);
+  background: #fff;
+}
+
+.city-picker .side-section:last-child {
+  border-bottom: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.city-picker .group-save {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--city-border);
+}
+
+.city-picker .group-save .search {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--city-border);
+  border-radius: var(--city-radius);
+  outline: none;
+  font-size: 13px;
+  background: #fff;
+}
+
+.city-picker .group-save .search:focus {
+  border-color: var(--city-primary);
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.15);
+}
+
+.city-picker .group-save .btn {
+  height: 32px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+
+.city-picker .group-list {
+  max-height: 160px;
+  overflow: auto;
+  padding: 8px 12px 12px;
+}
+
+.city-picker .group-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--city-border);
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  color: var(--city-text);
+}
+
+.city-picker .group-item:hover,
+.city-picker .group-item.is-active {
+  border-color: var(--city-primary);
+  background: var(--city-primary-soft);
+  color: var(--city-primary);
+}
+
+.city-picker .group-item-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.city-picker .group-item-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.city-picker .group-item-meta {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--city-muted);
+  font-weight: 400;
+}
+
+.city-picker .group-item.is-active .group-item-meta {
+  color: #69b1ff;
+}
+
+.city-picker .group-item-del {
+  border: 0;
+  background: transparent;
+  color: var(--city-muted);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  flex-shrink: 0;
+}
+
+.city-picker .group-item-del:hover {
+  color: var(--city-danger);
+}
+
+.city-picker .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  margin: 0 6px 6px 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid var(--city-border);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.city-picker .tag button {
+  border: 0;
+  background: transparent;
+  color: var(--city-muted);
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.city-picker .tag button:hover {
+  color: var(--city-danger);
+}
+
+.city-picker .side-empty {
+  padding: 24px 8px;
+  text-align: center;
+  color: var(--city-muted);
+  font-size: 13px;
+}
+
+.city-picker-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(31, 35, 41, 0.92);
+  color: #fff;
+  font-size: 13px;
+  z-index: 10001;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .city-modal {
+    max-height: calc(100vh - 24px);
+  }
+
+  .city-picker {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .city-picker .picker-main {
+    border-right: 0;
+    border-bottom: 1px solid var(--city-border);
+    min-height: 320px;
+  }
+
+  .city-picker .picker-side {
+    min-height: 220px;
+  }
+}
