@@ -10,9 +10,10 @@ import java.util.List;
 
 import cn.eova.common.Ds;
 import cn.eova.common.utils.xx;
-import cn.eova.model.MetaField;
+import cn.eova.model.EovaOption;
 import cn.eova.model.User;
 import cn.eova.tools.x;
+import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -31,6 +32,8 @@ public class EovaExpBuilder {
 
     private User user;// 用户
     private String exp;// 表达式
+    private String ds;// 数据源
+    private EovaOption option;
     private String objectCode;// 元对象编码
     private String fieldCode;// 元字段编码
 
@@ -42,13 +45,15 @@ public class EovaExpBuilder {
         }
     }
 
-    public EovaExpBuilder(User user, String exp) {
-        this(exp);
+    public EovaExpBuilder(User user, EovaOption option) {
+        this(option.getSql());
         this.user = user;
+        this.ds = option.getDs();
     }
 
     public EovaExpBuilder(User user, String exp, String objectCode, String fieldCode) {
-        this(user, exp);
+        this(exp);
+        this.user = user;
         this.objectCode = objectCode;
         this.fieldCode = fieldCode;
     }
@@ -58,7 +63,10 @@ public class EovaExpBuilder {
      * @return
      */
     public EovaExp build() {
-        return new EovaExp(buildExp());
+        //  TODO 复杂表达式构建,待重构.... 先保障 eova_option 逻辑通畅.
+        // 解析表达式.
+        String sql = buildExp();
+        return new EovaExp(ds, sql);
     }
 
     /**
@@ -78,15 +86,14 @@ public class EovaExpBuilder {
      * @return
      */
     public String buildExp() {
+
         // 表达式为空, 默认根据元字段获取表达式
         if (exp == null) {
-            MetaField ei = MetaField.dao.getByObjectCodeAndEn(objectCode, fieldCode);
-            exp = ei.getExp();
-            // 如果不是标准SQL表达式, 说明是预配置表达式
-            if (!isSqlExp()) {
-                parseConfigExp();
-            }
-            return parseExp();
+//            MetaField ei = MetaField.dao.getByObjectCodeAndEn(objectCode, fieldCode);
+//            exp = ei.getExp();
+//            parseConfigExp();
+//            return parseExp();
+            x.log.error("Exp为空:" + JsonKit.toJson(this));
         }
 
         // 动态获取审批业务控件表达式
@@ -103,10 +110,9 @@ public class EovaExpBuilder {
                 throw new RuntimeException("安全模式：禁止将SQL作为参数, 存在SQL注入风险! 关闭安全模式配置项:safe_sql_param=false");
             }
             return parseExp();
+        } else {
+            parseConfigExp();
         }
-
-        // 构建预配置表达式
-        parseConfigExp();
 
         return parseExp();
     }
@@ -151,6 +157,11 @@ public class EovaExpBuilder {
 
 
     private void parseConfigExp() {
+        // 标准SQL表达式,不参与解析.
+        if (isSqlExp()) {
+            return;
+        }
+
         this.expParas = ExpUtil.buildSqlPara(exp);
         // Meta 重构20250421
 

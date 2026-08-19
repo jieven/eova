@@ -8,8 +8,6 @@ package cn.eova.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.aop.eova.EovaContext;
 import cn.eova.common.Easy;
 import cn.eova.common.base.BaseController;
@@ -25,6 +23,8 @@ import cn.eova.i18n.I18NBuilder;
 import cn.eova.model.EovaOption;
 import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.LogKit;
 import com.jfinal.kit.Ret;
@@ -268,7 +268,7 @@ public class WidgetCtrl extends BaseController {
         EovaExp se = new EovaExp(option);
 
         // 构建表达式
-        EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), option.getSql());
+        EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), option);
 //        EovaExp se = eeb.build();
         // 获取表达式动态参数
 //        List<Object> paras = DynamicParse.buildExpPara(exp); //eeb.getExpParas();

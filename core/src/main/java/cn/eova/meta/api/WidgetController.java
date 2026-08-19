@@ -8,7 +8,6 @@ package cn.eova.meta.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.eova.tools.x;
 import cn.eova.aop.eova.EovaContext;
 import cn.eova.common.Easy;
 import cn.eova.common.base.BaseController;
@@ -20,6 +19,7 @@ import cn.eova.engine.EovaExpBuilder;
 import cn.eova.engine.ExpUtil;
 import cn.eova.i18n.I18NBuilder;
 import cn.eova.model.EovaOption;
+import cn.eova.tools.x;
 import cn.eova.widget.MetaConst;
 import cn.eova.widget.WidgetManager;
 import com.jfinal.kit.JsonKit;
@@ -230,11 +230,11 @@ public class WidgetController extends BaseController {
 
 //        EovaOption option = EovaOption.dao.getByCode(optionCode);
         String exp = option.getSql();
-        EovaExp se = new EovaExp(option);
+//        EovaExp se = new EovaExp(option);
 
         // 构建表达式
-        EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), option.getSql());
-//        EovaExp se = eeb.build();
+        EovaExpBuilder eeb = new EovaExpBuilder(this.getUser(), option);
+        EovaExp se = eeb.build();
         // 获取表达式动态参数
 //        List<Object> paras = DynamicParse.buildExpPara(exp); //eeb.getExpParas();
 
@@ -248,9 +248,9 @@ public class WidgetController extends BaseController {
         String cache = option.getCache();//se.get(EovaExpParam.CACHE);
         List<Record> list = null;
         if (x.isEmpty(cache)) {
-            list = Db.use(se.ds).find(sql, paras.toArray());
+            list = Db.use(option.getDs()).find(sql, paras.toArray());
         } else {
-            list = Db.use(se.ds).findByCache(cache, sql, sql, paras.toArray());
+            list = Db.use(option.getDs()).findByCache(cache, sql, sql, paras.toArray());
         }
 
         // 兼容处理

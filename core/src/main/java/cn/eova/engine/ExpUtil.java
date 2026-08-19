@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cn.eova.config.EovaConfig;
 import cn.eova.tools.EovaTool;
 import cn.eova.tools.x;
 import com.jfinal.kit.Kv;
@@ -117,11 +116,11 @@ public class ExpUtil {
             String[] strs = exp.split(FG);
 
             // 第一位参数是SQL表达式Key
-            exp = EovaConfig.getExp(strs[0]);
-            if (exp == null) {
-                System.err.println(String.format("无法获取到表达式,请检查表达式配置,表达式Key=%s,添加新的表达式后重启服务才能生效!", strs[0]));
-                throw new RuntimeException();
-            }
+            //exp = EovaConfig.getExp(strs[0]);
+//            if (exp == null) {
+//                System.err.println(String.format("无法获取到表达式,请检查表达式配置,表达式Key=%s,添加新的表达式后重启服务才能生效!", strs[0]));
+//                throw new RuntimeException();
+//            }
 
             // 硬解析参数 -> 主要解决 in (1,2,3)
             ArrayList<Object> formatParm = new ArrayList<>();

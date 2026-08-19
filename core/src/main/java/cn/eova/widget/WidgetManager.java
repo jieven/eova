@@ -450,9 +450,10 @@ public class WidgetManager {
             }
 
             EovaOption option = EovaOption.dao.getByCode(exp);
-            EovaExp se = new EovaExp(option);
-
-            EovaExpBuilder eeb = new EovaExpBuilder(user, exp);
+            x.log.debug("EovaOption:" + x.str.formatJson(option.toJson()));
+            // EovaExp se = new EovaExp(option);表达式中有 # 无法直接SQL
+            EovaExpBuilder eeb = new EovaExpBuilder(user, option);
+            EovaExp se = eeb.build();
 
             // 表达式固定值翻译 TODO 暂时屏蔽, 待后续确认.
 //            if (eeb.isFixedItem()) {

@@ -40,9 +40,9 @@
         <!-- Table -->
         <ev-table
           ref="refTable"
-          design="#(loginUser.isAdmin)"
           object="#(object.code)"
           biz="#(object.code)"
+          :design="#(loginUser.isAdmin)"
           :page="page"
           :height="tableHeight"
           :is-edit="#(object.is_celledit??false)"

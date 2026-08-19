@@ -51,7 +51,10 @@ public class EovaExp {
     public EovaExp() {
     }
 
-
+    /**
+     * 通过EovaOtpion配置 解析SQL
+     * @param ops
+     */
     public EovaExp(EovaOption ops) {
         try {
             this.option = ops;
@@ -60,7 +63,7 @@ public class EovaExp {
             this.cn = ops.getFieldTxt();
             this.sql = ops.getSql();
 
-            // 初始化SQL解析器
+            // 初始化SQL解析器(表达式必须先解析完)
             this.sp = new SqlParse(EovaConfig.EOVA_DBTYPE, sql);
 
             // 解析Sql
@@ -71,30 +74,31 @@ public class EovaExp {
         }
     }
 
-    public EovaExp(String exp) {
+    public EovaExp(String ds, String exp) {
         try {
             // 无参
-            if (!exp.contains(";")) {
-                this.sql = exp;
-            }
+//            if (!exp.contains(";")) {
+//                this.sql = exp;
+//            }
             // 有参
-            else {
-                String[] strs = exp.split(";");
-                this.sql = strs[0];
-                // 除了SQL后续皆为参数键值对
-                int i = 0;
-                for (String s : strs) {
-                    i++;
-                    if (i == 1) {
-                        continue;
-                    }
-                    s = s.trim();
-                    String[] ss = s.split("=");
-                    param.put(ss[0].trim(), ss[1].trim());
-                }
-            }
+//            else {
+//                String[] strs = exp.split(";");
+//                this.sql = strs[0];
+//                // 除了SQL后续皆为参数键值对
+//                int i = 0;
+//                for (String s : strs) {
+//                    i++;
+//                    if (i == 1) {
+//                        continue;
+//                    }
+//                    s = s.trim();
+//                    String[] ss = s.split("=");
+//                    param.put(ss[0].trim(), ss[1].trim());
+//                }
+//            }
 
-            this.ds = get(EovaExpParam.DS);
+            this.sql = exp;
+            this.ds = ds;
 
             // 初始化SQL解析器
             sp = new SqlParse(EovaConfig.EOVA_DBTYPE, sql);

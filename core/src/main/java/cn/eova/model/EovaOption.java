@@ -5,9 +5,9 @@
  */
 package cn.eova.model;
 
-import cn.eova.tools.x;
 import cn.eova.common.base.BaseCache;
 import cn.eova.common.base.BaseModel;
+import cn.eova.tools.x;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Kv;
 
@@ -50,6 +50,10 @@ public class EovaOption extends BaseModel<EovaOption> {
 
     private Kv conf = null;
 
+    /**
+     * sql exp
+     * @return
+     */
     public String getSql() {
         return this.getStr("sql");
     }

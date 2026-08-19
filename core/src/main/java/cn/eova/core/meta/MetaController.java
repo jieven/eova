@@ -947,7 +947,7 @@ public class MetaController extends BaseController {
             String en = r.getStr("en");
             String cn = r.getStr("cn");
             String exp = r.getStr("exp");
-            EovaExp ee = new EovaExp(exp);
+            EovaExp ee = new EovaExp(Ds.MAIN, exp);
 
             String sql1 = ee.sql;
 
