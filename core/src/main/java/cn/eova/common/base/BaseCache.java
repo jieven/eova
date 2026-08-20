@@ -27,6 +27,10 @@ public class BaseCache {
     public static final String SER = "service";
     /** Player CacheName-空闲30Min超时,永久有效,最少使用策略 **/
     public static final String PLAYER = "player";
+    /** 404 WAF 计数（按 IP） **/
+    public static final String WAF_404 = "waf_404";
+    /** 404 WAF 软封禁（按 IP，TTL 到期自动解封） **/
+    public static final String WAF_BAN = "waf_ban";
 
     private static Object getCache(String cacheName, String key) {
         return CacheKit.get(cacheName, key);

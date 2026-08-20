@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.eova.tools.x;
-import com.alibaba.druid.DbType;
 import cn.eova.EovaApiRoutes;
 import cn.eova.EovaMetaHooks;
 import cn.eova.EovaWebRoutes;
@@ -35,6 +33,7 @@ import cn.eova.ext.jfinal.DbCaptchaCache;
 import cn.eova.ext.jfinal.EovaRenderSourceFactory;
 import cn.eova.ext.jfinal.directive.JsonDirective;
 import cn.eova.handler.UrlBanHandler;
+import cn.eova.handler.WAFHandler;
 import cn.eova.interceptor.ExceptionInterceptor;
 import cn.eova.interceptor.LoginInterceptor;
 import cn.eova.mod.EovaModConfig;
@@ -61,6 +60,8 @@ import cn.eova.service.LoginService;
 import cn.eova.service.biz;
 import cn.eova.service.sm;
 import cn.eova.sql.dql.dialect.QueryDialect;
+import cn.eova.tools.x;
+import com.alibaba.druid.DbType;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -106,7 +107,7 @@ public class EovaConfig extends JFinalConfig {
     /** Eova配置属性 有x.conf 代替 **/
     // protected static Map<String, String> props = new HashMap<String, String>();
     /** Eova表达式集合 **/
-    protected static Map<String, String> exps = new HashMap<String, String>();
+    // protected static Map<String, String> exps = new HashMap<String, String>();
 
     /** URI授权集合<角色ID,URI> **/
     protected static Map<Integer, Set<String>> authUris = new HashMap<Integer, Set<String>>();
@@ -155,7 +156,6 @@ public class EovaConfig extends JFinalConfig {
 
         // 初始化Eova Hook
         new EovaMetaHooks().config();
-
 
         // 回调Eova Mod Start
 //		try {
@@ -423,6 +423,9 @@ public class EovaConfig extends JFinalConfig {
     @Override
     public void configHandler(Handlers me) {
         System.err.println("Config Handlers Starting...");
+        
+        me.add(new WAFHandler());
+
         // 添加DruidHandler
         DruidStatViewHandler dvh = new DruidStatViewHandler("/druid", new IDruidStatViewAuth() {
             @Override
@@ -500,14 +503,14 @@ public class EovaConfig extends JFinalConfig {
      */
     protected void exp() {
         // Eova 系统功能需要的Exp
-        exps.put("selectEovaFieldByObjectCode", "select en Field,cn Name from eova_field where object_code = ?;ds=eova");
+        //exps.put("selectEovaFieldByObjectCode", "select en Field,cn Name from eova_field where object_code = ?;ds=eova");
         // 列表可显示字段
-        exps.put("comboFieldByObject", "select en ID,cn CN from eova_field where object_code = ? and is_show = 1 order by num;ds=eova");
-        exps.put("selectEovaUser", "select id,name 姓名, login_id 帐号 from eova_user;ds=eova");
-        exps.put("selectEovaRole", "select id,name cn from eova_role;ds=eova");
+        //exps.put("comboFieldByObject", "select en ID,cn CN from eova_field where object_code = ? and is_show = 1 order by num;ds=eova");
+        //exps.put("selectEovaUser", "select id,name 姓名, login_id 帐号 from eova_user;ds=eova");
+        //exps.put("selectEovaRole", "select id,name cn from eova_role;ds=eova");
         // Eova Flow 根据用户或角色过滤
-        exps.put("selectEovaUserByUid", "select id,name 姓名, login_id 帐号 from eova_user where id in %s;ds=eova");
-        exps.put("selectEovaUserByRid", "select id,name 姓名, login_id 帐号 from eova_user where rid in %s;ds=eova");
+        //exps.put("selectEovaUserByUid", "select id,name 姓名, login_id 帐号 from eova_user where id in %s;ds=eova");
+        //exps.put("selectEovaUserByRid", "select id,name 姓名, login_id 帐号 from eova_user where rid in %s;ds=eova");
 
         // 隐藏玩法の软硬结合
         // exps.put("selectEovaUser", "select id ID,name 姓名, login_id 帐号 from eova_user where id in %s and id < ?;ds=eova");
@@ -607,10 +610,6 @@ public class EovaConfig extends JFinalConfig {
 
     public static void setArps(HashMap<String, ActiveRecordPlugin> arps) {
         EovaConfig.arps = arps;
-    }
-
-    public static String getExp(String key) {
-        return exps.get(key);
     }
 
     public static Map<Integer, Set<String>> getAuthUris() {

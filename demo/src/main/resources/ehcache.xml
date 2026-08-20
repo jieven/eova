@@ -142,6 +142,28 @@
            transactionalMode="off">
     </cache>
 
+    <!-- WAF 404 计数：按 IP，1~5秒内 -->
+    <cache name="waf_404"
+           maxEntriesLocalHeap="50000"
+           eternal="false"
+           overflowToDisk="false"
+           timeToIdleSeconds="1"
+           timeToLiveSeconds="5"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+    </cache>
+
+    <!-- WAF 软封禁：按 IP，封 10 分钟后自动过期解封 -->
+    <cache name="waf_ban"
+           maxEntriesLocalHeap="50000"
+           eternal="false"
+           overflowToDisk="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="off">
+    </cache>
+
 </ehcache>
 
         <!-- maxEntriesLocalHeap="90000" 内存最多9W条-->
