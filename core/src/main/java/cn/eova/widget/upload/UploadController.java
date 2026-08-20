@@ -8,13 +8,15 @@ package cn.eova.widget.upload;
 import java.util.Collections;
 import java.util.List;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import cn.eova.aop.UploadIntercept;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.io.FileUtil;
 import cn.eova.common.utils.xx;
+import cn.eova.config.EovaConfig;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -95,6 +97,12 @@ public class UploadController extends BaseController {
         String marks = String.join(",", Collections.nCopies(files.size(), "?"));
         String sql = String.format("SELECT * FROM `eova_file` where code in (%s)", marks);
         List<Record> list = Db.use(Ds.EOVA).find(sql, files.toArray());
+
+        // 上传文件拦截
+        UploadIntercept intercept = EovaConfig.getUploadIntercept();
+        if (intercept != null) {
+            intercept.query(list);
+        }
 
         Ret ret = Ret.ok().set("data", list);
 
