@@ -24,6 +24,7 @@
   <div class="eova-login">
     <h2>{{ conf.app_name || '账号密码登录' }}</h2>
     <form ref="refForm" @keyup.enter="onSubmit">
+      <input type="hidden" placeholder="来源页" v-model="data.source">
       <div class="eova-login_input">
         <input type="text" placeholder="账号" maxlength="30" v-model="data.login_id">
       </div>
@@ -50,6 +51,7 @@
         // 初始化参数传递
         uzoo.app.data.value.login_id = '#(login_id)'
         uzoo.app.data.value.login_pwd = '#(login_pwd)'
+        uzoo.app.data.value.source = '#(source)'
         // 登录配置
         uzoo.app.conf.value.app_name = '#(app_name??'EOVA低代码开发平台')'
         uzoo.app.conf.value.is_captcha = '#(isCaptcha??false)'

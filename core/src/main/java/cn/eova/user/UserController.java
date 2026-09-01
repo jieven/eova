@@ -76,7 +76,7 @@ public class UserController extends BaseController {
         set("login_id", x.conf.get("dev.login_id"));
         set("login_pwd", x.conf.get("dev.login_pwd"));
 
-        set("source", get("back"));
+        set("source", get("back", EovaConfig.EOVA_INDEX));
 
         render(x.conf.get("app.login.page", "/eova/index/login.html"));
     }
@@ -152,16 +152,16 @@ public class UserController extends BaseController {
         // setAttr(LoginService.SID, ret.get(BaseCache.LOGIN));
 
         // 重定向到首页
-        boolean isMobile = WebUtil.isMobile(getRequest());
-        String source = EovaConfig.EOVA_INDEX;
-        if (isMobile) {
-            source = EovaConfig.EOVA_INDEX_H5;
-        }
-        String back = get("source");
-        if (!x.isEmpty(back)) {
-            source = back;
-        }
-        // redirect(source);
+//        boolean isMobile = WebUtil.isMobile(getRequest());
+//        String source = EovaConfig.EOVA_INDEX;
+//        if (isMobile) {
+//            source = EovaConfig.EOVA_INDEX_H5;
+//        }
+//        String back = get("source");
+//        if (!x.isEmpty(back)) {
+//            source = back;
+//        }
+        // 前端重定向
 
         OK();
     }

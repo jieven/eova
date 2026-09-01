@@ -6,7 +6,9 @@
   #include("/eova/_view/_block/base.html")
   <link rel="stylesheet" href="/eova/_view/index/index.css?v=241231">
   <script type="module" src="/eova/_view/index/index.js?v=1.0"></script>
+  #if(conf('eova.msg.sse') == 'true')
   <script type="module" src="/eova/ui/js/eova.msg.js?v=1.1"></script>
+  #end
   #renderOrElse(conf('ui.include.index'))#end
 </head>
 <body>
@@ -155,5 +157,13 @@
     </template>
   </div>
 </div>
+<script>
+    uzoo.vue.mountBefore = () => {
+        console.log("page beforeMount...")
+
+        // 登录配置
+        uzoo.app.conf.value.main = '#(conf("app_main"))'
+    }
+</script>
 </body>
 </html>

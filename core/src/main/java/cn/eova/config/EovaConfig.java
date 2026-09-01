@@ -423,7 +423,7 @@ public class EovaConfig extends JFinalConfig {
     @Override
     public void configHandler(Handlers me) {
         System.err.println("Config Handlers Starting...");
-        
+
         me.add(new WAFHandler());
 
         // 添加DruidHandler
@@ -443,7 +443,7 @@ public class EovaConfig extends JFinalConfig {
         });
         me.add(dvh);
         // 过滤禁止访问资源
-        me.add(new UrlBanHandler(".*\\.(html|tag|sql)", false));
+        me.add(new UrlBanHandler(".*\\.(tag|sql)", false));// html 取消了，方便前后端分离玩法。如有需要自行屏蔽。
         // API路由(默认开启, 不需要可以屏蔽)
         boolean isRouter = x.conf.getBool("eova.api.router", true);
         if (isRouter) {

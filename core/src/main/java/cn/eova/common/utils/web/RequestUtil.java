@@ -100,12 +100,26 @@ public class RequestUtil {
     }
 
     /**
-     * 获取Nginx代理转发IP
+     * 获取负载均衡（Nginx+ALB）代理 客户端源IP
      * @param request
      * @return
      */
-    public static String getNginxProxyIp(HttpServletRequest request) {
-        return request.getHeader("X-Real-IP");
+    public static String getGetWayProxyIp(HttpServletRequest request) {
+        // 1. 优先读取 X-Forwarded-For (ALB/SLB/CDN 默认使用此头)
+        String ip = request.getHeader("X-Forwarded-For");
+
+        // X-Forwarded-For 的格式通常为 "客户端IP, 代理1IP, 代理2IP"，取第一个即可
+        if (!x.isEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
+            return ip.split(",")[0].trim();
+        }
+
+        // 2. 回退读取 X-Real-IP (Nginx 常用此头)
+        ip = request.getHeader("X-Real-IP");
+        if (!x.isEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+
+        return null;
     }
 
     /**
@@ -114,7 +128,7 @@ public class RequestUtil {
      * @return
      */
     public static String getIp(HttpServletRequest request) {
-        String ip = getNginxProxyIp(request);
+        String ip = getGetWayProxyIp(request);
         if (x.isEmpty(ip)) {
             ip = request.getRemoteAddr();
         }
