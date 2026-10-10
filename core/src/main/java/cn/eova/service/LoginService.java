@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import cn.eova.tools.x;
 import cn.eova.auth.AuthUri;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseCache;
@@ -18,6 +17,7 @@ import cn.eova.common.utils.xx;
 import cn.eova.config.EovaConst;
 import cn.eova.model.Session;
 import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.json.Json;
 import com.jfinal.kit.LogKit;
 import com.jfinal.kit.Ret;
@@ -355,6 +355,10 @@ public class LoginService {
      *     如果没过期则先放缓存一份，然后再返回
      */
     public User loginBySid(String sid, String ip) {
+        // 特殊情况下SID为空（会造成死循环）
+        if (x.isEmpty(sid)) {
+            return null;
+        }
         Session session = Session.dao.findById(sid);
         if (session == null) {      // session 不存在
             return null;
