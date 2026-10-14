@@ -1,9 +1,14 @@
-const {createApp, ref, reactive, watch, computed, onMounted, nextTick} = Vue; // 使用全局 Vue 对象
+const {createApp, ref, reactive, watch, computed, onBeforeMount, onMounted, nextTick} = Vue; // 使用全局 Vue 对象
 const {me} = EovaUI
 const {x} = EovaTools
 
 const app = createApp({
     setup() {
+
+        // 登录配置
+        const conf = ref({
+            main: '/main', // 默认主页
+        })
 
         let showAll = false // 是否显示所有菜单
 
@@ -13,14 +18,7 @@ const app = createApp({
         const menus = ref()
 
         // 已打开菜单选项
-        let tabMenus = ref([
-            {
-                id: 0,
-                name: '首页',
-                active: true,
-                link: '/main'
-            }
-        ])
+        let tabMenus = ref([])
 
 
         // 所有可用菜单
@@ -241,6 +239,18 @@ const app = createApp({
             });
         }
 
+        onBeforeMount(() => {
+            console.log("onBeforeMount...")
+            uzoo.vue.mountBefore();
+            // 页面加载完后更新。
+            tabMenus.value.push({
+                id: 0,
+                name: '首页',
+                active: true,
+                link: conf.value.main
+            })
+        })
+
         // 在组件挂载完成后设置初始引用并监听 input 事件
         onMounted(() => {
             console.log('home...')
@@ -256,8 +266,8 @@ const app = createApp({
             init();
         })
 
-        return {
-            // props,
+        return uzoo.app = {
+            conf,
             tabMenus,
             menus,
             cats,

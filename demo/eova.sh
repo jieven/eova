@@ -25,7 +25,7 @@ APP_OPTS="-Xms256m -Xmx4g -Dundertow.port=${APP_PORT} -Dapp.name=${APP_NAME}"
 RELEASE_NAME=${APP_MOD}-release.zip
 
 #自定义Java环境变量(EOVA基于JAVA8,如默认为JAVA8,可注释下2行)
-export JAVA_HOME=/usr/java/java8
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0
 export PATH=$JAVA_HOME/bin:$PATH
 # ----------------------------------------------------------------------
 

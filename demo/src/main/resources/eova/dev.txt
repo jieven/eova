@@ -23,12 +23,10 @@ db.datasource=eova,main
 eova.url=jdbc:mysql://127.0.0.1:13306/eova_meta?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
 eova.user=root
 eova.pwd=root
-eova.driver=com.mysql.cj.jdbc.Driver
 
 main.url=jdbc:mysql://127.0.0.1:13306/demo?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
 main.user=root
 main.pwd=root
-main.driver=com.mysql.cj.jdbc.Driver
 
 db.pwd.encrypt=false
 
@@ -48,6 +46,11 @@ app.status.token = eova
 #app.logo=/eova/_view/index/meta.png
 # 自定义登录页
 #app.login.page=/_view/login/login.html
+
+# 自定义入口
+eova.index=/
+# 消息SSE
+eova.msg.sse = false
 
 #默认登录密码
 dev.login_id = eova

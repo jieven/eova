@@ -9,6 +9,7 @@ const setup = () => {
         login_id: '',
         login_pwd: '',
         captcha: '',
+        source: '/',
         msg: ''
     })
 
@@ -53,7 +54,7 @@ const setup = () => {
 
                 if (ret.state === 'ok') {
                     // 登录成功 跳转首页
-                    location.href = '/'
+                    location.href = data.value.source;
                 } else {
                     data.value.msg = ret.msg
                 }

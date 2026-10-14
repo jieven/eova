@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import cn.eova.common.Ds;
 import cn.eova.common.base.BaseController;
 import cn.eova.engine.EovaExp;
 import cn.eova.model.Button;
@@ -203,4 +204,31 @@ public class MetaControler extends BaseController {
 
         renderJson(btnList);
     }
+
+    /**
+     * 移除字段，更新元数据
+     */
+    public void removeField() {
+        String object = get("object");
+        String field = get("field");
+        String mode = get("mode");
+
+        if (x.isEmpty(object) || x.isEmpty(field) || x.isEmpty(mode)) {
+            NO("参数不完整");
+            return;
+        }
+
+        if (mode.equals("table")) {
+            Db.use(Ds.EOVA).update("update eova_field set is_show = 0 where object_code = ? and en = ?", object, field);
+        } else if (mode.equals("query") || mode.equals("create") || mode.equals("update") || mode.equals("read")) {
+            // 1正常 2只读 3隐藏 4禁用
+            Db.use(Ds.EOVA).update("update eova_field_diy set status = 4 where object_code = ? and en = ? and mode = ?", object, field, mode);
+        } else {
+            NO("不支持的业务场景");
+            return;
+        }
+
+        OK();
+    }
+
 }

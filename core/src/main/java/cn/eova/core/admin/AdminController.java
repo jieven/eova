@@ -7,14 +7,14 @@ package cn.eova.core.admin;
 
 import java.util.Map;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSONObject;
 import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.web.WebUtil;
 import cn.eova.config.EovaConfig;
 import cn.eova.model.Role;
 import cn.eova.model.User;
-import cn.eova.service.sm;
+import cn.eova.service.biz;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.Ret;
@@ -98,7 +98,7 @@ public class AdminController extends BaseController {
     // 重新登录
     public void reLogin() {
         String ip = WebUtil.getRealIp(getRequest());
-        User user = sm.login.loginBySid(SID(), ip);
+        User user = biz.login.loginBySid(SID(), ip);
         // 登录初始化
         if (EovaConfig.getUserSessionIntercept() != null) {
             EovaConfig.getUserSessionIntercept().login(user);

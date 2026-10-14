@@ -3411,4 +3411,7 @@ INSERT INTO `eova_widget` VALUES (46, 2, 'InputNums', '调数器2', '1.0', '', '
 ALTER TABLE `eova_user`
 MODIFY COLUMN `status` int NULL DEFAULT 1 COMMENT '状态:0=删除,1=正常,2=禁用' AFTER `id`;
 
+-- 用户新增重置密码
+INSERT INTO eova_button (`auth`,`bs`,`btnset`,`cat`,`config`,`diystyle`,`event`,`icon`,`is_base`,`is_hide`,`menu_code`,`name`,`num`,`style`,`ui`,`uri`)  VALUES ('/user/reset',null,'','0',null,null,'reset','eova-icon-refresh-1',0,0,'sys_users','重置密码','7','eova-btn_error','/eova/_view/user/reset/btn.js',null);
+
 SET FOREIGN_KEY_CHECKS = 1;

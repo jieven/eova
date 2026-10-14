@@ -1,0 +1,67 @@
+/**
+ * 设计模式：面板布局 + 查询字段关闭按钮定位。
+ * 按钮皮肤复用 EovaUI（.eova-btn_error / .eova-icon-close）。
+ */
+.eova-design-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1999;
+    min-width: 240px;
+    padding: 0;
+}
+
+.eova-design-panel__hd {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--eova-color_border1);
+    font-weight: 600;
+    color: var(--eova-color_txt3);
+    background: var(--eova-color_bg);
+}
+
+.eova-design-panel__body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.eova-design-panel__tip {
+    color: var(--eova-color_txt2);
+    line-height: 1.5;
+}
+
+.eova-design-panel__body > button {
+    width: 100%;
+    margin-right: 0;
+}
+
+/* 查询字段、表格列头：关闭按钮定位 */
+form.eova-form.eova-design .eova-form-field,
+.eova-table-view.eova-design .eova-table-header th {
+    position: relative;
+}
+
+.eova-design-remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    border-radius: 2px;
+    background: var(--eova-color_error);
+    color: var(--eova-color_w);
+    cursor: pointer;
+    opacity: 0.35;
+    line-height: 18px;
+    font-size: 12px;
+}
+
+form.eova-form.eova-design .eova-form-field:hover .eova-design-remove,
+.eova-table-view.eova-design .eova-table-header th:hover .eova-design-remove,
+.eova-design-remove:hover {
+    opacity: 1;
+}

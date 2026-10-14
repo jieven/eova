@@ -357,6 +357,7 @@ public class LoginService {
     public User loginBySid(String sid, String ip) {
         // 特殊情况下SID为空（会造成死循环）
         if (x.isEmpty(sid)) {
+            x.log.error("sid = null,ip:" + ip);
             return null;
         }
         Session session = Session.dao.findById(sid);
