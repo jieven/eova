@@ -50,6 +50,7 @@ const enableQueryFieldDesign = () => {
         if (field.querySelector('.eova-design-remove')) {
             return;
         }
+        field.appendChild(createRenameButton());
         field.appendChild(createRemoveButton('移除字段'));
     });
     form.addEventListener('click', onQueryFieldClick);
@@ -62,10 +63,20 @@ const disableQueryFieldDesign = () => {
     }
     form.classList.remove('eova-design');
     form.removeEventListener('click', onQueryFieldClick);
-    form.querySelectorAll('.eova-design-remove').forEach((btn) => btn.remove());
+    form.querySelectorAll('.eova-design-rename, .eova-design-remove').forEach((btn) => btn.remove());
 };
 
 const onQueryFieldClick = (e) => {
+    const renameBtn = e.target.closest('.eova-design-rename');
+    if (renameBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const field = renameBtn.closest('.eova-form-field');
+        if (field) {
+            renameQueryField(field);
+        }
+        return;
+    }
     const btn = e.target.closest('.eova-design-remove');
     if (!btn) {
         return;
@@ -141,6 +152,7 @@ const enableTableColumnDesign = () => {
             if (!isDataColumn(th) || th.querySelector('.eova-design-remove')) {
                 return;
             }
+            th.appendChild(createRenameButton());
             th.appendChild(createRemoveButton('移除列'));
         });
         view.addEventListener('click', onTableColumnClick);
@@ -151,11 +163,21 @@ const disableTableColumnDesign = () => {
     tableViews().forEach((view) => {
         view.classList.remove('eova-design');
         view.removeEventListener('click', onTableColumnClick);
-        view.querySelectorAll('.eova-table-header .eova-design-remove').forEach((btn) => btn.remove());
+        view.querySelectorAll('.eova-table-header .eova-design-rename, .eova-table-header .eova-design-remove').forEach((btn) => btn.remove());
     });
 };
 
 const onTableColumnClick = (e) => {
+    const renameBtn = e.target.closest('.eova-design-rename');
+    if (renameBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const th = renameBtn.closest('th');
+        if (th) {
+            renameTableColumn(th);
+        }
+        return;
+    }
     const btn = e.target.closest('.eova-design-remove');
     if (!btn) {
         return;
@@ -197,6 +219,131 @@ const removeTableColumn = (th) => {
             }
         });
     });
+};
+
+const requestRenameField = (fieldCode, cn) => {
+    const code = objectCode();
+    return axios.get('/api/meta/renameField', {
+        params: {object: code, field: fieldCode, cn}
+    }).then((res) => {
+        const ok = res.data && res.data.state === 'ok';
+        me.layer.notify(ok ? '操作成功' : '操作失败', ok ? `中文名已更新：${cn}` : '中文名更新失败', ok ? 'ok' : 'no');
+        return ok;
+    }).catch(() => {
+        me.layer.notify('操作失败', '中文名更新失败', 'no');
+        return false;
+    });
+};
+
+/** 表单标签与表头共用 cn，改一处两边一起换字 */
+const syncCn = (fieldCode, cn) => {
+    document.querySelectorAll('.eova-form-label').forEach((label) => {
+        const parts = (label.getAttribute('title') || '').split('#');
+        if (parts[1] !== fieldCode) {
+            return;
+        }
+        parts[0] = cn;
+        label.setAttribute('title', parts.join('#'));
+        const text = [...label.childNodes].find((node) => node.nodeType === 3 && node.textContent.trim());
+        if (text) {
+            text.textContent = cn + ' ';
+        }
+    });
+    document.querySelectorAll('.eova-table-header th').forEach((th) => {
+        if (columnFieldCode(th) !== fieldCode) {
+            return;
+        }
+        const span = th.querySelector('.eova-table_cell > span');
+        const text = span && [...span.childNodes].find((node) => node.nodeType === 3);
+        if (text) {
+            text.textContent = cn;
+        }
+    });
+};
+
+const columnFieldCode = (th) => {
+    const index = [...th.parentElement.children].indexOf(th);
+    const box = th.closest('.eova-table-box');
+    const cols = box ? box.querySelectorAll('.eova-table-header colgroup col') : [];
+    return (cols[index] && cols[index].getAttribute('title')) || '';
+};
+
+const openRenameInput = (textNode, fieldCode) => {
+    const parent = textNode && textNode.parentNode;
+    if (!textNode || !fieldCode || !parent || parent.querySelector('.eova-design-rename-input')) {
+        return;
+    }
+    const gap = parent.classList.contains('eova-form-label') ? ' ' : '';
+    const old = textNode.textContent.trim();
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'eova-design-rename-input';
+    input.value = old;
+    parent.replaceChild(input, textNode);
+    input.focus();
+    input.select();
+
+    let done = false;
+    const finish = (save) => {
+        if (done) {
+            return;
+        }
+        done = true;
+        const cn = input.value.trim();
+        const keep = save && cn && cn !== old;
+        const node = document.createTextNode((keep ? cn : old) + gap);
+        if (input.parentNode) {
+            input.parentNode.replaceChild(node, input);
+        }
+        if (!keep) {
+            return;
+        }
+        requestRenameField(fieldCode, cn).then((ok) => {
+            if (ok) {
+                syncCn(fieldCode, cn);
+            } else {
+                node.textContent = old + gap;
+            }
+        });
+    };
+    input.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            input.blur();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            input.value = old;
+            finish(false);
+        }
+    });
+    input.addEventListener('blur', () => finish(true));
+    input.addEventListener('click', (e) => e.stopPropagation());
+};
+
+const renameQueryField = (field) => {
+    const label = field.querySelector('.eova-form-label');
+    if (!label) {
+        return;
+    }
+    const fieldCode = ((label.getAttribute('title') || '').split('#')[1] || '').trim();
+    const text = [...label.childNodes].find((node) => node.nodeType === 3 && node.textContent.trim());
+    openRenameInput(text, fieldCode);
+};
+
+const renameTableColumn = (th) => {
+    const span = th.querySelector('.eova-table_cell > span');
+    const text = span && [...span.childNodes].find((node) => node.nodeType === 3);
+    openRenameInput(text, columnFieldCode(th));
+};
+
+const createRenameButton = () => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'eova-design-rename';
+    btn.title = '修改中文名';
+    btn.innerHTML = '<i class="eova-icon-edit"></i>';
+    return btn;
 };
 
 const createRemoveButton = (title) => {

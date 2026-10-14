@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import cn.eova.common.Ds;
+import cn.eova.common.base.BaseCache;
 import cn.eova.common.base.BaseController;
 import cn.eova.engine.EovaExp;
 import cn.eova.model.Button;
@@ -30,6 +31,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.ehcache.CacheKit;
 import com.jfinal.plugin.activerecord.Record;
 
 /**
@@ -229,6 +231,39 @@ public class MetaControler extends BaseController {
         }
 
         OK();
+    }
+
+    /**
+     * 修改字段中文名。表单与表格共用 eova_field.cn
+     * /api/meta/renameField?object=xxx&field=xxx&cn=xxx
+     */
+    public void renameField() {
+        String object = get("object");
+        String field = get("field");
+        String cn = get("cn");
+
+        if (x.isEmpty(object) || x.isEmpty(field) || x.isEmpty(cn)) {
+            NO("参数不完整");
+            return;
+        }
+
+        int rows = Db.use(Ds.EOVA).update("update eova_field set cn = ? where object_code = ? and en = ?", cn, object, field);
+        if (rows < 1) {
+            NO("字段不存在");
+            return;
+        }
+        Db.use(Ds.EOVA).update("update eova_field_diy set cn = ? where object_code = ? and en = ?", cn, object, field);
+        clearFieldCache(object);
+        OK();
+    }
+
+    /** 字段名变更后清掉列表/表单用的短缓存，刷新即可看到新中文名 */
+    private void clearFieldCache(String object) {
+        CacheKit.remove(BaseCache.SER, "select * from eova_field where object_code = ? order by num_" + object);
+        CacheKit.remove(BaseCache.SER, "select * from eova_field where object_code = ? and is_show = 1 order by fieldnum,num_" + object);
+        for (String mode : new String[]{"query", "create", "update", "read"}) {
+            CacheKit.remove(BaseCache.SER, "select * from eova_field_diy where object_code = ? and mode = ? order by num_" + object + "_" + mode);
+        }
     }
 
 }
