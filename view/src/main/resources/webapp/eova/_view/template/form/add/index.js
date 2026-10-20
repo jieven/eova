@@ -23,13 +23,17 @@ const app = createApp({
             }
 
             // nextTick()
-            // 强制等待校验msg 渲染成功
 
+
+            // 表单参数
             let data_ = refForm.value.getData()
+            // 本地参数（本地参数由开发者指定优先级更高）
+            let storageStr = sessionStorage.getItem(uzoo.page.code);
+            if (storageStr) {
+                data_ = {...data_, ...JSON.parse(storageStr)};
+            }
 
-            // 更新
             let url = me.urls.url('form_add', props)
-
             axios
                 .post(url, data_)
                 .then((res) => {
