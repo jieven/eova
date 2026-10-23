@@ -275,12 +275,12 @@ public class LoginService {
      * @param keepLogin
      * @return
      */
-    public Ret login(String loginId, boolean keepLogin) {
+    public Ret login(String token, boolean keepLogin) {
 //		String userDs = x.conf.get("login.user.ds", Ds.EOVA);
 //		String userTable = x.conf.get("login.user.table", "eova_user");
 //		String userId = x.conf.get("login.user.id", "id");
 
-        User user = findUserByLoginId(loginId);
+        User user = findUserByLoginId(token);
 
         int sessionMin = x.conf.getInt("login.user.session", 120);// 单位分钟， 默认2小时
         // 如果用户勾选保持登录，过期时间为 1 年，否则为默认值
@@ -358,7 +358,7 @@ public class LoginService {
         // 特殊情况下SID为空（会造成死循环）
         if (x.isEmpty(sid)) {
             x.log.error("sid = null,ip:" + ip);
-            return null;
+            throw new RuntimeException("登录SID不允许为空");
         }
         Session session = Session.dao.findById(sid);
         if (session == null) {      // session 不存在
