@@ -106,8 +106,14 @@
                       虚拟用户还原
                     </li>
                     <li onclick="window.open('/eova/admin/showUserData')">☆ 查看用户数据</li>
-                    <li onclick="window.open('/eova/admin/showRuntimeConfig')" style="border-bottom: var(--eova-border_solid)">⚙ 查看运行时配置</li>
-                    <li onclick="window.open('/meta/version')" style="border-bottom: var(--eova-border_solid)">📥 导出元数据</li>
+                    <li onclick="window.open('/eova/admin/showRuntimeConfig')" style="border-bottom: var(--eova-border_solid)">
+                      <i class="eova-icon-set-sm"></i>
+                      查看运行时配置
+                    </li>
+                    <li onclick="window.open('/meta/version')" style="border-bottom: var(--eova-border_solid)">
+                      <i class="eova-icon-next"></i>
+                      导出元数据
+                    </li>
                     #end
                     <li @click="updatePwd()">
                       <i class="eova-icon-password"></i>

@@ -210,7 +210,7 @@ public class MetaService extends BaseService {
      * @param fieldName
      * @param width
      */
-    public void upodateFieldWdith(String object, String fieldName, int width) {
+    public void updateFieldWdith(String object, String fieldName, int width) {
         Db.use(Ds.EOVA).delete("update eova_field set width = ? where object_code = ? and en = ? ", width, object, fieldName);
     }
 
