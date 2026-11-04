@@ -357,32 +357,34 @@ public class EovaConfig extends JFinalConfig {
         // 初始化数据源
         EovaDataSource.create(plugins);
 
-        // 初始化EOVA DB配置
-        plugins.add(new EovaConfigPlugin());
+        // 初始化缓存
+        plugins.add(new EhCachePlugin());
 
         /*
          * 特别说明, configPlugin{} 暂时无法使用DB和参数
          * 如果需要使用, 必须封装为Plugin, 并且排在下面
          */
+        if (!arps.isEmpty()) {
 
-        // 延迟添加Model映射, 可能会导致初始化数据源卡住
-        // eova model mapping
-        mappingEova(arps.get(Ds.EOVA));
+            // 初始化EOVA DB配置
+            plugins.add(new EovaConfigPlugin());
 
-        // diy model mapping
-        mapping(arps);
+            // 延迟添加Model映射, 可能会导致初始化数据源卡住
+
+            // eova model mapping
+            mappingEova(arps.get(Ds.EOVA));
+
+            // diy model mapping
+            mapping(arps);
+        }
 
         // 构建类型转换方言
         // EovaDataSource.buildConvertor();
-
-        // 配置EhCachePlugin插件
-        plugins.add(new EhCachePlugin());
 
         // 配置定时调度  默认不启动
         boolean isJob = x.conf.getBool("job.enable", false);
         if (isJob) {
             plugins.add(new EovaCronPlugin());
-//            plugins.add(new QuartzPlugin());
         } else {
             // 提醒配置开关, 不需要此提示可以配置为false
             if (x.isEmpty(x.conf.get("job.enable"))) {

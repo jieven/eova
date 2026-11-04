@@ -53,6 +53,8 @@ public class AuthUri {
         loginAuth.add("/api/meta/option/*");                // 查找表达式元数据
         loginAuth.add("/api/meta/table/eova_find@*");       // 查找表头
 
+        loginAuth.add("/api/tree/query/*");                 // 通用数据
+
 
         // 全局通用业务
 

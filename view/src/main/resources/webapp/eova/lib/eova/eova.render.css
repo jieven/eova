@@ -1,0 +1,46 @@
+/* 页面基础居中布局 */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa; /* 浅灰背景，突出中间的卡片 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.eova-msg-error {
+    background: #ffffff;
+    color: #333333;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    border-top: 4px solid #ff4d4f; /* 顶部红色警示条 */
+}
+
+/* 利用伪元素添加一个醒目的错误图标 */
+.eova-msg-error::before {
+    content: "!";
+    display: block;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    background-color: #fff1f0;
+    color: #ff4d4f;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto 20px auto;
+}
+
+.eova-msg-error p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    word-break: break-all; /* 防止长文本或报错堆栈溢出 */
+}

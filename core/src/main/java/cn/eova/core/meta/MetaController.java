@@ -19,6 +19,7 @@ import cn.eova.common.utils.db.DsUtil;
 import cn.eova.common.utils.xx;
 import cn.eova.config.EovaConst;
 import cn.eova.config.EovaDataSource;
+import cn.eova.core.admin.AdminInterceptor;
 import cn.eova.engine.EovaExp;
 import cn.eova.model.EovaOption;
 import cn.eova.model.Menu;
@@ -37,6 +38,7 @@ import com.jfinal.core.NotAction;
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.LogKit;
+import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
@@ -980,5 +982,82 @@ public class MetaController extends BaseController {
         }
 
         renderText(sb.toString());
+    }
+
+    @Before(AdminInterceptor.class)
+    public void version() {
+        render("/eova/meta/index.html");
+    }
+
+    /**
+     * 最近历史版本（默认 5 条）
+     * GET /meta/versions（仅超管）
+     */
+    @Before(AdminInterceptor.class)
+    public void versions() {
+        int limit = getInt("limit", 5);
+        renderJson(Ret.ok().set("versions", MetaUtil.listVersions(limit)));
+    }
+
+    /**
+     * 查询待上线 / 历史区间元数据（按表分组）
+     * GET /meta/updated
+     * GET /meta/updated?start=yyyy-MM-dd HH:mm:ss&end=yyyy-MM-dd HH:mm:ss（历史回看）
+     */
+    @Before(AdminInterceptor.class)
+    public void updated() {
+        String startStr = get("start");
+        String endStr = get("end");
+        List<Kv> groups;
+        if (!x.isEmpty(startStr) && !x.isEmpty(endStr)) {
+            try {
+                java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                groups = MetaUtil.findUpdatedMeta(df.parse(startStr), df.parse(endStr));
+            } catch (Exception e) {
+                renderJson(Ret.fail("时间格式错误，需 yyyy-MM-dd HH:mm:ss"));
+                return;
+            }
+        } else {
+            groups = MetaUtil.findUpdatedMeta();
+        }
+        renderJson(Ret.ok().set("groups", groups));
+    }
+
+    /**
+     * 导出元数据：生成 SQL；待上线默认写入 eova_version，历史回看可 skip_version
+     * POST /meta/export  JSON: { items:[{table_name,row_id},...], skip_version?:true }
+     */
+    @Before({AdminInterceptor.class, Tx.class})
+    @TxConfig(Ds.EOVA)
+    public void export() {
+        JSONObject body = getJsonObj();
+        if (body == null || body.getJSONArray("items") == null || body.getJSONArray("items").isEmpty()) {
+            renderHtml("<h3>缺少导出项 items</h3>");
+            return;
+        }
+        try {
+            JSONArray arr = body.getJSONArray("items");
+            List<Kv> items = new ArrayList<>();
+            for (int i = 0; i < arr.size(); i++) {
+                JSONObject o = arr.getJSONObject(i);
+                items.add(Kv.by("table_name", o.getString("table_name")).set("row_id", o.getIntValue("row_id")));
+            }
+            boolean writeVersion = !body.getBooleanValue("skip_version");
+            java.util.Date rangeStart = null;
+            java.util.Date rangeEnd = null;
+            String startStr = body.getString("start");
+            String endStr = body.getString("end");
+            if (!x.isEmpty(startStr) && !x.isEmpty(endStr)) {
+                java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                rangeStart = df.parse(startStr);
+                rangeEnd = df.parse(endStr);
+            }
+            Kv result = MetaUtil.exportMeta(items, writeVersion, rangeStart, rangeEnd);
+            set("result", result);
+            render("/eova/meta/export.html");
+        } catch (Exception e) {
+            x.log.error(e, "导出元数据失败");
+            renderMsg(e.getMessage());
+        }
     }
 }

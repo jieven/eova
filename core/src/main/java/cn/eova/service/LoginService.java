@@ -355,11 +355,6 @@ public class LoginService {
      *     如果没过期则先放缓存一份，然后再返回
      */
     public User loginBySid(String sid, String ip) {
-        // 特殊情况下SID为空（会造成死循环）
-        if (x.isEmpty(sid)) {
-            x.log.error("sid = null,ip:" + ip);
-            throw new RuntimeException("登录SID不允许为空");
-        }
         Session session = Session.dao.findById(sid);
         if (session == null) {      // session 不存在
             return null;

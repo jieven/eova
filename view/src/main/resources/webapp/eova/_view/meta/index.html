@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>元数据导出</title>
+  #include("/eova/_view/_block/base.html")
+  <script type="module" src="/eova/_view/meta/index.js"></script>
+  <style>
+      [v-cloak] {
+          display: none;
+      }
+
+      body {
+          margin: 0;
+          background-color: var(--eova-color_bg);
+          color: var(--eova-color_txt);
+      }
+
+      .meta-ver {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 16px 20px 40px;
+      }
+
+      .meta-ver__hd {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 16px;
+          margin-bottom: 14px;
+      }
+
+      .meta-ver__hd h1 {
+          margin: 0 0 6px;
+          font-size: 20px;
+          font-weight: 600;
+      }
+
+      .meta-ver__sub {
+          font-size: 13px;
+          color: var(--eova-color_txt2);
+      }
+
+      .meta-ver__sub code {
+          padding: 1px 6px;
+          border-radius: 3px;
+          background: var(--eova-color_bg2);
+          color: var(--eova-color_main);
+      }
+
+      .meta-ver__actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: center;
+          flex-shrink: 0;
+      }
+
+      /* 版本时间轴：待上线 + 最近历史，同一页切换 */
+      .meta-ver__rail {
+          display: flex;
+          align-items: stretch;
+          gap: 0;
+          margin: 4px 0 14px;
+          padding: 10px 12px;
+          background: var(--eova-color_w, #fff);
+          border: 1px solid var(--eova-color_border);
+          border-radius: var(--eova-border_radius, 4px);
+          overflow-x: auto;
+      }
+
+      .meta-ver__rail-live {
+          flex: 0 0 auto;
+          min-width: 118px;
+          padding: 8px 14px 8px 10px;
+          margin-right: 4px;
+          border-right: 1px dashed var(--eova-color_border);
+          cursor: pointer;
+          user-select: none;
+          transition: background .15s;
+      }
+
+      .meta-ver__rail-live:hover {
+          background: var(--eova-color_hover);
+      }
+
+      .meta-ver__rail-live.is-active {
+          background: color-mix(in srgb, var(--eova-color_main) 8%, transparent);
+      }
+
+      .meta-ver__rail-live-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--eova-color_txt);
+      }
+
+      .meta-ver__rail-live.is-active .meta-ver__rail-live-tag {
+          color: var(--eova-color_main);
+      }
+
+      .meta-ver__rail-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--eova-color_txt3);
+          box-shadow: 0 0 0 3px var(--eova-color_bg2);
+      }
+
+      .meta-ver__rail-live.is-active .meta-ver__rail-dot {
+          background: var(--eova-color_success, #19be6b);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--eova-color_success, #19be6b) 25%, transparent);
+      }
+
+      .meta-ver__rail-live-sub {
+          margin-top: 4px;
+          font-size: 12px;
+          color: var(--eova-color_txt2);
+      }
+
+      .meta-ver__rail-track {
+          display: flex;
+          align-items: stretch;
+          gap: 0;
+          flex: 1;
+          min-width: 0;
+          position: relative;
+      }
+
+      .meta-ver__rail-track::before {
+          content: '';
+          position: absolute;
+          left: 8px;
+          right: 8px;
+          top: 18px;
+          height: 1px;
+          background: var(--eova-color_border);
+          pointer-events: none;
+      }
+
+      .meta-ver__rail-node {
+          position: relative;
+          flex: 0 0 auto;
+          min-width: 148px;
+          max-width: 180px;
+          padding: 6px 12px 8px;
+          cursor: pointer;
+          user-select: none;
+          transition: background .15s;
+      }
+
+      .meta-ver__rail-node:hover {
+          background: var(--eova-color_hover);
+      }
+
+      .meta-ver__rail-node.is-active {
+          background: color-mix(in srgb, var(--eova-color_main) 8%, transparent);
+      }
+
+      .meta-ver__rail-node-mark {
+          width: 9px;
+          height: 9px;
+          margin-bottom: 8px;
+          border-radius: 50%;
+          border: 2px solid var(--eova-color_border2);
+          background: var(--eova-color_w, #fff);
+          box-sizing: border-box;
+      }
+
+      .meta-ver__rail-node.is-active .meta-ver__rail-node-mark {
+          border-color: var(--eova-color_main);
+          background: var(--eova-color_main);
+      }
+
+      .meta-ver__rail-node-ver {
+          font-size: 13px;
+          font-weight: 600;
+          font-family: ui-monospace, Consolas, monospace;
+          color: var(--eova-color_txt);
+          letter-spacing: 0.02em;
+      }
+
+      .meta-ver__rail-node.is-active .meta-ver__rail-node-ver {
+          color: var(--eova-color_main);
+      }
+
+      .meta-ver__rail-node-time {
+          margin-top: 2px;
+          font-size: 12px;
+          color: var(--eova-color_txt2);
+          line-height: 1.35;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+
+      .meta-ver__rail-empty {
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+          font-size: 13px;
+          color: var(--eova-color_txt3);
+      }
+
+      .meta-ver__stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin: 12px 0 4px;
+      }
+
+      .meta-ver__stat {
+          min-width: 120px;
+          padding: 10px 14px;
+          background: var(--eova-color_w, #fff);
+          border: 1px solid var(--eova-color_border);
+          border-radius: var(--eova-border_radius, 4px);
+          cursor: pointer;
+          transition: border-color .15s, box-shadow .15s;
+      }
+
+      .meta-ver__stat:hover,
+      .meta-ver__stat.is-active {
+          border-color: var(--eova-color_main);
+          box-shadow: 0 0 0 1px var(--eova-color_main);
+      }
+
+      .meta-ver__stat-label {
+          font-size: 12px;
+          color: var(--eova-color_txt2);
+          margin-bottom: 4px;
+      }
+
+      .meta-ver__stat-num {
+          font-size: 22px;
+          font-weight: 600;
+          color: var(--eova-color_main);
+          line-height: 1.2;
+      }
+
+      .meta-ver__stat-num.is-zero {
+          color: var(--eova-color_txt3);
+      }
+
+      .meta-ver__panel {
+          margin-top: 12px;
+      }
+
+      .meta-ver__group {
+          margin-bottom: 12px;
+          background: var(--eova-color_w, #fff);
+          border: 1px solid var(--eova-color_border);
+          border-radius: var(--eova-border_radius, 4px);
+          overflow: hidden;
+      }
+
+      .meta-ver__group-hd {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 5px;
+          background: var(--eova-color_bg1);
+          border-bottom: 1px solid var(--eova-color_border);
+          cursor: pointer;
+          user-select: none;
+      }
+
+      .meta-ver__group-hd:hover {
+          background: var(--eova-color_hover);
+      }
+
+      .meta-ver__group-title {
+          font-weight: 600;
+          flex: 1;
+          padding-left: 5px;
+      }
+
+      .meta-ver__group-meta {
+          font-size: 12px;
+          color: var(--eova-color_txt2);
+      }
+
+      .meta-ver__group-bd {
+          padding: 0;
+      }
+
+      .meta-ver__empty {
+          padding: 28px 16px;
+          text-align: center;
+          color: var(--eova-color_txt2);
+      }
+
+      .meta-ver__hist-item {
+          margin-bottom: 12px;
+          background: var(--eova-color_w, #fff);
+          border: 1px solid var(--eova-color_border);
+          border-radius: var(--eova-border_radius, 4px);
+          padding: 12px 14px;
+      }
+
+      .meta-ver__hist-hd {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 8px;
+      }
+
+      .meta-ver__hist-code {
+          font-weight: 600;
+          font-family: ui-monospace, Consolas, monospace;
+          color: var(--eova-color_main);
+      }
+
+      .meta-ver__hist-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+      }
+
+      .eova-table th,
+      .eova-table td {
+          vertical-align: middle;
+      }
+
+      /* 表头全选与表体勾选同皮（eova-table 默认只写了 td） */
+      .eova-table th input[type="checkbox"] {
+          width: 18px;
+          height: 18px;
+          vertical-align: middle;
+          border: 1px solid var(--eova-color_border2);
+          accent-color: var(--eova-color_main);
+          cursor: pointer;
+      }
+  </style>
+</head>
+<body>
+<div id="app" class="meta-ver" v-cloak>
+  <div class="meta-ver__hd">
+    <div>
+      <h1>元数据版本</h1>
+      <div class="meta-ver__sub">
+        点选下方节点切换「待上线」与历史时间窗；历史可重新生成 SQL（不打新版本）
+      </div>
+    </div>
+    <div class="meta-ver__actions">
+      <button type="button" @click="reload">
+        <i class="eova-icon-refresh"></i>
+        刷新
+      </button>
+      <button type="button" class="eova-btn_success" @click="exportPending" :disabled="!pendingTotal">
+        <i class="eova-icon-next"></i>
+        {{ isHistory ? '重新生成 SQL' : '导出元数据' }}
+        <span class="eova-badge eova-badge_round" v-if="checkedTotal">{{ checkedTotal }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="meta-ver__rail">
+    <div
+      class="meta-ver__rail-live"
+      :class="{ 'is-active': !isHistory }"
+      @click="selectVer('')"
+    >
+      <div class="meta-ver__rail-live-tag">
+        <span class="meta-ver__rail-dot"></span>
+        待上线
+      </div>
+      <div class="meta-ver__rail-live-sub">当前增量</div>
+    </div>
+    <div class="meta-ver__rail-track" v-if="versions.length">
+      <div
+        v-for="v in versions"
+        :key="v.ver"
+        class="meta-ver__rail-node"
+        :class="{ 'is-active': selectedVer === v.ver }"
+        :title="v.start + ' ~ ' + v.end"
+        @click="selectVer(v.ver)"
+      >
+        <div class="meta-ver__rail-node-mark"></div>
+        <div class="meta-ver__rail-node-ver">{{ formatVer(v.ver) }}</div>
+        <div class="meta-ver__rail-node-time">{{ formatRange(v) }}</div>
+      </div>
+    </div>
+    <div class="meta-ver__rail-empty" v-else>暂无历史版本</div>
+  </div>
+
+  <div class="eova-notes" v-if="!isHistory">
+    业务表
+    <code>updated</code> &gt; 最近一次版本
+    <code>created</code>
+    的增量。
+  </div>
+  <div class="eova-notes" v-else>
+    版本
+    <code>{{ selectedVer }}</code>
+    · 时间窗
+    <code>{{ currentRange.start }}</code>
+    ~
+    <code>{{ currentRange.end }}</code>
+    · 按窗回放当前库数据 · 重新生成不写版本
+  </div>
+
+  <div class="meta-ver__stats">
+    <div
+      class="meta-ver__stat"
+      :class="{ 'is-active': !filterTable }"
+      @click="filterTable = ''"
+    >
+      <div class="meta-ver__stat-label">{{ isHistory ? '全部' : '全部待导出' }}</div>
+      <div class="meta-ver__stat-num" :class="{ 'is-zero': !pendingTotal }">{{ pendingTotal }}</div>
+    </div>
+    <div
+      v-for="g in groups"
+      :key="'stat-' + g.table"
+      class="meta-ver__stat"
+      :class="{ 'is-active': filterTable === g.table }"
+      @click="filterTable = g.table"
+    >
+      <div class="meta-ver__stat-label">{{ g.label }}</div>
+      <div class="meta-ver__stat-num" :class="{ 'is-zero': !g.rows.length }">{{ g.rows.length }}</div>
+    </div>
+  </div>
+
+  <div class="meta-ver__panel" v-if="pendingTotal">
+    <div class="eova-tools" style="margin-bottom: 8px;">
+      <div class="eova-tools_box">
+        <button type="button" class="eova-btn_s30" @click="checkAll(true)">全选</button>
+        <button type="button" class="eova-btn_s30 eova-btn_base" @click="checkAll(false)">取消全选</button>
+        <span class="eova-sp"></span>
+        <span style="font-size:13px;color:var(--eova-color_txt2)">
+          已选 {{ checkedTotal }} / {{ visiblePendingTotal }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      v-for="g in visibleGroups"
+      :key="g.table"
+      class="meta-ver__group"
+    >
+      <div class="meta-ver__group-hd" @click="toggleGroup(g.table)">
+        <span class="meta-ver__group-title">{{ g.label }}</span>
+        <code class="meta-ver__group-meta">{{ g.table }}</code>
+        <span class="eova-badge eova-badge_round">{{ g.rows.length }}</span>
+        <i :class="openMap[g.table] ? 'eova-icon-up' : 'eova-icon-down'"></i>
+      </div>
+      <div class="meta-ver__group-bd" v-show="openMap[g.table]">
+        <table class="eova-table" ev-size="s30">
+          <thead>
+          <tr>
+            <th style="width:44px;text-align:center">
+              <input
+                type="checkbox"
+                :checked="isGroupAllChecked(g)"
+                :ref="(el) => setGroupIndeterminate(el, g)"
+                @click.stop="toggleGroupCheck(g)"
+              >
+            </th>
+            <th style="width:80px">ID</th>
+            <th>标识</th>
+            <th>名称</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="row in g.rows" :key="rowKey(g, row)">
+            <td style="text-align:center">
+              <input type="checkbox" v-model="checked[rowKey(g, row)]">
+            </td>
+            <td>{{ row.id }}</td>
+            <td>
+              <code>{{ row.key }}</code>
+            </td>
+            <td>{{ row.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-ver__empty" v-else>
+    {{ isHistory ? '该时间窗内无数据' : '暂无待导出数据' }}
+  </div>
+</div>
+</body>
+</html>

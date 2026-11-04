@@ -31,8 +31,8 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.ehcache.CacheKit;
 import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.ehcache.CacheKit;
 
 /**
  * 元数据处理
@@ -79,6 +79,9 @@ public class MetaControler extends BaseController {
         Map<String, MetaFieldDiy> map = diys.stream().collect(Collectors.toMap(m -> m.getStr("en"), m -> m));
         for (MetaField field : object.getFields()) {
             MetaFieldDiy diy = map.get(field.getEn());
+            if (diy == null) {
+                throw new RuntimeException(String.format("元字段个性化数据缺失:[%s-%s]", objectCode, field.getEn()));
+            }
             // 表单元字段预处理
             biz.meta.buildMetaFieldDiy(diy, getUser());
             // 构造个性化配置

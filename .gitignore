@@ -31,3 +31,7 @@ pom-xml-flattened
 #EOVA
 /src/main/resources/dev
 /src/main/webapp/_view/login/
+
+# MCP
+mcp/eova-field/.venv/
+.cursor/mcp.json

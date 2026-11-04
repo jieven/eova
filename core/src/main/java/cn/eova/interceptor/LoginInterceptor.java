@@ -8,9 +8,9 @@ package cn.eova.interceptor;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-import cn.eova.tools.x;
 import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.util.AntPathMatcher;
+import cn.eova.common.utils.web.RequestUtil;
 import cn.eova.common.utils.web.WebUtil;
 import cn.eova.config.EovaConfig;
 import cn.eova.config.EovaConst;
@@ -18,6 +18,7 @@ import cn.eova.i18n.I18NBuilder;
 import cn.eova.model.User;
 import cn.eova.service.LoginService;
 import cn.eova.service.sm;
+import cn.eova.tools.x;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
@@ -71,8 +72,15 @@ public class LoginInterceptor implements Interceptor {
         BaseController ctrl = (BaseController) inv.getController();
         User user = ctrl.getUser();
         if (user == null) {
-            String ip = WebUtil.getRealIp(ctrl.getRequest());
-            user = sm.login.loginBySid(ctrl.SID(), ip);
+            String sid = ctrl.SID();
+            String ip = RequestUtil.getIp(ctrl.getRequest());
+            String userAgent = RequestUtil.getUserAgent(ctrl.getRequest());
+            // 特殊情况下SID为空（会造成死循环）
+            if (x.isEmpty(sid)) {
+                x.log.error("sid = null,ip:" + ip);
+                x.log.error("异常登录，UserAgent:" + userAgent);
+            }
+            user = sm.login.loginBySid(sid, ip);
             if (user == null) {
                 // SID登录失败，销毁Cookie
                 ctrl.removeCookie(LoginService.CKSID);

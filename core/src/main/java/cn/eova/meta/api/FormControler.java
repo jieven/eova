@@ -192,11 +192,6 @@ public class FormControler extends BaseController {
             hook.invoke(EovaMetaHook.Action.GET_DATA, ac);
         }
 
-        // 固定值, 覆盖表单数据 TODO, 新增和修改 需要处理 INIT
-        // 构建关联参数值
-//         Record fixed = WidgetManager.getRef(this);
-//        setAttr("fixed", fixed);
-
         renderJson(record.toJson());
     }
 

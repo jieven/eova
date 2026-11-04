@@ -7,6 +7,7 @@ package cn.eova.meta;
 
 import cn.eova.hook.HookRegistry;
 import cn.eova.meta.hook.meta.GoodsStyleMetaHook;
+import cn.eova.meta.hook.meta.HotelStockHook;
 import cn.eova.meta.hook.meta.LinkMetaHook;
 import cn.eova.meta.hook.meta.ProductMetaHook;
 
@@ -22,6 +23,7 @@ public class AppMetaHooks extends HookRegistry {
 
         addMeta("goods_style", new GoodsStyleMetaHook());
         addMeta("meta_product", new ProductMetaHook());
+        addMeta("hotel_stock", new HotelStockHook());
         // 元对象编码不能弄错, 必须与实际一致.
         addMeta("test_links2", new LinkMetaHook());
 

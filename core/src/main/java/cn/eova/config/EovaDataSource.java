@@ -9,13 +9,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.eova.tools.x;
-import com.alibaba.druid.DbType;
-import com.alibaba.druid.filter.logging.Log4jFilter;
-import com.alibaba.druid.filter.stat.StatFilter;
-import com.alibaba.druid.util.JdbcUtils;
-import com.alibaba.druid.wall.WallConfig;
-import com.alibaba.druid.wall.WallFilter;
 import cn.eova.common.Ds;
 import cn.eova.common.utils.io.ClassUtil;
 import cn.eova.common.utils.string.AESUtil;
@@ -31,6 +24,13 @@ import cn.eova.sql.ddl.dialect.MysqlDefineDialect;
 import cn.eova.sql.dql.dialect.EovaMysqlDialect;
 import cn.eova.sql.dql.dialect.MysqlQueryDialect;
 import cn.eova.sql.dql.dialect.QueryDialect;
+import cn.eova.tools.x;
+import com.alibaba.druid.DbType;
+import com.alibaba.druid.filter.logging.Log4jFilter;
+import com.alibaba.druid.filter.stat.StatFilter;
+import com.alibaba.druid.util.JdbcUtils;
+import com.alibaba.druid.wall.WallConfig;
+import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.config.Plugins;
 import com.jfinal.kit.LogKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -70,6 +70,10 @@ public class EovaDataSource {
         String datasource = x.conf.get("db.datasource");
         if (x.isEmpty(datasource)) {
             throw new RuntimeException("数据源配置项不存在,请检查配置jdbc.config 配置项[db.datasource]");
+        }
+        if (datasource.equals("false")) {
+            // 允许无数据源运行，不进行初始化数据源
+            return;
         }
         for (String ds : datasource.split(",")) {
             ds = ds.trim();
