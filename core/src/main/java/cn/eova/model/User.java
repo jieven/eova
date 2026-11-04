@@ -74,6 +74,9 @@ public class User extends BaseModel<User> {
     }
 
     public int getOrgId() {
+        if (this.getInt("org_id") == null) {
+            return 0;
+        }
         return this.getInt("org_id");
     }
 
