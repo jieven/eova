@@ -1,10 +1,10 @@
 ---
 
 ## name: eova-diy-btn
-description: 
-  为 EovaMeta 开发自定义功能按钮（btn.js 扩展）。覆盖简单 axios 交互与复杂旁挂
+
+description: 为 EovaMeta 开发自定义功能按钮（btn.js 扩展）。覆盖简单 axios 交互与复杂旁挂
   ev-dialog（app.js/app.vue/app.css + EovaMeta.include/dom/single）。在用户提到
-  EovaMeta自定义功能、自定义按钮、DIY 按钮、btn.js、旁挂弹窗、功能扩展类交互时使用。
+  EovaMeta自定义功能、自定义按钮、DIY 按钮、btn.js、自定义弹窗、功能扩展类交互时使用。
 
 # EovaMeta 自定义功能（eova-diy-btn）
 
@@ -22,8 +22,6 @@ description:
 
 ---
 
-
-
 ## 场景选型
 
 
@@ -34,15 +32,11 @@ description:
 
 
 简单示例：`_view/task/run/btn.js`  
-复杂示例：`_view/menu/auth/`
+复杂示例：`_view/menu/auth/`、`_view/auth/`（字段权限）
 
 ---
 
-
-
 ## 公共约定
-
-
 
 ### 目录与按钮配置
 
@@ -57,8 +51,53 @@ view/.../eova/_view/<biz>/<action>/
 - 按钮 `ui` 填：`/eova/_view/<biz>/<action>/btn.js`
 - 按钮 `event` 填：与 `btn.js` 里函数名相同（如 `auth`、`run`）
 - 动态 `import` **必须用绝对路径**（`btn.js` 是经典 script，相对路径相对的是页面 URL）
+- 开发调试可加 `?v=${x.time.now()}` 防缓存，上线前由开发者自行去掉
 
+### 代码风格
 
+- **文件顶部不要写注释**（`btn.js` / `app.js` 开头直接 import / 常量 / 函数）
+- **无参时** `open()` **不传参**；有参再 `open(id)` / `open({…})`
+- **axios 地址统一提到顶部**，用 `const urls = { key: '/path' }` 按 key 管理，调用处写 `urls.list` / `urls.save` 等，禁止散落字面量
+- **常规表单布局优先用** `eova-form`（`eova-form-field` / `eova-form-label` / `eova-form-msg`）；默认不写 `width` / `max-width`；不满足再补最少自定义样式；**除非用户指定其它布局**
+- **前端校验提示默认用** `me.layer.msg()`（未选行、必填为空等）；接口失败用 `me.layer.no`，成功可用 `me.layer.ok` / `msg`，二次确认用 `confirm`
+- **旁挂弹窗底栏**：右下角绝对定位「确认 / 取消」；确认走保存（成功后关窗），取消只关窗 `visible = false`；保存中 `:disabled="saving"`，取消勿绑成保存
+
+```js
+const urls = {
+    save: '/auth/fieldSave',
+}
+
+axios.post(urls.save, payload)
+```
+
+```html
+<form method="post" class="eova-form" @submit.prevent>
+  <div class="eova-form-field">
+    <label class="eova-form-label required">文本</label>
+    <ev-input name="text" v-model="txt"></ev-input>
+    <div class="eova-form-msg">特别提示</div>
+  </div>
+</form>
+
+<button
+  type="button"
+  class="eova-btn eova-btn_success"
+  style="position: absolute; bottom: 5px; right: 60px"
+  :disabled="saving"
+  @click="saveRule"
+>
+  确认
+</button>
+<button
+  type="button"
+  class="eova-btn eova-btn_base"
+  style="position: absolute; bottom: 5px; right: 5px"
+  :disabled="saving"
+  @click="visible = false"
+>
+  取消
+</button>
+```
 
 ### 可用全局
 
@@ -75,19 +114,20 @@ view/.../eova/_view/<biz>/<action>/
 
 ---
 
-
-
 ## 场景 1：简单 — 仅 btn.js
 
 ```js
-// 运行一次（示意）
+const urls = {
+    run: '/task/run',
+}
+
 function run() {
     const rows = uzoo.app.refTable.value.getSelectRows()
     if (x.isEmpty(rows)) {
         me.layer.msg('请先选择一行数据')
         return
     }
-    axios.post('/task/run', rows[0])
+    axios.post(urls.run, rows[0])
         .then((res) => {
             const ret = res.data
             if (ret.state === 'ok') {
@@ -104,19 +144,16 @@ function run() {
 清单：
 
 ```
+- [ ] btn.js 顶部无文件头注释；有接口则 urls = {…}
 - [ ] btn.js 定义与 event 同名的全局 function
 - [ ] 校验选中行/节点
-- [ ] axios.post + ret.state 分支
+- [ ] axios 用 urls.key + ret.state 分支
 - [ ] 成功后按需刷新表格/树
 ```
 
 ---
 
-
-
 ## 场景 2：复杂 — 旁挂 ev-dialog
-
-
 
 ### 文件职责
 
@@ -129,44 +166,51 @@ function run() {
 | `app.css` | 用挂载点 id 限定作用域，如 `#eova-menu-auth …`                                             |
 
 
-
-
 ### btn.js
 
 ```js
-function auth() {
-    const id = uzoo.app.treeId.value
-    if (!id) {
-        me.layer.msg('请选择一个菜单')
+// 无参最简（开发期可带 ?v= 防缓存）
+function xxxx() {
+    import(`/eova/_view/auth/app.js?v=${x.time.now()}`).then(app => app.open())
+}
+
+// 有参
+function xxxx() {
+    const rows = uzoo.app.refTable.value.getSelectRows()
+    if (x.isEmpty(rows)) {
+        me.layer.msg('请先选择一行数据')
         return
     }
-    // 参数直接传给 open → show，可多个或对象
-    import('/eova/_view/menu/auth/app.js').then((app) => app.open(id))
+    // 如何取参根据业务和模版略有不同。
+    const id = rows[0].id;
+    import(`/eova/_view/menu/auth/app.js?v=${x.time.now()}`).then(app => app.open(id))
 }
 ```
-
-
 
 ### app.js 骨架
 
 ```js
-const {createApp, ref } = Vue
+const {createApp, ref} = Vue
 const {me} = EovaUI
 const {include, dom, single} = EovaMeta
 
-const ID = 'eova-<biz>-<action>'           // 唯一挂载点 id
+const ID = 'eova-<biz>-<action>'
 const TP = '/eova/_view/<biz>/<action>/app.vue'
 const CSS = '/eova/_view/<biz>/<action>/app.css'
+
+const urls = {
+    list: '/api/...',
+    save: '/api/...',
+}
 
 async function mount() {
     include(CSS)
 
     const visible = ref(false)
-    // …业务 refs 与方法…
 
     const app = createApp({
         setup() {
-            return { visible /*, … */ }
+            return {visible}
         },
         template: await include(TP),
     })
@@ -174,9 +218,8 @@ async function mount() {
     app.mount(dom(ID))
 
     return {
-        show(/* 与 open 实参一致 */) {
+        show(...args) {
             visible.value = true
-            // 拉数 / 重置表单…
         },
     }
 }
@@ -184,23 +227,37 @@ async function mount() {
 export const open = single(mount)
 ```
 
-
-
 ### app.vue 骨架
 
 ```vue
 <ev-dialog
   title="标题"
-  width="1200px"
-  height="700px"
+  width="760px"
+  height="500px"
   layer-container="body"
   v-model:visible="visible"
 >
-  <!-- 业务内容；html 内联属性用 kebab-case -->
+  <div style="padding: 12px 16px 20px;">
+    <form method="post" class="eova-form" @submit.prevent>
+      <!-- eova-form-field …；html 内联属性用 kebab-case -->
+    </form>
+    <button
+      type="button"
+      class="eova-btn eova-btn_success"
+      style="position: absolute; bottom: 5px; right: 60px"
+      :disabled="saving"
+      @click="saveRule"
+    >确认</button>
+    <button
+      type="button"
+      class="eova-btn eova-btn_base"
+      style="position: absolute; bottom: 5px; right: 5px"
+      :disabled="saving"
+      @click="visible = false"
+    >取消</button>
+  </div>
 </ev-dialog>
 ```
-
-
 
 ### EovaMeta API（必会）
 
@@ -217,18 +274,19 @@ export const open = single(mount)
 ### 复杂场景清单
 
 ```
+- [ ] btn.js / app.js 顶部无文件头注释
+- [ ] app.js 顶部 urls = {…}，axios 不写散落字面量
 - [ ] btn.js：校验 + 绝对路径 import + open(传参)
 - [ ] app.js：include(CSS) / await include(TP) / createApp + use(EovaUI) / mount(dom(ID))
 - [ ] export const open = single(mount)；show 内打开并加载数据
 - [ ] app.vue：ev-dialog + layer-container="body" + v-model:visible
-- [ ] app.css：用 #ID 限定，避免污染外层
+- [ ] 底栏确认=保存（成功关窗）/ 取消=`visible=false`，勿都绑保存
+- [ ] app.css：用 #ID 限定，避免污染外层（无额外样式可省略）
 - [ ] 不写 uzoo.app = …（会冲掉列表页作用域）
 - [ ] 不引入 eova.base.js / 不做第二套整页 html
 ```
 
 ---
-
-
 
 ## 反例
 
@@ -243,8 +301,6 @@ export const open = single(mount)
 
 
 ---
-
-
 
 ## 与其它技能边界
 
