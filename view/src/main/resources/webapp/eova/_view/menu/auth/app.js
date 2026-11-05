@@ -29,6 +29,7 @@ async function mount() {
     const auths = ref([])
 
     const applyChecked = () => {
+        // Vue 渲到 DOM 完成后再勾选；同步 getElementById 会拿不到节点
         nextTick(() => {
             ;(auths.value || []).forEach((auth) => {
                 const checkbox = document.getElementById(`CK_${auth.bid}_${auth.rid}`)
