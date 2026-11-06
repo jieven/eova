@@ -254,7 +254,7 @@ public class WidgetManager {
 
         // 获取查询数据(JSON) TODO EovaMeta Query
         JSONObject query = (JSONObject) ((BaseController) ctrl).getJson();
-        x.log.info("Query JSON:" + query);
+        x.log.debug("Query JSON:" + query);
 
         for (MetaField ei : fields) {
             // 查询前置 重写字段条件
@@ -450,6 +450,9 @@ public class WidgetManager {
             }
 
             EovaOption option = EovaOption.dao.getByCode(exp);
+            if (option == null) {
+                throw new RuntimeException("找不到表达式：" + exp);
+            }
             x.log.debug("EovaOption:" + x.str.formatJson(option.toJson()));
             // EovaExp se = new EovaExp(option);表达式中有 # 无法直接SQL
             EovaExpBuilder eeb = new EovaExpBuilder(user, option);
