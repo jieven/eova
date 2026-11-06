@@ -1,0 +1,148 @@
+.eova-slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.eova-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.eova-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e0e0e0;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+}
+
+.eova-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.eova-slider::-webkit-slider-thumb:hover {
+    background: #3a7bd5;
+}
+
+.eova-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.eova-slider::-moz-range-thumb:hover {
+    background: #3a7bd5;
+}
+
+.eova-slider::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.eova-slider::-ms-thumb:hover {
+    background: #3a7bd5;
+}
+
+.eova-slider-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #4a90e2, #4a90e2);
+    background-size: var(--slider-value) 100%;
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.eova-slider:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.eova-slider:disabled::-webkit-slider-thumb {
+    background: #cccccc;
+}
+
+.eova-slider:disabled::-moz-range-thumb {
+    background: #cccccc;
+}
+
+.eova-slider:disabled::-ms-thumb {
+    background: #cccccc;
+}
+
+.eova-slider-value {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
+.eova-slider-value:empty {
+    display: none;
+}
+
+/* 响应式优化 */
+@media (max-width: 480px) {
+    .eova-slider-container {
+        padding: 6px;
+    }
+
+    .eova-slider {
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    .eova-slider::-webkit-slider-thumb {
+        width: 16px;
+        height: 16px;
+    }
+
+    .eova-slider::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+    }
+
+    .eova-slider::-ms-thumb {
+        width: 16px;
+        height: 16px;
+    }
+
+    .eova-slider-value {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+}
