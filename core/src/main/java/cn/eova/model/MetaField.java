@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import cn.eova.tools.x;
-import com.alibaba.fastjson.JSON;
 import cn.eova.common.Ds;
 import cn.eova.common.base.BaseModel;
 import cn.eova.common.utils.jfinal.RecordUtil;
@@ -26,6 +24,8 @@ import cn.eova.core.meta.ColumnMeta;
 import cn.eova.engine.EovaExpBuilder;
 import cn.eova.engine.ExpUtil;
 import cn.eova.i18n.I18NBuilder;
+import cn.eova.tools.x;
+import com.alibaba.fastjson.JSON;
 import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -329,6 +329,7 @@ public class MetaField extends BaseModel<MetaField> {
     public List<MetaField> queryByObjectCode(String objectCode) {
         List<MetaField> list = MetaField.dao.queryByCache("select * from eova_field where object_code = ? order by num", objectCode);
         I18NBuilder.models(list, "cn", "fieldset", "placeholder");
+        // 元字段权限处理
         return list;
     }
 
@@ -354,6 +355,8 @@ public class MetaField extends BaseModel<MetaField> {
         Db.use(Ds.EOVA).update(sql, objectCode);
     }
 
+    // EovaMetg 已弃用此方法。由前端进行排序处理
+    @Deprecated
     public List<MetaField> queryShowFieldByObjectCode(String objectCode) {
         return MetaField.dao.queryByCache("select * from eova_field where object_code = ? and is_show = 1 order by fieldnum,num", objectCode);
     }
@@ -390,6 +393,7 @@ public class MetaField extends BaseModel<MetaField> {
      */
     public List<MetaField> queryFields(String objectCode, User user) {
         List<MetaField> mfs = MetaField.dao.queryByObjectCode(objectCode);
+        // 元字段服务端处理
         buildTableMetaField(objectCode, user, mfs);
         return mfs;
     }
@@ -428,26 +432,29 @@ public class MetaField extends BaseModel<MetaField> {
      */
     private void buildTableMetaField(String objectCode, User user, List<MetaField> mfs) {
 
-        // 用户个性化设置
-        List<Record> diyFields = Db.use(Ds.EOVA).find("select * from eova_diy where type = ? and uid = ? and object_code = ?", DIY_TABLE, user.getId(), objectCode);
-
         for (MetaField f : mfs) {
-
+            // 默认值 元字段的处理
             buildMetaField(objectCode, user, f);
+        }
 
-            // 排除自身
-            if (objectCode.startsWith("eova_diy")) {
-                continue;
-            }
-            // 个性化覆盖默认
-            for (Record diy : diyFields) {
-                if (f.getEn().equals(diy.getStr("en"))) {
-                    f.set("num", diy.getInt("num"));
-                    f.set("is_show", diy.get("is_open"));
-                    f.set("width", diy.getInt("width"));
+        if (x.conf.getBool("eova.user.diy", false)) {
+            // 用户个性化设置
+            List<Record> diyFields = Db.use(Ds.EOVA).find("select * from eova_diy where type = ? and uid = ? and object_code = ?", DIY_TABLE, user.getId(), objectCode);
+            for (MetaField f : mfs) {
+                // 排除自身
+                if (objectCode.startsWith("eova_diy")) {
+                    continue;
                 }
-            }
+                // 个性化覆盖默认
+                for (Record diy : diyFields) {
+                    if (f.getEn().equals(diy.getStr("en"))) {
+                        f.set("num", diy.getInt("num"));
+                        f.set("is_show", diy.get("is_open"));
+                        f.set("width", diy.getInt("width"));
+                    }
+                }
 
+            }
         }
 
         fieldSort(mfs);

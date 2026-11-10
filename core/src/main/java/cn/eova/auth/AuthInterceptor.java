@@ -7,15 +7,14 @@ package cn.eova.auth;
 
 import java.util.Set;
 
-import cn.eova.tools.x;
 import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.util.AntPathMatcher;
-import cn.eova.common.utils.xx;
 import cn.eova.config.EovaConfig;
 import cn.eova.config.EovaFieldAuth;
 import cn.eova.interceptor.LoginInterceptor;
 import cn.eova.model.User;
 import cn.eova.ops.OpsConst;
+import cn.eova.tools.x;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.kit.JsonKit;
@@ -79,10 +78,13 @@ public class AuthInterceptor implements Interceptor {
         }
 
         // 每5s更新字段权限
-        if (xx.isTimeout(user.getLong(UPDATE_FIELD_AUTH), 5)) {
-            user.setDisableFields(EovaFieldAuth.getDisableFields(user));
-            x.log.debug("{}更新用户列权限:{}", user.getId(), JsonKit.toJson(user.getDisableFields()));
+        if (x.time.isTimeout(user.getLong(UPDATE_FIELD_AUTH), 5)) {
+            Set<String> disableFields = EovaFieldAuth.getDisableFields(user);
+            user.setDisableFields(disableFields);
             user.put(UPDATE_FIELD_AUTH, System.currentTimeMillis());
+            if (x.conf.getBool("eova.auth.field", true)) {
+                x.log.info("【{}】{} 当前受限字段:{}", user.getName(), user.getRole().get("name"), JsonKit.toJson(user.getDisableFields()));
+            }
         }
 
         // 当前角色自定义授权

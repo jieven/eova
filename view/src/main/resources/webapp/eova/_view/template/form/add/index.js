@@ -18,12 +18,9 @@ const app = createApp({
             //   console.log('refForm 不存在')
             //   return
             // }
-            if (refForm.value.validate() == false) {
+            if (refForm.value.validate() === false) {
                 return
             }
-
-            // nextTick()
-
 
             // 表单参数
             let data_ = refForm.value.getData()

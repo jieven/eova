@@ -7,7 +7,6 @@ package cn.eova.meta.api;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +14,6 @@ import cn.eova.aop.AopContext;
 import cn.eova.aop.MetaObjectIntercept;
 import cn.eova.common.Easy;
 import cn.eova.common.base.BaseController;
-import cn.eova.common.render.CsvRender;
-import cn.eova.common.render.XlsxRender;
 import cn.eova.config.EovaConfig;
 import cn.eova.config.EovaDataSource;
 import cn.eova.config.PageConst;
@@ -25,6 +22,7 @@ import cn.eova.hook.HookRegistry;
 import cn.eova.model.Menu;
 import cn.eova.model.MetaField;
 import cn.eova.model.MetaObject;
+import cn.eova.service.biz;
 import cn.eova.service.sm;
 import cn.eova.template.common.util.TemplateUtil;
 import cn.eova.tools.x;
@@ -35,13 +33,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.jfinal.core.Controller;
-import com.jfinal.kit.LogKit;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 
 /**
  * Table
@@ -138,98 +134,10 @@ public class TableController extends BaseController {
 //				sb.insert(sb.length() - 1, String.format(",\"footer\":[%s]", footer.toJson()));
 //			}
 //		}
+//        System.out.println("Table数据" + page.getList());
+
         renderJson(Ret.ok().set("count", page.getTotalRow()).set("data", page.getList()));
     }
-
-    /**
-     * 已废弃 @see ImportCtrl
-     *
-     * @throws Exception
-     */
-    @Deprecated
-    public void export() throws Exception {
-
-        String objectCode = get(0);
-        String menuCode = get("menu_code");
-        String type = get("type", "csv");// xls csv
-
-        MetaObject object = sm.meta.getMeta(objectCode);
-        Menu menu = Menu.dao.findByCode(menuCode);
-
-        intercept = TemplateUtil.initMetaObjectIntercept(object.getBizIntercept());
-        // 元数据拦截器
-        if (intercept != null) {
-            AopContext ac = new AopContext(this);
-            ac.object = object;// 只读
-            ac.fields = object.getFields();// 读写
-            intercept.metadata(ac);
-        }
-
-        // 构建查询
-        List<Object> parmList = new ArrayList<Object>();
-        String sql = WidgetManager.buildQuerySQL(ctrl, menu, object, parmList, true, "");
-
-        try {
-            // count 过滤 order by
-            sql = new MysqlDialect().replaceOrderBy(sql);
-            Long count = Db.use(object.getDs()).queryLong("select count(*) " + sql, parmList.toArray());
-            int maxXls = x.conf.getInt("export.max.xls", 1 * 10000);
-            int maxCsv = x.conf.getInt("export.max.csv", 10 * 10000);
-            if (count != null && count > maxXls) {
-                if (type.equals("xls")) {
-                    // 如需导出大数据, 请采用其它方案自定义实现. 比如POI, 分布式导出等.
-                    renderText(String.format("[导出XLS]一次最多只能导出%s条, 超过%s条请使用[导出CSV]", maxXls, maxXls));
-                    return;
-                } else if (type.equals("csv") && count > maxCsv) {
-                    // 大数据导出非常占用内存, 所以也建议单独一个项目实现大数据导致, 避免宕机影响其它业务.
-                    renderText(String.format("[导出CSV]一次最多只能导出%s条, 超过%s条请联系管理员DB导出", maxCsv, maxCsv));
-                    return;
-                }
-            }
-        } catch (Exception e) {
-            LogKit.error("导出计算总量异常:" + e.getMessage());
-        }
-
-        List<Record> data = Db.use(object.getDs()).find("select * " + sql, parmList.toArray());
-
-        // 查询后置任务
-        if (intercept != null) {
-            AopContext ac = new AopContext(ctrl, data);
-            ac.object = object;
-            intercept.queryAfter(ac);
-        }
-
-        List<MetaField> fields = object.getFields();
-
-        // 根据表达式将数据中的值翻译成汉字
-        WidgetManager.convertValueByExp(this, fields, data);
-
-        Iterator<MetaField> it = fields.iterator();
-        while (it.hasNext()) {
-            MetaField f = it.next();
-            if (!f.getBoolean("is_show")) {
-                it.remove();
-            }
-        }
-
-        try {
-            if (type.equals("xls")) {
-                render(new XlsxRender(fields, data, object.getName()));
-            } else if (type.equals("csv")) {
-                render(new CsvRender(fields, data, object.getName()));
-            } else {
-                renderText("仅支持导出xls和csv");
-            }
-        } catch (Exception e) {
-            LogKit.error("导出异常:" + e.getMessage());
-            renderText("导出失败，如果数据过多，请联系管理员导出数据！");
-        }
-    }
-
-
-//    private void NO(String msg) {
-//        renderJson("{\"code\": 1, \"msg\": \"" + msg + "\", \"count\":\"0\",\"data\": []}");
-//    }
 
     // 更新表格列宽
     public void width() throws Exception {
@@ -237,7 +145,7 @@ public class TableController extends BaseController {
         String field = get("field");
         int width = getInt("width");
 
-        sm.meta.upodateFieldWdith(objectCode, field, width);
+        biz.meta.updateFieldWdith(objectCode, field, width);
 
         OK();
     }

@@ -42,9 +42,11 @@ public class MetaService extends BaseService {
 
     /**
      * 获取元字段
+     * @see MetaField.queryFields();
      * @param objectCode
      * @return
      */
+    @Deprecated
     public List<MetaField> getMetaField(String objectCode) {
         return MetaField.dao.queryByObjectCode(objectCode);
     }

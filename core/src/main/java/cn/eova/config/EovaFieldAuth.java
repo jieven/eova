@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import cn.eova.tools.x;
 import cn.eova.common.Ds;
 import cn.eova.model.User;
+import cn.eova.tools.x;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -110,6 +110,7 @@ public class EovaFieldAuth {
 
         String uid = user.getId() + "";
         String rid = user.getRid() + "";
+        String oid = user.getOrgId() + "";
 
         // 租户字段授权策略
         if (!fieldAuths.isEmpty()) {
@@ -136,6 +137,10 @@ public class EovaFieldAuth {
                         }
                         // 用户白名单:未授权用户 屏蔽当前字段
                         else if (type == 3 && !auths.contains(uid)) {
+                            disableFields.addAll(fields);
+                        }
+                        // 部门白名单:未授权用户 屏蔽当前字段
+                        else if (type == 4 && !auths.contains(oid)) {
                             disableFields.addAll(fields);
                         }
                     }

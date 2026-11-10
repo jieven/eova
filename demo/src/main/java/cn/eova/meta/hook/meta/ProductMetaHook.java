@@ -23,12 +23,12 @@ public class ProductMetaHook implements EovaMetaHook {
     }
 
     private String updateBefore(AopContext ac) throws Exception {
-        String catName = ac.record.getStr("cat_name");
-        System.out.println(catName);
-//        if (!catName.equals("秦始皇")) {
-//            // 秦始皇吃花椒
-//            return "updatefore:" + catName;
-//        }
+        String name = ac.record.getStr("name");
+        System.out.println(name);
+        if (name.equals("秦始皇")) {
+            // 秦始皇吃花椒
+            return "秦始皇吃花椒，赢麻了。";
+        }
         return null;
     }
 
@@ -36,6 +36,5 @@ public class ProductMetaHook implements EovaMetaHook {
         System.out.println("新增成功:" + ac.object.getStr("name"));
         return null;
     }
-
 }
 

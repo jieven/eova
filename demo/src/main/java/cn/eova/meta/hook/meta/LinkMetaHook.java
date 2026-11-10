@@ -46,7 +46,6 @@ public class LinkMetaHook implements EovaMetaHook {
         String url = ac.record.getStr("url");
         System.out.println(url);
         if (!url.startsWith("https")) {
-            // 秦始皇吃花椒
             return "链接地址, 必须是https开头";
 
         }

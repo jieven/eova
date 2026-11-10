@@ -850,8 +850,10 @@ public class MetaController extends BaseController {
 
     /********************Eova DataBase Sql Converter**********************/
 
+    // 待移除。
     // 用户个性化设置(type 1=显示,2=查询)
-    public void diy() {
+    @Deprecated
+    private void diy() {
 
         int type = getInt("type", 1);
         String objectCode = get(0);

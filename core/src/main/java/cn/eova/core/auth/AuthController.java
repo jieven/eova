@@ -23,8 +23,10 @@ import cn.eova.model.Menu;
 import cn.eova.model.Role;
 import cn.eova.model.RoleBtn;
 import cn.eova.model.User;
+import cn.eova.service.biz;
 import cn.eova.service.sm;
 import cn.eova.widget.WidgetUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
@@ -288,6 +290,35 @@ public class AuthController extends BaseController {
 
 //        setAttr("menus", authMenu);
         return authMenu;
+    }
+
+    // ---------------- 字段权限配置 ----------------
+    // 旁挂表单：POST /auth/fieldSave；列表由元对象表格负责
+
+    /**
+     * 保存字段权限规则
+     * POST /auth/fieldSave  JSON: {object, field, type, auth}
+     */
+    @Before(Tx.class)
+    @TxConfig(Ds.EOVA)
+    public void fieldSave() {
+        JSONObject body = getJsonObj();
+        if (body == null) {
+            NO("请求体为空");
+            return;
+        }
+        Integer id = body.getInteger("id");
+        String object = body.getString("object");
+        String field = body.getString("field");
+        Integer type = body.getInteger("type");
+        String auth = body.getString("auth");
+
+        String err = biz.auth.saveFieldAuth(getUser(), id, object, field, type, auth);
+        if (err != null) {
+            NO(err);
+            return;
+        }
+        OK("保存成功");
     }
 
     /**

@@ -13,12 +13,19 @@ vue.component('InputNum', '/_component/InputNum.js');// 计数器(丐版)
 vue.component('InputNums', '/_component/InputNums.js');// 计数器(AI版)
 vue.component('Rate', '/_component/Rate.js');// 评分组件(AI版)
 vue.component('EovaTags', '/_component/EovaTags.js');// 评分组件(AI版)
+vue.component('EovaSlider', '/_component/slider2/EovaSlider.js');// 滑块组件(AI版)
+vue.component('City', '/_component/city/city.js');// 省市多选
 
 // 自定义模版(模版类型_菜单编码) 干预列表页的查询表单
 vue.app('table_meta_hotel', {
     template: '/hotel/app.vue',
     script: '/hotel/app.js',
     components: ['SwordComing']
+});
+
+// 城市选择举例
+vue.app('meta_area', {
+    components: ['City']
 });
 
 // tree_table 扩展测试
@@ -39,5 +46,5 @@ vue.app('meta_hotel', {
 vue.app('meta_product', {
     template: '/product/app.vue',
     script: '/product/app.js',
-    components: ['MyDemo', 'InputNum', 'InputNums', 'EovaTags']
+    components: ['MyDemo', 'InputNum', 'InputNums', 'EovaTags', 'EovaSlider']
 });

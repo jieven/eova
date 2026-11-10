@@ -266,29 +266,3 @@ public class AuthUri {
 
 
 }
-
-
-// 通用业务免鉴权
-//        whiteList.add("/meta/object/**");
-//        whiteList.add("/meta/fields/**");
-//        whiteList.add("/meta/dict/**");
-// 用户个性化设置
-//        whiteList.add("/meta/diy/*");
-//        whiteList.add("/meta/swapdiy");
-//        whiteList.add("/grid/query/eova_diy*");
-// 权限相关免鉴权
-//        whiteList.add("/auth/button/*");
-//        whiteList.add("/widget/**");
-//        whiteList.add("/upload/**");
-//        whiteList.add("/grid/updateCell");
-//        whiteList.add("/user/password");
-//        whiteList.add("/user/doPassword");
-
-//        getAuthUris().get(0).add(EOVA_INDEX);
-//        getAuthUris().get(0).add(EOVA_INDEX + '/');
-//        getAuthUris().get(0).add(EOVA_INDEX_H5);
-//        getAuthUris().get(0).add(EOVA_INDEX_H5 + '/');
-
-//        getAuthUris().get(0).add("/menu1/**/**");
-//        getAuthUris().get(0).add("/app/**/**");
-//        getAuthUris().get(0).add("/api/meta/**/**");

@@ -57,8 +57,14 @@ public class MetaControler extends BaseController {
             object = se.getObject();
             fields = se.getFields();
         } else {
-            object = sm.meta.getMeta(objectCode);
-            fields = object.getFields();
+            User user = getUser();
+            if (user == null) {
+                NO("用户未登录，无法获取数据");
+                return;
+            }
+            // 分别获取元对象与元字段
+            object = MetaObject.dao.getByCode(objectCode);
+            fields = MetaField.dao.queryFields(objectCode, user);
         }
 
         Ret ret = Ret.ok().set("object", object).set("fields", fields);
