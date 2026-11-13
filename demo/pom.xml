@@ -42,19 +42,7 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-
-        <!--   阿里云定位POI查询     -->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-address-purification</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.5.9</version>
-        </dependency>
-
+ 
     </dependencies>
 
     <build>
