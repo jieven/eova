@@ -209,7 +209,6 @@ public class FormControler extends BaseController {
         String objectCode = this.get(0);
 
         List<Record> records = getJsonToRecords("rows");
-        System.out.println(records);
 
         MetaObject object = sm.meta.getMeta(objectCode);
         EovaMetaHook hook = HookRegistry.getMeta(objectCode);

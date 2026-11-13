@@ -18,8 +18,8 @@
         <maven.deploy.skip>true</maven.deploy.skip>
 
         <eova.core.version>1.1.5</eova.core.version>
-        <eova.meta.core.version>4.0.1-SNAPSHOTS</eova.meta.core.version>
-        <eova.meta.view.version>4.0.1-SNAPSHOTS</eova.meta.view.version>
+        <eova.meta.core.version>4.0.2-SNAPSHOTS</eova.meta.core.version>
+        <eova.meta.view.version>4.0.2-SNAPSHOTS</eova.meta.view.version>
     </properties>
 
     <dependencies>

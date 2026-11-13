@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>省市选择</title>
+    <style>
+      :root {
+        --primary: #1677ff;
+        --primary-soft: #e6f4ff;
+        --border: #e5e6eb;
+        --bg: #f5f6f8;
+        --text: #1f2329;
+        --muted: #86909c;
+        --danger: #f53f3f;
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          14px/1.5 -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          'PingFang SC',
+          'Microsoft YaHei',
+          sans-serif;
+      }
+
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .page-title {
+        margin: 0 0 4px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .page-desc {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .picker {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 16px;
+        min-height: 560px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .picker-main {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        border-right: 1px solid var(--border);
+      }
+
+      .btn {
+        height: 36px;
+        padding: 0 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: #fff;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.05);
+        color: #fff;
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        filter: none;
+      }
+
+      .btn-text {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        height: auto;
+        padding: 0;
+      }
+
+      .btn-text:hover {
+        color: var(--danger);
+      }
+
+      /* 省 Tabs：一次全部列出，可换行 */
+      .province-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+        max-height: 220px;
+        overflow-y: auto;
+      }
+
+      .province-tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 13px;
+        user-select: none;
+      }
+
+      .province-tab:hover {
+        border-color: #91caff;
+        color: var(--primary);
+      }
+
+      .province-tab.is-active {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* 该省下有已选城市时，右上角小点提示 */
+      .province-tab.has-selected::after {
+        content: '';
+        position: absolute;
+        right: 4px;
+        top: 4px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+
+      .city-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding: 12px 16px 16px;
+      }
+
+      .city-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .city-panel-title {
+        font-size: 15px;
+        font-weight: 600;
+        min-width: 0;
+      }
+
+      .city-panel-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .city-panel-actions .btn {
+        height: 30px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .city-count {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 400;
+      }
+
+      .city-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+        gap: 8px;
+        align-content: start;
+        overflow: auto;
+        flex: 1;
+        padding-right: 4px;
+      }
+
+      .city-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 36px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fff;
+        cursor: pointer;
+        user-select: none;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+
+      .city-item:hover {
+        border-color: #91caff;
+        background: #f7fbff;
+      }
+
+      .city-item.is-checked {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+      }
+
+      .city-item input {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        flex-shrink: 0;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      .city-item span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .empty-tip {
+        padding: 48px 16px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .loading {
+        padding: 80px 16px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      /* 已选侧栏 */
+      .picker-side {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        background: #fafafa;
+      }
+
+      .side-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+
+      .side-head h3 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .side-body {
+        flex: 1;
+        overflow: auto;
+        padding: 12px;
+        min-height: 0;
+      }
+
+      .side-section {
+        border-bottom: 1px solid var(--border);
+        background: #fff;
+      }
+
+      .side-section:last-child {
+        border-bottom: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .group-save {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .group-save .search {
+        flex: 1;
+        min-width: 0;
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        outline: none;
+        font-size: 13px;
+      }
+
+      .group-save .search:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.15);
+      }
+
+      .group-save .btn {
+        height: 32px;
+        padding: 0 10px;
+        flex-shrink: 0;
+      }
+
+      .group-list {
+        max-height: 180px;
+        overflow: auto;
+        padding: 8px 12px 12px;
+      }
+
+      .group-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        margin-bottom: 6px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fafafa;
+        cursor: pointer;
+        text-align: left;
+        font-size: 13px;
+        color: var(--text);
+      }
+
+      .group-item:hover,
+      .group-item.is-active {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+        color: var(--primary);
+      }
+
+      .group-item-main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .group-item-name {
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+      }
+
+      .group-item-meta {
+        flex-shrink: 0;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 400;
+      }
+
+      .group-item.is-active .group-item-meta {
+        color: #69b1ff;
+      }
+
+      .group-item-del {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        padding: 2px 4px;
+        flex-shrink: 0;
+      }
+
+      .group-item-del:hover {
+        color: var(--danger);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        max-width: 100%;
+        margin: 0 6px 6px 0;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid var(--border);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .tag button {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1;
+      }
+
+      .tag button:hover {
+        color: var(--danger);
+      }
+
+      .side-empty {
+        padding: 24px 8px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 40px;
+        transform: translateX(-50%);
+        padding: 10px 16px;
+        border-radius: 8px;
+        background: rgba(31, 35, 41, 0.92);
+        color: #fff;
+        font-size: 13px;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .result {
+        margin-top: 16px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+
+      .result h3 {
+        margin: 0 0 10px;
+        font-size: 14px;
+      }
+
+      .result pre {
+        margin: 0;
+        max-height: 220px;
+        overflow: auto;
+        padding: 12px;
+        background: #f7f8fa;
+        border-radius: 8px;
+        font-size: 12px;
+        line-height: 1.55;
+        color: #4e5969;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+
+      @media (max-width: 900px) {
+        .picker {
+          grid-template-columns: 1fr;
+        }
+
+        .picker-main {
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .picker-side {
+          min-height: 220px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="page" v-cloak>
+      <h1 class="page-title">省市选择</h1>
+      <div v-if="loading" class="loading">正在加载省市区数据…</div>
+      <div v-else-if="loadError" class="loading">{{ loadError }}</div>
+
+      <div v-else class="picker">
+        <div class="picker-main">
+          <!-- 所有省份一次列出，仅切换，不勾选 -->
+          <div class="province-tabs">
+            <button
+              v-for="p in provinces"
+              :key="p.id"
+              type="button"
+              class="province-tab"
+              :class="{
+                'is-active': activeProvinceId === p.id,
+                'has-selected': provinceHasSelected(p.id),
+              }"
+              @click="activeProvinceId = p.id"
+            >
+              {{ p.name }}
+            </button>
+          </div>
+
+          <div class="city-panel">
+            <div class="city-panel-head">
+              <div class="city-panel-title">
+                {{ activeProvince?.name || '—' }}
+                <span class="city-count">
+                  （已选 {{ selectedCountInActive }} /
+                  {{ activeCities.length }}）
+                </span>
+              </div>
+              <div class="city-panel-actions">
+                <button type="button" class="btn" @click="selectAllVisible">
+                  全选当前
+                </button>
+                <button type="button" class="btn" @click="clearVisible">
+                  清空当前
+                </button>
+              </div>
+            </div>
+
+            <div v-if="activeCities.length" class="city-grid">
+              <label
+                v-for="city in activeCities"
+                :key="city.id"
+                class="city-item"
+                :class="{ 'is-checked': selectedSet.has(city.id) }"
+              >
+                <input
+                  type="checkbox"
+                  :checked="selectedSet.has(city.id)"
+                  @change="toggleCity(city)"
+                />
+                <span :title="city.name">{{ city.name }}</span>
+              </label>
+            </div>
+            <div v-else class="empty-tip">该省暂无城市数据</div>
+          </div>
+        </div>
+
+        <aside class="picker-side">
+          <div class="side-section">
+            <div class="group-save">
+              <input
+                v-model.trim="groupName"
+                class="search"
+                type="text"
+                maxlength="20"
+                placeholder="将已选城市,保存组，如：华中"
+                @keyup.enter="saveTempGroup"
+              />
+              <button
+                type="button"
+                class="btn btn-primary"
+                :disabled="!selectedList.length"
+                @click="saveTempGroup"
+              >
+                保存
+              </button>
+            </div>
+            <div class="group-list">
+              <div
+                v-for="g in tempGroups"
+                :key="g.id"
+                class="group-item"
+                :class="{ 'is-active': activeGroupId === g.id }"
+                @click="applyTempGroup(g)"
+              >
+                <div class="group-item-main">
+                  <div class="group-item-name">{{ g.name }}</div>
+                  <div class="group-item-meta">{{ g.cityIds.length }}市</div>
+                </div>
+                <button
+                  type="button"
+                  class="group-item-del"
+                  title="删除自定义组"
+                  @click.stop="removeTempGroup(g.id)"
+                >
+                  ×
+                </button>
+              </div>
+              <div v-if="!tempGroups.length" class="side-empty">
+                勾选城市后点「保存」可存为自定义组
+              </div>
+            </div>
+          </div>
+
+          <div class="side-section">
+            <div class="side-head">
+              <h3>已选 {{ selectedList.length }} 个市</h3>
+              <button
+                v-if="selectedList.length"
+                type="button"
+                class="btn btn-text"
+                @click="clearAll"
+              >
+                清空全部
+              </button>
+            </div>
+            <div class="side-body">
+              <template v-if="selectedList.length">
+                <span v-for="item in selectedList" :key="item.id" class="tag">
+                  {{ item.name }}
+                  <button
+                    type="button"
+                    title="移除"
+                    @click="removeCity(item.id)"
+                  >
+                    ×
+                  </button>
+                </span>
+              </template>
+              <div v-else class="side-empty">勾选左侧城市后显示在这里</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div v-if="toastText" class="toast">{{ toastText }}</div>
+
+      <div class="result">
+        <h3>v-model 输出（selected）</h3>
+        <pre>{{ selectedJson }}</pre>
+      </div>
+    </div>
+
+    <script src="https://s1.whkxk.com/vue/3.5.34/vue.global.prod.js"></script>
+    <script>
+      const { createApp, ref, computed, reactive, onMounted } = Vue;
+
+      const TEMP_GROUP_KEY = 'eova_city_select';
+
+      function loadTempGroupsFromCache() {
+        try {
+          const raw = localStorage.getItem(TEMP_GROUP_KEY);
+          const list = raw ? JSON.parse(raw) : [];
+          return Array.isArray(list) ? list : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveTempGroupsToCache(list) {
+        localStorage.setItem(TEMP_GROUP_KEY, JSON.stringify(list));
+      }
+
+      createApp({
+        setup() {
+          const loading = ref(true);
+          const loadError = ref('');
+          const provinces = ref([]);
+          const citiesByProvince = reactive({});
+          const cityMap = reactive({});
+          const activeProvinceId = ref(null);
+          const selectedIds = ref([]);
+          const tempGroups = ref(loadTempGroupsFromCache());
+          const groupName = ref('');
+          const activeGroupId = ref('');
+          const toastText = ref('');
+          let toastTimer = null;
+
+          const selectedSet = computed(() => new Set(selectedIds.value));
+
+          const activeProvince = computed(() =>
+            provinces.value.find((p) => p.id === activeProvinceId.value)
+          );
+
+          const activeCities = computed(
+            () => citiesByProvince[activeProvinceId.value] || []
+          );
+
+          const selectedCountInActive = computed(
+            () =>
+              activeCities.value.filter((c) => selectedSet.value.has(c.id))
+                .length
+          );
+
+          const selectedList = computed(() =>
+            selectedIds.value
+              .map((id) => cityMap[id])
+              .filter(Boolean)
+              .sort((a, b) => a.provinceId - b.provinceId || a.id - b.id)
+          );
+
+          const selectedJson = computed(() =>
+            JSON.stringify(selectedList.value, null, 2)
+          );
+
+          function showToast(msg) {
+            toastText.value = msg;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+              toastText.value = '';
+            }, 1800);
+          }
+
+          function provinceHasSelected(provinceId) {
+            const cities = citiesByProvince[provinceId] || [];
+            return cities.some((c) => selectedSet.value.has(c.id));
+          }
+
+          function setSelected(ids) {
+            selectedIds.value = [...new Set(ids)];
+            activeGroupId.value = '';
+          }
+
+          function toggleCity(city) {
+            const set = new Set(selectedIds.value);
+            if (set.has(city.id)) set.delete(city.id);
+            else set.add(city.id);
+            setSelected([...set]);
+          }
+
+          function selectAllVisible() {
+            const set = new Set(selectedIds.value);
+            activeCities.value.forEach((c) => set.add(c.id));
+            setSelected([...set]);
+          }
+
+          function clearVisible() {
+            const set = new Set(selectedIds.value);
+            activeCities.value.forEach((c) => set.delete(c.id));
+            setSelected([...set]);
+          }
+
+          function removeCity(id) {
+            setSelected(selectedIds.value.filter((x) => x !== id));
+          }
+
+          function clearAll() {
+            selectedIds.value = [];
+            activeGroupId.value = '';
+          }
+
+          function persistGroups() {
+            saveTempGroupsToCache(tempGroups.value);
+          }
+
+          function saveTempGroup() {
+            if (!selectedIds.value.length) {
+              showToast('请先勾选城市');
+              return;
+            }
+            const name =
+              groupName.value ||
+              `自定义组 ${tempGroups.value.length + 1}`;
+            const cityIds = [...selectedIds.value];
+            const exist = tempGroups.value.find((g) => g.name === name);
+            if (exist) {
+              exist.cityIds = cityIds;
+              exist.updatedAt = Date.now();
+              activeGroupId.value = exist.id;
+              showToast(`已更新自定义组「${name}」`);
+            } else {
+              const item = {
+                id: String(Date.now()),
+                name,
+                cityIds,
+                createdAt: Date.now(),
+              };
+              tempGroups.value = [item, ...tempGroups.value];
+              activeGroupId.value = item.id;
+              showToast(`已保存自定义组「${name}」`);
+            }
+            persistGroups();
+            groupName.value = '';
+          }
+
+          function applyTempGroup(group) {
+            const validIds = (group.cityIds || []).filter((id) => cityMap[id]);
+            selectedIds.value = [...new Set(validIds)];
+            activeGroupId.value = group.id;
+            if (validIds.length && cityMap[validIds[0]]) {
+              activeProvinceId.value = cityMap[validIds[0]].provinceId;
+            }
+            showToast(
+              `已应用「${group.name}」（${validIds.length} 个市）`
+            );
+          }
+
+          function removeTempGroup(id) {
+            tempGroups.value = tempGroups.value.filter((g) => g.id !== id);
+            if (activeGroupId.value === id) activeGroupId.value = '';
+            persistGroups();
+            showToast('已删除自定义组');
+          }
+
+          async function loadData() {
+            try {
+              const res = await fetch('./assets/data/area.json');
+              if (!res.ok) throw new Error('HTTP ' + res.status);
+              const data = await res.json();
+              const records = data.RECORDS || [];
+
+              const provinceList = records
+                .filter((x) => x.lv === 1)
+                .sort((a, b) => a.id - b.id);
+
+              const provinceNameMap = {};
+              provinceList.forEach((p) => {
+                provinceNameMap[p.id] = p.name;
+                citiesByProvince[p.id] = [];
+              });
+
+              records
+                .filter((x) => x.lv === 2)
+                .sort((a, b) => a.id - b.id)
+                .forEach((c) => {
+                  const item = {
+                    id: c.id,
+                    name: c.name,
+                    provinceId: c.pid,
+                    provinceName: provinceNameMap[c.pid] || '',
+                  };
+                  cityMap[c.id] = item;
+                  if (citiesByProvince[c.pid]) {
+                    citiesByProvince[c.pid].push(item);
+                  }
+                });
+
+              provinces.value = provinceList;
+              activeProvinceId.value = provinceList[0]?.id ?? null;
+            } catch (e) {
+              loadError.value =
+                '加载 area.json 失败，请用本地静态服务打开本页（不要直接 file://）。' +
+                (e?.message ? ' ' + e.message : '');
+            } finally {
+              loading.value = false;
+            }
+          }
+
+          onMounted(loadData);
+
+          return {
+            loading,
+            loadError,
+            provinces,
+            activeProvinceId,
+            activeProvince,
+            activeCities,
+            selectedSet,
+            selectedCountInActive,
+            selectedList,
+            selectedJson,
+            tempGroups,
+            groupName,
+            activeGroupId,
+            toastText,
+            provinceHasSelected,
+            toggleCity,
+            selectAllVisible,
+            clearVisible,
+            removeCity,
+            clearAll,
+            saveTempGroup,
+            applyTempGroup,
+            removeTempGroup,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

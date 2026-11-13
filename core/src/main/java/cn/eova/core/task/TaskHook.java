@@ -3,6 +3,8 @@ package cn.eova.core.task;
 import cn.eova.aop.AopContext;
 import cn.eova.hook.EovaMetaHook;
 import cn.eova.plugin.cron4j.EovaCronPlugin;
+import cn.eova.tools.x;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 
 public class TaskHook implements EovaMetaHook {
 
@@ -30,7 +32,12 @@ public class TaskHook implements EovaMetaHook {
         int taskId = ac.record.getInt("id");
 
         // 先停止任务
-        EovaCronPlugin.get(taskId).stop();
+        Cron4jPlugin cp = EovaCronPlugin.get(taskId);
+        if (cp != null) {
+            cp.stop();
+        } else {
+            x.log.info("任务实例不存在：" + taskId);
+        }
 
         return null;
     }
@@ -40,7 +47,7 @@ public class TaskHook implements EovaMetaHook {
         String name = ac.record.getStr("name");
         String className = ac.record.getStr("clazz");
         String cronExp = ac.record.getStr("exp");
-        int state = ac.record.getInt("state");
+
         String params = ac.record.getStr("params");
 
         // 创建任务(默认禁用)

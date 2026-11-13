@@ -9,7 +9,9 @@ import cn.eova.common.base.BaseController;
 import cn.eova.common.utils.util.JsonUtil;
 import cn.eova.model.Task;
 import cn.eova.plugin.cron4j.EovaCronPlugin;
+import cn.eova.tools.x;
 import com.jfinal.kit.Kv;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 
 /**
  * 定时任务
@@ -24,12 +26,16 @@ public class TaskController extends BaseController {
         int id = getInt("id");
 
         try {
-            EovaCronPlugin.get(id).start();
-
-            Task.dao.updateState(id, Task.STATE_START);
+            Cron4jPlugin cp = EovaCronPlugin.get(id);
+            if (cp != null) {
+                cp.start();
+                Task.dao.updateState(id, Task.STATE_START);
+            } else {
+                x.log.info("任务实例不存在：" + id);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            OK();
+            x.log.error(e, "实例停止失败");
+            NO("实例启动失败：" + e.getMessage());
         }
 
         OK();
@@ -40,12 +46,16 @@ public class TaskController extends BaseController {
         int id = getInt("id");
 
         try {
-            EovaCronPlugin.get(id).stop();
-
-            Task.dao.updateState(id, Task.STATE_STOP);
+            Cron4jPlugin cp = EovaCronPlugin.get(id);
+            if (cp != null) {
+                cp.stop();
+                Task.dao.updateState(id, Task.STATE_STOP);
+            } else {
+                x.log.info("任务实例不存在：" + id);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            OK();
+            x.log.error(e, "实例停止失败");
+            NO("实例停止失败：" + e.getMessage());
         }
 
         OK();
@@ -63,9 +73,8 @@ public class TaskController extends BaseController {
             // 立即运行一次
             EovaCronPlugin.runTask(className, kv);
         } catch (Exception e) {
-            e.printStackTrace();
-
-            NO("任务运行失败！");
+            x.log.error(e, "实例运行失败");
+            NO("实例运行失败：" + e.getMessage());
         }
 
         OK();

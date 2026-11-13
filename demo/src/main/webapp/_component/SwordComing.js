@@ -20,18 +20,24 @@ const SwordComing = defineComponent({
         <img src="/ui/img/sword2.webp" style="width: 70vw;" alt="剑来">
       </div>
       <div ref="swordRef" class="sword-go" v-show="show"
-           style="position: fixed; top: 85px; bottom: 50px; right: 0; width: 350px; z-index: 999;background-color: white; border: 1px solid #878484">
+           style="position: fixed; top: 50px; bottom: 20px; right: 0; width: 400px; z-index: 999999999999;background-color: white; border: 1px solid #878484">
         <h3 style="margin: 5px; color: var(--eova-color_main)"> 🗡 {{ row.name }}</h3>
         <div style="position: absolute;right: 5px;top: 5px;" @click="$emit('update:show', false)" title="隐藏窗口">
           <i class="eova-icon-close"></i>
         </div>
         <h3>&nbsp;酒店布草库存</h3>
+        <div class="eova-tools">
+          <div class="eova-tools_box">
+            <button @click="onAdd">新增库存</button>
+            <button @click="onUpdate">修改库存</button>
+          </div>
+        </div>
         <ev-table
             ref="refTable1"
             object="hotel_stock"
             biz="hotel_stock"
             :page="page"
-            :height="300"
+            :height="200"
             :init-query="false"
         >
         </ev-table>
@@ -46,6 +52,14 @@ const SwordComing = defineComponent({
             :init-query="false"
         >
         </ev-table>
+        <ev-form
+            ref="refForm"
+            mode="read"
+            name="stock_from"
+            biz="hotel_stock"
+            object="hotel_stock"
+            pk="1"
+        ></ev-form>
         <div class="eova-notes" style="margin: 10px">💡 手中有剑，心中有道！剑来！</div>
       </div>
     `,
@@ -91,26 +105,29 @@ const SwordComing = defineComponent({
                 console.log("选中行:")
                 console.log(row.value)
 
+                hideImageAndRemoveClass();
+                handlerRowClick();
+
                 // 进场动画
-                if (isFirst.value) {
-                    isFirst.value = false;
-                    // 显示图
-                    sword1Ref.value.style.display = 'flex';
-                    setTimeout(() => {
-                        sword1Ref.value.style.display = 'none';
-                        sword2Ref.value.style.display = 'flex';
-                    }, 500)
-                    // 页面动画
-                    const bodyElement = document.body;
-                    bodyElement.classList.add('quake');
-                    setTimeout(() => {
-                        bodyElement.classList.remove('quake');
-                        hideImageAndRemoveClass()
-                        handlerRowClick();
-                    }, 3000)
-                } else {
-                    handlerRowClick();
-                }
+                // if (isFirst.value) {
+                //     isFirst.value = false;
+                //     // 显示图
+                //     sword1Ref.value.style.display = 'flex';
+                //     setTimeout(() => {
+                //         sword1Ref.value.style.display = 'none';
+                //         sword2Ref.value.style.display = 'flex';
+                //     }, 500)
+                //     // 页面动画
+                //     const bodyElement = document.body;
+                //     bodyElement.classList.add('quake');
+                //     setTimeout(() => {
+                //         bodyElement.classList.remove('quake');
+                //         hideImageAndRemoveClass()
+                //         handlerRowClick();
+                //     }, 3000)
+                // } else {
+                //     handlerRowClick();
+                // }
             }
         )
 
@@ -157,6 +174,39 @@ const SwordComing = defineComponent({
             // handlerRowClick()
         })
 
+
+        const LW = 720, LH = 660
+
+        // 新增
+        const onAdd = () => {
+            let url = `/app/add/hotel_stock?biz=create&ref=hotel_id:${row.value.id}`;
+            // 上述是自定义带参用法1：显示带入新增页面，参与页面展示。
+
+            // 自定义带参用法2：更灵活的提交表单时覆盖表单参数，隐式操作。
+            sessionStorage.setItem('hotel_stock', JSON.stringify({
+                hotel_id: row.value.id
+            }));
+
+            me.layer.open('新增库存', url, LW, LH, () => {
+                me.layer.msg('操作成功！')
+                refTable1.value.query({hotel_id: row.value.id})
+            })
+        }
+
+        // 修改
+        const onUpdate = () => {
+            let rows = refTable1.value.getSelectRows()
+            if (x.isEmpty(rows)) {
+                me.layer.msg('请先选择一行数据')
+                return
+            }
+            let url = `/app/update/hotel_stock?id=${rows[0].id}&biz=update`;
+            me.layer.open('修改库存', url, LW, LH, () => {
+                me.layer.msg('操作成功！')
+                refTable1.value.query({hotel_id: row.value.id})
+            })
+        }
+
         return {
             row,
             swordRef,
@@ -165,8 +215,10 @@ const SwordComing = defineComponent({
 
             refTable1,
             refTable2,
-            page
+            page,
 
+            onAdd,
+            onUpdate
         };
 
     }
