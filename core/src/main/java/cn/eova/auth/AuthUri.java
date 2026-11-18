@@ -55,6 +55,9 @@ public class AuthUri {
 
         loginAuth.add("/api/tree/query/*");                 // 通用数据
 
+        loginAuth.add("/upload/query");                     // 通用文件查询
+        loginAuth.add("/upload/file");                      // 通用文件上传
+
 
         // 全局通用业务
 

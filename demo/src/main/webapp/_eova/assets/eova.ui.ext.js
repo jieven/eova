@@ -82,6 +82,25 @@ eovaTableCell.set('meta_product.img', (val) => {
 })
 
 
+// 文件管理.大小格式化（字段 kb 实际存的是字节）
+eovaTableCell.set('eova_file.kb', (val) => {
+    if (x.isEmpty(val)) return '';
+    let n = Number(val);
+    if (isNaN(n) || n < 0) return val;
+    if (n === 0) return '0B';
+
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let i = 0;
+    while (n >= 1024 && i < units.length - 1) {
+        n /= 1024;
+        i++;
+    }
+    // 较大数值取整，较小保留 1 位小数
+    const num = n >= 100 || Number.isInteger(n) ? Math.round(n) : Math.round(n * 10) / 10;
+    return `${num}${units[i]}`;
+})
+
+
 /**
  * 表格 ~ 灵动岛
  *
