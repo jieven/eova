@@ -36,10 +36,21 @@
     margin-right: 0;
 }
 
-/* 查询字段、表格列头：关闭按钮定位 */
+/* 查询字段、表格列头、工具栏按钮：关闭按钮定位 */
 form.eova-form.eova-design .eova-form-field,
-.eova-table-view.eova-design .eova-table-header th {
+.eova-table-view.eova-design .eova-table-header th,
+.eova-design-btn-wrap {
     position: relative;
+}
+
+.eova-design-btn-wrap {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.eova-design-btn-wrap > button {
+    margin-right: 0;
 }
 
 .eova-design-rename,
@@ -70,6 +81,7 @@ form.eova-form.eova-design .eova-form-field:hover .eova-design-rename,
 form.eova-form.eova-design .eova-form-field:hover .eova-design-remove,
 .eova-table-view.eova-design .eova-table-header th:hover .eova-design-rename,
 .eova-table-view.eova-design .eova-table-header th:hover .eova-design-remove,
+.eova-design-btn-wrap:hover .eova-design-remove,
 .eova-design-rename:hover,
 .eova-design-remove:hover {
     opacity: 1;

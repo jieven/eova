@@ -243,6 +243,45 @@ public class MetaControler extends BaseController {
     }
 
     /**
+     * 移除工具栏按钮（逻辑删除）。查询按钮不可删。
+     * /api/meta/removeButton?menu=xxx&id=xxx
+     */
+    public void removeButton() {
+        String menu = get("menu");
+        String id = get("id");
+
+        if (x.isEmpty(menu) || x.isEmpty(id)) {
+            NO("参数不完整");
+            return;
+        }
+
+        Button btn = Button.dao.findById(id);
+        if (btn == null || !menu.equals(btn.getStr("menu_code"))) {
+            NO("按钮不存在");
+            return;
+        }
+        if (Button.FUN_QUERY_UI.equals(btn.getStr("ui")) || Button.FUN_QUERY_NAME.equals(btn.getStr("name"))) {
+            NO("查询按钮不可删除");
+            return;
+        }
+
+        int rows = Db.use(Ds.EOVA).update("update eova_button set is_hide = 1 where id = ? and menu_code = ?", id, menu);
+        if (rows < 1) {
+            NO("按钮删除失败");
+            return;
+        }
+
+        // 清掉按角色缓存的按钮列表，刷新即可看到结果
+        User user = getUser();
+        if (user != null) {
+            String findRoleBtn = "select bid from eova_role_btn where rid = ?";
+            String sql = "select * from eova_button where is_hide <> 1 and menu_code = ? and id in (" + findRoleBtn + ") order by num";
+            CacheKit.remove(BaseCache.SER, sql + "_" + menu + "_" + user.getRid());
+        }
+        OK();
+    }
+
+    /**
      * 修改字段中文名。表单与表格共用 eova_field.cn
      * /api/meta/renameField?object=xxx&field=xxx&cn=xxx
      */

@@ -3,12 +3,12 @@
 #for(btn : btnList)
 
 #if(btn.is_base)
-<button class="#(btn.style)" @click="#(btn.event)()">
+<button class="#(btn.style)" data-btn-id="#(btn.id)" data-btn-name="#(btn.name)" data-btn-ui="#(btn.ui)" data-btn-event="#(btn.event)" @click="#(btn.event)()">
     <i class="#(btn.icon)"></i>
     #(btn.name)
 </button>
 #else
-<button class="#(btn.style)" onclick="handlerButtonEvent('#(btn.event)')">
+<button class="#(btn.style)" data-btn-id="#(btn.id)" data-btn-name="#(btn.name)" data-btn-ui="#(btn.ui)" data-btn-event="#(btn.event)" onclick="handlerButtonEvent('#(btn.event)')">
     <i class="#(btn.icon)"></i>
     #(btn.name)
 </button>

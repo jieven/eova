@@ -6,7 +6,7 @@
  * 进入设计模式后：
  * - 查询字段右上角出现关闭按钮，点击即移除该字段 DOM
  * - 表格数据列头右上角出现关闭按钮，点击即移除整列 DOM
- * 元字段配置 API 接入后，在 removeQueryField / removeTableColumn 中提交变更。
+ * - 工具栏按钮右上角出现关闭按钮，点击即移除该按钮（查询按钮除外）
  */
 window.__eovaDesign = {
     on: false,
@@ -23,6 +23,7 @@ const onDesign = () => {
     // showDesignPanel();
     enableQueryFieldDesign();
     enableTableColumnDesign();
+    enableButtonDesign();
     me.layer.msg('进入设计模式');
 };
 
@@ -34,6 +35,7 @@ const exitDesign = () => {
     window.__eovaDesign.on = false;
     disableQueryFieldDesign();
     disableTableColumnDesign();
+    disableButtonDesign();
     // hideDesignPanel();
     me.layer.msg('已退出设计模式');
 };
@@ -335,6 +337,99 @@ const renameTableColumn = (th) => {
     const span = th.querySelector('.eova-table_cell > span');
     const text = span && [...span.childNodes].find((node) => node.nodeType === 3);
     openRenameInput(text, columnFieldCode(th));
+};
+
+const menuCode = () => (window.uzoo && uzoo.page && uzoo.page.menu_code) || '';
+
+/** 工具栏元按钮（排除管理条、查询按钮） */
+const toolButtons = () => {
+    const list = [];
+    document.querySelectorAll('.eova-tools_box > button[data-btn-id]').forEach((btn) => {
+        if (btn.closest('.eova-admins') || isQueryButton(btn)) {
+            return;
+        }
+        list.push(btn);
+    });
+    return list;
+};
+
+const isQueryButton = (btn) => {
+    const ui = (btn.getAttribute('data-btn-ui') || '').trim();
+    const event = (btn.getAttribute('data-btn-event') || '').trim();
+    const name = (btn.getAttribute('data-btn-name') || btn.textContent || '').replace(/\s+/g, '');
+    return ui === 'query' || event === 'onQuery' || name === '查询';
+};
+
+const enableButtonDesign = () => {
+    toolButtons().forEach((btn) => {
+        if (btn.parentElement && btn.parentElement.classList.contains('eova-design-btn-wrap')) {
+            return;
+        }
+        const wrap = document.createElement('span');
+        wrap.className = 'eova-design-btn-wrap eova-design';
+        btn.parentNode.insertBefore(wrap, btn);
+        wrap.appendChild(btn);
+        wrap.appendChild(createRemoveButton('移除按钮'));
+        wrap.addEventListener('click', onToolButtonClick);
+    });
+};
+
+const disableButtonDesign = () => {
+    document.querySelectorAll('.eova-design-btn-wrap').forEach((wrap) => {
+        wrap.removeEventListener('click', onToolButtonClick);
+        const btn = wrap.querySelector('button[data-btn-id]');
+        const remove = wrap.querySelector('.eova-design-remove');
+        if (remove) {
+            remove.remove();
+        }
+        if (btn && wrap.parentNode) {
+            wrap.parentNode.insertBefore(btn, wrap);
+        }
+        wrap.remove();
+    });
+};
+
+const onToolButtonClick = (e) => {
+    const removeBtn = e.target.closest('.eova-design-remove');
+    if (!removeBtn) {
+        return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    const wrap = removeBtn.closest('.eova-design-btn-wrap');
+    const btn = wrap && wrap.querySelector('button[data-btn-id]');
+    if (btn) {
+        removeToolButton(btn, wrap);
+    }
+};
+
+const requestRemoveButton = (btnId, btnName) => {
+    const menu = menuCode();
+    return axios.get('/api/meta/removeButton', {
+        params: {menu, id: btnId, name: btnName}
+    }).then((res) => {
+        const ok = res.data && res.data.state === 'ok';
+        me.layer.notify(ok ? '操作成功' : '操作失败', ok ? `按钮已删除：${btnName}` : '按钮删除失败', ok ? 'ok' : 'no');
+        return ok;
+    }).catch(() => {
+        me.layer.notify('操作失败', '按钮删除失败', 'no');
+        return false;
+    });
+};
+
+/**
+ * 实时移除工具栏按钮（逻辑删除 eova_button.is_hide）。
+ * @param {HTMLElement} btn
+ * @param {HTMLElement} wrap
+ */
+const removeToolButton = (btn, wrap) => {
+    const btnId = btn.getAttribute('data-btn-id') || '';
+    const btnName = (btn.getAttribute('data-btn-name') || btn.textContent || '').replace(/\s+/g, ' ').trim();
+    requestRemoveButton(btnId, btnName).then((ok) => {
+        if (ok) {
+            (wrap || btn).remove();
+        }
+    });
 };
 
 const createRenameButton = () => {
